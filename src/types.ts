@@ -38,7 +38,7 @@ type userBook = {
     users: learningGroupUser[];
     message: message[];
 }
-export type user = {
+export type User = {
     age?: number;
     userId: string;
     name: string;
