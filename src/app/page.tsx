@@ -1,6 +1,13 @@
+'use client'
+import React from 'react';
 
-export default function Home() {
+const SomeComponent = () => {
+
   return (
-    <h1>Home</h1>
-     );
-}
+    <div>
+      hello
+    </div>
+  );
+};
+
+export default SomeComponent;
