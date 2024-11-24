@@ -1,6 +1,10 @@
-import Login from "./components/Login/Login";
 
-export default function Home() {
+'use client'
+import React from 'react';
+import Login from "./components/Login/Login";
+const SomeComponent = () => {
+
+
   return (
     <div>
       <h1>Home</h1>
@@ -9,3 +13,6 @@ export default function Home() {
 
   );
 }
+
+
+export default SomeComponent;
