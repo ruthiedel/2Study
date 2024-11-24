@@ -1,49 +1,49 @@
-type section = {
+type Section = {
     _id?: string;
     text: string;
     questions: string[];
 }
-type chapter = {
+type Chapter = {
     _id?: string;
-    sections: section[];
+    sections: Section[];
 }
-type message = {
+type Message = {
     _id?: string;
     userId: string;
     userName: string;
     text: string;
     time: Date;
 }
-type learningGroupUser = {
+type LearningGroupUser = {
     userId: string;
     userName: string;
 }
-export type book = {
+export type Book = {
     _id?: string;
     book_name: string;
     author: string;
     categories: string[];
-    chapters: chapter[];
+    chapters: Chapter[];
     coverImage: string;
     users: string;
-    learningGroups: learningGroup;
+    learningGroups: LearningGroup;
 }
-type userBook = {
+type UserBook = {
     book_id: string;
     chapter_id: string;
     section_id: string;
     rate: number;
 }
- type learningGroup = {
-    users: learningGroupUser[];
-    message: message[];
+ type LearningGroup = {
+    users: LearningGroupUser[];
+    message: Message[];
 }
-export type user = {
+export type User = {
     age?: number;
     userId: string;
     name: string;
     email: string;
-    books: userBook[];
+    books: UserBook[];
 }
 
 
