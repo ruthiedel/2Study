@@ -24,7 +24,6 @@ export default function ProgressCard() {
         <Typography gutterBottom variant="h5" component="div">
           ההתקדמות שלך
         </Typography>
-        <Typography variant="body2" color="text.secondary">
           <List>
             <ListItem>
               <ListItemIcon>
@@ -36,17 +35,14 @@ export default function ProgressCard() {
                 <ListItemIcon><ForwardToInboxIcon /></ListItemIcon>
               <ListItemText primary="גרף התקדמות" />
             </ListItem>
-
             <ListItem>
                 <ListItemIcon><PeopleIcon /></ListItemIcon>
                 <ListItemText primary="אתה מול אחרים" />
             </ListItem>
           </List>
-        </Typography>
         <Link href="#" underline="none">GO</Link>
         <Button href="#">GO2</Button>
       </CardContent>
-       
     </Card>
   );
 }
