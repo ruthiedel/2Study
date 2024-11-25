@@ -40,7 +40,7 @@ type UserBook = {
 }
 export type User = {
     age?: number;
-    userId: string;
+    _id?: string;
     name: string;
     email: string;
     books: UserBook[];
