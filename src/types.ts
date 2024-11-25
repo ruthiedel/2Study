@@ -24,7 +24,7 @@ export type Book = {
     author: string;
     categories: string[];
     chapters: Chapter[];
-    coverImage: string;
+    coverImage: Blob;
     users: string;
     learningGroups: LearningGroup;
 }
