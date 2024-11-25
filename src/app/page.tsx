@@ -1,18 +1,13 @@
-
 'use client'
 import React from 'react';
-import Login from "./components/Login/Login";
-const SomeComponent = () => {
 
+const SomeComponent = () => {
 
   return (
     <div>
-      <h1>Home</h1>
-      <Login />
+      hello
     </div>
-
   );
-}
-
+};
 
 export default SomeComponent;

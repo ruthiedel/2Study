@@ -24,7 +24,7 @@ export type Book = {
     author: string;
     categories: string[];
     chapters: Chapter[];
-    coverImage: string;
+    coverImage: Blob;
     users: string;
     learningGroups: LearningGroup;
 }
@@ -40,7 +40,7 @@ type UserBook = {
 }
 export type User = {
     age?: number;
-    userId: string;
+    _id?: string;
     name: string;
     email: string;
     books: UserBook[];
