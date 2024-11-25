@@ -2,6 +2,7 @@
 
 # dependencies
 /node_modules
+next.config.ts
 /next.config.ts
 /.pnp
 .pnp.js
