@@ -1,0 +1,66 @@
+.appBar {
+    background-color: #1e1d1d; 
+    box-shadow: none;
+    border-bottom: 2px solid #f5f5f5;
+  }
+  
+  .toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    direction: rtl; 
+  }
+  
+  
+  .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: gold;
+    font-family: "Arial", sans-serif;
+  }
+  
+  .navButtons {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .navButton {
+    color: white;
+    font-size: 1.2rem;
+    border-radius: 20px;
+    padding: 5px 15px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .navButton:hover {
+    background-color: #444;
+    color: #fff;
+  }
+  
+  .iconButton {
+    color: #fff;
+  }
+
+  .iconButton svg {
+    font-size: 3rem; 
+  }
+  
+
+  .logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .logoImage {
+    cursor: pointer; 
+    transition: transform 0.2s ease; 
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50px;
+  }
+  
+  .logoImage:hover {
+    transform: scale(1.1); 
+  }
+  

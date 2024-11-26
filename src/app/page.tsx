@@ -1,18 +1,15 @@
 'use client'
-
 import React from 'react';
-import UserContainer from '@/app/components/userStatus/userContainer';
+import Homepage from '@/components/homepage/homepage';
 
 const SomeComponent = () => {
 
-
   return (
-    <>
-    <h1>Home</h1>
-    <UserContainer/>
-    </>
-     );
-}
-
+    
+    <div>
+      <Homepage/>
+    </div>
+  );
+};
 
 export default SomeComponent;
