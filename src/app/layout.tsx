@@ -1,5 +1,6 @@
 import Header from "@/components/header/Header";
 import "./globals.css";
+import RequireAuth from "@/layout/RequireAuth";
 
 export default function RootLayout({
   children,
@@ -9,8 +10,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Header/>
+      <RequireAuth>
         {children}
+      </RequireAuth>
       </body>
     </html>
   );

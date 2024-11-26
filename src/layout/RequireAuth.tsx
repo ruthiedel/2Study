@@ -4,6 +4,7 @@ import React, { ReactNode, useEffect, useState } from 'react';
 import useUserStore from '@/services/zustand/userZustand/userStor';
 import LoadingSpinner from '@/components/loading/loadingSpiner';
 import Login from '@/components/Login/Login';
+import Header from '@/components/header/Header';
 
 interface RequireAuthProps {
   children: ReactNode;
@@ -27,7 +28,10 @@ const RequireAuth = ({ children }: RequireAuthProps) => {
     return <Login/>
   }
 
-  return <>{children}</>;
+  return <>
+      <Header/>
+  {children}
+  </>;
 };
 
 export default RequireAuth;

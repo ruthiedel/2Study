@@ -8,7 +8,7 @@ const Homepage = () => {
     const user = useUserStore((state) => state.user);
 
     return (
-        <RequireAuth>
+   
             <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center">
                 {/* Header */}
                 <header className="w-full bg-black py-4 shadow-lg">
@@ -57,7 +57,6 @@ const Homepage = () => {
                     </div>
                 </footer>
             </div>
-        </RequireAuth>
     );
 };
 
