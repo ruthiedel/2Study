@@ -2,7 +2,9 @@
 import React from "react";
 import { Box, Button, Typography, Card } from "@mui/material";
 import { styled } from "@mui/system";
-import { auth, provider, signInWithPopup } from "@/lib/firebase";
+import { auth } from "@/lib/firebase"; // שים לב ששינית את הנתיב המתאים
+import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+// import { auth, provider, signInWithPopup } from "@/lib/firebase";
 import useUserStore from "@/services/zustand/userZustand/userStor";
 import { logInUser } from "@/services/userService";
 
@@ -34,6 +36,10 @@ const Login = () => {
 
   const handleGoogleLogin = async () => {
     try {
+      const provider = new GoogleAuthProvider();
+      provider.setCustomParameters({
+        prompt: "select_account",  
+      });
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
       const localUser = {

@@ -6,6 +6,7 @@ import RequireAuth from "@/layout/RequireAuth";
 
 const Homepage = () => {
     const user = useUserStore((state) => state.user);
+    const logout = useUserStore((state) => state.logout);
 
     return (
         <RequireAuth>
@@ -45,8 +46,8 @@ const Homepage = () => {
                     <p className="text-gray-400 mt-4 text-lg">
                         Track your progress, stay motivated, and achieve your learning goals.
                     </p>
-                    <button className="mt-8 px-6 py-3 bg-gold text-black rounded-lg shadow hover:bg-opacity-80 transition">
-                        Get Started
+                    <button onClick={logout} className="mt-8 px-6 py-3 bg-gold text-black rounded-lg shadow hover:bg-opacity-80 transition">
+                        Log Out
                     </button>
                 </main>
 
