@@ -7,7 +7,6 @@ const SomeComponent = () => {
   return (
     
     <div>
-      hello
       <Homepage/>
     </div>
   );
