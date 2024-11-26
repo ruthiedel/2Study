@@ -1,7 +1,6 @@
 'use client'
 import React from 'react';
-import RequireAuth from '@/layout/RequireAuth';
-import Homepage from './compnents/homepage/homepage';
+import Homepage from '@/components/homepage/homepage';
 
 const SomeComponent = () => {
 
