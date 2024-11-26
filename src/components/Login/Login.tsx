@@ -62,7 +62,7 @@ const Login = () => {
         justifyContent: "center",
         alignItems: "center",
         height: "100vh",
-        backgroundColor: "#333",
+       
       }}
     >
       <Card
