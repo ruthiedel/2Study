@@ -7,15 +7,22 @@ import Link from "next/link";
 import Image from "next/image";
 import logo from "@/pictures/צילום מסך 2024-11-24 141224 (1).png";
 import styles from "./header.module.css";
+import useUserStore from "@/services/zustand/userZustand/userStor";
 
 const Header: React.FC = () => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const logout = useUserStore((state) => state.logout);
 
     const handleMenuOpen = (event: MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
     };
 
     const handleMenuClose = () => {
+        setAnchorEl(null);
+    };
+
+    const handleLogout = () => {
+        logout();
         setAnchorEl(null);
     };
 
@@ -61,7 +68,7 @@ const Header: React.FC = () => {
                     className={styles.menu}
                 >
                     <MenuItem onClick={handleMenuClose}>איזור אישי</MenuItem>
-                    <MenuItem onClick={handleMenuClose}>התנתקות</MenuItem>
+                    <MenuItem onClick={handleLogout}>התנתקות</MenuItem>
                 </Menu>
             </Toolbar>
         </AppBar>
