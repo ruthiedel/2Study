@@ -1,11 +1,9 @@
 'use client';
 
 import React, { ReactNode, useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import useUserStore from '@/services/zustand/userZustand/userStor';
-import LoadingSpinner from '@/compnents/loading/loadingSpiner';
-import Login from '@/compnents/Login/Login';
-// import Login from '@/app/login/page';
+import LoadingSpinner from '@/components/loading/loadingSpiner';
+import Login from '@/components/Login/Login';
 
 interface RequireAuthProps {
   children: ReactNode;
