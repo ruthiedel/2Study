@@ -1,6 +1,6 @@
 import React from "react";
 
-const About: React.FC = () => {
+const  About: React.FC = () => {
     return (
         <div >
             <h1 dir="rtl">אודות האתר שלנו</h1>
@@ -19,3 +19,5 @@ const About: React.FC = () => {
         </div>
     )
 }
+
+export default About;
