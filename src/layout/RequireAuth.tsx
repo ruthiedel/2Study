@@ -1,10 +1,10 @@
 'use client';
 
 import React, { ReactNode, useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import useUserStore from '@/services/zustand/userZustand/userStor';
-import LoadingSpinner from '@/app/compnents/loading/loadingSpiner';
-// import Login from '@/app/login/page';
+import LoadingSpinner from '@/components/loading/loadingSpiner';
+import Login from '@/components/Login/Login';
+import Header from '@/components/header/Header';
 
 interface RequireAuthProps {
   children: ReactNode;
@@ -25,10 +25,13 @@ const RequireAuth = ({ children }: RequireAuthProps) => {
 
   if (!user) {
     // return <Login />;
-    return <h1>login</h1>
+    return <Login/>
   }
 
-  return <>{children}</>;
+  return <>
+      <Header/>
+  {children}
+  </>;
 };
 
 export default RequireAuth;

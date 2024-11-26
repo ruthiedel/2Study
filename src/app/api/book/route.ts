@@ -12,4 +12,4 @@ export async function GET(request: Request) {
       console.error(error);
       return NextResponse.json({ message: 'Failed to fetch books' }, { status: 500 });
     }
-  }
+}

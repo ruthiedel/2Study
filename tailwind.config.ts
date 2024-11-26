@@ -9,11 +9,11 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        gold: "#FFD700", 
       },
     },
   },
   plugins: [],
 };
+
 export default config;
