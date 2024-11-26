@@ -48,6 +48,3 @@ export async function getAllBooks(client: MongoClient, collection: string) {
 
   return booksWithImages;
 }
-
-
-
