@@ -3,8 +3,8 @@
 import React, { ReactNode, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import useUserStore from '@/services/zustand/userZustand/userStor';
-import LoadingSpinner from '@/app/compnents/loading/loadingSpiner';
-import Login from '@/app/compnents/Login/Login';
+import LoadingSpinner from '@/compnents/loading/loadingSpiner';
+import Login from '@/compnents/Login/Login';
 // import Login from '@/app/login/page';
 
 interface RequireAuthProps {
