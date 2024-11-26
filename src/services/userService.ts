@@ -3,6 +3,7 @@ import { User } from "@/types";
 
 export const logInUser = async (user: Omit<User, '_id'>) => {
     try {
+        console.log(user)
         const response = await http.post("/user", user);  
         return response.data;  
     } catch (error) {
