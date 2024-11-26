@@ -28,7 +28,7 @@ export type Book = {
     users?: string;
     learningGroups?: LearningGroup;
 }
-type UserBook = {
+export type UserBook = {
     book_id: string;
     chapter_id: string;
     section_id: string;
