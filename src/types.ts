@@ -44,11 +44,5 @@ export type User = {
     name: string;
     email: string;
     books: UserBook[];
+    userImagePath: string;
 }
-
-
-
-
-
-
-
