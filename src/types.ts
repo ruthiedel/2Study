@@ -18,15 +18,22 @@ type LearningGroupUser = {
     userId: string;
     userName: string;
 }
+
+type category = {
+    type: string;
+    subject: string;
+}
 export type Book = {
     _id?: string;
-    book_name: string;
+    name: string;
     author: string;
-    categories: string[];
+    category: category;
     chapters: Chapter[];
-    coverImage: Blob;
+    coverImage: string;
     users?: string;
     learningGroups?: LearningGroup;
+    chapters_num: number;
+    paragraphs_num: number;
 }
 export type UserBook = {
     book_id: string;
