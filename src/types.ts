@@ -30,6 +30,7 @@ export type Book = {
 }
 export type UserBook = {
     book_id: string;
+    book_name: string;
     chapter_id: string;
     section_id: string;
     rate: number;
@@ -45,4 +46,9 @@ export type User = {
     email: string;
     books: UserBook[];
     userImagePath: string;
+}
+export type Mail = {
+    name: string;
+    email: string;
+    message: string
 }

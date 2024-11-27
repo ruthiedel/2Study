@@ -1,9 +1,9 @@
 import http from "./http";
-import { User } from "@/types";
+import { Mail } from "@/types";
 
-export const logInUser = async (user: Omit<User, '_id'>) => {
+export const sendMail = async (mail:Mail) => {
     try {
-        const response = await http.post("/user", user);  
+        const response = await http.post("/mail", mail);  
         return response.data;  
     } catch (error) {
         console.error("Error during login:", error);  
