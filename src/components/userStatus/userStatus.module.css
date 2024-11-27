@@ -1,0 +1,36 @@
+
+
+.container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.mycard {
+    background-color: #F9F2D7;
+    border-radius: 5px;
+    margin: 10px;
+}
+
+.userbox {
+    color: #000000;
+    padding: 10px 20px;
+    background-color: #F6F6F6;
+    flex-grow: 1;
+}
+
+.readMoreButton {
+    background-color: #000000;
+    color: white;
+    font-size: 1.2rem;
+    border-radius: 20px;
+    padding: 5px 15px;
+    transition: background-color 0.3s ease;
+    font-family: '2StudyFont', sans-serif;
+}
+  
+.readMoreButton:hover {
+    background-color: #444;
+    color: #fff;
+}
+  

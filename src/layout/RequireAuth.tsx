@@ -7,6 +7,8 @@ import Login from '@/components/login/login';
 import Header from '@/components/header/Header';
 import { Box } from '@mui/material'; // Import של Modal ו-Box
 import styles from './modal.module.css';
+import ContactForm from '@/components/footer/footer'; 
+
 
 interface RequireAuthProps {
   children: ReactNode;
@@ -16,9 +18,17 @@ interface RequireAuthProps {
 const RequireAuth = ({ children }: RequireAuthProps) => {
   const user = useUserStore((state) => state.user);
   const [isChecking, setIsChecking] = useState(true);
+  const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
-    setIsChecking(false);
+    if (user === undefined) {
+      setIsChecking(true);
+    } else {
+      setIsChecking(false);
+      if (!user) {
+        setOpenModal(true);
+      }
+    }
   }, [user]);
 
   if (isChecking) {
@@ -29,8 +39,7 @@ const RequireAuth = ({ children }: RequireAuthProps) => {
     <>
       <Header />
       {children}
-
-      {/* modal להציג את ה-login כמודאל */}
+      <ContactForm/>
       {!user && (
         <div className={styles.modal}>
           <Box

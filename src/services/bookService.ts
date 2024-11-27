@@ -48,3 +48,20 @@ export const getNextChapter = (book: Book, currentChapterId: string): Chapter | 
       throw error;
     }
   };
+
+
+export const getSections = async (
+  bookId: string,
+  chapterNumber: number,
+  sectionNumber: number
+) => {
+  try {
+    const response = await http.get(`/book/sections`, {
+      params: { bookId, chapterNumber, sectionNumber },
+    });
+    return response.data; 
+  } catch (error) {
+    console.error(`Error fetching sections for book ${bookId}, chapter ${chapterNumber}, section ${sectionNumber}:`, error);
+    throw error; 
+  }
+};
