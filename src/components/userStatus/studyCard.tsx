@@ -3,9 +3,9 @@
 import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import { StyledLink } from '@/app/components/styleComponents/StyledLink';   
+import { StyledLink } from '@/components/styleComponents/StyledLink';   
 import Typography from '@mui/material/Typography';
-
+import styles from './userStatus.module.css'
 
 export type bookRowProp = {
   bookName: string;
@@ -44,10 +44,10 @@ const booksData: bookRowProp[] = [
 
 export default function StudyCard() {
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={{ maxWidth: 345 }}  className={styles.mycard}>
       <CardContent style={{ textAlign: 'center' }}>
         <Typography gutterBottom variant="h5" component="div">
-          הלמידה שלי
+          ספרים בלמידה
         </Typography>
         {booksData.map(book =>
           {

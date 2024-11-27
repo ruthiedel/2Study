@@ -1,19 +1,13 @@
 import * as React from "react";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Typography from "@mui/material/Typography";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
 import BarChartIcon from '@mui/icons-material/BarChart';
 import ForwardToInboxIcon from '@mui/icons-material/ForwardToInbox';
 import PeopleIcon from '@mui/icons-material/People';
-import { Button, Link, ListItemIcon } from "@mui/material";
+import { Card, CardContent, Button, Link, ListItemIcon, Typography, List, ListItem, ListItemText } from "@mui/material";
+import styles from './userStatus.module.css'
 
 export default function ProgressCard() {
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={{ maxWidth: 345 }} className={styles.mycard}>
       {/* <CardMedia
         component="img"
         height="140"
@@ -40,8 +34,6 @@ export default function ProgressCard() {
                 <ListItemText primary="אתה מול אחרים" />
             </ListItem>
           </List>
-        <Link href="#" underline="none">GO</Link>
-        <Button href="#">GO2</Button>
       </CardContent>
     </Card>
   );
