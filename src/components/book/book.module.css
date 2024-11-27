@@ -1,6 +1,6 @@
 .card {
     background-color: #c2c2c2; 
-    border-radius: 8px;
+    border-radius: 10px;
     width: 300px;
     font-family: '2StudyFont', sans-serif;
     margin: 20px auto;
@@ -8,8 +8,8 @@
   
   .cardHeader {
     background-color: white;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
     overflow: hidden;
   }
   

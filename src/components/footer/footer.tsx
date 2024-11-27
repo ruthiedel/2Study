@@ -50,7 +50,7 @@ const ContactForm: React.FC = () => {
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-            <h2 className={styles.heading}>ליצירת קשר:</h2>
+            <h2 className={styles.heading}> נשמור על קשר 😄</h2>
             <div className={styles.fieldsContainer}>
                 <Image
                     src={logo}
@@ -84,10 +84,15 @@ const ContactForm: React.FC = () => {
                     />
                     {errors.message && <p className={styles.error}>{errors.message.message}</p>}
                 </div>
+                <button type="submit" className={styles.button} disabled={isSubmitting}>
+                    {isSubmitting ? 'שליחה...' : 'שלח'}
+                </button>
             </div>
-            <button type="submit" className={styles.button} disabled={isSubmitting}>
-                {isSubmitting ? 'שליחה...' : 'שלח'}
-            </button>
+            <div className={styles.footer}>
+                <p className={styles.footerSection}>© כל הזכויות שמורות</p>
+                <p className={styles.footerSection}>📧 054racheli@gmail.com</p>
+                <p className={styles.footerSection}>🌟 נשמח לשמוע את דעתכם</p>
+            </div>
         </form>
     );
 };
