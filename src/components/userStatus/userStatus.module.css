@@ -1,9 +1,6 @@
 
-
 .container {
     display: flex;
-    flex-direction: row;
-    align-items: center;
 }
 
 .mycard {
@@ -16,7 +13,33 @@
     color: #000000;
     padding: 10px 20px;
     background-color: #F6F6F6;
-    flex-grow: 1;
+    margin: 50px;
+    padding-right: 100px;
+    display: flex;
+    height: 200px;
+}
+
+.infoContainer {
+    margin: 0 10% 0 4% ;
+    font-weight: 400;
+    font-size: 8.24628px;
+    text-align: right;
+}
+
+.info1{
+    margin-top: 100%;
+    margin-bottom: 40%;
+    padding: 3%;
+}
+
+.infoButtonStyled {
+    border-radius: 30px !important;
+    box-shadow: 4px 10px 10px rgba(87, 87, 87, 0.473);
+    margin-top: 10%;
+    margin-bottom: 10%;
+    text-align: center;
+    padding: 3%;
+    width: 220px;
 }
 
 .readMoreButton {
@@ -33,4 +56,34 @@
     background-color: #444;
     color: #fff;
 }
-  
+
+.numOfBooks {
+    font-size: 8px;
+    font-weight: bold;
+    background-color: #EBCE55;
+    color: #000000;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 50%;
+    height: 40%;
+    text-align: center;
+    opacity: 63%;
+    padding: 2%;
+}
+
+.numOfBooksContainer{
+    display: flex;
+    align-items: center;
+}
+
+.imgUser {
+    margin: 3%;
+    position: absolute;
+    top: 17%;
+    right: 5%;
+    max-width: 100px;
+    max-width: 100px;
+    border-radius: 50%;
+    border: #000000 2px solid;
+    object-fit: cover;
+}

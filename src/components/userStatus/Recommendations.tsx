@@ -43,7 +43,7 @@ const Recommendations = () => {
     // const {books} : User = useQuery
     
   return (
-    <div className='container'>
+    <div className={styles.container}>
     {localBooks.map((book) => {
       return (
         <Card key={book._id} sx={{ maxWidth: 345 }} className={styles.mycard}>
