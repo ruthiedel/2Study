@@ -1,36 +1,15 @@
 "use client";
 import React from "react";
-import { Box, Button, Typography, Card } from "@mui/material";
-import { styled } from "@mui/system";
-import { auth } from "@/lib/firebase"; // שים לב ששינית את הנתיב המתאים
+import { Box, Button, Typography } from "@mui/material";
+import { auth } from "@/lib/firebase"; 
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-// import { auth, provider, signInWithPopup } from "@/lib/firebase";
 import useUserStore from "@/services/zustand/userZustand/userStor";
 import { logInUser } from "@/services/userService";
+import Image from "next/image";
+import login1 from "@/public/images/login1.png";
+import login2 from "@/public/images/login2.png";
+import styles from "./login.module.css";
 
-
-const IconContainer = styled(Box)({
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  justifyContent: "center",
-  marginBottom: "20px",
-});
-
-const IconCircle = styled(Box)({
-  width: "50px",
-  height: "50px",
-  borderRadius: "50%",
-  backgroundColor: "#d4a200",
-});
-
-const IconBase = styled(Box)({
-  width: "80px",
-  height: "20px",
-  marginTop: "-10px",
-  borderRadius: "10px",
-  backgroundColor: "#a17f00",
-});
 const Login = () => {
   const setUser = useUserStore((state) => state.setUser);
 
@@ -57,49 +36,21 @@ const Login = () => {
   };
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
-       
-      }}
-    >
-      <Card
-        sx={{
-          padding: "20px",
-          borderRadius: "16px",
-          textAlign: "center",
-          width: "300px",
-          backgroundColor: "#222",
-          boxShadow: "0 4px 10px rgba(0, 0, 0, 0.3)",
-        }}
-      >
-        <IconContainer>
-          <IconCircle />
-          <IconBase />
-        </IconContainer>
-        <Typography variant="h6" sx={{ color: "#fff", marginBottom: "20px" }}>
-          בוא נחבר אותך:
-        </Typography>
-        <Button
-          onClick={handleGoogleLogin}
-          variant="contained"
-          sx={{
-            backgroundColor: "#d4a200",
-            color: "#fff",
-            fontSize: "16px",
-            padding: "10px 20px",
-            borderRadius: "8px",
-            "&:hover": {
-              backgroundColor: "#b38600",
-            },
-          }}
-        >
-          המשך עם Google
-        </Button>
-      </Card>
+    <Box className={styles.login_card}>
+      <Image
+        src={login1}
+        alt="Top Icon"
+        className={styles.login_card_icon_top}
+      />
+      <Typography className={styles.login_card_text}>בוא נחבר אותך:</Typography>
+      <Button onClick={handleGoogleLogin} variant="contained" className={styles.login_card_button}>
+        המשך עם Google
+      </Button>
+      <Image
+        src={login2}
+        alt="Bottom Icon"
+        className={styles.login_card_icon_bottom}
+      />
     </Box>
   );
 };

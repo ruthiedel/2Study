@@ -1,0 +1,13 @@
+
+.modal {
+  position: fixed; /* מניח את המודל מעל כל העמוד */
+  top: 0;
+  left: 0;
+  width: 100vw; /* גודל המודל יתפוס את כל רוחב המסך */
+  height: 100vh; /* גובה המודל יתפוס את כל גובה המסך */
+  background-color: rgba(0, 0, 0, 0.7); /* רקע כהה ושקוף */
+  display: flex;
+  justify-content: center; /* מיקום מרכזי של התוכן */
+  align-items: center; /* מיקום מרכזי של התוכן */
+  z-index: 9999; /* מוודא שהמודל יהיה מעל כל התוכן */
+}
