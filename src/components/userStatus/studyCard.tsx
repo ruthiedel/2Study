@@ -6,6 +6,9 @@ import CardContent from '@mui/material/CardContent';
 import { StyledLink } from '@/components/styleComponents/StyledLink';   
 import Typography from '@mui/material/Typography';
 import styles from './userStatus.module.css'
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { User } from '@/types';
+import { getAllBooks } from '@/services/bookService';
 
 export type bookRowProp = {
   bookName: string;
@@ -43,6 +46,14 @@ const booksData: bookRowProp[] = [
 ];
 
 export default function StudyCard() {
+  const queryClient = useQueryClient();
+
+  const { data: books, isLoading, error } = useQuery<User[], Error>({
+    queryKey: ["books"],
+    queryFn: getAllBooks,
+    staleTime: 300000,
+  });
+
   return (
     <Card sx={{ maxWidth: 345 }}  className={styles.mycard}>
       <CardContent style={{ textAlign: 'center' }}>
