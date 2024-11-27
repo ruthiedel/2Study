@@ -6,6 +6,8 @@ next.config.ts
 /next.config.ts
 next.config.js
 /next.config.js
+next.config.mjs
+/next.config.mjs
 /.pnp
 .pnp.js
 .yarn/install-state.gz
