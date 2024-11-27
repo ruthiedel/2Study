@@ -3,9 +3,10 @@
 import React, { ReactNode, useEffect, useState } from 'react';
 import useUserStore from '@/services/zustand/userZustand/userStor';
 import LoadingSpinner from '@/components/loading/loadingSpiner';
-import Login from '@/components/Login/Login';
+import Login from '@/components/login/login';
 import Header from '@/components/header/Header';
-import { Modal, Box } from '@mui/material'; // Import של Modal ו-Box
+import { Box } from '@mui/material'; // Import של Modal ו-Box
+import styles from './modal.module.css';
 
 interface RequireAuthProps {
   children: ReactNode;
@@ -31,12 +32,7 @@ const RequireAuth = ({ children }: RequireAuthProps) => {
 
       {/* modal להציג את ה-login כמודאל */}
       {!user && (
-        <Modal
-          open={true} // תצג את המודאל אם המשתמש לא מחובר
-          onClose={() => {}}
-          aria-labelledby="modal-login"
-          aria-describedby="login-modal-description"
-        >
+        <div className={styles.modal}>
           <Box
             sx={{
               position: 'absolute',
@@ -45,12 +41,12 @@ const RequireAuth = ({ children }: RequireAuthProps) => {
               transform: 'translate(-50%, -50%)',
               bgcolor: 'transparent', // הופך את הרקע לטרנפרנטי
               p: 0, // מסיר padding
-              boxShadow: 0, // מסיר הצללה מה-box
+              boxShadow: 0, // מסיר הצללה מה-box,
             }}
           >
             <Login />
           </Box>
-        </Modal>
+        </div>
       )}
     </>
   );
