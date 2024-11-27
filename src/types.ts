@@ -3,7 +3,7 @@ type Section = {
     text: string;
     questions: string[];
 }
-type Chapter = {
+export type Chapter = {
     _id?: string;
     sections: Section[];
 }
@@ -25,22 +25,22 @@ export type Book = {
     categories: string[];
     chapters: Chapter[];
     coverImage: Blob;
-    users: string;
-    learningGroups: LearningGroup;
+    users?: string;
+    learningGroups?: LearningGroup;
 }
-type UserBook = {
+export type UserBook = {
     book_id: string;
     chapter_id: string;
     section_id: string;
     rate: number;
 }
- type LearningGroup = {
+type LearningGroup = {
     users: LearningGroupUser[];
     message: Message[];
 }
 export type User = {
     age?: number;
-    userId: string;
+    _id?: string;
     name: string;
     email: string;
     books: UserBook[];

@@ -1,8 +1,6 @@
-import type { Metadata } from "next";
-import localFont from "next/font/local";
+import Header from "@/components/header/Header";
 import "./globals.css";
-
-
+import RequireAuth from "@/layout/RequireAuth";
 
 export default function RootLayout({
   children,
@@ -12,7 +10,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
+      <RequireAuth>
         {children}
+      </RequireAuth>
       </body>
     </html>
   );
