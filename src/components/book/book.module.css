@@ -1,0 +1,69 @@
+.card {
+    background-color: #c2c2c2; 
+    border-radius: 8px;
+    width: 300px;
+    font-family: '2StudyFont', sans-serif;
+    margin: 20px auto;
+  }
+  
+  .cardHeader {
+    background-color: white;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    overflow: hidden;
+  }
+  
+  .cardImage {
+    width: 100%;
+    height: 150px;
+    object-fit:contain;
+  }
+  
+  .cardTitle {
+    font-weight: bold;
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  .cardAuthor {
+    text-align: center;
+    color: #555;
+  }
+  
+  .cardCategories {
+    text-align: center;
+    color: #777;
+  }
+  
+  .cardDivider {
+    height: 1px;
+    background-color: black;
+    margin: 10px 0;
+  }
+  
+  .cardFooter {
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  .cardButton {
+    background-color: black;
+    color: white;
+    border-radius: 20px;
+    padding: 10px 20px;
+    width: 80%;
+    cursor: pointer;
+    border: none;
+    font-size: 14px;
+    transition: background-color 0.3s;
+    font-family: '2StudyFont', sans-serif;
+  }
+  
+  .cardButton:hover {
+    background-color: #474646;
+  }
+  
+  
+  .cardTitle, .cardAuthor, .cardCategories, .cardButton, .cardFooter, .font {
+    font-family: '2StudyFont', sans-serif;
+  }

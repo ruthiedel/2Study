@@ -1,66 +1,57 @@
+'use client';
+
 import React from "react";
-import { useQuery } from "@tanstack/react-query";
 import { Book as BookType } from "@/types";
-import { Card, CardMedia, CardContent, Typography, CircularProgress, Box } from "@mui/material";
+import { Card, CardContent, Typography, Box } from "@mui/material";
+import styles from "./book.module.css"; // ייבוא הקובץ CSS
 
 type BookProps = {
   book: BookType;
 };
 
-// פונקציה להמרת Blob ל-Base64
-const convertBlobToBase64 = (blob: Blob): Promise<string> => {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      if (reader.result) {
-        resolve(reader.result as string);
-      } else {
-        reject("Failed to read blob.");
-      }
-    };
-    reader.readAsDataURL(blob);
-  });
-};
-
 const Book: React.FC<BookProps> = ({ book }) => {
-  const { data: coverImageUrl, isLoading, error } = useQuery({
-    queryKey: ["coverImage", book._id],
-    queryFn: async () => convertBlobToBase64(book.coverImage as Blob), // המרת Blob ל-Base64
-    enabled: !!book.coverImage,
-  });
-
-  if (isLoading) {
-    return (
-      <Box display="flex" justifyContent="center" alignItems="center" height="100%">
-        <CircularProgress />
-      </Box>
-    );
-  }
-
-  if (error) {
-    return <Typography color="error">Error loading image</Typography>;
-  }
+  // אם coverImage הוא URL
+  const coverImageSrc = typeof book.coverImage === 'string' 
+    ? book.coverImage 
+    // אם coverImage הוא Blob או File
+    : URL.createObjectURL(book.coverImage);
 
   return (
-    <Card sx={{ maxWidth: 345, margin: "16px auto", boxShadow: 3 }}>
-      {coverImageUrl && (
-        <CardMedia
-          component="img"
-          height="140"
-          image={coverImageUrl}
-          alt={book.book_name}
+    <Card className={styles.card}>
+      <div className={styles.cardHeader}>
+        <img
+          src={coverImageSrc} 
+          alt={book.name}
+          className={styles.cardImage}
         />
-      )}
+      </div>
+
       <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
-          {book.book_name}
+        <Typography className={styles.cardTitle} variant="h6">
+          {book.name}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Author: {book.author}
+
+        <Typography className={styles.cardAuthor} variant="body2">
+          {book.author}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Categories: {book.categories.join(", ")}
+
+        <Typography className={styles.cardCategories} variant="body2">
+        קטגוריות: {book.category.subject}, {book.category.type}
         </Typography>
+
+        <div className={styles.cardDivider}></div>
+
+        <Typography variant="body2" color="text.secondary" align="center" className={styles.font}>
+          פרקים: {book.chapters_num}
+        </Typography>
+
+        <Typography variant="body2" color="text.secondary" align="center" className={styles.font}>
+          סעיפים: {book.paragraphs_num}
+        </Typography>
+
+        <Box className={styles.cardFooter}>
+          <button className={styles.cardButton}>לקריאה</button>
+        </Box>
       </CardContent>
     </Card>
   );
