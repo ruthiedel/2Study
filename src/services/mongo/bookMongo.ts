@@ -66,3 +66,20 @@ export async function getBookById(client: MongoClient, collection: string, bookI
   };
 }
 
+
+
+
+
+export async function getPartOgAllBooks(client: MongoClient, collection: string) {
+  const db = client.db('Books');
+
+  const books = await db
+    .collection(collection)
+    .find({}, { projection: { chapters: 0 } }) 
+    .toArray();
+
+  return books;
+}
+
+
+
