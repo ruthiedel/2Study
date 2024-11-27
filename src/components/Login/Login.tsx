@@ -47,6 +47,7 @@ const Login = () => {
         email: user.email || '',
         name: user.displayName || '',
         books: [],
+        userImagePath: user.photoURL as string,
       }
       setUser(localUser);
       logInUser(localUser);

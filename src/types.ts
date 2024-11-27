@@ -1,11 +1,11 @@
-type Section = {
+type Paragraph = {
     _id?: string;
     text: string;
     questions: string[];
 }
 export type Chapter = {
     _id?: string;
-    sections: Section[];
+    paragraphs: Paragraph[];
 }
 type Message = {
     _id?: string;
@@ -45,15 +45,10 @@ export type User = {
     name: string;
     email: string;
     books: UserBook[];
+    userImagePath: string;
 }
-
 export type Mail = {
     name: string;
     email: string;
     message: string
 }
-
-
-
-
-

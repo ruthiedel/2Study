@@ -1,4 +1,4 @@
-import { MongoClient } from 'mongodb';
+import { MongoClient, ObjectId } from 'mongodb';
 import { promises as fs } from 'fs';
 import path from 'path';
 
@@ -50,4 +50,19 @@ export async function getAllBooks(client: MongoClient, collection: string) {
 }
 
 
+export async function getBookById(client: MongoClient, collection: string, bookId: string) {
+  const db = client.db('Books');
+
+  const objectId = new ObjectId(bookId);
+
+  const book = await db.collection(collection).findOne({ _id: objectId });
+
+  if (!book) {
+    throw new Error('Book not found');
+  }
+
+  return {
+    ...book,
+  };
+}
 
