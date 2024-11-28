@@ -1,0 +1,100 @@
+/* Main card container */
+.card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: #000; /* Black background */
+    color: white;
+    border-radius: 10px;
+    padding: 20px;
+    width: 400px;
+    font-family: Arial, sans-serif;
+    position: relative;
+  }
+  
+  /* Section styling (Question and Answer sections) */
+  .section {
+    margin-bottom: 15px;
+    width: 100%;
+  }
+  
+  /* Label styling */
+  .label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+  }
+  
+  /* Input container for alignment */
+  .inputContainer {
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+  
+  /* Inputs styling */
+  .input {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: none;
+    background-color: #fff;
+    color: #000;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Toggle button styling for answer reveal */
+  .toggleButton {
+    position: absolute;
+    right: -40px;
+    background-color: transparent;
+    border: none;
+    font-size: 1.5rem;
+    color: white;
+    cursor: pointer;
+  }
+  
+  /* Expandable answer input styles */
+  .answerCollapsed {
+    width: 60%; /* Collapsed state */
+    transition: width 0.3s ease;
+  }
+  
+  .answerExpanded {
+    width: 100%; /* Expanded state */
+    transition: width 0.3s ease;
+  }
+  
+  /* Change Question Button styling */
+  .changeQuestionButton {
+    background-color: #f0a500;
+    color: black;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    align-self: center;
+    margin-top: 10px;
+  }
+  
+  .changeQuestionButton:hover {
+    background-color: #ffa726;
+  }
+  
+  /* Image container for the sidebar image */
+  .imageContainer {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 80px;
+    height: 80px;
+  }
+  
+  .image {
+    width: 100%;
+    height: auto;
+  }
+  
