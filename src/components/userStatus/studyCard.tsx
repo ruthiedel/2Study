@@ -16,13 +16,13 @@ export type bookRowProp = {
 
 const booksData: bookRowProp[] = [
   {
-    bookName: "הארי פוטר ואבן החכמים",
-    chapterName: "הארי פוטר מגלה את האמת",
-    sectionName: "הַבִּיטָה בְּעֵינַיִם הַיְּרוּקוֹת שֶׁלִּי",
+    bookName: "הארי פוטר  ",
+    chapterName: "  מגלה את האמת",
+    sectionName: "הַבִּיטָה בְּעֵינַיִם  ",
   },
   {
     bookName: "הHobbit",
-    chapterName: "An Unexpected Party",
+    chapterName: "An  Party",
     sectionName: "Bilbo Baggins",
   },
   {
@@ -31,20 +31,20 @@ const booksData: bookRowProp[] = [
     sectionName: "Chapter 1",
   },
   {
-    bookName: "Pride and Prejudice",
+    bookName: "Pride",
     chapterName: "Volume I",
     sectionName: "Chapter 1",
   },
   {
-    bookName: "The Lord of the Rings",
-    chapterName: "The Fellowship of the Ring",
+    bookName: "The Lord",
+    chapterName: "The Fellowship",
     sectionName: "Prologue",
   },
 ];
 
 export default function StudyCard() {
   return (
-    <Card sx={{ maxWidth: 345 }}  className={styles.mycard}>
+    <Card className={styles.mycard}>
       <CardContent style={{ textAlign: 'center' }}>
         <Typography gutterBottom variant="h5" component="div">
           ספרים בלמידה
@@ -53,7 +53,9 @@ export default function StudyCard() {
           {
             return (
               <StyledLink key={book.bookName}>
-                {book.bookName} - {book.chapterName} - {book.sectionName}
+                <b>{book.bookName}</b>
+                <div className='bg-black rounded-full absolute bottom-[-8px] left-[50%] w-[15px] h-[15px] z-10'></div>
+                <p>{book.chapterName} {book.sectionName}</p> 
               </StyledLink>
             );
           }
