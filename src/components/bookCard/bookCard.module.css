@@ -1,0 +1,74 @@
+.bookCard {
+    max-width: 600px;
+    padding: 24px;
+    border-radius: 30px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: #F3F8F2;
+  }
+  
+  .closeButton {
+    position: absolute;
+    top: 8px;
+    background-color: black;
+    color:white;
+    left: 8px;
+  }
+  
+  .bookTitle {
+    font-weight: bold;
+  }
+  
+  .bookImage {
+    object-fit: cover;
+    width: 347px;
+    border-radius: 51px;
+
+  }
+  
+  .starsContainer {
+    margin-top: 8px;
+  }
+  
+  .truncatedText {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .fullText {
+    white-space: normal;
+  }
+  
+  .readMoreButton {
+    margin-top: 8px;
+    color: #3e3d3d;
+  }
+  
+  .learnButton {
+    margin-top: 16px;
+    background-color: black;
+    color: white;
+    float: left;
+  }
+  .learnButton:hover{
+    background-color: #3e3d3d;
+    cursor: pointer;
+  }
+  .container{
+    margin-top: 20px;
+  }
+  .ttext{
+    margin-top: 8px;
+  }
+
+  .bookTitle,
+  .text,
+  .ttext,
+  .fullText,
+  .truncatedText,
+  .readMoreButton,
+  .learnButton{
+  font-family: '2StudyFont', sans-serif;
+}
