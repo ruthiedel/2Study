@@ -5,7 +5,7 @@ import { Chapter } from "@/types";
 export const getAllBooks = async (): Promise<Book[]> => {
     try {
         const response = await http.get("/book");
-        return  response.data.documents;
+        return  response.data;
     } catch (error) {
         console.error("Error fetching book:", error);
         throw error;
