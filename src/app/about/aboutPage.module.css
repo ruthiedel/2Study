@@ -16,7 +16,7 @@
   .heroSection {
     position: relative;
     height: 400px;
-    background-image: url('../../pictures/aboutmain.jpg');
+    background-image: url('../../../public/pictures/aboutmain.jpg');
     background-size: cover;
     background-position: center;
     /* margin-bottom: 60px; */
@@ -117,21 +117,21 @@
   }
 
   .feature1{
-    background-image: url('../../pictures/solution.jpg')
+    background-image: url('../../../public/pictures/solution.jpg')
 
   }
   .feature2{
-    background-image: url('../../pictures/place.jpg')
+    background-image: url('../../../public/pictures/place.jpg')
 
   }
 
 
   .feature3{
-    background-image: url('../../pictures/knowledge.jpg')
+    background-image: url('../../../public/pictures/knowledge.jpg')
 
   }
   .feature4{
-    background-image: url('../../pictures/process.jpg')
+    background-image: url('../../../public/pictures/process.jpg')
 
   }
   
@@ -189,19 +189,19 @@
 
   .bottomFeatureImage1
   {
-    background-image: url('../../pictures/graph.jpg')
+    background-image: url('../../../public/pictures/graph.jpg')
 
   }
   
   .bottomFeatureImage2
   {
-    background-image: url('../../pictures/easy.jpg')
+    background-image: url('../../../public/pictures/easy.jpg')
 
   }
   
   .bottomFeatureImage3
   {
-    background-image: url('../../pictures/personal.jpg')
+    background-image: url('../../../public/pictures/personal.jpg')
 
   }
   .bottomFeatureTitle {
