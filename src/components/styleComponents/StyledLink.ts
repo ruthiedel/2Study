@@ -1,14 +1,16 @@
 import styled from 'styled-components';
 
 export const StyledLink = styled.a`
-  display: block;
+  position: relative;
+  display: flex;
   text-decoration: none; 
+  justify-content: space-between;
   color: inherit; 
-  border: 1px solid #ddd; 
+  font-size: 8px
+  border: none; 
   padding: 10px 15px; 
   margin: 15px 0;
-  border-radius: 25px; 
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+  box-shadow: 0 2px 1px rgba(0, 0, 0, 0.1); 
   cursor: pointer; 
   transition: transform 0.2s, box-shadow 0.2s; 
   

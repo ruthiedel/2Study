@@ -23,11 +23,11 @@ const Information = () => {
         />
       </Box>
       <CardContent className={styles.userbox}>
-        <Box>
-          <Box className={styles.infoContainer}>
+        <Box className={styles.infoContainer}>
+          <Box>
             <Typography className={styles.info1}>שם: </Typography>
             <Typography className={styles.info1}>מייל: </Typography>
-            {user?.age && user?.age > 0 && <Typography>גיל </Typography>}
+            {user?.age && user?.age > 0 && <Typography className={styles.info1}>גיל </Typography>}
           </Box>
           <Box className={styles.infoContainer2}>
             <Typography className={styles.infoButtonStyled}>
@@ -46,11 +46,11 @@ const Information = () => {
 
         <Box className={styles.numOfBooksContainer}>
           {/*  <p>{user.books.sum(if(mark !== -1))}</p> */}
-          <StarIcon className={styles.starIcon} />
           <Typography className={styles.numOfBooks}>
-            ★ {user?.books.length} ספרים בלמידה ★
+            <StarIcon className={styles.starIcon} />
+              {user?.books.length} ספרים בלמידה
+            <StarIcon className={styles.starIcon} />
           </Typography>
-          <StarIcon className={styles.starIcon} />
         </Box>
       </CardContent>
     </Card>

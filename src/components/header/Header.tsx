@@ -67,7 +67,7 @@ const Header: React.FC = () => {
                     onClose={handleMenuClose}
                     className={styles.menu}
                 >
-                    <MenuItem onClick={handleMenuClose}>איזור אישי</MenuItem>
+                    <Link href='/userdashboard' passHref><MenuItem>איזור אישי</MenuItem></Link>
                     <MenuItem onClick={handleLogout}>התנתקות</MenuItem>
                 </Menu>
             </Toolbar>
