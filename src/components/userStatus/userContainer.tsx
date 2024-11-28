@@ -5,7 +5,7 @@ import Recommendations from "@/components/userStatus/Recommendations";
 
 export default function UserContainer() {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-2 h-screen">
+    <div className="">
       <div className="">
         <div className="">
           <Information />

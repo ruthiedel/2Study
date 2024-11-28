@@ -48,7 +48,7 @@ const Information = () => {
           {/*  <p>{user.books.sum(if(mark !== -1))}</p> */}
           <StarIcon className={styles.starIcon} />
           <Typography className={styles.numOfBooks}>
-            ★ {user?.books.length} ספרים בלמידה ★
+             {user?.books.length} ספרים בלמידה
           </Typography>
           <StarIcon className={styles.starIcon} />
         </Box>

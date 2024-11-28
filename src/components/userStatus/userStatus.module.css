@@ -1,12 +1,21 @@
 
-.container {
-    display: flex;
-}
-
 .mycard {
     background-color: #F9F2D7;
-    border-radius: 5px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 24px;    
     margin: 10px;
+}
+
+.imgUser {
+    margin: 3%;
+    position: absolute;
+    top: 17%;
+    right: 5%;
+    max-width: 100px;
+    max-height: 100px;
+    border-radius: 50%;
+    border: #000000 2px solid;
+    object-fit: cover;
 }
 
 .userbox {
@@ -27,8 +36,8 @@
 }
 
 .info1{
-    margin-top: 100%;
-    margin-bottom: 40%;
+    margin-top: 2%;
+    margin-bottom: 4%;
     padding: 3%;
 }
 
@@ -57,6 +66,12 @@
     color: #fff;
 }
 
+
+.numOfBooksContainer{
+    display: flex;
+    align-items: center;
+}
+
 .numOfBooks {
     font-size: 8px;
     font-weight: bold;
@@ -71,19 +86,8 @@
     padding: 2%;
 }
 
-.numOfBooksContainer{
-    display: flex;
-    align-items: center;
-}
-
-.imgUser {
-    margin: 3%;
-    position: absolute;
-    top: 17%;
-    right: 5%;
-    max-width: 100px;
-    max-width: 100px;
-    border-radius: 50%;
-    border: #000000 2px solid;
-    object-fit: cover;
+.starIcon {
+    color:#ffffff;
+    width: 10px;
+    height: 10px;
 }
