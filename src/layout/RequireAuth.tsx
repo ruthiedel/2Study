@@ -3,7 +3,7 @@
 import React, { ReactNode, useEffect, useState } from 'react';
 import useUserStore from '@/services/zustand/userZustand/userStor';
 import LoadingSpinner from '@/components/loading/loadingSpiner';
-import Login from '@/components/Login/Login';
+import Login from '../components/Login/Login';
 import Header from '@/components/header/Header';
 import { Box } from '@mui/material';
 import styles from './modal.module.css';

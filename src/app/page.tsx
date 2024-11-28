@@ -8,7 +8,7 @@ const SomeComponent = () => {
     
     <div>
       <Homepage/>
-      <QuestionCard/>
+      {/* <QuestionCard /> */}
     </div>
   );
 };
