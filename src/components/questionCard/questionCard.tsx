@@ -22,7 +22,7 @@ const QuestionCard: React.FC = () => {
     >
       <Box
         component="img"
-        src="/pictures/question.png"
+        src="/pictures/easy.jpg"
         alt="Question Icon"
         sx={{
           position: "absolute",
