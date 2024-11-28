@@ -3,7 +3,7 @@ import { Card, Grid, IconButton, Button, Typography, Box, Rating } from '@mui/ma
 import CloseIcon from '@mui/icons-material/Close';
 import Image from 'next/image';
 import styles from './bookCard.module.css';
-import image from "@/pictures/garnisht.png";
+//import image from "@/pictures/easy.jpg";
 
 import { Book } from '@/types';
 
@@ -41,12 +41,12 @@ const BookCard: React.FC<BookCardProps> = ({ book }) => {
                         <Typography variant="body2" color="textSecondary" align="right" className={styles.text}>
                             {book.category.subject}
                         </Typography>
-                        <Image
+                        {/* <Image
                             src={image}
                             alt='garnisht'
                             width={280}
                             height={150}
-                        />
+                        /> */}
                         <Typography variant="body2" className={styles.text}>
                             <strong> פרקים: </strong>{book.chapters_num} | <strong> סעיפים: </strong>{book.paragraphs_num}
                         </Typography>

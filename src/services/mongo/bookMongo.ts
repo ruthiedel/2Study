@@ -47,7 +47,7 @@ export async function fetchAllBooks(client: MongoClient, collection: string) {
     .find({}, { projection: { chapters: 0 } }) // הסרת פרטי הפרקים
     .toArray();
 
-  const picturesPath = path.join(process.cwd(), 'src', 'pictures');
+  const picturesPath = path.join(process.cwd(), 'public', 'pictures');
 
   const booksWithImages = await Promise.all(
     books.map(async (book) => {
