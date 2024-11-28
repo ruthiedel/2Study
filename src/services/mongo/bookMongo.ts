@@ -5,6 +5,27 @@ import path from 'path';
 let client: MongoClient;
 let clientPromise: Promise<MongoClient>;
 
+
+// פונקציה לעדכון דירוג של ספר
+export const updateBookRating = async (bookId: string, averageRating: number) => {
+  const client = await connectDatabase(); // מתחברים לבסיס הנתונים
+  const db = client.db("Books");
+  const collection = db.collection("books");
+
+  // עדכון הדירוג של הספר
+  const result = await collection.updateOne(
+    { _id: new ObjectId(bookId) }, // מזהה הספר
+    { $set: { rating: averageRating } } // עדכון דירוג הספר
+  );
+
+  if (result.modifiedCount === 0) {
+    throw new Error("Failed to update book rating");
+  }
+
+  return result;
+};
+
+// חיבור לבסיס הנתונים
 export async function connectDatabase() {
   if (!client) {
     const dbConnectionString = process.env.PUBLIC_DB_CONNECTION;
@@ -17,12 +38,13 @@ export async function connectDatabase() {
   return clientPromise;
 }
 
-export async function getAllBooks(client: MongoClient, collection: string) {
+// שליפת כל הספרים
+export async function fetchAllBooks(client: MongoClient, collection: string) {
   const db = client.db('Books');
 
   const books = await db
     .collection(collection)
-    .find({}, { projection: { chapters: 0 } }) 
+    .find({}, { projection: { chapters: 0 } }) // הסרת פרטי הפרקים
     .toArray();
 
   const picturesPath = path.join(process.cwd(), 'src', 'pictures');
@@ -49,8 +71,8 @@ export async function getAllBooks(client: MongoClient, collection: string) {
   return booksWithImages;
 }
 
-
-export async function getBookById(client: MongoClient, collection: string, bookId: string) {
+// שליפת ספר לפי ID
+export async function fetchBookById(client: MongoClient, collection: string, bookId: string) {
   const db = client.db('Books');
 
   const objectId = new ObjectId(bookId);
@@ -66,20 +88,14 @@ export async function getBookById(client: MongoClient, collection: string, bookI
   };
 }
 
-
-
-
-
-export async function getPartOgAllBooks(client: MongoClient, collection: string) {
+// שליפת חלק מהספרים
+export async function fetchPartialBooks(client: MongoClient, collection: string) {
   const db = client.db('Books');
 
   const books = await db
     .collection(collection)
-    .find({}, { projection: { chapters: 0 } }) 
+    .find({}, { projection: { chapters: 0 } })
     .toArray();
 
   return books;
 }
-
-
-

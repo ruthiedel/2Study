@@ -1,6 +1,8 @@
 import http from "./http";
 import { Book } from "@/types";
 import { Chapter } from "@/types";
+import {  updateBookRating} from "@/services/mongo/bookMongo";
+
 
 export const getAllBooks = async (): Promise<Book[]> => {
     try {
@@ -65,3 +67,7 @@ export const getSections = async (
     throw error; 
   }
 };
+export const saveBookRating = async (bookId: string, averageRating: number) => {
+  // קריאה לפונקציה לעדכון הדירוג של הספר
+  await updateBookRating(bookId, averageRating);
+}

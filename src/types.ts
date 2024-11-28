@@ -34,6 +34,7 @@ export type Book = {
     learningGroups?: LearningGroup;
     chapters_num: number;
     paragraphs_num: number;
+    rating?: number;
 }
 export type UserBook = {
     book_id: string;
