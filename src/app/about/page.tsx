@@ -5,8 +5,7 @@ import styles from "./aboutPage.module.css";
 const AboutPage = () => {
     return (
         <div className={styles.pageContainer}>
-            <div className={styles.space} />
-            {/* Top Section */}
+          
             <div className={styles.heroSection}>
                 <div className={styles.heroOverlay}>
                     <h1 className={styles.heroTitle}>אודות</h1>
@@ -26,7 +25,7 @@ const AboutPage = () => {
             <div className={styles.featuresContainer}>
                 {/* Feature 1 */}
                 <div className={styles.feature}>
-                    <div className={styles.featureImage} style={{ backgroundImage: "url('/feature1-image.jpg')" }}></div>
+                    <div className={`${styles.featureImage} ${styles.feature1}`} ></div>
                     <div className={styles.featureContent}>
                         <h3 className={styles.featureTitle}>פתרונות מהירים, הצלחה גדולה</h3>
                         <div className={styles.featureUnderline}></div>
@@ -40,8 +39,8 @@ const AboutPage = () => {
 
                 {/* Feature 2 */}
                 <div className={styles.featureReverse}>
-                    <div className={styles.featureImage} style={{ backgroundImage: "url('/feature2-image.jpg')" }}></div>
-                    <div className={styles.featureContent}>
+                <div className={`${styles.featureImage} ${styles.feature2}`} ></div>
+                <div className={styles.featureContent}>
                         <h3 className={styles.featureTitle}>המקום המושלם ללמוד</h3>
                         <div className={styles.featureUnderline}></div>
                         <p className={styles.featureText}>
@@ -56,8 +55,8 @@ const AboutPage = () => {
 
                 {/* Feature 3 */}
                 <div className={styles.feature}>
-                    <div className={styles.featureImage} style={{ backgroundImage: "url('/feature3-image.jpg')" }}></div>
-                    <div className={styles.featureContent}>
+                <div className={`${styles.featureImage} ${styles.feature3}`} ></div>
+                <div className={styles.featureContent}>
                         <h3 className={styles.featureTitle}>ידע מחבר בין אנשים</h3>
                         <div className={styles.featureUnderline}></div>
                         <p className={styles.featureText}>
@@ -70,8 +69,8 @@ const AboutPage = () => {
 
                 {/* Feature 4 */}
                 <div className={styles.featureReverse}>
-                    <div className={styles.featureImage} style={{ backgroundImage: "url('/feature4-image.jpg')" }}></div>
-                    <div className={styles.featureContent}>
+                <div className={`${styles.featureImage} ${styles.feature4}`} ></div>
+                <div className={styles.featureContent}>
                         <h3 className={styles.featureTitle}>התהליך שלך, ההתקדמות שלך</h3>
                         <div className={styles.featureUnderline}></div>
                         <p className={styles.featureText}>
@@ -89,19 +88,19 @@ const AboutPage = () => {
                 <div className={styles.titleUnderline}></div>
                 <div className={styles.bottomFeatures}>
                     <div className={styles.bottomFeature}>
-                        <div className={styles.bottomFeatureImage}></div>
+                        <div className={`${styles.bottomFeatureImage} ${styles.bottomFeatureImage1}`}></div>
                         <h3 className={styles.bottomFeatureTitle}>התקדמות אישית</h3>
                         <p className={styles.bottomFeatureText}>
                             תוכלו לראות את ההתקדמות שלכם
                             <br/>
-                             ולראו לבד, ששני דקות בכל יום
+                             ולראות לבד, ששני דקות בכל יום
                              <br/>
                               יכולות ליצור שינוי אדיר!
                         </p>
                     </div>
                     <div className={styles.bottomFeature}>
-                        <div className={styles.bottomFeatureImage}></div>
-                        <h3 className={styles.bottomFeatureTitle}>קל להגיע</h3>
+                    <div className={`${styles.bottomFeatureImage} ${styles.bottomFeatureImage2}`}></div>
+                    <h3 className={styles.bottomFeatureTitle}>קל להגיע</h3>
                         <p className={styles.bottomFeatureText}>
                              הרבה אנשים חולמים לעבוד מהבית, שלא
                             <br/>
@@ -115,8 +114,8 @@ const AboutPage = () => {
                         </p>
                     </div>
                     <div className={styles.bottomFeature}>
-                        <div className={styles.bottomFeatureImage}></div>
-                        <h3 className={styles.bottomFeatureTitle}>קידום אישי</h3>
+                    <div className={`${styles.bottomFeatureImage} ${styles.bottomFeatureImage3}`}></div>
+                    <h3 className={styles.bottomFeatureTitle}>קידום אישי</h3>
                         <p className={styles.bottomFeatureText}>
                             כיף להרגיש שמתקדמים בחיים, במיוחד
                             <br/>
