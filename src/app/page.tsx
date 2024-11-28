@@ -35,9 +35,6 @@ const SomeComponent = () => {
     <div>
       <Homepage />
       <h1>פרטי הספר</h1>
-      <h1>פרטי הספר</h1>
-      <h1>פרטי הספר</h1>
-      <h1>פרטי הספר</h1>
 
       {/* רק אם showRatingModal הוא true, נראה את ה-RatingComponent */}
       {showRatingModal && (
