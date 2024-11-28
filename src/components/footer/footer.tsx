@@ -50,7 +50,7 @@ const ContactForm: React.FC = () => {
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-            <h2 className={styles.heading}> נשמור על קשר 😄</h2>
+            <h2 className={styles.heading}> נשמור על קשר</h2>
             <div className={styles.fieldsContainer}>
                 <Image
                     src={logo}
