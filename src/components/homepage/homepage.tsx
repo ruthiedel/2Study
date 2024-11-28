@@ -5,6 +5,7 @@ import useUserStore from "@/services/zustand/userZustand/userStor";
 import RequireAuth from "@/layout/RequireAuth";
 import Book from "../book/book";
 import { Book as Booktype }  from "@/types";
+import FilterComponent from "../filterComponent/FilterComponent";
 
 const Homepage = () => {
     const user = useUserStore((state) => state.user);
@@ -55,7 +56,7 @@ const Homepage = () => {
                 </header>
 
                 {/* Main Content */}
-                <main className="container mx-auto px-6 mt-12 flex flex-col items-center text-center">
+                <main className="container mx-auto px-6 mt-12 flex flex-col items-center">
                     <h2 className="text-4xl font-extrabold text-white">
                         Welcome {user?.name}
                     </h2>
@@ -67,6 +68,7 @@ const Homepage = () => {
                     </button>
 
                     <Book book={defaultBook}/>
+                    <FilterComponent/>
                 </main>
 
                 {/* Footer */}
