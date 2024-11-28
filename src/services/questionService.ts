@@ -30,7 +30,6 @@ export async function generateQuestionAndAnswer(text:string)
         .join('')
         .trim();
   
-      console.log('Full Content:', fullContent);
   
       const questionPart = fullContent.split('תשובה :')[0].trim(); 
       const answerPart = fullContent.split('תשובה :')[1]?.trim() || ''; 
