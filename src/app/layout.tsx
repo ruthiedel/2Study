@@ -6,7 +6,8 @@ export const metadata: Metadata = {
   title: "2Stady",
   icons: {
     icon: "/ico2Stady.ico",
-  }
+  },
+  description: "Study anytime",
 };
 export default function RootLayout({
   children,
