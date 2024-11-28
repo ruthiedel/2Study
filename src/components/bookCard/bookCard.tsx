@@ -52,7 +52,7 @@ const BookCard: React.FC<BookCardProps> = ({ book }) => {
                         </Typography>
 
                         <Box className={styles.starsContainer}>
-                            <Rating value={2} readOnly sx={{ color: '#F3F25B' }} />
+                            <Rating value={2.3} readOnly sx={{ color: '#F3F25B' }} />
                         </Box>
                     </Grid>
 
