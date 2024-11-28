@@ -3,7 +3,7 @@ import { Card, Grid, IconButton, Button, Typography, Box, Rating } from '@mui/ma
 import CloseIcon from '@mui/icons-material/Close';
 import Image from 'next/image';
 import styles from './bookCard.module.css';
-import image from "@/pictures/garnisht.png";
+import image from '@/public/images/garnisht.png';
 
 import { Book } from '@/types';
 
