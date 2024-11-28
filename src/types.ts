@@ -19,7 +19,7 @@ type LearningGroupUser = {
     userName: string;
 }
 
-type category = {
+export type category = {
     type: string;
     subject: string;
 }
