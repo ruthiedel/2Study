@@ -25,7 +25,7 @@ export async function getAllBooks(client: MongoClient, collection: string) {
     .find({}, { projection: { chapters: 0 } }) 
     .toArray();
 
-  const picturesPath = path.join(process.cwd(), 'src', 'pictures');
+  const picturesPath = path.join(process.cwd(), 'public', 'pictures');
 
   const booksWithImages = await Promise.all(
     books.map(async (book) => {

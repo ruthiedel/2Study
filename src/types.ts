@@ -1,7 +1,11 @@
-type Paragraph = {
+export type Paragraph = {
     _id?: string;
     text: string;
-    questions: string[];
+    questions: Question[];
+}
+type Question ={
+    question :string;
+    answer: string;
 }
 export type Chapter = {
     _id?: string;
