@@ -5,7 +5,7 @@ import { AppBar, Toolbar, IconButton, Button, Menu, MenuItem, Box } from "@mui/m
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Link from "next/link";
 import Image from "next/image";
-import logo from "@/pictures/צילום מסך 2024-11-24 141224 (1).png";
+import logo from "@/../public/pictures/צילום מסך 2024-11-24 141224 (1).png";
 import styles from "./header.module.css";
 import useUserStore from "@/services/zustand/userZustand/userStor";
 
