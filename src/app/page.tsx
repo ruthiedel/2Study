@@ -12,6 +12,7 @@ const SomeComponent = () => {
     <QueryClientProvider client={queryClient}>
     <div>
       <Homepage/>
+
       
       <QuestionCard/>
     </div>
