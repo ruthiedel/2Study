@@ -8,14 +8,15 @@ import { Book } from '../../types';
 
 type BookCardProps = {
     book: Book;
+    onClose: () => void;
 };
 
-const BookCard: React.FC<BookCardProps> = ({ book }) => {
+const BookCard: React.FC<BookCardProps> = ({ book, onClose }) => {
     const [showMore, setShowMore] = useState(false);
 
     return (
         <Card className={styles.bookCard}>
-            <IconButton className={styles.closeButton} aria-label="close">
+            <IconButton className={styles.closeButton} aria-label="close" onClick={onClose}>
                 <CloseIcon />
             </IconButton>
             <div className={styles.container}>
