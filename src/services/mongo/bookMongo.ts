@@ -7,25 +7,59 @@ let clientPromise: Promise<MongoClient>;
 
 
 // פונקציה לעדכון דירוג של ספר
-export const updateBookRating = async (bookId: string, averageRating: number) => {
-  const client = await connectDatabase(); // מתחברים לבסיס הנתונים
-  const db = client.db("Books");
-  const collection = db.collection("books");
+export async function updateBookRating(bookId: string, newRating: number) {
+  const db = await connectDatabase();
+  const booksCollection = db.collection('books');
+  const ratingsCollection = db.collection('ratings');
 
-  // עדכון הדירוג של הספר
-  const result = await collection.updateOne(
-    { _id: new ObjectId(bookId) }, // מזהה הספר
-    { $set: { rating: averageRating } } // עדכון דירוג הספר
-  );
+  // המרת bookId ל-ObjectId
+  const objectId = new ObjectId(bookId);
 
-  if (result.modifiedCount === 0) {
-    throw new Error("Failed to update book rating");
+  // שליפת כל הדירוגים של הספר
+  const ratings = await ratingsCollection.find({ bookId: objectId }).toArray();
+
+  // אם אין דירוגים קיימים, הוסף את הדירוג החדש ועדכן את הספר
+  if (ratings.length === 0) {
+    await ratingsCollection.insertOne({
+      bookId: objectId,
+      rating: newRating,
+    });
+
+    await booksCollection.updateOne(
+      { _id: objectId },
+      {
+        $set: {
+          rating: newRating,
+          rating_num: 1, // דירוג ראשון
+        },
+      }
+    );
+
+    return;
   }
 
-  return result;
-};
+  // אם יש דירוגים קיימים, חשב ממוצע דירוגים חדש ועדכן את הספר
+  const totalRatings = ratings.length + 1; // מספר דירוגים כולל הדירוג החדש
+  const averageRating =
+    (ratings.reduce((acc, r) => acc + r.rating, 0) + newRating) / totalRatings;
 
-// חיבור לבסיס הנתונים
+  await ratingsCollection.insertOne({
+    bookId: objectId,
+    rating: newRating,
+  });
+
+  await booksCollection.updateOne(
+    { _id: objectId },
+    {
+      $set: {
+        rating: averageRating,
+        rating_num: totalRatings,
+      },
+    }
+  );
+}
+
+// פונקציה לחיבור למסד הנתונים
 export async function connectDatabase() {
   if (!client) {
     const dbConnectionString = process.env.PUBLIC_DB_CONNECTION;
@@ -35,8 +69,21 @@ export async function connectDatabase() {
     client = new MongoClient(dbConnectionString);
     clientPromise = client.connect();
   }
-  return clientPromise;
+  return (await clientPromise).db('Books'); 
 }
+
+// חיבור לבסיס הנתונים
+// export async function connectDatabase() {
+//   if (!client) {
+//     const dbConnectionString = process.env.PUBLIC_DB_CONNECTION;
+//     if (!dbConnectionString) {
+//       throw new Error('Database connection string is not defined');
+//     }
+//     client = new MongoClient(dbConnectionString);
+//     clientPromise = client.connect();
+//   }
+//   return clientPromise;
+// }
 
 // שליפת כל הספרים
 export async function fetchAllBooks(client: MongoClient, collection: string) {

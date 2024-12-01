@@ -1,53 +1,53 @@
-import { useState } from "react";
-import styles from "./rating.module.css";
+import React, { useState } from 'react';
+import styles from './rating.module.css';
 
-interface RatingProps {
-  bookId: string;
-  onClose: () => void; // פונקציה לסגירת הקומפוננטה
-  onSubmitRating: (bookId: string, rating: number) => Promise<void>; // שליחת דירוג
-}
+type RatingCardProps = {
+  bookId?: string;
+  onClose: () => void;
+  onSubmitRating: (rating: number) => void;
+};
 
-const Rating = ({ bookId, onClose, onSubmitRating }: RatingProps) => {
-  const [rating, setRating] = useState(0);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+const RatingCard: React.FC<RatingCardProps> = ({ bookId, onClose, onSubmitRating }) => {
+  const [rating, setRating] = useState<number | null>(null);
 
-  const handleSubmit = async () => {
-    if (rating === 0) return; // ודא שהדירוג נבחר
+  const handleRatingChange = (value: number) => {
+    setRating(value);
+  };
 
-    setIsSubmitting(true);
-    await onSubmitRating(bookId, rating);
-    setIsSubmitting(false);
-    onClose(); // סגור את הקומפוננטה לאחר השליחה
+  const handleSubmit = () => {
+    if (rating !== null) {
+      onSubmitRating(rating);
+    }
   };
 
   return (
-    <div className={styles.modal}>
-      <div className={styles.ratingContainer}>
-        <h3>דרג את הספר</h3>
-        <div className={styles.stars}>
-          {[1, 2, 3, 4, 5].map((star) => (
-            <span
-              key={star}
-              className={rating >= star ? styles.selectedStar : styles.star}
-              onClick={() => setRating(star)}
-            >
-              ★
-            </span>
-          ))}
-        </div>
+    <div className={styles.container}>
+      <h2 className={styles.title}>דרג את הספר</h2>
+      <div className={styles.ratingOptions}>
+        {[1, 2, 3, 4, 5].map((value) => (
+          <button
+            key={value}
+            className={`${styles.ratingButton} ${rating === value ? styles.selected : ''}`}
+            onClick={() => handleRatingChange(value)}
+          >
+            {value}
+          </button>
+        ))}
+      </div>
+      <div className={styles.actions}>
+        <button className={styles.cancelButton} onClick={onClose}>
+          לא הפעם
+        </button>
         <button
           className={styles.submitButton}
           onClick={handleSubmit}
-          disabled={rating === 0 || isSubmitting}
+          disabled={rating === null}
         >
-          {rating === 0 ? "שלח דירוג" : "שולח..."}
-        </button>
-        <button className={styles.cancelButton} onClick={onClose}>
-          לא הפעם
+          שלח דירוג
         </button>
       </div>
     </div>
   );
 };
 
-export default Rating;
+export default RatingCard;
