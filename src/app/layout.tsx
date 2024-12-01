@@ -2,7 +2,6 @@ import "./globals.css";
 import { Metadata } from 'next';
 import RequireAuth from '../layout/RequireAuth';
 
-
 export const metadata: Metadata = {
   title: "2Stady",
   icons: {

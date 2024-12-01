@@ -22,6 +22,7 @@ const Login = () => {
       });
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
+      console.log(user);
       const localUser = {
         _id: user.uid,
         email: user.email || '',
