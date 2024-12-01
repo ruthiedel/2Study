@@ -42,8 +42,8 @@ export type Book = {
 export type UserBook = {
     book_id: string;
     book_name: string;
-    chapter_id: string;
-    section_id: string;
+    chapter_id: number;
+    section_id: number;
     rate: number;
 }
 type LearningGroup = {

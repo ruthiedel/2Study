@@ -109,29 +109,28 @@
 
   
   .featureImage {
-    width: 180px;
-    height: 180px;
+    width: 240px;
+    height: 200px;
     background-color: #F3DD86;
-    border-radius: 50%;
     background-size:cover;
   }
 
   .feature1{
-    background-image: url('../../../public/pictures/solution.jpg')
+    background-image: url('../../../public/pictures/1.png')
 
   }
   .feature2{
-    background-image: url('../../../public/pictures/place.jpg')
+    background-image: url('../../../public/pictures/2.png')
 
   }
 
 
   .feature3{
-    background-image: url('../../../public/pictures/knowledge.jpg')
+    background-image: url('../../../public/pictures/3.png')
 
   }
   .feature4{
-    background-image: url('../../../public/pictures/process.jpg')
+    background-image: url('../../../public/pictures/4.png')
 
   }
   
@@ -178,10 +177,9 @@
   }
   
   .bottomFeatureImage {
-    width: 70px;
-    height: 70px;
+    max-width: 115px;
+    height: 100px;
     background-color: #F3DD86;
-    border-radius: 50%;
     margin: 0 auto 15px;
     background-size:cover;
 
@@ -189,19 +187,19 @@
 
   .bottomFeatureImage1
   {
-    background-image: url('../../../public/pictures/graph.jpg')
+    background-image: url('../../../public/pictures/progress.png')
 
   }
   
   .bottomFeatureImage2
   {
-    background-image: url('../../../public/pictures/easy.jpg')
+    background-image: url('../../../public/pictures/p.png')
 
   }
   
   .bottomFeatureImage3
   {
-    background-image: url('../../../public/pictures/personal.jpg')
+    background-image: url('../../../public/pictures/arive.png')
 
   }
   .bottomFeatureTitle {
@@ -216,4 +214,21 @@
     line-height: 1.8;
     font-family: 'Assistant', sans-serif;
   }
+
+  .pageContainer,
+.pageContainer h1,
+.pageContainer h2,
+.pageContainer h3,
+.pageContainer h4,
+.pageContainer h5,
+.pageContainer h6,
+.pageContainer p,
+.pageContainer span,
+.pageContainer a,
+.pageContainer li,
+.pageContainer button,
+.pageContainer input,
+.pageContainer textarea {
+  font-family: '2StudyFont', sans-serif;
+}
   

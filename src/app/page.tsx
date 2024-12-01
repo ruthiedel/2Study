@@ -9,8 +9,6 @@ const SomeComponent = () => {
     <QueryClientProvider client={queryClient}>
     <div>
       <Homepage/>
-
-
     </div>
     </QueryClientProvider>
   );

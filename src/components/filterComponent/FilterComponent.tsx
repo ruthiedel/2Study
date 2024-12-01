@@ -1,25 +1,36 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styles from './FilterComponent.module.css';
 
-const FilterComponent: React.FC = () => {
-  const [bookName, setBookName] = useState<string>('');
-  const [authorName, setAuthorName] = useState<string>('');
-  const [categories, setCategories] = useState<string[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<string>('');
 
+interface FilterComponentProps {
+  bookName: string;
+  setBookName: React.Dispatch<React.SetStateAction<string>>;
+  authorName: string;
+  setAuthorName: React.Dispatch<React.SetStateAction<string>>;
+  categories: string[];
+  setCategories: React.Dispatch<React.SetStateAction<string[]>>;
+}
+
+const FilterComponent: React.FC<FilterComponentProps> = ({
+  bookName,
+  setBookName,
+  authorName,
+  setAuthorName,
+  categories,
+  setCategories,
+}) => {
   const availableCategories = [
     "הלכה",
     "מוסר",
     "שמירת הלשון",
     "לימוד",
-    "הוראה"
+    "הוראה",
   ];
 
   const handleCategorySelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const category = event.target.value;
     if (category && !categories.includes(category)) {
       setCategories([...categories, category]);
-      setSelectedCategory('');
     }
   };
 
@@ -30,7 +41,7 @@ const FilterComponent: React.FC = () => {
   return (
     <div className={styles.filterContainer}>
       <strong>
-      <label className={styles.bigTitle}>מיין לפי:</label>
+        <label className={styles.bigTitle}>מיין לפי:</label>
       </strong>
       <label className={styles.title}>שם ספר:</label>
       <input
@@ -67,7 +78,7 @@ const FilterComponent: React.FC = () => {
       </div>
 
       <select
-        value={selectedCategory}
+        value=""
         onChange={handleCategorySelect}
         className={styles.select}
       >
