@@ -5,7 +5,7 @@ import { AppBar, Toolbar, IconButton, Button, Menu, MenuItem, Box } from "@mui/m
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Link from "next/link";
 import Image from "next/image";
-import logo from "@/../public/pictures/logo1.png"
+import logo from "../../../public/pictures/logo1.png";
 import styles from "./header.module.css";
 import useUserStore from '../../services/zustand/userZustand/userStor';
 

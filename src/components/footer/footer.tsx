@@ -3,8 +3,8 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { sendMail } from '@/services/mailService';
+import logo from "../../../public/pictures/logo1.png";
 import { Mail } from '../../types';
-import logo from "@/../public/pictures/logo1.png";
 import Image from "next/image";
 import styles from './ContactForm.module.css';
 
