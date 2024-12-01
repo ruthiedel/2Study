@@ -73,12 +73,6 @@ const Homepage = () => {
                     <BookCard book={defaultBook}/>
                 </main>
 
-                {/* Footer */}
-                <footer className="w-full bg-black text-white py-6 mt-12">
-                    <div className="container mx-auto text-center">
-                        <p className="text-gold">© 2024 Study Progress Tracker. All rights reserved.</p>
-                    </div>
-                </footer>
             </div>
     );
 };

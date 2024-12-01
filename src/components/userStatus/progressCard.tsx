@@ -7,7 +7,7 @@ import styles from './userStatus.module.css'
 
 export default function ProgressCard() {
   return (
-    <Card sx={{ maxWidth: 345 }} className={styles.mycard}>
+    <Card className={styles.mycard}>
       {/* <CardMedia
         component="img"
         height="140"

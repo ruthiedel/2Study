@@ -22,37 +22,57 @@ const Information = () => {
           className={styles.imgUser}
         />
       </Box>
-      <CardContent className={styles.userbox}>
-        <Box className={styles.infoContainer}>
+      <div className={styles.userbox}>
+        {/* <Box className={styles.infoContainer}>
           <Box>
-            <Typography className={styles.info1}>שם: </Typography>
-            <Typography className={styles.info1}>מייל: </Typography>
-            {user?.age && user?.age > 0 && <Typography className={styles.info1}>גיל </Typography>}
-          </Box>
-          <Box className={styles.infoContainer2}>
-            <Typography className={styles.infoButtonStyled}>
-              {user?.name}
-            </Typography>
-            <Typography className={styles.infoButtonStyled}>
-              {user?.email}
-            </Typography>
-            {user?.age && user?.age > 0 && (
-              <Typography>
-                {user?.age && user?.age > 0 ? user?.age : "אין גיל מעודכן"}
+            <div className={styles.infoContainer2}>
+              <Typography className={styles.info1}>שם: </Typography>
+              <Typography className={styles.infoButtonStyled}>
+                {user?.name}
               </Typography>
-            )}
+            </div>
+            <div className={styles.infoContainer2}>
+              <Typography className={styles.info1}>מייל: </Typography>
+              <Typography className={styles.infoButtonStyled}>
+                {user?.email}
+              </Typography>
+            </div>
+            <div className={styles.infoContainer2}>
+              {user?.age && user?.age > 0 && <Typography className={styles.info1}>גיל </Typography>}
+
+              {user?.age && user?.age > 0 && (
+                <Typography>
+                  {user?.age && user?.age > 0 ? user?.age : "אין גיל מעודכן"}
+                </Typography>
+              )}
+            </div>
           </Box>
-        </Box>
+        </Box> */}
+
+        <div className={styles.infoContainerMain}>
+          <div className={styles.infoContainer2}>
+            <strong>
+              <div>שם</div>
+            </strong>
+            <div>{":  "+user?.name}</div>
+          </div>
+          <div className={styles.infoContainer2}>
+            <strong>
+              <div>מייל</div>
+            </strong>
+            <div>{":  "+user?.email}</div>
+          </div>
+        </div>
 
         <Box className={styles.numOfBooksContainer}>
           {/*  <p>{user.books.sum(if(mark !== -1))}</p> */}
           <Typography className={styles.numOfBooks}>
             <StarIcon className={styles.starIcon} />
-              {user?.books.length} ספרים בלמידה
+            {user?.books.length} ספרים בלמידה
             <StarIcon className={styles.starIcon} />
           </Typography>
         </Box>
-      </CardContent>
+      </div>
     </Card>
   );
 };

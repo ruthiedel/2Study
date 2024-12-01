@@ -45,7 +45,7 @@ const Recommendations = () => {
         return (
           <div className={styles.recommendcard}>
             <div>
-            <div className="text-sm">מומלץ בשבילך</div>
+            <div className="text-sm mt-4">מומלץ בשבילך</div>
               <div className="text-[8px]">
                 מערכת ההמלצה שלנו חיפשה את הספר המתאים ביותר עבורך בהתבסס על
                 בחירות ודירוגים קודמים
