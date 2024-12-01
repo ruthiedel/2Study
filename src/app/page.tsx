@@ -2,7 +2,6 @@
 import React from 'react';
 import { Homepage, QuestionCard } from '@/components';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-
 const SomeComponent = () => {
   const queryClient = new QueryClient();
 
@@ -11,12 +10,6 @@ const SomeComponent = () => {
     <div>
       <Homepage/>
 
-      
-      <QuestionCard p={{
-          _id: undefined,
-          text: '',
-          questions: []
-        }}/>
     </div>
     </QueryClientProvider>
   );

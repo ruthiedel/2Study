@@ -1,19 +1,17 @@
 'use client';
 
 import React from "react";
-import { Book as BookType } from "@/types";
+import { Book as BookType } from '../../types';
 import { Card, CardContent, Typography, Box } from "@mui/material";
-import styles from "./book.module.css"; // ייבוא הקובץ CSS
+import styles from "./book.module.css"; 
 
 type BookProps = {
   book: BookType;
 };
 
 const Book: React.FC<BookProps> = ({ book }) => {
-  // אם coverImage הוא URL
   const coverImageSrc = typeof book.coverImage === 'string' 
     ? book.coverImage 
-    // אם coverImage הוא Blob או File
     : URL.createObjectURL(book.coverImage);
 
   return (

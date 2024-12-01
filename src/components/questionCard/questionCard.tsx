@@ -3,8 +3,8 @@ import React, { useEffect, useState } from "react";
 import { Box, TextField, Button, IconButton, Typography } from "@mui/material";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
-import { Paragraph } from "@/types";
-import { generateQuestionAndAnswer } from "@/services/questionService";
+import { Paragraph } from '../../types';
+import { generateQuestionAndAnswer } from '../../services/questionService';
 const QuestionCard = (props:{p:Paragraph}) => {
     const [isQuestionOpen, setIsQuestionOpen] = useState(true); 
     const [isAnswerOpen, setIsAnswerOpen] = useState(false); 

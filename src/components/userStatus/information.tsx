@@ -1,10 +1,8 @@
 "use client";
 
 import React from "react";
-import useUserStore from "@/services/zustand/userZustand/userStor";
-import { User } from "@/types";
+import useUserStore from '../../services/zustand/userZustand/userStor';
 import { Card, CardMedia, Typography } from "@mui/material";
-import CardContent from "@mui/material/CardContent";
 import Box from "@mui/material/Box";
 import styles from "./userStatus.module.css";
 import StarIcon from "@mui/icons-material/Star";

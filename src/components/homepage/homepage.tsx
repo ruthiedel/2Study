@@ -1,12 +1,11 @@
 "use client";
 
 import React from "react";
-import useUserStore from "@/services/zustand/userZustand/userStor";
-import RequireAuth from "@/layout/RequireAuth";
+import useUserStore from '../../services/zustand/userZustand/userStor';
 import Book from "../book/book";
-import { Book as Booktype } from "@/types";
+import { Book as Booktype } from '../../types';
 import FilterComponent from "../filterComponent/FilterComponent";
-import booksDetails from '@/hooks/booksDetails';
+import booksDetails from '../../hooks/booksDetails';
 import BookCard from "../bookCard/bookCard";
 
 const Homepage = () => {

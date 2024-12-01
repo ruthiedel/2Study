@@ -1,5 +1,5 @@
 import http from "./http";
-import { Mail } from "@/types";
+import { Mail } from '../types';
 
 export const sendMail = async (mail:Mail) => {
     try {
