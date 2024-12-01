@@ -1,13 +1,38 @@
 'use client';
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, TextField, Button, IconButton, Typography } from "@mui/material";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import { Paragraph } from "@/types";
+import { generateQuestionAndAnswer } from "@/services/questionService";
+const QuestionCard = (props:{p:Paragraph}) => {
+    const [isQuestionOpen, setIsQuestionOpen] = useState(true); 
+    const [isAnswerOpen, setIsAnswerOpen] = useState(false); 
+    const [idxQuestion,setIdxQuestion] = useState(0);
+   
 
-const QuestionCard: React.FC = () => {
-    const [isQuestionOpen, setIsQuestionOpen] = useState(true); // שאלה פתוחה כברירת מחדל
-    const [isAnswerOpen, setIsAnswerOpen] = useState(false); // תשובה סגורה כברירת מחדל
-
+    useEffect(() => {
+        const fetchQuestionAndAnswer = async () => {
+            if (props.p.questions.length === 0) {
+                const { question, answer } = await generateQuestionAndAnswer(props.p.text);
+                // עדכון הסטייט או הטיפול בנתונים
+                console.log("שאלה:", question, "תשובה:", answer);
+            }
+        };
+    
+        fetchQuestionAndAnswer();
+    }, []);
+    useEffect(() => {
+        const fetchQuestionAndAnswer = async () => {
+            if (props.p.questions.length <idxQuestion) {
+                const { question, answer } = await generateQuestionAndAnswer(props.p.text);
+                // עדכון הסטייט או הטיפול בנתונים
+                console.log("שאלה:", question, "תשובה:", answer);
+            }
+        };
+    
+        fetchQuestionAndAnswer();
+    }, [idxQuestion]);
     return (
         <Box
             sx={{
@@ -50,6 +75,7 @@ const QuestionCard: React.FC = () => {
                         color: "black",
                         "&:hover": { backgroundColor: "#ffa726" },
                     }}
+                    onClick={()=>{setIdxQuestion(idxQuestion+1)}}
                 >
                     שנה שאלה
                 </Button>
@@ -80,7 +106,7 @@ const QuestionCard: React.FC = () => {
                     {isQuestionOpen && (
                         <TextField
                             fullWidth
-                            value="מה מזג האוויר היום?"
+                            value={props.p.questions[idxQuestion].question}
                             InputProps={{
                                 readOnly: true,
                                 style: { backgroundColor: "white", borderRadius: "5px" },
@@ -115,7 +141,7 @@ const QuestionCard: React.FC = () => {
                     {isAnswerOpen && (
                         <TextField
                             fullWidth
-                            value="קר וגשום"
+                            value={props.p.questions[idxQuestion].answer}
                             InputProps={{
                                 readOnly: true,
                                 style: {
