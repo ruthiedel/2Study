@@ -43,7 +43,7 @@ const Recommendations = () => {
     <div className={styles.container}>
       {localBooks.map((book) => {
         return (
-          <div className={styles.recommendcard}>
+          <div className={styles.recommendcard} key={book.book_name}>
             <div>
             <div className="text-sm mt-4">מומלץ בשבילך</div>
               <div className="text-[8px]">
