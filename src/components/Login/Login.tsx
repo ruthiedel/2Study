@@ -6,8 +6,8 @@ import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import useUserStore from "../../services/zustand/userZustand/userStor";
 import { logInUser } from "../../services/userService";
 import Image from "next/image";
-import login1 from "../../../public/images/login1.png";
-import login2 from "../../../public/images/login2.png";
+import login1 from "../../../public/images/login.png";
+import login2 from "../../../public/images/login.png";
 import styles from "./login.module.css";
 
 const Login = () => {
