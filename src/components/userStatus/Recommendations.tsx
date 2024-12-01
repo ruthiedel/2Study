@@ -50,7 +50,7 @@ const Recommendations = () => {
                 מערכת ההמלצה שלנו חיפשה את הספר המתאים ביותר עבורך בהתבסס על
                 בחירות ודירוגים קודמים
               </div>
-              <Book key={book.book_name}
+              {/* <Book key={book.book_name}
                 book={{
                   _id: undefined,
                   name: "",
@@ -66,7 +66,7 @@ const Recommendations = () => {
                   chapters_num: 0,
                   paragraphs_num: 0,
                 }}
-              ></Book>
+              ></Book> */}
             </div>
           </div>
         );

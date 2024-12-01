@@ -7,9 +7,10 @@ import styles from "./book.module.css";
 
 type BookProps = {
   book: BookType;
+  handleClick: (book: BookType) => void;
 };
 
-const Book: React.FC<BookProps> = ({ book }) => {
+const Book: React.FC<BookProps> = ({ book, handleClick }) => {
   const coverImageSrc = typeof book.coverImage === 'string' 
     ? book.coverImage 
     : URL.createObjectURL(book.coverImage);
@@ -33,10 +34,12 @@ const Book: React.FC<BookProps> = ({ book }) => {
           {book.author}
         </Typography>
 
+        <div className={styles.cardDivider}></div>
+
         <Typography className={styles.cardCategories} variant="body2">
         קטגוריות: {book.category.subject}, {book.category.type}
         </Typography>
-
+{/* 
         <div className={styles.cardDivider}></div>
 
         <Typography variant="body2" color="text.secondary" align="center" className={styles.font}>
@@ -45,10 +48,10 @@ const Book: React.FC<BookProps> = ({ book }) => {
 
         <Typography variant="body2" color="text.secondary" align="center" className={styles.font}>
           סעיפים: {book.paragraphs_num}
-        </Typography>
+        </Typography> */}
 
         <Box className={styles.cardFooter}>
-          <button className={styles.cardButton}>לקריאה</button>
+          <button className={styles.cardButton} onClick={()=>handleClick(book)}>לפרטים</button>
         </Box>
       </CardContent>
     </Card>
