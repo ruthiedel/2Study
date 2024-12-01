@@ -44,7 +44,6 @@ const booksData: bookRowProp[] = [
 
 export default function StudyCard() {
   const user = useUserStore((state) => state.user);
-  console.log(user);
 
   return (
     <Card className={styles.mycard}>
@@ -65,7 +64,7 @@ export default function StudyCard() {
             }
           )
         )}
-        {booksData.map(book =>
+        {/* {booksData.map(book =>
           {
             return (
               <StyledLink key={book.bookName}>
@@ -75,7 +74,7 @@ export default function StudyCard() {
               </StyledLink>
             );
           }
-        )}
+        )} */}
       </CardContent>   
 
     </Card>
