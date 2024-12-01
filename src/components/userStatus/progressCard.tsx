@@ -2,12 +2,12 @@ import * as React from "react";
 import BarChartIcon from '@mui/icons-material/BarChart';
 import ForwardToInboxIcon from '@mui/icons-material/ForwardToInbox';
 import PeopleIcon from '@mui/icons-material/People';
-import { Card, CardContent, Button, Link, ListItemIcon, Typography, List, ListItem, ListItemText } from "@mui/material";
+import { Card, CardContent, ListItemIcon, Typography, List, ListItem, ListItemText } from "@mui/material";
 import styles from './userStatus.module.css'
 
 export default function ProgressCard() {
   return (
-    <Card sx={{ maxWidth: 345 }} className={styles.mycard}>
+    <Card className={styles.mycard}>
       {/* <CardMedia
         component="img"
         height="140"

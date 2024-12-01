@@ -1,7 +1,7 @@
 "use client"
 import { useQuery } from '@tanstack/react-query';
-import { getAllBooks } from '@/services/bookService';
-import { Book } from '@/types'
+import { getAllBooks } from '../services/bookService';
+import { Book } from '../types'
 
 const booksDetails = () => {
     

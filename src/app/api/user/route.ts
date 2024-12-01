@@ -1,7 +1,6 @@
-import { checkAndAddUser } from '@/services/mongo/userMongo';
-
+import { checkAndAddUser } from '../../../services/mongo/userMongo';
 import { NextResponse } from 'next/server';
-import { User } from "@/types";
+import { User } from '../../../types';
 
 export async function POST(request: Request) {
     try {

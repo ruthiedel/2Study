@@ -1,12 +1,11 @@
 "use client";
 
 import React from "react";
-import useUserStore from "@/services/zustand/userZustand/userStor";
-import RequireAuth from "@/layout/RequireAuth";
+import useUserStore from '../../services/zustand/userZustand/userStor';
 import Book from "../book/book";
-import { Book as Booktype } from "@/types";
+import { Book as Booktype } from '../../types';
 import FilterComponent from "../filterComponent/FilterComponent";
-import booksDetails from '@/hooks/booksDetails';
+import booksDetails from '../../hooks/booksDetails';
 import BookCard from "../bookCard/bookCard";
 
 const Homepage = () => {
@@ -84,14 +83,8 @@ const Homepage = () => {
                 <FilterComponent />
                 <BookCard book={defaultBook}/>
             </main>
+            </div>
 
-            {/* Footer */}
-            <footer className="w-full bg-black text-white py-6 mt-12">
-                <div className="container mx-auto text-center">
-                    <p className="text-gold">© 2024 Study Progress Tracker. All rights reserved.</p>
-                </div>
-            </footer>
-        </div>
     );
 };
 

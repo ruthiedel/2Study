@@ -2,7 +2,7 @@
 
 import React from "react";
 import styles from "./userStatus.module.css";
-import Book from "@/components/book/book";
+import { Book } from '@/components';
 import { Book as BookType } from "@/types";
 
 type partOfBook = {
@@ -45,7 +45,7 @@ const Recommendations = () => {
         return (
           <div className={styles.recommendcard}>
             <div>
-            <div className="text-sm">מומלץ בשבילך</div>
+            <div className="text-sm mt-4">מומלץ בשבילך</div>
               <div className="text-[8px]">
                 מערכת ההמלצה שלנו חיפשה את הספר המתאים ביותר עבורך בהתבסס על
                 בחירות ודירוגים קודמים

@@ -6,8 +6,9 @@ import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import useUserStore from "../../services/zustand/userZustand/userStor";
 import { logInUser } from "../../services/userService";
 import Image from "next/image";
-import login1 from "../../../public/pictures/login1.png";
-import login2 from "../../../public/pictures/login2.png"
+
+import login1 from '../../../public/pictures/login1.png';
+import login2 from '../../../public/pictures/login2.png';
 import styles from "./login.module.css";
 
 const Login = () => {
@@ -37,20 +38,20 @@ const Login = () => {
 
   return (
     <Box className={styles.login_card}>
-      <Image
+      {/* <Image
         src={login1}
         alt="Top Icon"
         className={styles.login_card_icon_top}
-      />
+      /> */}
       <Typography className={styles.login_card_text}>בוא נחבר אותך:</Typography>
       <Button onClick={handleGoogleLogin} variant="contained" className={styles.login_card_button}>
         המשך עם Google
       </Button>
-      <Image
+      {/* <Image
         src={login2}
         alt="Bottom Icon"
         className={styles.login_card_icon_bottom}
-      />
+      /> */}
     </Box>
   );
 };

@@ -1,6 +1,5 @@
 import http from "./http";
-import { Book } from "@/types";
-import { Chapter } from "@/types";
+import { Book, Chapter } from '../types';
 
 export const getAllBooks = async (): Promise<Book[]> => {
     try {

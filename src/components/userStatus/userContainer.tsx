@@ -1,7 +1,7 @@
-import StudyCard from "@/components/userStatus/studyCard";
-import ProgressCard from "@/components/userStatus/progressCard";
-import Information from "@/components/userStatus/information";
-import Recommendations from "@/components/userStatus/Recommendations";
+import StudyCard from './studyCard';
+import ProgressCard from './progressCard';
+import Information from './information';
+import Recommendations from './Recommendations';
 
 export default function UserContainer() {
   return (
