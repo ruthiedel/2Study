@@ -3,9 +3,8 @@ import { Card, Grid, IconButton, Button, Typography, Box, Rating } from '@mui/ma
 import CloseIcon from '@mui/icons-material/Close';
 import Image from 'next/image';
 import styles from './bookCard.module.css';
-import image from '@/public/images/garnisht.png';
-
-import { Book } from '@/types';
+import image from '../../../public/pictures/garnisht.png'
+import { Book } from '../../types';
 
 type BookCardProps = {
     book: Book;

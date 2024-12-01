@@ -1,5 +1,5 @@
 import { MongoClient } from 'mongodb';
-import { User } from '@/types';
+import { User } from '../../types';
 
 let client: MongoClient;
 let clientPromise: Promise<MongoClient>;

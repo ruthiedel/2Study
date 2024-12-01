@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { connectDatabase, getAllBooks } from '@/services/mongo/bookMongo';
+import { connectDatabase, getAllBooks } from '../../../services/mongo/bookMongo';
 
 
 export async function GET(request: Request) {
