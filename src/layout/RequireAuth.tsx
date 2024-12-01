@@ -1,13 +1,13 @@
 'use client';
 
 import React, { ReactNode, useEffect, useState } from 'react';
-import useUserStore from '@/services/zustand/userZustand/userStor';
-import LoadingSpinner from '@/components/loading/loadingSpiner';
+import useUserStore from '../services/zustand/userZustand/userStor';
+import LoadingSpinner from '../components/loading/loadingSpiner';
 import Login from '../components/Login/Login';
-import Header from '@/components/header/Header';
+import Header from '../components/header/Header';
 import { Box } from '@mui/material';
 import styles from './modal.module.css';
-import ContactForm from '@/components/footer/footer'; 
+import ContactForm from '../components/footer/footer'; 
 
 
 interface RequireAuthProps {
