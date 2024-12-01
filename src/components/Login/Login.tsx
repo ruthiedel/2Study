@@ -9,7 +9,7 @@ import Image from "next/image";
 
 import login1 from '../../../public/pictures/login1.png';
 import login2 from '../../../public/pictures/login2.png';
-import styles from "./Login.module.css";
+import styles from "./login.module.css";
 
 const Login = () => {
   const setUser = useUserStore((state) => state.setUser);
