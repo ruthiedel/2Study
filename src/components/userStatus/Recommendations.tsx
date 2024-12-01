@@ -2,7 +2,8 @@
 
 import React from "react";
 import styles from "./userStatus.module.css";
-import Book from "@/components/book/book";
+import { Book } from '@/components';
+import { Book as BookType } from "@/types";
 
 type partOfBook = {
   _id?: string;

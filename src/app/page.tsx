@@ -1,8 +1,7 @@
 'use client'
 import React from 'react';
-import Homepage from '@/components/homepage/homepage';
+import { Homepage, QuestionCard } from '@/components';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import QuestionCard from '@/components/questionCard/questionCard';
 const SomeComponent = () => {
   const queryClient = new QueryClient();
 
@@ -11,8 +10,6 @@ const SomeComponent = () => {
     <div>
       <Homepage/>
 
-      
-      {/* <QuestionCard/> */}
     </div>
     </QueryClientProvider>
   );
