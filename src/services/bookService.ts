@@ -30,7 +30,17 @@ export const getBooksByIds = async (ids: string[]): Promise<Book[]> => {
     }
   };
 
-//  
+  export const updateBook = async ({ id, updatedData }: { id: string; updatedData: Book }): Promise<Book> => {
+    try {
+      const response = await http.put(`/book/${id}`, updatedData);
+      return response.data; 
+    } catch (error) {
+      console.error("Error updating the book:", error);
+      throw error; 
+    }
+  };
+  
+
 export const getNextChapter = (book: Book, currentChapterId: string): Chapter | null => {
     try {
       const currentChapterIndex = book.chapters.findIndex(

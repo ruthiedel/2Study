@@ -66,9 +66,29 @@ export async function getBookById(client: MongoClient, collection: string, bookI
   };
 }
 
+export async function updateBook(client: MongoClient, collection: string, bookId: string, updatedData: Partial<Record<string, any>> ) {
+  const db = client.db('Books');
 
+  const objectId = new ObjectId(bookId);
 
+  const result = await db.collection(collection).updateOne(
+    { _id: objectId },
+    { $set: updatedData }
+  );
 
+  if (result.matchedCount === 0) {
+    throw new Error('Book not found');
+  }
+
+  if (result.modifiedCount === 0) {
+    throw new Error('No changes were made to the book');
+  }
+
+  return {
+    message: 'Book updated successfully',
+    updatedFields: updatedData,
+  };
+}
 
 export async function getPartOgAllBooks(client: MongoClient, collection: string) {
   const db = client.db('Books');
