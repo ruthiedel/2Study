@@ -35,12 +35,13 @@ export type Book = {
     name: string;
     author: string;
     category: category;
-    chapters: Chapter[];
+    chapters?: Chapter[];
     coverImage: string;
-    users?: string;
     learningGroups?: LearningGroup;
     chapters_num: number;
     paragraphs_num: number;
+    firstParagraphText?: string;
+    paragraphsCountPerChapter?: number[];
 }
 export type UserBook = {
     book_id: string;
