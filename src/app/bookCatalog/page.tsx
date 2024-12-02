@@ -1,10 +1,10 @@
 import React from 'react'
 import ShowBooks from '../../components/ShowBooks/ShowBooks'
 
-function BookKatalog() {
+function BookCatalog() {
   return (
     <ShowBooks/>
   )
 }
 
-export default BookKatalog
+export default BookCatalog

@@ -47,7 +47,7 @@ const Header: React.FC = () => {
                     <Link href="/about" passHref>
                         <Button className={styles.navButton}>אודות</Button>
                     </Link>
-                    <Link href="/bookKatalog" passHref>
+                    <Link href="/bookCatalog" passHref>
                         <Button className={styles.navButton}>קטלוג ספרים</Button>
                     </Link>
                 </Box>
