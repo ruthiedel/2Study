@@ -1,9 +1,10 @@
 .card {
     background-color: #c2c2c2; 
     border-radius: 10px;
-    width: 300px;
+    width: auto;
     font-family: '2StudyFont', sans-serif;
-    margin: 20px auto;
+    margin: 15px auto;
+    max-width: 220px;
   }
   
   .cardHeader {

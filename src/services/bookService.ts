@@ -1,13 +1,10 @@
 import http from "./http";
-import { Book } from "@/types";
-import { Chapter } from "@/types";
-import {  updateBookRating} from "@/services/mongo/bookMongo";
-
+import { Book, Chapter } from '../types';
 
 export const getAllBooks = async (): Promise<Book[]> => {
     try {
         const response = await http.get("/book");
-        return  response.data.documents;
+        return  response.data;
     } catch (error) {
         console.error("Error fetching book:", error);
         throw error;
@@ -33,23 +30,23 @@ export const getBooksByIds = async (ids: string[]): Promise<Book[]> => {
     }
   };
 
-//  
-export const getNextChapter = (book: Book, currentChapterId: string): Chapter | null => {
-    try {
-      const currentChapterIndex = book.chapters.findIndex(
-        (chapter) => chapter._id === currentChapterId
-      );
+// //  
+// export const getNextChapter = (book: Book, currentChapterId: string): Chapter | null => {
+//     try {
+//       const currentChapterIndex = book.chapters.findIndex(
+//         (chapter) => chapter._id === currentChapterId
+//       );
   
-      if (currentChapterIndex === -1 || currentChapterIndex === book.chapters.length - 1) {
-        return null; 
-      }
+//       if (currentChapterIndex === -1 || currentChapterIndex === book.chapters.length - 1) {
+//         return null; 
+//       }
   
-      return book.chapters[currentChapterIndex + 1];
-    } catch (error) {
-      console.error("Error finding the next chapter:", error);
-      throw error;
-    }
-  };
+//       return book.chapters[currentChapterIndex + 1];
+//     } catch (error) {
+//       console.error("Error finding the next chapter:", error);
+//       throw error;
+//     }
+//   };
 
 
 export const getSections = async (

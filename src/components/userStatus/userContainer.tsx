@@ -1,11 +1,11 @@
-import StudyCard from "@/components/userStatus/studyCard";
-import ProgressCard from "@/components/userStatus/progressCard";
-import Information from "@/components/userStatus/information";
-import Recommendations from "@/components/userStatus/Recommendations";
+import StudyCard from './studyCard';
+import ProgressCard from './progressCard';
+import Information from './information';
+import Recommendations from './Recommendations';
 
 export default function UserContainer() {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-2 h-screen">
+    <div className="grid grid-cols-1 md:grid-cols-2 h-screen m-8">
       <div className="">
         <div className="">
           <Information />

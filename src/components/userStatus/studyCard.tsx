@@ -3,9 +3,10 @@
 import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import { StyledLink } from '@/components/styleComponents/StyledLink';   
+import { StyledLink } from '../styleComponents/StyledLink';   
 import Typography from '@mui/material/Typography';
 import styles from './userStatus.module.css'
+import useUserStore from '../../services/zustand/userZustand/userStor';
 
 export type bookRowProp = {
   bookName: string;
@@ -13,16 +14,15 @@ export type bookRowProp = {
   sectionName: string;
 };
 
-
 const booksData: bookRowProp[] = [
   {
-    bookName: "הארי פוטר ואבן החכמים",
-    chapterName: "הארי פוטר מגלה את האמת",
-    sectionName: "הַבִּיטָה בְּעֵינַיִם הַיְּרוּקוֹת שֶׁלִּי",
+    bookName: "הארי פוטר  ",
+    chapterName: "  מגלה את האמת",
+    sectionName: "הַבִּיטָה בְּעֵינַיִם  ",
   },
   {
     bookName: "הHobbit",
-    chapterName: "An Unexpected Party",
+    chapterName: "An  Party",
     sectionName: "Bilbo Baggins",
   },
   {
@@ -31,33 +31,50 @@ const booksData: bookRowProp[] = [
     sectionName: "Chapter 1",
   },
   {
-    bookName: "Pride and Prejudice",
+    bookName: "Pride",
     chapterName: "Volume I",
     sectionName: "Chapter 1",
   },
   {
-    bookName: "The Lord of the Rings",
-    chapterName: "The Fellowship of the Ring",
+    bookName: "The Lord",
+    chapterName: "The Fellowship",
     sectionName: "Prologue",
   },
 ];
 
 export default function StudyCard() {
+  const user = useUserStore((state) => state.user);
+
   return (
-    <Card sx={{ maxWidth: 345 }}  className={styles.mycard}>
+    <Card className={styles.mycard}>
       <CardContent style={{ textAlign: 'center' }}>
         <Typography gutterBottom variant="h5" component="div">
           ספרים בלמידה
         </Typography>
-        {booksData.map(book =>
+        {user && user.books && user.books.length > 0 && (
+          user.books.map(book =>
+            {
+              return (
+                <StyledLink key={book.book_name}>
+                  <b>{book.book_name}</b>
+                  <div className='bg-black rounded-full absolute bottom-[-8px] left-[50%] w-[15px] h-[15px] z-10'></div>
+                  <p>{book.section_id} {book.chapter_id}</p> 
+                </StyledLink>
+              );
+            }
+          )
+        )}
+        {/* {booksData.map(book =>
           {
             return (
               <StyledLink key={book.bookName}>
-                {book.bookName} - {book.chapterName} - {book.sectionName}
+                <b>{book.bookName}</b>
+                <div className='bg-black rounded-full absolute bottom-[-8px] left-[50%] w-[15px] h-[15px] z-10'></div>
+                <p>{book.chapterName} {book.sectionName}</p> 
               </StyledLink>
             );
           }
-        )}
+        )} */}
       </CardContent>   
 
     </Card>
