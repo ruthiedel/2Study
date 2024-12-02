@@ -1,53 +1,73 @@
-import React, { useState } from 'react';
-import styles from './rating.module.css';
+import { useState } from "react";
+import Rating from "@mui/material/Rating";
+import styles from "./rating.module.css";
+import { updateBookRatingService } from "../../services/ratingService";
+import useUserStore from '../../services/zustand/userZustand/userStor';
 
-type RatingCardProps = {
-  bookId?: string;
-  onClose: () => void;
-  onSubmitRating: (rating: number) => void;
-};
 
-const RatingCard: React.FC<RatingCardProps> = ({ bookId, onClose, onSubmitRating }) => {
+interface RatingComponentProps {
+  bookId: string; 
+}
+
+const RatingComponent: React.FC<RatingComponentProps> = ({ bookId }) => {
+  const updateRating = useUserStore((state) => state.updateRating);
   const [rating, setRating] = useState<number | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isVisible, setIsVisible] = useState(true); 
 
-  const handleRatingChange = (value: number) => {
-    setRating(value);
-  };
-
-  const handleSubmit = () => {
+  const handleRatingSubmit = async () => {
     if (rating !== null) {
-      onSubmitRating(rating);
+      setIsSubmitting(true);
+      try {
+        await updateBookRatingService(bookId, rating); 
+        updateRating(bookId, rating);
+        alert("דירוג נשמר בהצלחה!");
+        setIsVisible(false); 
+      } catch (error) {
+        console.error("שגיאה בשמירת הדירוג:", error);
+        alert("אירעה שגיאה בשמירת הדירוג.");
+      } finally {
+        setIsSubmitting(false);
+      }
     }
   };
 
+  const handleCancel = () => {
+    setRating(null);
+    setIsVisible(false); // סגירת הקומפוננטה
+  };
+
+  if (!isVisible) return null; // אם הקומפוננטה סגורה, לא מציגים אותה
+
   return (
-    <div className={styles.container}>
-      <h2 className={styles.title}>דרג את הספר</h2>
-      <div className={styles.ratingOptions}>
-        {[1, 2, 3, 4, 5].map((value) => (
-          <button
-            key={value}
-            className={`${styles.ratingButton} ${rating === value ? styles.selected : ''}`}
-            onClick={() => handleRatingChange(value)}
-          >
-            {value}
-          </button>
-        ))}
-      </div>
-      <div className={styles.actions}>
-        <button className={styles.cancelButton} onClick={onClose}>
-          לא הפעם
-        </button>
+    <div className={styles.ratingContainer}>
+      <p className={styles.title}>דרג את הספר</p>
+      <Rating
+        name="book-rating"
+        value={rating}
+        precision={1}
+        onChange={(event, newValue) => setRating(newValue)}
+        disabled={isSubmitting}
+        className={styles.ratingStars}
+      />
+      <div className={styles.buttonsContainer}>
         <button
-          className={styles.submitButton}
-          onClick={handleSubmit}
-          disabled={rating === null}
+          className={`${styles.submitButton} ${rating === null ? styles.disabled : ""}`}
+          onClick={handleRatingSubmit}
+          disabled={isSubmitting || rating === null}
         >
           שלח דירוג
+        </button>
+        <button
+          className={styles.cancelButton}
+          onClick={handleCancel}
+          disabled={isSubmitting}
+        >
+          לא הפעם
         </button>
       </div>
     </div>
   );
 };
 
-export default RatingCard;
+export default RatingComponent;
