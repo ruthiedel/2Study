@@ -43,10 +43,10 @@ const Recommendations = () => {
     <div className={styles.container}>
       {localBooks.map((book) => {
         return (
-          <div className={styles.recommendcard} key={book.book_name}>
+          <div className={`${styles.recommendcard} fontFamily`} key={book.book_name}>
             <div>
-            <div className="text-sm mt-4">מומלץ בשבילך</div>
-              <div className="text-[8px]">
+            <div className="text-sm mt-4 fontFamily">מומלץ בשבילך🌟</div>
+              <div className="text-[8px] fontFamily">
                 מערכת ההמלצה שלנו חיפשה את הספר המתאים ביותר עבורך בהתבסס על
                 בחירות ודירוגים קודמים
               </div>

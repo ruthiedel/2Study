@@ -9,7 +9,7 @@ import StarIcon from "@mui/icons-material/Star";
 
 const Information = () => {
   const user = useUserStore((state) => state.user);
-  
+
   return (
     <Card className={styles.mycard}>
       <Box>
@@ -35,22 +35,24 @@ const Information = () => {
             </strong>
             <div className={styles.infobutto}>{user?.email}</div>
           </div>
-          {user?.age && user?.age > 0 && 
-          <div className={styles.infoContainer2}>
-            <strong>
-              <div>גיל:</div>
-            </strong>
-            <div className={styles.infobutto}>{user?.age}
+          {user?.age && user?.age > 0 &&
+            <div className={styles.infoContainer2}>
+              <strong>
+                <div>גיל:</div>
+              </strong>
+              <div className={styles.infobutto}>{user?.age}
+              </div>
             </div>
-          </div>
-           }
+          }
         </div>
 
         <Box className={styles.numOfBooksContainer}>
           {/* {user.books.sum(if(mark !== -1))} */}
           <Typography className={styles.numOfBooks}>
             <StarIcon className={styles.starIcon} />
-            {user?.books.length} ספרים בלמידה
+            <div className="fontFamily">
+              {user?.books.length} ספרים בלמידה
+            </div>
             <StarIcon className={styles.starIcon} />
           </Typography>
         </Box>

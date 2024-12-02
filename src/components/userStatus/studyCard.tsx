@@ -48,7 +48,7 @@ export default function StudyCard() {
   return (
     <Card className={styles.mycard}>
       <CardContent style={{ textAlign: 'center' }}>
-        <Typography gutterBottom variant="h5" component="div">
+        <Typography gutterBottom variant="h5" component="div" className='fontFamily'>
           ספרים בלמידה
         </Typography>
         {user && user.books && user.books.length > 0 && (
@@ -56,9 +56,9 @@ export default function StudyCard() {
             {
               return (
                 <StyledLink key={book.book_name}>
-                  <b>{book.book_name}</b>
+                  <b className='fontFamily'>{book.book_name}</b>
                   <div className='bg-black rounded-full absolute bottom-[-8px] left-[50%] w-[15px] h-[15px] z-10'></div>
-                  <p>{book.section_id} {book.chapter_id}</p> 
+                  <p className='fontFamily'>{book.section_id} {book.chapter_id}</p> 
                 </StyledLink>
               );
             }

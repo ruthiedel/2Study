@@ -1,4 +1,4 @@
-import { connectDatabase, getBookById } from '../../../../services/mongo/bookMongo';
+import { connectDatabase, fetchBookById } from '../../../../services/mongo/bookMongo';
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
@@ -13,7 +13,7 @@ export async function GET(request: Request) {
 
   try {
     const client = await connectDatabase();
-    const book = await getBookById(client, 'books', bookId);
+    const book = await fetchBookById(client, 'books', bookId);
 
     if (!book) {
       return NextResponse.json({ message: 'Book not found' }, { status: 404 });
