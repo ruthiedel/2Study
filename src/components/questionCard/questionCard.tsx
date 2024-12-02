@@ -70,7 +70,6 @@ const QuestionCard = (props:{p:Paragraph}) => {
                         marginBottom: "20px",
                     }}
                 />
-
                 <Button
                     variant="contained"
                     sx={{
@@ -83,6 +82,7 @@ const QuestionCard = (props:{p:Paragraph}) => {
                     שנה שאלה
                 </Button>
             </Box>
+
 
 
             <Box sx={{ flex: 1, paddingLeft: "20px" }}>
