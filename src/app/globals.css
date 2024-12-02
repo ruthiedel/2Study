@@ -17,6 +17,10 @@ body {
   font-family: '2StudyFont', sans-serif;
 }
 
+.fontFamily{
+  font-family: '2StudyFont', sans-serif;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
