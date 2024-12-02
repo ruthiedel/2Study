@@ -75,7 +75,7 @@ export const getSections = async (
     throw error; 
   }
 };
-export const saveBookRating = async (bookId: string, averageRating: number) => {
-  // קריאה לפונקציה לעדכון הדירוג של הספר
-  await updateBookRating(bookId, averageRating);
-}
+// export const saveBookRating = async (bookId: string, averageRating: number) => {
+//   // קריאה לפונקציה לעדכון הדירוג של הספר
+//   await updateBookRating(bookId, averageRating);
+// }
