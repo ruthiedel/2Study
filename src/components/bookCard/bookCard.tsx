@@ -73,10 +73,10 @@ const BookCard: React.FC<BookCardProps> = ({ book, onClose }) => {
                         variant="body1"
                         className={showMore ? styles.fullText : styles.truncatedText}
                     >
-                        {'להוסיף שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספר'}
+                        {book.firstParagraphText}
                     </Typography>
 
-                    {'להוסיף שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספר'.length > 100 && (
+                    {book.firstParagraphText && (book.firstParagraphText.length > 100) && (
                         <Button onClick={() => setShowMore(!showMore)} className={styles.readMoreButton}>
                             {showMore ? 'פחות' : 'קרא עוד'}
                         </Button>
