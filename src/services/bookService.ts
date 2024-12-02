@@ -41,11 +41,11 @@ export const getBooksByIds = async (ids: string[]): Promise<Book[]> => {
   };
   
 
-export const getNextChapter = (book: Book, currentChapterId: string): Chapter | null => {
-    try {
-      const currentChapterIndex = book.chapters.findIndex(
-        (chapter) => chapter._id === currentChapterId
-      );
+// export const getNextChapter = (book: Book, currentChapterId: string): Chapter | null => {
+//     try {
+//       const currentChapterIndex = book.chapters.findIndex(
+//         (chapter) => chapter._id === currentChapterId
+//       );
 
   
 //       if (currentChapterIndex === -1 || currentChapterIndex === book.chapters.length - 1) {
