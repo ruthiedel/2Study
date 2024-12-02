@@ -10,3 +10,13 @@ export const logInUser = async (user: Omit<User, '_id'>) => {
         throw error;
     }
 };
+
+export const addBookToUser = async (userId: string, bookId: string, bookName: string) => {
+    try {
+        const response = await http.patch(`/user/${userId}`, { bookId, bookName });
+        return response.data;
+    } catch (error) {
+        console.error("Error adding book to user:", error);
+        throw error;
+    }
+};

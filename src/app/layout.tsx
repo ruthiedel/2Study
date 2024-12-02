@@ -5,7 +5,6 @@ import { Metadata } from 'next';
 import RequireAuth from '../layout/RequireAuth';
 import {QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-
 // export const metadata: Metadata = {
 //   title: "2Stady",
 //   icons: {
