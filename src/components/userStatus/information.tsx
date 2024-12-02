@@ -21,31 +21,6 @@ const Information = () => {
         />
       </Box>
       <div className={styles.userbox}>
-        {/* <Box className={styles.infoContainer}>
-          <Box>
-            <div className={styles.infoContainer2}>
-              <Typography className={styles.info1}>שם: </Typography>
-              <Typography className={styles.infoButtonStyled}>
-                {user?.name}
-              </Typography>
-            </div>
-            <div className={styles.infoContainer2}>
-              <Typography className={styles.info1}>מייל: </Typography>
-              <Typography className={styles.infoButtonStyled}>
-                {user?.email}
-              </Typography>
-            </div>
-            <div className={styles.infoContainer2}>
-              {user?.age && user?.age > 0 && <Typography className={styles.info1}>גיל </Typography>}
-
-              {user?.age && user?.age > 0 && (
-                <Typography>
-                  {user?.age && user?.age > 0 ? user?.age : "אין גיל מעודכן"}
-                </Typography>
-              )}
-            </div>
-          </Box>
-        </Box> */}
 
         <div className={styles.infoContainerMain}>
           <div className={styles.infoContainer2}>
@@ -60,6 +35,15 @@ const Information = () => {
             </strong>
             <div className={styles.infobutto}>{user?.email}</div>
           </div>
+          {user?.age && user?.age > 0 && 
+          <div className={styles.infoContainer2}>
+            <strong>
+              <div>גיל:</div>
+            </strong>
+            <div className={styles.infobutto}>{user?.age}
+            </div>
+          </div>
+           }
         </div>
 
         <Box className={styles.numOfBooksContainer}>

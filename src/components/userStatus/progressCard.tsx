@@ -8,12 +8,6 @@ import styles from './userStatus.module.css'
 export default function ProgressCard() {
   return (
     <Card className={styles.mycard}>
-      {/* <CardMedia
-        component="img"
-        height="140"
-        image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCSLWVM0gEGq5ao5lDxgbYoCn0FyE5Ejkwig&s"
-        alt="green iguana"
-      /> */}
       <CardContent style={{ textAlign: 'center' }}>
         <Typography gutterBottom variant="h5" component="div">
           ההתקדמות שלך

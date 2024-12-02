@@ -42,8 +42,8 @@ export async function addUserBook(userId: string, bookId: string, bookName: stri
   const newUserBook: UserBook = {
     book_id: bookId,
     book_name: bookName,
-    chapter_id: '1',
-    section_id: '1',
+    chapter_id: 1,
+    section_id: 1,
     rate: 0,
   }
   await usersCollection.updateOne(
