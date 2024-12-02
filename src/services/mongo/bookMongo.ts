@@ -5,6 +5,8 @@ import path from 'path';
 let client: MongoClient;
 let clientPromise: Promise<MongoClient>;
 
+
+// חיבור לבסיס הנתונים
 export async function connectDatabase() {
   if (!client) {
     const dbConnectionString = process.env.PUBLIC_DB_CONNECTION;
@@ -17,7 +19,8 @@ export async function connectDatabase() {
   return clientPromise;
 }
 
-export async function getAllBooks(client: MongoClient, collection: string) {
+// שליפת כל הספרים
+export async function fetchAllBooks(client: MongoClient, collection: string) {
   const db = client.db('Books');
   const books = await db.collection(collection).aggregate([
     {
@@ -61,7 +64,6 @@ export async function getAllBooks(client: MongoClient, collection: string) {
     console.log("No books found.");
     return [];
   }
-
   const picturesPath = path.join(process.cwd(), 'public', 'pictures');
 
   const booksWithImages = await Promise.all(
@@ -85,8 +87,8 @@ export async function getAllBooks(client: MongoClient, collection: string) {
   return booksWithImages;
 }
 
-
-export async function getBookById(client: MongoClient, collection: string, bookId: string) {
+// שליפת ספר לפי ID
+export async function fetchBookById(client: MongoClient, collection: string, bookId: string) {
   const db = client.db('Books');
 
   const objectId = new ObjectId(bookId);
@@ -102,20 +104,14 @@ export async function getBookById(client: MongoClient, collection: string, bookI
   };
 }
 
-
-
-
-
-export async function getPartOgAllBooks(client: MongoClient, collection: string) {
+// שליפת חלק מהספרים
+export async function fetchPartialBooks(client: MongoClient, collection: string) {
   const db = client.db('Books');
 
   const books = await db
     .collection(collection)
-    .find({}, { projection: { chapters: 0 } }) 
+    .find({}, { projection: { chapters: 0 } })
     .toArray();
 
   return books;
 }
-
-
-

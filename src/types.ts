@@ -40,6 +40,7 @@ export type Book = {
     learningGroups?: LearningGroup;
     chapters_num: number;
     paragraphs_num: number;
+    rating?: number;
     firstParagraphText?: string;
     paragraphsCountPerChapter?: number[];
 }

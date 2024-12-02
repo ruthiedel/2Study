@@ -47,12 +47,12 @@ const BookCard: React.FC<BookCardProps> = ({ book, onClose }) => {
                         <Typography variant="body2" color="textSecondary" align="right" className={styles.text}>
                             {book.category.subject}
                         </Typography>
-                        <Image
+                        {/* <Image
                             src={image}
                             alt='garnisht'
                             width={280}
                             height={150}
-                        />
+                        /> */}
                         <Typography variant="body2" className={styles.text}>
                             <strong> פרקים: </strong>{book.chapters_num} | <strong> סעיפים: </strong>{book.paragraphs_num}
                         </Typography>
