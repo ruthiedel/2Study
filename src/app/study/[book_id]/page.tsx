@@ -28,8 +28,8 @@ const Study = () => {
                 });
             } else {
                 setMark({
-                    chapterId:1,
-                    paragraphId:1,
+                    chapterId: 1,
+                    paragraphId: 1,
                 });
             }
         }
@@ -59,11 +59,13 @@ const Study = () => {
             }
         }
     }, [mark]);
-    console.log(paragraph,"kkkkkkkkkkkkkkkkkk")
+    console.log(paragraph, "kkkkkkkkkkkkkkkkkk")
 
     return (
         <Box display="flex" height="100vh">
-            <ChapterSidebar selectedBookId={bookIdString} onBookSelect={() => { }} />
+            <ChapterSidebar selectedBookId={bookIdString} onSectionSelect={(chapterIndex, sectionIndex) => {
+                setMark({ chapterId: chapterIndex, paragraphId: sectionIndex });
+            }} />
             {mark && paragraph.length > 0 && <ShowParagraph paragraph={paragraph[0]} chapterTitle={numberToGematria(mark?.chapterId!)} />}
             <Chat />
             {paragraph.length > 0 &&
