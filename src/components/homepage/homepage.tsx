@@ -73,15 +73,6 @@ const Homepage = () => {
                 <button onClick={logout} className="mt-8 px-6 py-3 bg-gold text-black rounded-lg shadow hover:bg-opacity-80 transition">
                     Log Out
                 </button>
-                <ul>
-                    {data?.map((book) => (
-                        <li key={bookID++}>
-                            <Book book={book} />
-                        </li>
-                    ))}
-                </ul>
-                <FilterComponent />
-                <BookCard book={defaultBook}/>
             </main>
             </div>
 

@@ -46,17 +46,18 @@ export const getNextChapter = (book: Book, currentChapterId: string): Chapter | 
       const currentChapterIndex = book.chapters.findIndex(
         (chapter) => chapter._id === currentChapterId
       );
+
   
-      if (currentChapterIndex === -1 || currentChapterIndex === book.chapters.length - 1) {
-        return null; 
-      }
+//       if (currentChapterIndex === -1 || currentChapterIndex === book.chapters.length - 1) {
+//         return null; 
+//       }
   
-      return book.chapters[currentChapterIndex + 1];
-    } catch (error) {
-      console.error("Error finding the next chapter:", error);
-      throw error;
-    }
-  };
+//       return book.chapters[currentChapterIndex + 1];
+//     } catch (error) {
+//       console.error("Error finding the next chapter:", error);
+//       throw error;
+//     }
+//   };
 
 
 export const getSections = async (
@@ -74,3 +75,7 @@ export const getSections = async (
     throw error; 
   }
 };
+export const saveBookRating = async (bookId: string, averageRating: number) => {
+  // קריאה לפונקציה לעדכון הדירוג של הספר
+  await updateBookRating(bookId, averageRating);
+}

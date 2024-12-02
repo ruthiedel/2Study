@@ -51,22 +51,23 @@ const Recommendations = () => {
                 בחירות ודירוגים קודמים
               </div>
               <Book key={book.book_name}
-                book={{
-                  _id: undefined,
-                  name: "",
-                  author: "",
-                  category: {
-                    type: "",
-                    subject: "",
-                  },
-                  chapters: [],
-                  coverImage: "",
-                  users: undefined,
-                  learningGroups: undefined,
-                  chapters_num: 0,
-                  paragraphs_num: 0,
-                }}
-              ></Book>
+              book={{
+                _id: undefined,
+                name: "",
+                author: "",
+                category: {
+                  type: "",
+                  subject: "",
+                },
+                chapters: [],
+                coverImage: "",
+                learningGroups: undefined,
+                chapters_num: 0,
+                paragraphs_num: 0,
+              }} handleClick={function (book: BookType): void {
+                console.log("write me!!");
+              } }              >
+                </Book> 
             </div>
           </div>
         );

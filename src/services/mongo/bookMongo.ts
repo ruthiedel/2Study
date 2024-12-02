@@ -5,6 +5,8 @@ import path from 'path';
 let client: MongoClient;
 let clientPromise: Promise<MongoClient>;
 
+
+// חיבור לבסיס הנתונים
 export async function connectDatabase() {
   if (!client) {
     const dbConnectionString = process.env.PUBLIC_DB_CONNECTION;
@@ -17,14 +19,51 @@ export async function connectDatabase() {
   return clientPromise;
 }
 
-export async function getAllBooks(client: MongoClient, collection: string) {
+// שליפת כל הספרים
+export async function fetchAllBooks(client: MongoClient, collection: string) {
   const db = client.db('Books');
+  const books = await db.collection(collection).aggregate([
+    {
+      $project: {
+        name: 1,
+        author: 1, 
+        category: 1, 
+        chapters_num: 1, 
+        paragraphs_num: 1, 
+        coverImage: 1, 
+        firstParagraphText: {
+          $arrayElemAt: [
+            { $ifNull: [{ $arrayElemAt: ["$chapters.paragraphs", 0] }, null] },
+            0
+          ] 
+        },
+        paragraphsCountPerChapter: {
+          $map: {
+            input: "$chapters", 
+            as: "chapter",
+            in: { $size: "$$chapter.paragraphs" } 
+          }
+        }
+      }
+    },
+    {
+      $project: {
+        name: 1,
+        author: 1,
+        category: 1,
+        chapters_num: 1,
+        paragraphs_num: 1,
+        coverImage: 1,
+        firstParagraphText: "$firstParagraphText.text", 
+        paragraphsCountPerChapter: 1 
+      }
+    }
+  ]).toArray();
 
-  const books = await db
-    .collection(collection)
-    .find({}, { projection: { chapters: 0 } }) 
-    .toArray();
-
+  if (!books || books.length === 0) {
+    console.log("No books found.");
+    return [];
+  }
   const picturesPath = path.join(process.cwd(), 'public', 'pictures');
 
   const booksWithImages = await Promise.all(
@@ -36,21 +75,20 @@ export async function getAllBooks(client: MongoClient, collection: string) {
         const imageBuffer = await fs.readFile(imagePath);
         coverImageBlob = `data:image/jpeg;base64,${imageBuffer.toString('base64')}`;
       } catch (error) {
-        console.error(`Image not found for book: ${book.book_name}`);
+        console.error(`Image not found for book: ${book.coverImage}`);
+        coverImageBlob = ''; 
       }
-
       return {
-        ...book,
-        coverImage: coverImageBlob,
+        ...book, 
+        coverImage: coverImageBlob, 
       };
     })
   );
-
   return booksWithImages;
 }
 
-
-export async function getBookById(client: MongoClient, collection: string, bookId: string) {
+// שליפת ספר לפי ID
+export async function fetchBookById(client: MongoClient, collection: string, bookId: string) {
   const db = client.db('Books');
 
   const objectId = new ObjectId(bookId);
@@ -65,6 +103,7 @@ export async function getBookById(client: MongoClient, collection: string, bookI
     ...book,
   };
 }
+
 
 export async function updateBook(client: MongoClient, collection: string, bookId: string, updatedData: Partial<Record<string, any>> ) {
   const db = client.db('Books');
@@ -90,16 +129,14 @@ export async function updateBook(client: MongoClient, collection: string, bookId
   };
 }
 
-export async function getPartOgAllBooks(client: MongoClient, collection: string) {
+
+export async function fetchPartialBooks(client: MongoClient, collection: string) {
   const db = client.db('Books');
 
   const books = await db
     .collection(collection)
-    .find({}, { projection: { chapters: 0 } }) 
+    .find({}, { projection: { chapters: 0 } })
     .toArray();
 
   return books;
 }
-
-
-

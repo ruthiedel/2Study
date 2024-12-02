@@ -1,5 +1,5 @@
-import { MongoClient } from 'mongodb';
-import { User } from '../../types';
+import { MongoClient, ObjectId } from 'mongodb';
+import { User, UserBook } from '../../types';
 
 let client: MongoClient;
 let clientPromise: Promise<MongoClient>;
@@ -27,4 +27,29 @@ export async function checkAndAddUser(user: Omit<User, '_id'>) {
     return { status: 201, message: 'User added successfully' };
   }
   return { status: 200, message: 'User already exists' };
+}
+
+export async function addUserBook(userId: string, bookId: string, bookName: string) {
+  const client = await connectDatabase();
+  const db = client.db('Books');
+  const usersCollection = db.collection('users');
+
+  const user = await usersCollection.findOne({ _id: new ObjectId(userId) });
+  if (!user) {
+    return {status: 404, message: 'User not found' };
+  }
+
+  const newUserBook: UserBook = {
+    book_id: bookId,
+    book_name: bookName,
+    chapter_id: 1,
+    section_id: 1,
+    rate: 0,
+  }
+  await usersCollection.updateOne(
+    { _id: new ObjectId(userId) },
+    { $addToSet: { books: { $each: [newUserBook] } } as any }
+  );
+
+  return { status: 200, message: 'Book added to user successfully' };
 }

@@ -2,11 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
 @font-face {
   font-family: '2StudyFont'; 
-  src: url('../public//fonts/yarden-regular-alefalefalef.woff2') format('woff2');
+  src: url('../../public/yarden-regular-alefalefalef.woff2') format('woff2');
   font-weight: normal;
   font-style: normal;
 }

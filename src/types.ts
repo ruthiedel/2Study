@@ -2,8 +2,10 @@ export type Paragraph = {
     _id?: string;
     text: string;
     questions: Question[];
+    ParagraphId?: string;
 }
-type Question ={
+
+type Question = {
     question :string;
     answer: string;
 }
@@ -18,6 +20,7 @@ type Message = {
     text: string;
     time: Date;
 }
+
 type LearningGroupUser = {
     userId: string;
     userName: string;
@@ -32,18 +35,20 @@ export type Book = {
     name: string;
     author: string;
     category: category;
-    chapters: Chapter[];
+    chapters?: Chapter[];
     coverImage: string;
-    users?: string;
     learningGroups?: LearningGroup;
     chapters_num: number;
     paragraphs_num: number;
+    rating?: number;
+    firstParagraphText?: string;
+    paragraphsCountPerChapter?: number[];
 }
 export type UserBook = {
     book_id: string;
     book_name: string;
-    chapter_id: string;
-    section_id: string;
+    chapter_id: number;
+    section_id: number;
     rate: number;
 }
 type LearningGroup = {
