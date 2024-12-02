@@ -7,4 +7,7 @@ export { default as Homepage } from './homepage/homepage';
 export { default as Loading } from './loading/loadingSpiner';
 export { default as Login } from './Login/Login';
 export { default as QuestionCard } from './questionCard/questionCard';
+export { default as Chat } from './Chat/Chat';
+export { default as ShowParagraph } from './ShowParagraph/ShowParagraph';
+export { default as ChapterSidebar } from './ChapterSideBar/ChapterSideBar';
 export { default as UserContainer } from './userStatus/userContainer';
