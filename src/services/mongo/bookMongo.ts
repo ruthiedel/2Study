@@ -5,7 +5,6 @@ import path from 'path';
 let client: MongoClient;
 let clientPromise: Promise<MongoClient>;
 
-
 export async function connectDatabase() {
   if (!client) {
     const dbConnectionString = process.env.PUBLIC_DB_CONNECTION;
@@ -63,7 +62,6 @@ export async function fetchAllBooks(client: MongoClient, collection: string) {
     console.log("No books found.");
     return [];
   }
-
   const picturesPath = path.join(process.cwd(), 'public', 'pictures');
 
   const booksWithImages = await Promise.all(
