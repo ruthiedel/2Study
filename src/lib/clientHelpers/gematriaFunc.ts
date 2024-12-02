@@ -9,7 +9,9 @@ export default function numberToGematria(num: number): string {
     let index = 0;
     while (num > 0) {
         const digit = num % 10;
-        result = gematriaMap[index][digit - 1] + result;
+        if (digit !== 0) {
+            result = gematriaMap[index][digit - 1] + result;
+        }
         num = Math.floor(num / 10);
         index++;
     }
