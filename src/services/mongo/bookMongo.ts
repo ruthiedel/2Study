@@ -82,9 +82,6 @@ export async function getAllBooks(client: MongoClient, collection: string) {
       };
     })
   );
-
-  console.log("Books with images, first paragraph text, and paragraphs count:", booksWithImages);
-
   return booksWithImages;
 }
 
