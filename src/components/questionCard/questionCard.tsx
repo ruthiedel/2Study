@@ -15,9 +15,9 @@ const QuestionCard = (props:{p:Paragraph}) => {
     useEffect(() => {
         const fetchQuestionAndAnswer = async () => {
             if (props.p.questions.length === 0) {
-                const { question, answer } = await generateQuestionAndAnswer(props.p.text);
-                // עדכון הסטייט או הטיפול בנתונים
-                console.log("שאלה:", question, "תשובה:", answer);
+                // const { question, answer } = await generateQuestionAndAnswer(props.p.text);
+                // // עדכון הסטייט או הטיפול בנתונים
+                // console.log("שאלה:", question, "תשובה:", answer);
             }
         };
         console.log(props,"j")
