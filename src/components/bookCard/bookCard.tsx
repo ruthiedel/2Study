@@ -1,3 +1,4 @@
+'use client'
 import React, { useState } from 'react';
 import { Card, Grid, IconButton, Button, Typography, Box, Rating } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
@@ -13,6 +14,11 @@ type BookCardProps = {
 
 const BookCard: React.FC<BookCardProps> = ({ book, onClose }) => {
     const [showMore, setShowMore] = useState(false);
+
+
+    const handleReadMore = () => {
+        window.location.href = `study/${book._id}`;
+    };
 
     return (
         <Card className={styles.bookCard}>
@@ -60,7 +66,7 @@ const BookCard: React.FC<BookCardProps> = ({ book, onClose }) => {
                         variant="body1"
                         className={styles.ttext}
                     >
-                        <strong>הצצה לספר:</strong> 
+                        <strong>הצצה לספר:</strong>
                     </Typography>
 
                     <Typography
@@ -77,7 +83,7 @@ const BookCard: React.FC<BookCardProps> = ({ book, onClose }) => {
                     )}
 
                     <Grid item xs={12}>
-                        <Button variant="contained" className={styles.learnButton}>
+                        <Button variant="contained" className={styles.learnButton} onClick={handleReadMore}>
                             אני רוצה ללמוד ←
                         </Button>
                     </Grid>

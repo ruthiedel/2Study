@@ -2,8 +2,10 @@ export type Paragraph = {
     _id?: string;
     text: string;
     questions: Question[];
+    ParagraphId?: string;
 }
-type Question ={
+
+type Question = {
     question :string;
     answer: string;
 }
@@ -18,6 +20,7 @@ type Message = {
     text: string;
     time: Date;
 }
+
 type LearningGroupUser = {
     userId: string;
     userName: string;
