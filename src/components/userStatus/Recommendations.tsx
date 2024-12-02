@@ -61,7 +61,6 @@ const Recommendations = () => {
                 },
                 chapters: [],
                 coverImage: "",
-                users: undefined,
                 learningGroups: undefined,
                 chapters_num: 0,
                 paragraphs_num: 0,
