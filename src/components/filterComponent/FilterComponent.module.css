@@ -7,8 +7,9 @@
     flex-direction: column;
     gap: 16px;
     color: #000;
-    max-width: 250px; /* כדי למנוע הרחבה מעבר לרוחב המוגדר */
+    max-width: 250px;
     box-sizing: border-box;
+    height: 100%;
 }
 
 .title .bigTitle {

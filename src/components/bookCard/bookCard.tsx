@@ -1,22 +1,28 @@
+'use client'
 import React, { useState } from 'react';
 import { Card, Grid, IconButton, Button, Typography, Box, Rating } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import Image from 'next/image';
 import styles from './bookCard.module.css';
-//import image from "@/pictures/easy.jpg";
-
-import { Book } from '@/types';
+import image from '../../../public/pictures/garnisht.png'
+import { Book } from '../../types';
 
 type BookCardProps = {
     book: Book;
+    onClose: () => void;
 };
 
-const BookCard: React.FC<BookCardProps> = ({ book }) => {
+const BookCard: React.FC<BookCardProps> = ({ book, onClose }) => {
     const [showMore, setShowMore] = useState(false);
+
+
+    const handleReadMore = () => {
+        window.location.href = `study/${book._id}`;
+    };
 
     return (
         <Card className={styles.bookCard}>
-            <IconButton className={styles.closeButton} aria-label="close">
+            <IconButton className={styles.closeButton} aria-label="close" onClick={onClose}>
                 <CloseIcon />
             </IconButton>
             <div className={styles.container}>
@@ -52,7 +58,7 @@ const BookCard: React.FC<BookCardProps> = ({ book }) => {
                         </Typography>
 
                         <Box className={styles.starsContainer}>
-                            <Rating value={2} readOnly sx={{ color: '#F3F25B' }} />
+                            <Rating value={2.3} readOnly sx={{ color: '#F3F25B' }} />
                         </Box>
                     </Grid>
 
@@ -60,7 +66,7 @@ const BookCard: React.FC<BookCardProps> = ({ book }) => {
                         variant="body1"
                         className={styles.ttext}
                     >
-                        <strong>הצצה לספר:</strong> 
+                        <strong>הצצה לספר:</strong>
                     </Typography>
 
                     <Typography
@@ -77,7 +83,7 @@ const BookCard: React.FC<BookCardProps> = ({ book }) => {
                     )}
 
                     <Grid item xs={12}>
-                        <Button variant="contained" className={styles.learnButton}>
+                        <Button variant="contained" className={styles.learnButton} onClick={handleReadMore}>
                             אני רוצה ללמוד ←
                         </Button>
                     </Grid>

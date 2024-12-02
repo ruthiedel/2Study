@@ -5,9 +5,9 @@ import { AppBar, Toolbar, IconButton, Button, Menu, MenuItem, Box } from "@mui/m
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Link from "next/link";
 import Image from "next/image";
-import logo from "@/../public/pictures/צילום מסך 2024-11-24 141224 (1).png";
+import logo from "../../../public/pictures/logo1.png";
 import styles from "./header.module.css";
-import useUserStore from "@/services/zustand/userZustand/userStor";
+import useUserStore from '../../services/zustand/userZustand/userStor';
 
 const Header: React.FC = () => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -47,7 +47,7 @@ const Header: React.FC = () => {
                     <Link href="/about" passHref>
                         <Button className={styles.navButton}>אודות</Button>
                     </Link>
-                    <Link href="/catalog" passHref>
+                    <Link href="/bookCatalog" passHref>
                         <Button className={styles.navButton}>קטלוג ספרים</Button>
                     </Link>
                 </Box>
@@ -67,7 +67,7 @@ const Header: React.FC = () => {
                     onClose={handleMenuClose}
                     className={styles.menu}
                 >
-                    <MenuItem onClick={handleMenuClose}>איזור אישי</MenuItem>
+                    <Link href='/userDashboard' passHref><MenuItem onClick={handleMenuClose}>איזור אישי</MenuItem></Link>
                     <MenuItem onClick={handleLogout}>התנתקות</MenuItem>
                 </Menu>
             </Toolbar>

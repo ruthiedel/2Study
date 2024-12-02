@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { sendMail } from '@/services/mailService';
-import { Mail } from '@/types';
-import logo from "@/../public/pictures/צילום מסך 2024-11-24 141224 (1).png";
+import logo from "../../../public/pictures/logo1.png";
+import { Mail } from '../../types';
 import Image from "next/image";
 import styles from './ContactForm.module.css';
 

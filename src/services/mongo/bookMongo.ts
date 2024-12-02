@@ -6,60 +6,6 @@ let client: MongoClient;
 let clientPromise: Promise<MongoClient>;
 
 
-// פונקציה לעדכון דירוג של ספר
-export async function updateBookRating(bookId: string, newRating: number) {
-  const db = await connectDatabase();
-  const booksCollection = db.collection('books');
-  const ratingsCollection = db.collection('ratings');
-
-  // המרת bookId ל-ObjectId
-  const objectId = new ObjectId(bookId);
-
-  // שליפת כל הדירוגים של הספר
-  const ratings = await ratingsCollection.find({ bookId: objectId }).toArray();
-
-  // אם אין דירוגים קיימים, הוסף את הדירוג החדש ועדכן את הספר
-  if (ratings.length === 0) {
-    await ratingsCollection.insertOne({
-      bookId: objectId,
-      rating: newRating,
-    });
-
-    await booksCollection.updateOne(
-      { _id: objectId },
-      {
-        $set: {
-          rating: newRating,
-          rating_num: 1, // דירוג ראשון
-        },
-      }
-    );
-
-    return;
-  }
-
-  // אם יש דירוגים קיימים, חשב ממוצע דירוגים חדש ועדכן את הספר
-  const totalRatings = ratings.length + 1; // מספר דירוגים כולל הדירוג החדש
-  const averageRating =
-    (ratings.reduce((acc, r) => acc + r.rating, 0) + newRating) / totalRatings;
-
-  await ratingsCollection.insertOne({
-    bookId: objectId,
-    rating: newRating,
-  });
-
-  await booksCollection.updateOne(
-    { _id: objectId },
-    {
-      $set: {
-        rating: averageRating,
-        rating_num: totalRatings,
-      },
-    }
-  );
-}
-
-// פונקציה לחיבור למסד הנתונים
 export async function connectDatabase() {
   if (!client) {
     const dbConnectionString = process.env.PUBLIC_DB_CONNECTION;
@@ -69,30 +15,54 @@ export async function connectDatabase() {
     client = new MongoClient(dbConnectionString);
     clientPromise = client.connect();
   }
-  return (await clientPromise).db('Books'); 
+  return clientPromise;
 }
-
-// חיבור לבסיס הנתונים
-// export async function connectDatabase() {
-//   if (!client) {
-//     const dbConnectionString = process.env.PUBLIC_DB_CONNECTION;
-//     if (!dbConnectionString) {
-//       throw new Error('Database connection string is not defined');
-//     }
-//     client = new MongoClient(dbConnectionString);
-//     clientPromise = client.connect();
-//   }
-//   return clientPromise;
-// }
 
 // שליפת כל הספרים
 export async function fetchAllBooks(client: MongoClient, collection: string) {
   const db = client.db('Books');
+  const books = await db.collection(collection).aggregate([
+    {
+      $project: {
+        name: 1,
+        author: 1, 
+        category: 1, 
+        chapters_num: 1, 
+        paragraphs_num: 1, 
+        coverImage: 1, 
+        firstParagraphText: {
+          $arrayElemAt: [
+            { $ifNull: [{ $arrayElemAt: ["$chapters.paragraphs", 0] }, null] },
+            0
+          ] 
+        },
+        paragraphsCountPerChapter: {
+          $map: {
+            input: "$chapters", 
+            as: "chapter",
+            in: { $size: "$$chapter.paragraphs" } 
+          }
+        }
+      }
+    },
+    {
+      $project: {
+        name: 1,
+        author: 1,
+        category: 1,
+        chapters_num: 1,
+        paragraphs_num: 1,
+        coverImage: 1,
+        firstParagraphText: "$firstParagraphText.text", 
+        paragraphsCountPerChapter: 1 
+      }
+    }
+  ]).toArray();
 
-  const books = await db
-    .collection(collection)
-    .find({}, { projection: { chapters: 0 } }) // הסרת פרטי הפרקים
-    .toArray();
+  if (!books || books.length === 0) {
+    console.log("No books found.");
+    return [];
+  }
 
   const picturesPath = path.join(process.cwd(), 'public', 'pictures');
 
@@ -105,16 +75,15 @@ export async function fetchAllBooks(client: MongoClient, collection: string) {
         const imageBuffer = await fs.readFile(imagePath);
         coverImageBlob = `data:image/jpeg;base64,${imageBuffer.toString('base64')}`;
       } catch (error) {
-        console.error(`Image not found for book: ${book.book_name}`);
+        console.error(`Image not found for book: ${book.coverImage}`);
+        coverImageBlob = ''; 
       }
-
       return {
-        ...book,
-        coverImage: coverImageBlob,
+        ...book, 
+        coverImage: coverImageBlob, 
       };
     })
   );
-
   return booksWithImages;
 }
 

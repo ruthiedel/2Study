@@ -1,7 +1,8 @@
 'use client'
 import React from 'react';
-import UserContainer from '@/components/userStatus/userContainer'
-const Dashboard = () => {
+import { UserContainer } from '../../components';
+
+const UserDashboard = () => {
 
   return (
     
@@ -11,4 +12,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default UserDashboard;

@@ -1,4 +1,4 @@
-import { connectDatabase, getBookById } from "@/services/mongo/bookMongo";
+import { connectDatabase, getBookById } from '../../../../services/mongo/bookMongo';
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {

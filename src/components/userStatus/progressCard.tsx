@@ -2,18 +2,12 @@ import * as React from "react";
 import BarChartIcon from '@mui/icons-material/BarChart';
 import ForwardToInboxIcon from '@mui/icons-material/ForwardToInbox';
 import PeopleIcon from '@mui/icons-material/People';
-import { Card, CardContent, Button, Link, ListItemIcon, Typography, List, ListItem, ListItemText } from "@mui/material";
+import { Card, CardContent, ListItemIcon, Typography, List, ListItem, ListItemText } from "@mui/material";
 import styles from './userStatus.module.css'
 
 export default function ProgressCard() {
   return (
-    <Card sx={{ maxWidth: 345 }} className={styles.mycard}>
-      {/* <CardMedia
-        component="img"
-        height="140"
-        image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCSLWVM0gEGq5ao5lDxgbYoCn0FyE5Ejkwig&s"
-        alt="green iguana"
-      /> */}
+    <Card className={styles.mycard}>
       <CardContent style={{ textAlign: 'center' }}>
         <Typography gutterBottom variant="h5" component="div">
           ההתקדמות שלך

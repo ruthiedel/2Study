@@ -1,8 +1,8 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { auth } from "@/lib/firebase";
+import { auth } from '../../../lib/firebase';
 import { signOut } from "firebase/auth";
-import { User } from "@/types";
+import { User } from '../../../types';
 
 export type UserStore = {
   user: User | null;

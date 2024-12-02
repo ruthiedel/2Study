@@ -1,4 +1,4 @@
-import { Book, UserBook } from "@/types";
+import { Book, UserBook } from "../../types";
 
 export const getBookCategoriesCount = (books: Book[]): Record<string, number> => {
   const categoryCount: Record<string, number> = {};
