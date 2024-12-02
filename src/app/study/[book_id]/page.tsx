@@ -24,27 +24,36 @@ import { useParams } from 'next/navigation'; const Study = () => {
             }
         }
     }, [book_id]);
-
+    // console.log(paragraph[1])
     useEffect(() => {
-        if (mark && book_id) {
+       
+        
+        if (mark ) {
             const validBookId = Array.isArray(book_id) ? book_id[0] : book_id;
-
+    
             if (typeof validBookId === 'string') {
                 getSections(validBookId, mark.chapterId, mark.paragraphId).then((response) => {
-                    const sections = response.sections;
-                    const relevantParagraphs = sections.filter((section: { paragraphId: number; }) => section.paragraphId === mark.paragraphId);
-                    setParagraph(relevantParagraphs);
+                    setParagraph(response.sections);
                 });
             }
         }
-    }, [mark, book_id]);
+        else{
+            const validBookId = Array.isArray(book_id) ? book_id[0] : book_id;
+    
+            if (typeof validBookId === 'string') {
+                getSections(validBookId, 1, 1).then((response) => {
+                    setParagraph([...response.sections]);
+
+                });
+            }
+        }
+    }, [mark]);
 
     return (
 
         <div>
-            <QuestionCard p={paragraph[1]} />
-
-
+            {paragraph.length > 0 &&
+            <QuestionCard p={paragraph[1]} />}
         </div>
     );
 };

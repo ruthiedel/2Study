@@ -9,8 +9,9 @@ const QuestionCard = (props:{p:Paragraph}) => {
     const [isQuestionOpen, setIsQuestionOpen] = useState(true); 
     const [isAnswerOpen, setIsAnswerOpen] = useState(false); 
     const [idxQuestion,setIdxQuestion] = useState(0);
-   
+    console.log(props,"j")
 
+   
     useEffect(() => {
         const fetchQuestionAndAnswer = async () => {
             if (props.p.questions.length === 0) {
@@ -19,7 +20,7 @@ const QuestionCard = (props:{p:Paragraph}) => {
                 console.log("שאלה:", question, "תשובה:", answer);
             }
         };
-    
+        console.log(props,"j")
         fetchQuestionAndAnswer();
     }, []);
     useEffect(() => {
@@ -34,6 +35,8 @@ const QuestionCard = (props:{p:Paragraph}) => {
         fetchQuestionAndAnswer();
     }, [idxQuestion]);
     return (
+        <>
+        {props.p.questions.length>0 &&
         <Box
             sx={{
                 display: "flex",
@@ -103,7 +106,7 @@ const QuestionCard = (props:{p:Paragraph}) => {
                             שאלה לתרגול:
                         </Typography>
                     </div>
-                    {isQuestionOpen && (
+                    {isQuestionOpen && props.p&& (
                         <TextField
                             fullWidth
                             value={props.p.questions[idxQuestion].question}
@@ -138,7 +141,7 @@ const QuestionCard = (props:{p:Paragraph}) => {
                             חשוף את התשובה:
                         </Typography>
                     </div>
-                    {isAnswerOpen && (
+                    {isAnswerOpen && props.p && (
                         <TextField
                             fullWidth
                             value={props.p.questions[idxQuestion].answer}
@@ -155,8 +158,10 @@ const QuestionCard = (props:{p:Paragraph}) => {
                         />
                     )}
                 </Box>
+                
             </Box>
-        </Box>
+        </Box>}
+        </>
     );
 };
 
