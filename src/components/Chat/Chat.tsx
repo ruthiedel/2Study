@@ -1,8 +1,9 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import Pusher from 'pusher-js';
-import useUserStore, { UserStore } from '../../services/zustand/userZustand/userStor';
+import useUserStore from '../../services/zustand/userZustand/userStor';
 import { User } from '../../types';
+import ChatStyles from './Chat.module.css'; 
 
 interface Message {
   username: string;
@@ -12,12 +13,19 @@ interface Message {
 
 const Chat = ({ bookId }: { bookId: string }) => {
   const user: User | null = useUserStore((state) => state.user);
-
-
   const [messages, setMessages] = useState<Message[]>([]);
   const [message, setMessage] = useState('');
+  const [isSending, setIsSending] = useState(false);
 
   useEffect(() => {
+    const fetchMessages = async () => {
+      const res = await fetch(`/api/chat/?bookId=${bookId}`);
+      const data = await res.json();
+      setMessages(data);
+    };
+
+    fetchMessages();
+
     const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY!, {
       cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER!,
     });
@@ -33,105 +41,63 @@ const Chat = ({ bookId }: { bookId: string }) => {
   }, [bookId]);
 
   const sendMessage = async () => {
-    if(user){
-    if (message.trim() === '') return;
+    if (!user || message.trim() === '' || isSending) return;
 
+    setIsSending(true); // חסימת הכפתור
     await fetch('/api/chat', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ message, username: user.name, bookId, userId: user._id })    });
+      body: JSON.stringify({
+        message,
+        username: user.name,
+        bookId,
+        timestamp: new Date().toISOString(),
+      }),
+    });
 
-    setMessage('');
-  }
+    setMessage(''); // ריקון האינפוט
+    setIsSending(false); // שחרור הכפתור
   };
 
   return (
-    <div style={styles.container}>
-      <div style={styles.header}>קבוצת לימוד - שם הספר</div>
-      <div style={styles.messages}>
+    <div className={ChatStyles.container}>
+      <div className={ChatStyles.header}>קבוצת לימוד - שם הספר</div>
+      <div className={ChatStyles.messages}>
         {messages.map((msg, index) => (
-          <div key={index} style={{ ...styles.message, ...(msg.username === user!.name ? styles.selfMessage : {}) }}>
-            <div style={styles.username}>{msg.username}</div>
-            <div style={styles.text}>{msg.message}</div>
-            <div style={styles.timestamp}>{msg.timestamp}</div>
+          <div
+            key={index}
+            className={`${ChatStyles.message} ${
+              msg.username === user?.name ? ChatStyles.selfMessage : ''
+            }`}
+          >
+            <div className={ChatStyles.username}>{msg.username}</div>
+            <div className={ChatStyles.text}>{msg.message}</div>
+            <div className={ChatStyles.timestamp}>
+              {new Date(msg.timestamp).toLocaleTimeString()}
+            </div>
           </div>
         ))}
       </div>
-      <div style={styles.inputContainer}>
+      <div className={ChatStyles.inputContainer}>
         <input
           type="text"
-          placeholder="כתוב הודעה..."
           value={message}
+          placeholder="כתוב הודעה..."
           onChange={(e) => setMessage(e.target.value)}
-          style={styles.input}
+          className={ChatStyles.input}
         />
-        <button onClick={sendMessage} style={styles.sendButton}>שלח</button>
+        <button
+          onClick={sendMessage}
+          className={ChatStyles.sendButton}
+          disabled={isSending}
+        >
+          {isSending ? 'שולח...' : 'שלח'}
+        </button>
       </div>
     </div>
   );
 };
 
-const styles = {
-  container: {
-    display: 'flex',
-    flexDirection: 'column' as 'column',
-    height: '100vh',
-    backgroundColor: '#f5f5f5',
-  },
-  header: {
-    backgroundColor: '#333',
-    color: 'white',
-    padding: '10px',
-    textAlign: 'center' as 'center',
-  },
-  messages: {
-    flex: 1,
-    overflowY: 'auto' as 'auto',
-    padding: '10px',
-  },
-  message: {
-    marginBottom: '15px',
-    textAlign: 'left' as 'left',
-  },
-  selfMessage: {
-    textAlign: 'right' as 'right',
-  },
-  username: {
-    fontWeight: 'bold' as 'bold',
-  },
-  text: {
-    backgroundColor: '#e0e0e0',
-    padding: '10px',
-    borderRadius: '10px',
-    display: 'inline-block',
-  },
-  timestamp: {
-    fontSize: '0.8em',
-    color: 'gray',
-    marginTop: '5px',
-  },
-  inputContainer: {
-    display: 'flex',
-    padding: '10px',
-  },
-  input: {
-    flex: 1,
-    padding: '10px',
-    border: '1px solid #ccc',
-    borderRadius: '5px',
-  },
-  sendButton: {
-    padding: '10px',
-    backgroundColor: '#333',
-    color: 'white',
-    border: 'none',
-    borderRadius: '5px',
-    marginLeft: '5px',
-    cursor: 'pointer',
-  },
-};
-
 export default Chat;
-
