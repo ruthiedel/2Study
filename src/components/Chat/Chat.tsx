@@ -1,65 +1,98 @@
-'use client';
+"use client";
 import React, { useState, useEffect } from 'react';
 import Pusher from 'pusher-js';
+import { useUpdateBook, getBooks } from '../../hooks/booksDetails';
+import { User, Message } from '../../types';
+import ChatStyles from './Chat.module.css';
 import useUserStore from '../../services/zustand/userZustand/userStor';
-import { User } from '../../types';
-import ChatStyles from './Chat.module.css'; 
-
-interface Message {
-  username: string;
-  message: string;
-  timestamp: string;
-}
 
 const Chat = ({ bookId }: { bookId: string }) => {
   const user: User | null = useUserStore((state) => state.user);
+  const { data: books } = getBooks();
+  const updateBookMutation = useUpdateBook();
+
   const [messages, setMessages] = useState<Message[]>([]);
   const [message, setMessage] = useState('');
   const [isSending, setIsSending] = useState(false);
 
   useEffect(() => {
-    const fetchMessages = async () => {
-      const res = await fetch(`/api/chat/?bookId=${bookId}`);
-      const data = await res.json();
-      setMessages(data);
-    };
-
-    fetchMessages();
-
     const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY!, {
       cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER!,
     });
 
-    const channel = pusher.subscribe(`chat-${bookId}`);
+    if(books){
+    const selectedBook =books.find(book => book._id==bookId)
+    if(selectedBook&&selectedBook.learningGroups&&selectedBook.learningGroups.message){
+    setMessages([...selectedBook?.learningGroups.message])
+    }
+    else{
+    console.log("No learningGroups", selectedBook)
+    }
+   }
+   else{
+    console.log("No books")
+   }
+            const channel = pusher.subscribe(`chat-${bookId}`);
     channel.bind('message', (data: Message) => {
-      setMessages((prevMessages) => [...prevMessages, data]);
+      setMessages((prevMessages) => {
+          return [...prevMessages, data];
+        
+      });
     });
-
+  
     return () => {
       pusher.unsubscribe(`chat-${bookId}`);
     };
-  }, [bookId]);
+  }, [books]);
 
   const sendMessage = async () => {
     if (!user || message.trim() === '' || isSending) return;
 
-    setIsSending(true); // חסימת הכפתור
-    await fetch('/api/chat', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        message,
-        username: user.name,
-        bookId,
-        timestamp: new Date().toISOString(),
-      }),
-    });
+    const newMessage: Message = {
+      _id: '', // יווצר בשרת
+      bookId,
+      username: user.name,
+      message: message,
+      timestamp: new Date(),
+    };
 
-    setMessage(''); // ריקון האינפוט
-    setIsSending(false); // שחרור הכפתור
+    setIsSending(true);
+    try {
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          message: newMessage.message,
+          username: user.name,
+          bookId,
+        }),
+      });
+      console.log(res)
+      if (res.ok) {
+        const savedMessage: Message = await res.json();
+        console.log('Message sent successfully', savedMessage);
+
+        updateBookMutation.mutate({
+          id: bookId,
+          updatedData: {
+            learningGroups: {
+              message: [...messages, savedMessage],
+            },
+          },
+        });
+      } else {
+        console.error('Error sending message');
+      }
+    } catch (error) {
+      console.error('Error sending message', error);
+    }
+
+    setMessage('');
+    setIsSending(false);
   };
+  console.log(messages,"eeee")
 
   return (
     <div className={ChatStyles.container}>
