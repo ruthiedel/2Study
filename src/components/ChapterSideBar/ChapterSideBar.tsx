@@ -65,7 +65,7 @@ const Sidebar: React.FC<SidebarProps> = ({ selectedBookId, onSectionSelect }) =>
                                     <ListItem
                                         key={sectionIndex}
                                         className={styles.innerListItem}
-                                        onClick={() => onSectionSelect(chapterIndex, sectionIndex)}
+                                        onClick={() => onSectionSelect(chapterIndex + 1, sectionIndex + 1)}
                                     >
                                         <ListItemText
                                             primary={`סעיף ${numberToGematria(sectionIndex + 1)}`}

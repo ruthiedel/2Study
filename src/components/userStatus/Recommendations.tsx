@@ -64,6 +64,7 @@ const Recommendations = () => {
                 learningGroups: undefined,
                 chapters_num: 0,
                 paragraphs_num: 0,
+                number_raters: 0,
               }} handleClick={function (book: BookType): void {
                 console.log("write me!!");
               } }              >
