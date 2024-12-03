@@ -1,45 +1,56 @@
 'use client'
-import { Book, Paragraph } from '../../../types';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { Box } from '@mui/material';
 import useUserStore from '../../../services/zustand/userZustand/userStor';
 import { getSections } from '../../../services/bookService';
-import { QuestionCard } from '../../../components';
-import { useParams } from 'next/navigation'; const Study = () => {
-    const { book_id } = useParams();
+import { useParams } from 'next/navigation';
+import { QuestionCard, Chat, ChapterSidebar, ShowParagraph } from '../../../components';
+import { Paragraph } from '../../../types';
+import numberToGematria from '../../../lib/clientHelpers/gematriaFunc'
+
+
+const Study = () => {
+    const { book_id } = useParams() as { book_id: string | string[] };
+    const bookIdString = Array.isArray(book_id) ? book_id[0] : book_id;
     const user = useUserStore((state) => state.user);
     const [mark, setMark] = React.useState<{ chapterId: number, paragraphId: number } | null>(null)
     const [paragraph, setParagraph] = React.useState<Paragraph[]>([])
 
 
+
     useEffect(() => {
-        if (user) {
-            if (book_id && user.books) {
-                const userBook = user.books.find((book) => book.book_id === book_id);
-                if (userBook) {
-                    setMark({
-                        chapterId: userBook.chapter_id,
-                        paragraphId: userBook.section_id,
-                    });
-                }
+        if (user && book_id && user.books) {
+            const userBook = user.books.find((book) => book.book_id === book_id);
+            if (userBook) {
+                setMark({
+                    chapterId: userBook.chapter_id,
+                    paragraphId: userBook.section_id,
+                });
+            } else {
+                setMark({
+                    chapterId:1,
+                    paragraphId:1,
+                });
             }
         }
-    }, [book_id]);
-    // console.log(paragraph[1])
+    }, []);
+
+
     useEffect(() => {
-       
-        
-        if (mark ) {
+
+
+        if (mark) {
             const validBookId = Array.isArray(book_id) ? book_id[0] : book_id;
-    
+
             if (typeof validBookId === 'string') {
                 getSections(validBookId, mark.chapterId, mark.paragraphId).then((response) => {
                     setParagraph(response.sections);
                 });
             }
         }
-        else{
+        else {
             const validBookId = Array.isArray(book_id) ? book_id[0] : book_id;
-    
+
             if (typeof validBookId === 'string') {
                 getSections(validBookId, 1, 1).then((response) => {
                     setParagraph([...response.sections]);
@@ -50,11 +61,13 @@ import { useParams } from 'next/navigation'; const Study = () => {
     }, [mark]);
 
     return (
-
-        <div>
+        <Box display="flex" height="100vh">
+            <ChapterSidebar selectedBookId={bookIdString} onBookSelect={() => { }} />
+            {mark && <ShowParagraph paragraph={paragraph[0]} chapterTitle={numberToGematria(mark?.chapterId!)} />}
+            <Chat />
             {paragraph.length > 0 &&
-            <QuestionCard p={paragraph[1]} />}
-        </div>
+                <QuestionCard p={paragraph[1]} />}
+        </Box>
     );
 };
 

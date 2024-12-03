@@ -5,13 +5,13 @@ import useUserStore from '../../services/zustand/userZustand/userStor';
 import Book from "../book/book";
 import { Book as Booktype } from '../../types';
 import FilterComponent from "../filterComponent/FilterComponent";
-import booksDetails from '../../hooks/booksDetails';
+import {getBooks} from '../../hooks/booksDetails';
 import BookCard from "../bookCard/bookCard";
 
 const Homepage = () => {
     const user = useUserStore((state) => state.user);
     const logout = useUserStore((state) => state.logout);
-    const { data, isLoading, error } = booksDetails();
+    const { data, isLoading, error } = getBooks();
     let bookID = 0;
 
     console.log(data);

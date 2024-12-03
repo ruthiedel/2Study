@@ -1,6 +1,7 @@
 import { MongoClient, ObjectId } from 'mongodb';
 import { promises as fs } from 'fs';
 import path from 'path';
+import { Rating } from '@mui/material';
 
 let client: MongoClient;
 let clientPromise: Promise<MongoClient>;
@@ -29,6 +30,8 @@ export async function fetchAllBooks(client: MongoClient, collection: string) {
         chapters_num: 1, 
         paragraphs_num: 1, 
         coverImage: 1, 
+        rating: 1,
+        number_raters: 1,
         firstParagraphText: {
           $arrayElemAt: [
             { $ifNull: [{ $arrayElemAt: ["$chapters.paragraphs", 0] }, null] },
@@ -52,6 +55,8 @@ export async function fetchAllBooks(client: MongoClient, collection: string) {
         chapters_num: 1,
         paragraphs_num: 1,
         coverImage: 1,
+        rating: 1,
+        number_raters: 1,
         firstParagraphText: "$firstParagraphText.text", 
         paragraphsCountPerChapter: 1 
       }
@@ -102,7 +107,32 @@ export async function fetchBookById(client: MongoClient, collection: string, boo
   };
 }
 
-// שליפת חלק מהספרים
+
+export async function updateBook(client: MongoClient, collection: string, bookId: string, updatedData: Partial<Record<string, any>> ) {
+  const db = client.db('Books');
+
+  const objectId = new ObjectId(bookId);
+
+  const result = await db.collection(collection).updateOne(
+    { _id: objectId },
+    { $set: updatedData }
+  );
+
+  if (result.matchedCount === 0) {
+    throw new Error('Book not found');
+  }
+
+  if (result.modifiedCount === 0) {
+    throw new Error('No changes were made to the book');
+  }
+
+  return {
+    message: 'Book updated successfully',
+    updatedFields: updatedData,
+  };
+}
+
+
 export async function fetchPartialBooks(client: MongoClient, collection: string) {
   const db = client.db('Books');
 
