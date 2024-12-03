@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import {Book} from '../../types'
 import numberToGematria from '../../lib/clientHelpers/gematriaFunc'
-import booksDetails from '@/hooks/booksDetails';
+import {getBooks} from '@/hooks/booksDetails';
 
 const sidebarStyles = {
     container: {
@@ -38,7 +38,7 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ selectedBookId, onBookSelect }) => {
     // Fetch selected book data using React Query
-    const { data: books, isLoading, error } = booksDetails();
+    const { data: books, isLoading, error } = getBooks();
     const [selectedBook,setSelectedBook] = React.useState<Book|null>(null)
     React.useEffect(() =>{
         if(books && selectedBookId){

@@ -30,12 +30,23 @@ export const getBooksByIds = async (ids: string[]): Promise<Book[]> => {
     }
   };
 
-// //  
+  export const updateBook = async ({ id, updatedData }: { id: string; updatedData: Partial<Record<string, any>> }): Promise<Book> => {
+    try {
+      const response = await http.patch(`/book/${id}`, updatedData);
+      return response.data; 
+    } catch (error) {
+      console.error("Error updating the book:", error);
+      throw error; 
+    }
+  };
+  
+
 // export const getNextChapter = (book: Book, currentChapterId: string): Chapter | null => {
 //     try {
 //       const currentChapterIndex = book.chapters.findIndex(
 //         (chapter) => chapter._id === currentChapterId
 //       );
+
   
 //       if (currentChapterIndex === -1 || currentChapterIndex === book.chapters.length - 1) {
 //         return null; 
@@ -64,3 +75,7 @@ export const getSections = async (
     throw error; 
   }
 };
+// export const saveBookRating = async (bookId: string, averageRating: number) => {
+//   // קריאה לפונקציה לעדכון הדירוג של הספר
+//   await updateBookRating(bookId, averageRating);
+// }

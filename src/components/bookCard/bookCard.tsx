@@ -6,6 +6,7 @@ import Image from 'next/image';
 import styles from './bookCard.module.css';
 import image from '../../../public/pictures/garnisht.png'
 import { Book } from '../../types';
+// import RatingComponent from '../rating/rating'
 
 type BookCardProps = {
     book: Book;
@@ -38,6 +39,7 @@ const BookCard: React.FC<BookCardProps> = ({ book, onClose }) => {
                     </Grid>
 
                     <Grid item xs={12} sm={8}>
+                        {/* <RatingComponent bookId={book._id!}/> */}
                         <Typography variant="h5" align="right" className={styles.bookTitle}>
                             {book.name}
                         </Typography>
@@ -47,12 +49,12 @@ const BookCard: React.FC<BookCardProps> = ({ book, onClose }) => {
                         <Typography variant="body2" color="textSecondary" align="right" className={styles.text}>
                             {book.category.subject}
                         </Typography>
-                        <Image
+                        {/* <Image
                             src={image}
                             alt='garnisht'
                             width={280}
                             height={150}
-                        />
+                        /> */}
                         <Typography variant="body2" className={styles.text}>
                             <strong> פרקים: </strong>{book.chapters_num} | <strong> סעיפים: </strong>{book.paragraphs_num}
                         </Typography>
@@ -73,10 +75,10 @@ const BookCard: React.FC<BookCardProps> = ({ book, onClose }) => {
                         variant="body1"
                         className={showMore ? styles.fullText : styles.truncatedText}
                     >
-                        {'להוסיף שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספר'}
+                        {book.firstParagraphText}
                     </Typography>
 
-                    {'להוסיף שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספ שדה לספר'.length > 100 && (
+                    {book.firstParagraphText && (book.firstParagraphText.length > 100) && (
                         <Button onClick={() => setShowMore(!showMore)} className={styles.readMoreButton}>
                             {showMore ? 'פחות' : 'קרא עוד'}
                         </Button>

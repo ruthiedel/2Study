@@ -6,7 +6,7 @@ import BookDetail from '../book/book';
 import FilterComponent from '../filterComponent/FilterComponent';
 import styles from './ShowBook.module.css';
 import { Book } from '../../types';
-import booksDetails from '@/hooks/booksDetails';
+import {getBooks} from '@/hooks/booksDetails';
 
 
 const ShowBooks: React.FC = () => {
@@ -15,7 +15,7 @@ const ShowBooks: React.FC = () => {
     const [authorName, setAuthorName] = useState('');
     const [categories, setCategories] = useState<string[]>([]);
 
-    const { data: books, isLoading, error } = booksDetails();
+    const { data: books, isLoading, error } = getBooks();
 
     if (isLoading) return <div>טעינה...</div>;
     if (error) return <div>התרחשה שגיאה בהורדת הספרים</div>;

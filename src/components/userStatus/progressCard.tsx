@@ -9,7 +9,7 @@ export default function ProgressCard() {
   return (
     <Card className={styles.mycard}>
       <CardContent style={{ textAlign: 'center' }}>
-        <Typography gutterBottom variant="h5" component="div">
+        <Typography gutterBottom variant="h5" component="div" className="fontFamily">
           ההתקדמות שלך
         </Typography>
           <List>

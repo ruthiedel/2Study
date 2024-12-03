@@ -63,8 +63,8 @@ const Study = () => {
     return (
         <Box display="flex" height="100vh">
             <ChapterSidebar selectedBookId={bookIdString} onBookSelect={() => { }} />
-            {mark && <ShowParagraph paragraph={paragraph[0]} chapterTitle={numberToGematria(mark?.chapterId!)} />}
-            <Chat />
+            {mark && paragraph.length > 0 && <ShowParagraph paragraph={paragraph[0]} chapterTitle={numberToGematria(mark?.chapterId!)} />}
+            <Chat bookId={bookIdString} />
             {paragraph.length > 0 &&
                 <QuestionCard p={paragraph[1]} />}
         </Box>

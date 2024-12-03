@@ -9,14 +9,17 @@ import StarIcon from "@mui/icons-material/Star";
 
 const Information = () => {
   const user = useUserStore((state) => state.user);
-  
+
+  // image={user?.userImagePath ? `/proxy?url=${encodeURIComponent(user.userImagePath)}` : "/defaultUser.png"}
+
   return (
     <Card className={styles.mycard}>
       <Box>
         <CardMedia
           component="img"
-          image={user?.userImagePath ? user.userImagePath : "defaultUser.png"}
-          alt="user"
+          image={user?.userImagePath}
+          alt={user?.name || "User"}
+          loading="lazy"
           className={styles.imgUser}
         />
       </Box>
@@ -35,22 +38,22 @@ const Information = () => {
             </strong>
             <div className={styles.infobutto}>{user?.email}</div>
           </div>
-          {user?.age && user?.age > 0 && 
-          <div className={styles.infoContainer2}>
-            <strong>
-              <div>גיל:</div>
-            </strong>
-            <div className={styles.infobutto}>{user?.age}
+          {user?.age && user?.age > 0 &&
+            <div className={styles.infoContainer2}>
+              <strong>
+                <div>גיל:</div>
+              </strong>
+              <div className={styles.infobutto}>{user?.age}
+              </div>
             </div>
-          </div>
-           }
+          }
         </div>
 
         <Box className={styles.numOfBooksContainer}>
           {/* {user.books.sum(if(mark !== -1))} */}
           <Typography className={styles.numOfBooks}>
             <StarIcon className={styles.starIcon} />
-            {user?.books.length} ספרים בלמידה
+              {user?.books.length} ספרים בלמידה
             <StarIcon className={styles.starIcon} />
           </Typography>
         </Box>
