@@ -13,12 +13,12 @@ export type Chapter = {
     _id?: string;
     paragraphs: Paragraph[];
 }
-type Message = {
+ export type Message = {
     _id?: string;
-    userId: string;
-    userName: string;
-    text: string;
-    time: Date;
+    bookId: string;
+    username: string;
+    message: string;
+    timestamp: Date;
 }
 
 type LearningGroupUser = {
@@ -53,7 +53,7 @@ export type UserBook = {
     rate: number;
 }
 type LearningGroup = {
-    users: LearningGroupUser[];
+    users?: LearningGroupUser[];
     message: Message[];
 }
 export type User = {
