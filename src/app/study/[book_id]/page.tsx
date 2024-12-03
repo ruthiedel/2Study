@@ -28,8 +28,8 @@ const Study = () => {
                 });
             } else {
                 setMark({
-                    chapterId:1,
-                    paragraphId:1,
+                    chapterId: 1,
+                    paragraphId: 1,
                 });
             }
         }
@@ -62,7 +62,9 @@ const Study = () => {
 
     return (
         <Box display="flex" height="100vh">
-            <ChapterSidebar selectedBookId={bookIdString} onBookSelect={() => { }} />
+            <ChapterSidebar selectedBookId={bookIdString} onSectionSelect={(chapterIndex, sectionIndex) => {
+                setMark({ chapterId: chapterIndex, paragraphId: sectionIndex });
+            }} />
             {mark && paragraph.length > 0 && <ShowParagraph paragraph={paragraph[0]} chapterTitle={numberToGematria(mark?.chapterId!)} />}
             <Chat bookId={bookIdString} />
             {paragraph.length > 0 &&
