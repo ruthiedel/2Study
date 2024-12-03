@@ -6,7 +6,7 @@ import Image from 'next/image';
 import styles from './bookCard.module.css';
 import image from '../../../public/pictures/garnisht.png'
 import { Book } from '../../types';
-import RatingComponent from '../rating/rating'
+// import RatingComponent from '../rating/rating'
 
 type BookCardProps = {
     book: Book;
@@ -39,7 +39,7 @@ const BookCard: React.FC<BookCardProps> = ({ book, onClose }) => {
                     </Grid>
 
                     <Grid item xs={12} sm={8}>
-                        <RatingComponent bookId={book._id!}/>
+                        {/* <RatingComponent bookId={book._id!}/> */}
                         <Typography variant="h5" align="right" className={styles.bookTitle}>
                             {book.name}
                         </Typography>
