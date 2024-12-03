@@ -44,7 +44,7 @@ export async function addUserBook(userId: string, bookId: string, bookName: stri
     book_name: bookName,
     chapter_id: 1,
     section_id: 1,
-    rate: 0,
+    rate: -1,
   }
   await usersCollection.updateOne(
     { _id: new ObjectId(userId) },

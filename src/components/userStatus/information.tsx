@@ -10,13 +10,16 @@ import StarIcon from "@mui/icons-material/Star";
 const Information = () => {
   const user = useUserStore((state) => state.user);
 
+  // image={user?.userImagePath ? `/proxy?url=${encodeURIComponent(user.userImagePath)}` : "/defaultUser.png"}
+
   return (
     <Card className={styles.mycard}>
       <Box>
         <CardMedia
           component="img"
-          image={user?.userImagePath ? user.userImagePath : "defaultUser.png"}
-          alt="user"
+          image={user?.userImagePath}
+          alt={user?.name || "User"}
+          loading="lazy"
           className={styles.imgUser}
         />
       </Box>
@@ -50,9 +53,7 @@ const Information = () => {
           {/* {user.books.sum(if(mark !== -1))} */}
           <Typography className={styles.numOfBooks}>
             <StarIcon className={styles.starIcon} />
-            <div className="fontFamily">
               {user?.books.length} ספרים בלמידה
-            </div>
             <StarIcon className={styles.starIcon} />
           </Typography>
         </Box>
