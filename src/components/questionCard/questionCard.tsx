@@ -9,7 +9,6 @@ const QuestionCard = (props:{p:Paragraph}) => {
     const [isQuestionOpen, setIsQuestionOpen] = useState(true); 
     const [isAnswerOpen, setIsAnswerOpen] = useState(false); 
     const [idxQuestion,setIdxQuestion] = useState(0);
-    console.log(props,"j")
 
    
     useEffect(() => {
@@ -20,7 +19,6 @@ const QuestionCard = (props:{p:Paragraph}) => {
                 // console.log("שאלה:", question, "תשובה:", answer);
             }
         };
-        console.log(props,"j")
         fetchQuestionAndAnswer();
     }, []);
     useEffect(() => {

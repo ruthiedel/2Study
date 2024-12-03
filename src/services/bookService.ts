@@ -32,7 +32,7 @@ export const getBooksByIds = async (ids: string[]): Promise<Book[]> => {
 
   export const updateBook = async ({ id, updatedData }: { id: string; updatedData: Partial<Record<string, any>> }): Promise<Book> => {
     try {
-      const response = await http.put(`/book/${id}`, updatedData);
+      const response = await http.patch(`/book/${id}`, updatedData);
       return response.data; 
     } catch (error) {
       console.error("Error updating the book:", error);

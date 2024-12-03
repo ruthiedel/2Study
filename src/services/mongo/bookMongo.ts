@@ -32,6 +32,7 @@ export async function fetchAllBooks(client: MongoClient, collection: string) {
         coverImage: 1, 
         rating: 1,
         number_raters: 1,
+        learningGroups:1,
         firstParagraphText: {
           $arrayElemAt: [
             { $ifNull: [{ $arrayElemAt: ["$chapters.paragraphs", 0] }, null] },
@@ -58,7 +59,8 @@ export async function fetchAllBooks(client: MongoClient, collection: string) {
         rating: 1,
         number_raters: 1,
         firstParagraphText: "$firstParagraphText.text", 
-        paragraphsCountPerChapter: 1 
+        paragraphsCountPerChapter: 1 ,
+        learningGroups:1
       }
     }
   ]).toArray();
