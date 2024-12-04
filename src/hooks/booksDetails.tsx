@@ -16,7 +16,7 @@ export const useUpdateBook = () => {
 
   return useMutation({
     mutationFn: updateBook,
-    onMutate: async ({ id, updatedData }: { id: string; updatedData: Partial<Book> }) => {
+    onMutate: async ({ id, updatedData }: { id: string; updatedData: Partial<Record<string, any>> }) => {
       await queryClient.cancelQueries({ queryKey: ["Books"] });
 
       const previousBooks = queryClient.getQueryData<Book[]>(["Books"]);
@@ -32,3 +32,9 @@ export const useUpdateBook = () => {
     },
   });
 };
+
+
+// const handleUpdateCar = (e: React.FormEvent) => {
+//   e.preventDefault();
+//   useUpdateBook.mutate();
+// };

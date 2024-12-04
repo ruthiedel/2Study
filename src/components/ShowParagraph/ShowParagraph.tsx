@@ -28,7 +28,6 @@ type Props = {
 
 const ParagraphNavigation: React.FC<Props> = (props) => {
     const { paragraph, chapterTitle } = props;
-    console.log(props,"ppppp")
 
     const removeHtmlTags = (text: string) => {
         const parser = new DOMParser();
@@ -38,7 +37,7 @@ const ParagraphNavigation: React.FC<Props> = (props) => {
     
       return (
         <Box style={paragraphStyles.container}>
-          <Typography style={paragraphStyles.title}>{chapterTitle} סעיף</Typography>
+          <Typography style={paragraphStyles.title}>{chapterTitle}</Typography>
           <Typography style={paragraphStyles.text}>
             {removeHtmlTags(paragraph.text)}
           </Typography>

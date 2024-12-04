@@ -7,14 +7,28 @@ import { User } from '../../../types';
 export type UserStore = {
   user: User | null;
   setUser: (user: User) => void;
+  updateRating: (bookId: string, newRating: number) => void;
   logout: () => Promise<void>;
 };
 
+
 const useUserStore = create<UserStore>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       user: null,
       setUser: (user: User) => set({ user }),
+      updateRating: (bookId: string, newRating: number) => {
+        const currentUser = get().user;
+        if (currentUser) {
+          const updatedBooks = currentUser.books.map((book) => {
+            if (book.book_id === bookId) {
+              return { ...book, rate: newRating };
+            }
+            return book;
+          });
+          set({ user: { ...currentUser, books: updatedBooks } });
+        }
+      },
       logout: async () => {
         try {
           await signOut(auth);
@@ -31,5 +45,6 @@ const useUserStore = create<UserStore>()(
     }
   )
 );
+
 
 export default useUserStore;

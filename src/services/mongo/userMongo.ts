@@ -68,7 +68,7 @@ try{
     book_name: bookName,
     chapter_id: 1,
     section_id: 1,
-    rate: 0,
+    rate: -1,
   }
 
   console.log(newUserBook);

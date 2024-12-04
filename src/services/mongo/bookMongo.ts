@@ -1,12 +1,11 @@
 import { MongoClient, ObjectId } from 'mongodb';
 import { promises as fs } from 'fs';
 import path from 'path';
+import { Rating } from '@mui/material';
 
 let client: MongoClient;
 let clientPromise: Promise<MongoClient>;
 
-
-// חיבור לבסיס הנתונים
 export async function connectDatabase() {
   if (!client) {
     const dbConnectionString = process.env.PUBLIC_DB_CONNECTION;
@@ -31,6 +30,9 @@ export async function fetchAllBooks(client: MongoClient, collection: string) {
         chapters_num: 1, 
         paragraphs_num: 1, 
         coverImage: 1, 
+        rating: 1,
+        number_raters: 1,
+        learningGroups:1,
         firstParagraphText: {
           $arrayElemAt: [
             { $ifNull: [{ $arrayElemAt: ["$chapters.paragraphs", 0] }, null] },
@@ -54,8 +56,11 @@ export async function fetchAllBooks(client: MongoClient, collection: string) {
         chapters_num: 1,
         paragraphs_num: 1,
         coverImage: 1,
+        rating: 1,
+        number_raters: 1,
         firstParagraphText: "$firstParagraphText.text", 
-        paragraphsCountPerChapter: 1 
+        paragraphsCountPerChapter: 1 ,
+        learningGroups:1
       }
     }
   ]).toArray();

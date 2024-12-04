@@ -6,7 +6,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); 
     gap: 16px;
-    max-height: calc(2 * 250px + 16px);
+    max-height: calc(2 * 250px + 16px); 
     overflow-y: scroll; 
     padding-left: 16px; 
     direction: ltr; 
@@ -20,16 +20,18 @@
 
 .bookGrid::-webkit-scrollbar-thumb {
     background-color: #888; 
-    border-radius: 10px; 
-    border: 2px solid #fff;
+
+
+    border-radius: 10px;
+    border: 2px solid #fff; 
 }
 
 .bookGrid::-webkit-scrollbar-thumb:hover {
-    background-color: #555; 
+    background-color: #555;
 }
 
 .bookGrid::-webkit-scrollbar-track {
-    background: #f1f1f1;
+    background: #f1f1f1; 
     border-radius: 10px;
 }
 
