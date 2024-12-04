@@ -11,9 +11,9 @@ import numberToGematria from '../../../lib/clientHelpers/gematriaFunc';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
 import { getBooks } from '@/hooks/booksDetails';
 import Styles from './Study.module.css';
-import {  toast } from 'react-toastify';
-import Confetti from 'react-confetti';
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Confetti from 'react-confetti';
 import RatingComponent from '@/components/rating/rating';
 
 interface Index {
@@ -29,7 +29,7 @@ interface Paragraphs {
 const Study = () => {
     const { book_id } = useParams() as { book_id: string | string[] };
     const bookId = Array.isArray(book_id) ? book_id[0] : book_id;
-    const { data: books } = getBooks();
+    const { data: books, isLoading } = getBooks();
     const user = useUserStore((state) => state.user);
     const [index, setIndex] = useState<Index | null>(null);
     const [paragraph, setParagraph] = useState<Paragraphs[]>([]);
@@ -37,7 +37,6 @@ const Study = () => {
     const [showConfetti, setShowConfetti] = useState(false);
     const [loading, setLoading] = useState(false);
 
-    // איתחול מיקום ראשוני
     useEffect(() => {
         if (user && bookId) {
             const userBook = user.books.find((book) => book.book_id === bookId);
@@ -45,14 +44,12 @@ const Study = () => {
         }
     }, [bookId, user]);
 
-    // איתחול מידע על ספר נוכחי
     useEffect(() => {
         if (books) {
             setBookData(books.find((book) => book._id === bookId) || null);
         }
     }, [books, bookId]);
 
-    // קריאה ל-API להבאת הסעיפים
     useEffect(() => {
         if (!index || !bookId) return;
         const { chapterId, paragraphId } = index;
@@ -60,14 +57,12 @@ const Study = () => {
         const fetchParagraphs = async (bookId: string, chapterId: number, paragraphId: number) => {
             try {
                 const paragraphs = await getSections(bookId, chapterId, paragraphId);
-                console.log(paragraphs, 'from server');
                 if (!paragraphs || paragraphs.length === 0) {
                     throw new Error('No paragraphs found');
                 }
                 setParagraph(paragraphs.sections);
             } catch (error) {
                 console.error('Error fetching paragraphs:', error);
-                toast.error('אירעה שגיאה בעת הבאת הסעיפים');
             } finally {
                 setLoading(false);
             }
@@ -77,7 +72,6 @@ const Study = () => {
 
     const handleNavigation = (direction: 'next' | 'prev') => {
         if (!index || !bookData || !bookData.paragraphsCountPerChapter) return;
-
         const { chapterId, paragraphId } = index;
 
         let newChapterId = chapterId;
@@ -98,41 +92,46 @@ const Study = () => {
                 newParagraphId = bookData.paragraphsCountPerChapter[newChapterId - 1] || 1;
             }
         }
-        const isLastSection = useMemo(() => {
-            return (
-                index?.chapterId === bookData?.chapters_num &&
-                index?.paragraphId === bookData?.paragraphsCountPerChapter?.[index!.chapterId - 1]
-            );
-        }, [index, bookData]);
 
-        const handleFinish = () => {
-            setShowConfetti(true);
-            toast.success('סיימת ללמוד! כל הכבוד 🎉');
-            setTimeout(() => setShowConfetti(false), 5000);
-        };
-
-        console.log(paragraph, 'paragraph')
-        const currentParagraph = paragraph.find(
-            (p) => p.chapterNumber === index?.chapterId && p.section.ParagraphId === index?.paragraphId
-        );
-    
+        setIndex({ chapterId: newChapterId, paragraphId: newParagraphId });
+    };
+    const isLastSection = useMemo(() => {
         return (
+            index?.chapterId === bookData?.chapters_num &&
+            index?.paragraphId === bookData?.paragraphsCountPerChapter?.[bookData.chapters_num - 1]
+        );
+    }, [index, bookData]);
+
+    const handleFinish = () => {
+        setShowConfetti(true);
+        toast.success("סיימת ללמוד! כל הכבוד 🎉", {
+            position: "top-center",
+            autoClose: 3000,
+        });
+        setTimeout(() => setShowConfetti(false), 5000);
+    };
+
+    const currentParagraph = paragraph.find(
+        (p) => p.chapterNumber === index?.chapterId && p.section.paragraphId === index?.paragraphId
+    );
+
+    return (
+        (isLoading ? <Loading /> :
             <Box display="flex" height="100vh">
                 <ChapterSidebar
                     selectedBookId={bookId}
                     onSectionSelect={(chapterIndex, sectionIndex) => setIndex({ chapterId: chapterIndex, paragraphId: sectionIndex })}
                 />
                 <div className={Styles.container}>
-                    <h1>פרק {index?.chapterId} סעיף {index?.paragraphId}</h1>
                     <IconButton onClick={() => handleNavigation('prev')} disabled={index?.chapterId === 1 && index?.paragraphId === 1}>
                         <ExpandLess />
                     </IconButton>
                     {loading ? <Loading /> :
                         <ShowParagraph
                             paragraph={currentParagraph?.section!}
-                            chapterTitle={`פרק ${numberToGematria(index.chapterId)} סעיף ${numberToGematria(index.paragraphId)}`}
+                            chapterTitle={`פרק ${numberToGematria(index?.chapterId || 1)} סעיף ${numberToGematria(index?.paragraphId || 1)}`}
                         />}
-                    <IconButton onClick={() => handleNavigation('next')} disabled={!index || !bookData || index.chapterId >= bookData.chapters_num}>
+                    <IconButton onClick={() => handleNavigation('next')} disabled={isLastSection}>
                         <ExpandMore />
                     </IconButton>
                     {isLastSection && (
@@ -143,11 +142,10 @@ const Study = () => {
                     <RatingComponent bookId={bookData?._id || ''} />
                 </div>
                 <Chat bookId={bookId} />
-                {/* <ToastContainer /> */}
+                <ToastContainer />
                 {showConfetti && <Confetti />}
-            </Box>
-        );
-    };
+            </Box>)
+    );
 }
 
 export default Study;
