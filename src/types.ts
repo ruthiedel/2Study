@@ -2,7 +2,7 @@ export type Paragraph = {
     _id?: string;
     text: string;
     questions: Question[];
-    ParagraphId?: string;
+    ParagraphId?: number;
 }
 
 type Question = {
