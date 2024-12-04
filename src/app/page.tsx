@@ -16,8 +16,6 @@ const handleRatingSubmit = async () => {
     <QueryClientProvider client={queryClient}>
     <div>
       <Homepage/>
-      <button onClick={handleRatingSubmit}>שלח דירוג</button>
-      <RatingComponent bookId='6748241ab441a87e376042a3'/>
     </div>
     </QueryClientProvider>
   );
