@@ -37,7 +37,7 @@ const ParagraphNavigation: React.FC<Props> = (props) => {
     
       return (
         <Box style={paragraphStyles.container}>
-          <Typography style={paragraphStyles.title}>{chapterTitle} סעיף</Typography>
+          <Typography style={paragraphStyles.title}>{chapterTitle}</Typography>
           <Typography style={paragraphStyles.text}>
             {removeHtmlTags(paragraph.text)}
           </Typography>

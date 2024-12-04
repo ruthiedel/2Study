@@ -17,6 +17,7 @@ const RatingComponent: React.FC<RatingComponentProps> = ({ bookId }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   let evgRating = 0;
+  let num_raters = 0;
 
 
 
@@ -25,24 +26,16 @@ const RatingComponent: React.FC<RatingComponentProps> = ({ bookId }) => {
       setIsSubmitting(true);
       const book = getBookById(bookId);
       if ((await book).number_raters > 0) {
-        alert("נכנס לif 1");
-        (await book).number_raters++
-        evgRating = Math.round(((await book).rating! + rating) / ((await book).number_raters));
-        alert("יוצא if 1");
+        num_raters =(await book).number_raters++
+        evgRating = Math.round(((await book).rating! + rating) / num_raters);
       }
       else {
-        alert("נכנס ל else 1");
-        (await book).number_raters = 1;
+        num_raters = 1;
         (await book).rating = rating;
         evgRating = rating;
-        alert("יוצא מ else 1");
-
       }
       try {
-
-        await updateBookMutation.mutate({ id: "6748241ab441a87e376042a3", updatedData: { "rating": 2 } });
-
-        alert("פונקציה אפרת");
+        await updateBookMutation.mutate({ id: bookId, updatedData: { "rating": evgRating , "number_raters":  num_raters} },);
         updateRating(bookId, rating);
         alert("דירוג נשמר בהצלחה!");
         setIsVisible(false);

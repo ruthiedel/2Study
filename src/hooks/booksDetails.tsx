@@ -7,7 +7,7 @@ export const getBooks = () => {
   return useQuery<Book[]>({
     queryKey: ["Books"],
     queryFn: getAllBooks,
-    staleTime: 10000,
+    staleTime: 2000000,
   });
 };
 
