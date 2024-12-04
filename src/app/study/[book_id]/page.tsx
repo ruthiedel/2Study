@@ -26,7 +26,7 @@ type Index = {
 
 type Paragraphs = {
     paragraphs: Paragraph[];
-    chapterId: number;
+    // chapterId: number;
 };
 
 const Study = () => {
@@ -35,7 +35,7 @@ const Study = () => {
     const { data: books, isLoading, error } = getBooks();
     const user = useUserStore((state) => state.user);
     const [index, setIndex] = useState<Index | null>(null);
-    const [paragraph, setParagraph] = useState<Paragraphs>({ paragraphs: [], chapterId: 1 });
+    const [paragraph, setParagraph] = useState<Paragraphs>({ paragraphs: []});
     const [bookData, setBookData] = useState<Book | null>(null); 
     const [showConfetti, setShowConfetti] = useState(false);
 
@@ -73,7 +73,7 @@ const Study = () => {
                 if (isBookValid) {
                     getSections(bookId, index.chapterId, index.paragraphId)
                         .then((response: SectionResponse) => {
-                            setParagraph({ paragraphs: response.sections, chapterId: index.chapterId });
+                            setParagraph({ paragraphs: response.sections});
                         })
                         .catch((error) => {
                             console.error("Error fetching sections:", error);
@@ -85,7 +85,7 @@ const Study = () => {
             if (isBookValid) {
                 getSections(bookId, 1, 1)
                     .then((response: SectionResponse) => {
-                        setParagraph({ paragraphs: response.sections, chapterId: 1 });
+                        setParagraph({ paragraphs: response.sections });
                     })
                     .catch((error) => {
                         console.error("Error fetching sections:", error);
@@ -183,7 +183,7 @@ const Study = () => {
                 <RatingComponent bookId={bookData?._id? bookData._id : ''}/>
             </div>
             <Chat bookId={bookId} />
-            {paragraph.paragraphs.length > 0 && <QuestionCard p={paragraph.paragraphs[1]} />}
+            {<QuestionCard p={paragraph.paragraphs[1]} bookId={bookId} setParagraph={setParagraph} chapterId={1} />}
             <ToastContainer />
             {showConfetti && <Confetti />}
         </Box>

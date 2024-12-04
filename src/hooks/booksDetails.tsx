@@ -33,8 +33,14 @@ export const useUpdateBook = () => {
   });
 };
 
-
-// const handleUpdateCar = (e: React.FormEvent) => {
-//   e.preventDefault();
-//   useUpdateBook.mutate();
-// };
+export const getBookById = (id: string) => {
+  const queryClient = useQueryClient();
+  
+  const books = queryClient.getQueryData<Book[]>(["Books"]);
+  
+  if (books) {
+    return books.find(book => book._id === id);
+  }
+  
+  return null;
+};
