@@ -1,11 +1,13 @@
 'use client'
 import React, { useState } from 'react';
+import useUserStore from '../../services/zustand/userZustand/userStor';
 import { Card, Grid, IconButton, Button, Typography, Box, Rating } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import Image from 'next/image';
 import styles from './bookCard.module.css';
 import image from '../../../public/pictures/garnisht.png'
 import { Book } from '../../types';
+import { updateUser } from '../../services/userService';
 
 type BookCardProps = {
     book: Book;
@@ -14,10 +16,29 @@ type BookCardProps = {
 
 const BookCard: React.FC<BookCardProps> = ({ book, onClose }) => {
     const [showMore, setShowMore] = useState(false);
+    const [foundBook, setFoundBook] = useState(false);
+    const user = useUserStore((state) => state.user);
 
+    const handleReadMore = async () => {
+        console.log(user)
+        const foundBook = user?.books.find((userBook) => userBook.book_id === book._id);
+        if (foundBook) {
+            window.location.href = `study/${book._id}`;
+        } else {
+            // const newUserBook: UserBook = {
+            //     book_id: bookId,
+            //     book_name: bookName,
+            //     chapter_id: 1,
+            //     section_id: 1,
+            //     rate: 0,
+            // }
+            // await updateUser({ id: userId, updatedData: updatedUserData });
+            // updateUser(user!._id!, book._id!, book.name);
+            console.log(user)
+            alert(user)
+            window.location.href = `study/${book._id}`;
+        }
 
-    const handleReadMore = () => {
-        window.location.href = `study/${book._id}`;
     };
 
     return (
@@ -84,7 +105,7 @@ const BookCard: React.FC<BookCardProps> = ({ book, onClose }) => {
 
                     <Grid item xs={12}>
                         <Button variant="contained" className={styles.learnButton} onClick={handleReadMore}>
-                            אני רוצה ללמוד ←
+                            {user?.books.find((userBook) => userBook.book_id === book._id) ? "המשך ללמוד ←" : "הוסף לרשימת הספרים שלי"}
                         </Button>
                     </Grid>
                 </Grid>

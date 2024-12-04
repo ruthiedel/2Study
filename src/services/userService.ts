@@ -11,12 +11,22 @@ export const logInUser = async (user: Omit<User, '_id'>) => {
     }
 };
 
-export const addBookToUser = async (userId: string, bookId: string, bookName: string) => {
+// export const addBookToUser = async (userId: string, bookId: string, bookName: string) => {
+//     try {
+//         const response = await http.patch(`/user/${userId}`, { bookId, bookName });
+//         return response.data;
+//     } catch (error) {
+//         console.error("Error adding book to user:", error);
+//         throw error;
+//     }
+// };
+
+export const updateUser = async ({ id, updatedData }: { id: string; updatedData: User }): Promise<User> => {
     try {
-        const response = await http.patch(`/user/${userId}`, { bookId, bookName });
-        return response.data;
+      const response = await http.put(`/user/${id}`, updatedData);
+      return response.data; 
     } catch (error) {
-        console.error("Error adding book to user:", error);
-        throw error;
+      console.error("Error updating the user:", error);
+      throw error; 
     }
-};
+  };
