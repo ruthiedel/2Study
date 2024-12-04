@@ -18,7 +18,7 @@ const Sidebar: React.FC<SidebarProps> = ({ selectedBookId, onSectionSelect }) =>
     const [expandedChapter, setExpandedChapter] = useState<number | null>(null);
 
     useEffect(() => {
-        if (books && selectedBookId) {
+        if (books && books.length > 0 && selectedBookId) {
             const book = books.find((book) => book._id === selectedBookId);
             setSelectedBook(book || null);
         }
