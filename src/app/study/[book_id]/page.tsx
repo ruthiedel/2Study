@@ -67,7 +67,7 @@ const Study = () => {
 
     useEffect(() => {
         if (index) {
-            const isExist = paragraph.paragraphs.some(p => p.ParagraphId === index.paragraphId.toString());
+            const isExist = paragraph.paragraphs.some(p => p.paragraphId === index.paragraphId.toString());
             if (!isExist) {
                 const isBookValid = bookId && typeof bookId === 'string';
                 if (isBookValid) {
@@ -174,7 +174,6 @@ const Study = () => {
                     <ExpandMore />
                 </IconButton>
 
-                {/* כפתור סיימתי ללמוד */}
                 {index && index.chapterId === bookData?.paragraphsCountPerChapter?.length && index.paragraphId === bookData?.paragraphsCountPerChapter[index.chapterId - 1] && (
                     <Button onClick={handleFinish} variant="contained" color="primary" className={Styles.finishButton}>
                         סיימתי ללמוד
@@ -183,7 +182,7 @@ const Study = () => {
                 <RatingComponent bookId={bookData?._id? bookData._id : ''}/>
             </div>
             <Chat bookId={bookId} />
-            {<QuestionCard p={paragraph.paragraphs[1]} bookId={bookId} setParagraph={setParagraph} chapterId={1} />}
+            {paragraph&&paragraph.paragraphs.length>0&&<QuestionCard p={paragraph.paragraphs[1]} bookId={bookId} setParagraph={setParagraph} chapterId={1} />}
             <ToastContainer />
             {showConfetti && <Confetti />}
         </Box>

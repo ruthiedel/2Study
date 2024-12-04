@@ -6,55 +6,49 @@ import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import { Paragraph } from '../../types';
 import { generateQuestionAndAnswer } from '../../services/questionService';
 import {  getBookById } from '../../hooks/booksDetails';
-import { updateBook } from "../../services/bookService";
+import { updateBook, updateBookQuestionService } from "../../services/bookService";
 
 const QuestionCard = (props: { p: Paragraph, bookId: string, chapterId: number ,setParagraph: React.Dispatch<React.SetStateAction<{ paragraphs:Paragraph[] }>> 
 }) => {
     const [isQuestionOpen, setIsQuestionOpen] = useState(true);
     const [isAnswerOpen, setIsAnswerOpen] = useState(false);
     const [idxQuestion, setIdxQuestion] = useState(0);
-    const [errorMessage, setErrorMessage] = useState("");
+    const [errorMessage, setErrorMessage] = useState(false);
     const book = getBookById(props.bookId);
-    console.log(props.p,"oopopopop")
+    console.log(props.p,"ppppp")
     useEffect(() => {
         const fetchQuestionAndAnswer = async () => {
-            if (props.p.questions.length === 0) {
-                const { question, answer } = await generateQuestionAndAnswer(props.p.text);
-                const updatedParagraph = { ...props.p, questions: [...props.p.questions, { question, answer }] };
-                    props.setParagraph((prev) => {
-                        const updatedParagraphs = prev.paragraphs.map(paragraph => 
-                            paragraph._id === props.p._id ? updatedParagraph : paragraph
-                        );
-                        return { ...prev, paragraphs: updatedParagraphs };
-                    });
-                if (book) {
-                    const updatedChapters = book.chapters?.map(chapter => {
-                        if (chapter.chapterId === props.chapterId) {
-                            const updatedParagraphs = chapter.paragraphs.map(paragraph => 
-                                paragraph._id === props.p._id ? updatedParagraph : paragraph
-                            );
-                            return { ...chapter, paragraphs: updatedParagraphs };
-                        }
-                        return chapter;
-                    });
-
-                    try {
-                        await updateBook({
-                            id: book._id!,
-                            updatedData: {
-                                chapters: updatedChapters,
-                            },
-                        });
-                        console.log("הפסקה עודכנה בהצלחה!");
-                    } catch (error) {
-                        console.error("שגיאה בעדכון הפסקה:", error);
-                    }
-                }
-                console.log("שאלה:", question, "תשובה:", answer);
+          if (props.p.questions.length === 0) {
+            try {
+              const { question, answer } = await generateQuestionAndAnswer(props.p.text);
+      
+              await updateBookQuestionService({
+                bookId: props.bookId,
+                chapterId: String(props.chapterId),
+                paragraphId: String(props.p.paragraphId),
+                question,
+                answer,
+              });
+      
+              // עדכון הפסקה ב-state המקומי
+              props.setParagraph((prev) => {
+                const updatedParagraphs = prev.paragraphs.map((paragraph) =>
+                  paragraph._id === props.p._id
+                    ? { ...paragraph, questions: [...paragraph.questions, { question, answer }] }
+                    : paragraph
+                );
+      
+                return { ...prev, paragraphs: updatedParagraphs };
+              });
+            } catch (error) {
+              console.error("Failed to update the book with the new question and answer:", error);
             }
+          }
         };
+      
         fetchQuestionAndAnswer();
-    }, []);
+      }, []);
+      
 
     useEffect(() => {
         const fetchQuestionAndAnswer = async () => {
@@ -91,7 +85,7 @@ const QuestionCard = (props: { p: Paragraph, bookId: string, chapterId: number ,
                     }
                 }
             } else {
-                setErrorMessage("לא ניתן ליצור שאלה נוספת. יש כבר 5 שאלות.");
+                setErrorMessage(true);
             }
         };
 
@@ -209,7 +203,7 @@ const QuestionCard = (props: { p: Paragraph, bookId: string, chapterId: number ,
                                     חשוף את התשובה:
                                 </Typography>
                             </div>
-                            {isAnswerOpen && props.p && (
+                            {isAnswerOpen  && (
                                 <TextField
                                     fullWidth
                                     value={props.p.questions[idxQuestion].answer}

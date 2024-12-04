@@ -59,3 +59,29 @@ export const getSections = async (
     throw error; 
   }
 };
+
+
+export const updateBookQuestionService = async ({
+  bookId,
+  chapterId,
+  paragraphId,
+  question,
+  answer,
+}: {
+  bookId: string;
+  chapterId: string;
+  paragraphId: string;
+  question: string;
+  answer: string;
+}): Promise<void> => {
+  try {
+    await http.patch(`/book/${bookId}/${chapterId}/${paragraphId}`, {
+      question,
+      answer,
+    });
+  } catch (error) {
+    console.error("Error updating the question:", error);
+    throw error;
+  }
+};
+
