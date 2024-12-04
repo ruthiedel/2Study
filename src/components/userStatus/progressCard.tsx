@@ -4,8 +4,17 @@ import ForwardToInboxIcon from '@mui/icons-material/ForwardToInbox';
 import PeopleIcon from '@mui/icons-material/People';
 import { Card, CardContent, ListItemIcon, Typography, List, ListItem, ListItemText } from "@mui/material";
 import styles from './userStatus.module.css'
+import { getBookCategoriesCount, getBooksProgress } from '../../lib/clientHelpers/graphsFunctions'
+import { getBooks } from '../../hooks/booksDetails';
 
 export default function ProgressCard() {
+  const { data: books } = getBooks();
+
+if (books && books.length > 0){
+  console.log('test: ')
+  console.log(getBookCategoriesCount(books));
+}
+
   return (
     <Card className={styles.mycard}>
       <CardContent style={{ textAlign: 'center' }}>
