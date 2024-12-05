@@ -5,16 +5,15 @@ import { Box, IconButton, Button } from '@mui/material';
 import useUserStore from '../../../services/zustand/userZustand/userStor';
 import { getSections } from '../../../services/bookService';
 import { useParams } from 'next/navigation';
-import { Chat, ChapterSidebar, ShowParagraph, Loading } from '../../../components';
+import { Chat, ChapterSidebar, ShowParagraph, Loading, Rating, QuestionCard } from '../../../components';
 import { Book, Paragraph } from '../../../types';
 import numberToGematria from '../../../lib/clientHelpers/gematriaFunc';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
-import { getBooks } from '@/hooks/booksDetails';
+import { getBooks } from '../../../hooks/booksDetails';
 import Styles from './Study.module.css';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Confetti from 'react-confetti';
-import RatingComponent from '@/components/rating/rating';
 
 interface Index {
     chapterId: number;
@@ -38,15 +37,17 @@ const Study = () => {
     const [showConfetti, setShowConfetti] = useState(false);
     const [loading, setLoading] = useState(false);
 
+console.log('paragraph: ', paragraph);
+
     useEffect(() => {
-        if (user && bookId) {
+        if (user && bookId && Array.isArray(books)) {
             const userBook = user.books.find((book) => book.book_id === bookId);
             setIndex(userBook ? { chapterId: userBook.chapter_id, paragraphId: userBook.section_id } : { chapterId: 1, paragraphId: 1 });
         }
     }, [bookId, user]);
 
     useEffect(() => {
-        if (books) {
+        if (books && Array.isArray(books)) {
             setBookData(books.find((book) => book._id === bookId) || null);
         }
     }, [books, bookId]);
@@ -119,8 +120,6 @@ const Study = () => {
     );
 
     return (
-
-    
             
         (isLoading ? <Loading /> :
             <Box display="flex" height="100vh">
@@ -132,7 +131,7 @@ const Study = () => {
                     <IconButton onClick={() => handleNavigation('prev')} disabled={index?.chapterId === 1 && index?.paragraphId === 1}>
                         <ExpandLess />
                     </IconButton>
-                    {loading ? <Loading /> :
+                    {loading ? <p>loading...</p>:
                         <ShowParagraph
                             paragraph={currentParagraph?.section!}
                             chapterTitle={`פרק ${numberToGematria(index?.chapterId || 1)} סעיף ${numberToGematria(index?.paragraphId || 1)}`}
@@ -145,9 +144,10 @@ const Study = () => {
                             סיימתי ללמוד
                         </Button>
                     )}
-                    {paragraph&&paragraph.paragraphs.length>0&&<QuestionCard p={paragraph.paragraphs[0]} bookId={bookId} setParagraph={setParagraph} chapterId={1} />}
+                    {/* { paragraph && paragraph. >  0 &&
+                        <QuestionCard p={paragraph.paragraphs[0]} bookId={bookId} setParagraph={setParagraph} chapterId={1} />} */}
 
-                    <RatingComponent bookId={bookData?._id || ''} />
+                    <Rating bookId={bookData?._id || ''} />
                 </div>
                 <Chat bookId={bookId} />
                 <ToastContainer />

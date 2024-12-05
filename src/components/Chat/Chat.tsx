@@ -20,7 +20,7 @@ const Chat = ({ bookId }: { bookId: string }) => {
       cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER!,
     });
 
-    if (books) {
+    if (books && Array.isArray(books)) {
       const selectedBook = books.find(book => book._id == bookId)
       if (selectedBook && selectedBook.learningGroups && selectedBook.learningGroups.message) {
         setMessages([...selectedBook?.learningGroups.message])

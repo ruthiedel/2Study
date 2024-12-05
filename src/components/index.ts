@@ -11,3 +11,4 @@ export { default as Chat } from './Chat/Chat';
 export { default as ShowParagraph } from './ShowParagraph/ShowParagraph';
 export { default as ChapterSidebar } from './ChapterSideBar/ChapterSideBar';
 export { default as UserContainer } from './userStatus/userContainer';
+export { default as Rating } from './rating/rating';
