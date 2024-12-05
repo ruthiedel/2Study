@@ -3,7 +3,7 @@ import Rating from "@mui/material/Rating";
 import styles from "./rating.module.css";
 import { useUpdateBook } from '../../hooks/booksDetails';
 import useUserStore from "../../services/zustand/userZustand/userStor";
-import { getBookById } from '../../services/bookService'
+import { getBookById } from '../../hooks/booksDetails'
 
 
 interface RatingComponentProps {
@@ -27,20 +27,21 @@ const RatingComponent: React.FC<RatingComponentProps> = ({ bookId }) => {
       setIsSubmitting(true);
       try {
         const book = await getBookById(bookId);
-        const num_raters = book.number_raters > 0 ? book.number_raters + 1 : 1;
-        const evgRating = book.number_raters > 0
-          ? Math.round((book.rating! * book.number_raters + rating) / num_raters)
-          : rating;
-        await updateBookMutation.mutate({
-          id: bookId,
-          updatedData: { rating: evgRating, number_raters: num_raters },
-        });
-
-        updateRating(bookId, evgRating);
+        if (book){
+          const num_raters = book.number_raters > 0 ? book.number_raters + 1 : 1;
+          const evgRating = book.number_raters > 0
+            ? Math.round((book.rating! * book.number_raters + rating) / num_raters)
+            : rating;
+          await updateBookMutation.mutate({
+            id: bookId,
+            updatedData: { rating: evgRating, number_raters: num_raters },
+          });
+          updateRating(bookId, evgRating);
         
-        alert(rating);
-        alert("דירוג נשמר בהצלחה!");
-        setIsVisible(false);
+          alert(rating);
+          alert("דירוג נשמר בהצלחה!");
+          setIsVisible(false);
+        }
       } catch (error) {
         alert("אירעה שגיאה בשמירת הדירוג.");
       } finally {
