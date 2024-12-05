@@ -11,9 +11,9 @@ import numberToGematria from '../../../lib/clientHelpers/gematriaFunc';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
 import { getBooks } from '@/hooks/booksDetails';
 import Styles from './Study.module.css';
-import {  toast } from 'react-toastify';
+// import {  toast } from 'react-toastify';
 import Confetti from 'react-confetti';
-import 'react-toastify/dist/ReactToastify.css';
+// import 'react-toastify/dist/ReactToastify.css';
 import RatingComponent from '@/components/rating/rating';
 
 interface Index {
@@ -29,14 +29,14 @@ interface Paragraphs {
 const Study = () => {
     const { book_id } = useParams() as { book_id: string | string[] };
     const bookId = Array.isArray(book_id) ? book_id[0] : book_id;
-    const { data: books } = getBooks();
+    const { data: books, isLoading, error  } = getBooks();
     const user = useUserStore((state) => state.user);
     const [index, setIndex] = useState<Index | null>(null);
     const [paragraph, setParagraph] = useState<Paragraphs[]>([]);
     const [bookData, setBookData] = useState<Book | null>(null);
     const [showConfetti, setShowConfetti] = useState(false);
     const [loading, setLoading] = useState(false);
-
+    
     // איתחול מיקום ראשוני
     useEffect(() => {
         if (user && bookId) {
@@ -67,7 +67,6 @@ const Study = () => {
                 setParagraph(paragraphs.sections);
             } catch (error) {
                 console.error('Error fetching paragraphs:', error);
-                toast.error('אירעה שגיאה בעת הבאת הסעיפים');
             } finally {
                 setLoading(false);
             }
@@ -107,7 +106,7 @@ const Study = () => {
 
         const handleFinish = () => {
             setShowConfetti(true);
-            toast.success('סיימת ללמוד! כל הכבוד 🎉');
+            // toast.success('סיימת ללמוד! כל הכבוד 🎉');
             setTimeout(() => setShowConfetti(false), 5000);
         };
 
@@ -116,6 +115,13 @@ const Study = () => {
             (p) => p.chapterNumber === index?.chapterId && p.section.ParagraphId === index?.paragraphId
         );
     
+        if (isLoading) {
+            return <Loading></Loading>;
+        }
+        
+        if (error) {
+            return <div>Error loading books</div>;
+        }
         return (
             <Box display="flex" height="100vh">
                 <ChapterSidebar
