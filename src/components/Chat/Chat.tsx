@@ -57,7 +57,7 @@ const Chat = ({ bookId }: { bookId: string }) => {
     if (!user || message.trim() === '' || isSending) return;
 
     const newMessage: Message = {
-      _id: '', // יווצר בשרת
+      _id: '',
       bookId,
       username: user.name,
       message: message,
@@ -73,7 +73,7 @@ const Chat = ({ bookId }: { bookId: string }) => {
         },
         body: JSON.stringify({
           message: newMessage.message,
-          username: user.name,
+          username: `${user.name} ${user._id}`,
           bookId,
         }),
       });
@@ -101,6 +101,22 @@ const Chat = ({ bookId }: { bookId: string }) => {
     setIsSending(false);
   };
 
+  const getIdFromUserName = (userName: string): string => {
+    const lastSpaceIndex = userName.lastIndexOf(' ');
+    if (lastSpaceIndex !== -1) {
+      return userName.substring(lastSpaceIndex + 1); 
+    }
+    return '';
+  }
+
+  const getNameFromUserName = (userName: string): string => {
+    const lastSpaceIndex = userName.lastIndexOf(' ');
+    if (lastSpaceIndex !== -1) {
+      return userName.substring(0, lastSpaceIndex); 
+    }
+    return '';
+  }
+
   return (
     <div className={ChatStyles.container} >
       <div className={ChatStyles.header}>
@@ -116,15 +132,15 @@ const Chat = ({ bookId }: { bookId: string }) => {
       </div>
       <div className={ChatStyles.messages} id='messages-container'>
         {messages.map((msg, index) => (
-          <div className={`${ChatStyles.messageContainer}  ${msg.username === user?.name ? ChatStyles.selfContainer : ''
-                }`}>
+          <div className={`${ChatStyles.messageContainer}  ${getIdFromUserName(msg.username) === user?._id ? ChatStyles.selfContainer : ''
+            }`}>
             <div className={ChatStyles.profile}>{msg.username[0]}</div>
             <div
               key={index}
-              className={`${ChatStyles.message} ${msg.username === user?.name ? ChatStyles.selfMessage : ChatStyles.otherMessage
+              className={`${ChatStyles.message} ${getIdFromUserName(msg.username) === user?._id  ? ChatStyles.selfMessage : ChatStyles.otherMessage
                 }`}
             >
-              <div className={ChatStyles.username}>{msg.username}</div>
+              <div className={ChatStyles.username}>{getNameFromUserName(msg.username)}</div>
               <div className={ChatStyles.text}>{msg.message}</div>
               <div className={ChatStyles.timestamp}>
                 {new Date(msg.timestamp).toLocaleTimeString()}
