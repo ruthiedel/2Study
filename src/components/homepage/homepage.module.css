@@ -1,0 +1,25 @@
+.homepage{
+    background-color: black;
+    padding: 30px;
+    text-align: center;
+    color: white;
+    height: 100vh;
+}
+
+.homepage h1{
+    font-size: 250%;
+    margin-top: 30px;
+
+}
+
+.homepage h2{
+    font-size: 150%;
+    margin-top: 30px;
+
+}
+
+.homepage p{
+    font-size: 120%;
+    margin-top: 30px;
+
+}
