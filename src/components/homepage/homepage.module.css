@@ -1,25 +1,144 @@
-.homepage{
-    background-color: black;
-    padding: 30px;
+.home-container {
+    font-family: 'Arial', sans-serif;
+    background-color: #fff;
+    color: #333;
+    padding: 50px 10%;
+  }
+  
+  .intro {
     text-align: center;
-    color: white;
-    height: 100vh;
-}
-
-.homepage h1{
-    font-size: 250%;
-    margin-top: 30px;
-
-}
-
-.homepage h2{
-    font-size: 150%;
-    margin-top: 30px;
-
-}
-
-.homepage p{
-    font-size: 120%;
-    margin-top: 30px;
-
-}
+    margin-bottom: 60px;
+  }
+  
+  .headline {
+    font-size: 3rem;
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .subheadline {
+    font-size: 1.5rem;
+    color: #777;
+    margin-bottom: 30px;
+  }
+  
+  .cta-button {
+    background-color: #FFB800; /* חרדל */
+    color: #fff;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .cta-button:hover {
+    background-color: #E69400;
+  }
+  
+  /* Features */
+  .features {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 60px;
+  }
+  
+  .feature-card {
+    background-color: #f7f7f7;
+    padding: 30px;
+    border-radius: 8px;
+    width: 30%;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+  }
+  
+  .feature-card:hover {
+    transform: scale(1.05);
+  }
+  
+  .feature-card h2 {
+    font-size: 1.5rem;
+    color: #333;
+  }
+  
+  .feature-card p {
+    font-size: 1rem;
+    color: #777;
+  }
+  
+  /* Recommendations */
+  .recommendation {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+  
+  .recommendation h2 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .recommendation p {
+    font-size: 1.2rem;
+    color: #777;
+    margin-bottom: 30px;
+  }
+  
+  /* Testimonials */
+  .testimonial {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+  
+  .testimonial h2 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .testimonial p {
+    font-size: 1.2rem;
+    color: #777;
+  }
+  
+  /* Animations */
+  @keyframes fadeInUp {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  
+  @keyframes fadeInLeft {
+    0% { opacity: 0; transform: translateX(-20px); }
+    100% { opacity: 1; transform: translateX(0); }
+  }
+  
+  @keyframes fadeInRight {
+    0% { opacity: 0; transform: translateX(20px); }
+    100% { opacity: 1; transform: translateX(0); }
+  }
+  
+  /* Animation classes */
+  .animate__fadeInUp {
+    animation: fadeInUp 1s ease-in-out;
+  }
+  
+  .animate__fadeInLeft {
+    animation: fadeInLeft 1s ease-in-out;
+  }
+  
+  .animate__fadeInRight {
+    animation: fadeInRight 1s ease-in-out;
+  }
+  
+  .animate__zoomIn {
+    animation: zoomIn 0.5s ease-in-out;
+  }
+  
+  @keyframes zoomIn {
+    0% { transform: scale(0.8); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  

@@ -4,6 +4,8 @@ import styles from "./rating.module.css";
 import { useUpdateBook } from '../../hooks/booksDetails';
 import useUserStore from "../../services/zustand/userZustand/userStor";
 import { getBookById } from '../../hooks/booksDetails'
+import {updateUser} from '../../services/userService'
+import { User } from '../../types';
 
 
 interface RatingComponentProps {
@@ -36,7 +38,18 @@ const RatingComponent: React.FC<RatingComponentProps> = ({ bookId }) => {
             id: bookId,
             updatedData: { rating: evgRating, number_raters: num_raters },
           });
-          updateRating(bookId, evgRating);
+          const newbooks = user?.books.map(book =>{
+            if(book.book_id === bookId){
+              return {...book, rate: rating}
+            }
+            return book;
+          })
+          const newuser: User ={
+            ...user!,
+            books:newbooks || [],
+          };
+          updateUser({ id: user?._id || "", updatedData: newuser });
+          // updateRating(bookId, evgRating);
         
           alert(rating);
           alert("דירוג נשמר בהצלחה!");
