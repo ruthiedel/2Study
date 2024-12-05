@@ -28,8 +28,11 @@ const Login = () => {
         books: [],
         userImagePath: user.photoURL as string,
       }
+      const response =  await logInUser(localUser);
+      if (response.message) {
+        localUser._id = response.message
+      }
       setUser(localUser);
-      logInUser(localUser);
     } catch (error) {
       console.error("Error during Google login:", error);
     }
