@@ -2,6 +2,7 @@
 import React from 'react';
 import { Typography, Box } from '@mui/material';
 import { Paragraph } from '../../types';
+import { Loading } from '..';
 
 const paragraphStyles = {
   container: {
@@ -39,7 +40,7 @@ const ParagraphNavigation: React.FC<Props> = (props) => {
     <Box style={paragraphStyles.container}>
       <Typography style={paragraphStyles.title}>{chapterTitle}</Typography>
       <Typography style={paragraphStyles.text}>
-        {paragraph && paragraph.text ? removeHtmlTags(paragraph.text) : "אין תוכן זמין"}
+        {paragraph && paragraph.text ? removeHtmlTags(paragraph.text) : <Loading/>}
       </Typography>
     </Box>
   );
