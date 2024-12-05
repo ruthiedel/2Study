@@ -5,7 +5,12 @@ import { User } from '../../../types';
 export async function POST(request: Request) {
     try {
         const body = await request.json();
-        const user: Omit<User, '_id'> = body;
+        
+        const { _id, ...userWithoutId } = body; 
+        const user = {
+            ...userWithoutId,  
+        };
+        
         const result = await checkAndAddUser(user);
         return NextResponse.json(
             { message: result.message },
