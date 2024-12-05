@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import useUserStore from '../../services/zustand/userZustand/userStor';
 import { Card, Grid, IconButton, Button, Typography, Box, Rating } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
@@ -15,11 +15,21 @@ type BookCardProps = {
 
 const BookCard: React.FC<BookCardProps> = ({ book, onClose }) => {
     const [showMore, setShowMore] = useState(false);
+    const [foundBook, setFoundBook] = useState(false);
     const user = useUserStore((state) => state.user);
 
+    useEffect(() => {
+        const bookExists = user?.books.find((userBook) => userBook.book_id === book._id);
+        if (bookExists) {
+            setFoundBook(true);
+        } else {
+            setFoundBook(false);
+        }
+    },[]);
+
     const handleReadMore = async () => {
-        const foundBook = user?.books.find((userBook) => userBook.book_id === book._id);
-        if (foundBook) {
+        const bookExists = user?.books.find((userBook) => userBook.book_id === book._id);
+        if (bookExists) {
             window.location.href = `study/${book._id}`;
         } else {
             const newUserBook: UserBook = {
@@ -97,7 +107,7 @@ const BookCard: React.FC<BookCardProps> = ({ book, onClose }) => {
 
                     <Grid item xs={12}>
                         <Button variant="contained" className={styles.learnButton} onClick={handleReadMore}>
-                            {user?.books.find((userBook) => userBook.book_id === book._id) ? "המשך ללמוד ←" : "הוסף לרשימת הספרים שלי"}
+                            { foundBook ?  "הוסף לרשימת הספרים שלי" : "המשך ללמוד ←"}
                         </Button>
                     </Grid>
                 </Grid>
