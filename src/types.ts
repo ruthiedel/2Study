@@ -10,7 +10,8 @@ type Question = {
     answer: string;
 }
 export type Chapter = {
-    _id?: string;
+    chapterId?: number;
+
     paragraphs: Paragraph[];
 }
  export type Message = {

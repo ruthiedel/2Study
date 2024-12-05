@@ -21,6 +21,7 @@ interface Index {
     paragraphId: number;
 }
 
+
 interface Paragraphs {
     section: Paragraph;
     chapterNumber: number;
@@ -51,6 +52,7 @@ const Study = () => {
     }, [books, bookId]);
 
     useEffect(() => {
+
         if (!index || !bookId) return;
         const { chapterId, paragraphId } = index;
 
@@ -66,6 +68,7 @@ const Study = () => {
             } finally {
                 setLoading(false);
             }
+
         };
         fetchParagraphs(bookId, chapterId, paragraphId);
     }, [index]);
@@ -116,6 +119,9 @@ const Study = () => {
     );
 
     return (
+
+    
+            
         (isLoading ? <Loading /> :
             <Box display="flex" height="100vh">
                 <ChapterSidebar
@@ -139,12 +145,15 @@ const Study = () => {
                             סיימתי ללמוד
                         </Button>
                     )}
+                    {paragraph&&paragraph.paragraphs.length>0&&<QuestionCard p={paragraph.paragraphs[0]} bookId={bookId} setParagraph={setParagraph} chapterId={1} />}
+
                     <RatingComponent bookId={bookData?._id || ''} />
                 </div>
                 <Chat bookId={bookId} />
                 <ToastContainer />
                 {showConfetti && <Confetti />}
             </Box>)
+
     );
 }
 

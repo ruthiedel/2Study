@@ -92,7 +92,7 @@ const Chat = ({ bookId }: { bookId: string }) => {
     setMessage('');
     setIsSending(false);
   };
-  console.log(messages, "eeee")
+
 
   return (
     <div className={ChatStyles.container}>
