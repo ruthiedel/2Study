@@ -10,10 +10,10 @@ const Chat = ({ bookId }: { bookId: string }) => {
   const user: User | null = useUserStore((state) => state.user);
   const { data: books } = getBooks();
   const updateBookMutation = useUpdateBook();
-
   const [messages, setMessages] = useState<Message[]>([]);
   const [message, setMessage] = useState('');
   const [isSending, setIsSending] = useState(false);
+  const [bookName, setBookName] = useState('');
 
   useEffect(() => {
     const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY!, {
@@ -24,6 +24,7 @@ const Chat = ({ bookId }: { bookId: string }) => {
       const selectedBook = books.find(book => book._id == bookId)
       if (selectedBook && selectedBook.learningGroups && selectedBook.learningGroups.message) {
         setMessages([...selectedBook?.learningGroups.message])
+        setBookName(selectedBook.name);
       }
       else {
         console.log("No learningGroups", selectedBook)
@@ -44,6 +45,13 @@ const Chat = ({ bookId }: { bookId: string }) => {
       pusher.unsubscribe(`chat-${bookId}`);
     };
   }, [books]);
+
+  useEffect(() => {
+    const messageContainer = document.getElementById('messages-container');
+    if (messageContainer) {
+      messageContainer.scrollTop = messageContainer.scrollHeight;
+    }
+  }, [messages]);
 
   const sendMessage = async () => {
     if (!user || message.trim() === '' || isSending) return;
@@ -93,21 +101,34 @@ const Chat = ({ bookId }: { bookId: string }) => {
     setIsSending(false);
   };
 
-
   return (
-    <div className={ChatStyles.container}>
-      <div className={ChatStyles.header}>קבוצת לימוד - שם הספר</div>
-      <div className={ChatStyles.messages}>
+    <div className={ChatStyles.container} >
+      <div className={ChatStyles.header}>
+        <>קבוצת לימוד {bookName}</>
+        <div className={ChatStyles.profileContainer}>
+          <div className={ChatStyles.onlineIndicator}></div>
+          <img
+            src={user?.userImagePath || '/default-avatar.png'}
+            alt={user?.name}
+            className={ChatStyles.profileImage}
+          />
+        </div>
+      </div>
+      <div className={ChatStyles.messages} id='messages-container'>
         {messages.map((msg, index) => (
-          <div
-            key={index}
-            className={`${ChatStyles.message} ${msg.username === user?.name ? ChatStyles.selfMessage : ''
-              }`}
-          >
-            <div className={ChatStyles.username}>{msg.username}</div>
-            <div className={ChatStyles.text}>{msg.message}</div>
-            <div className={ChatStyles.timestamp}>
-              {new Date(msg.timestamp).toLocaleTimeString()}
+          <div className={`${ChatStyles.messageContainer}  ${msg.username === user?.name ? ChatStyles.selfContainer : ''
+                }`}>
+            <div className={ChatStyles.profile}>{msg.username[0]}</div>
+            <div
+              key={index}
+              className={`${ChatStyles.message} ${msg.username === user?.name ? ChatStyles.selfMessage : ChatStyles.otherMessage
+                }`}
+            >
+              <div className={ChatStyles.username}>{msg.username}</div>
+              <div className={ChatStyles.text}>{msg.message}</div>
+              <div className={ChatStyles.timestamp}>
+                {new Date(msg.timestamp).toLocaleTimeString()}
+              </div>
             </div>
           </div>
         ))}
@@ -120,7 +141,7 @@ const Chat = ({ bookId }: { bookId: string }) => {
           onChange={(e) => setMessage(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === 'Enter') {
-              e.preventDefault(); 
+              e.preventDefault();
               sendMessage();
             }
           }}
