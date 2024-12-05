@@ -13,8 +13,11 @@ export async function POST(request: Request) {
         
         const result = await checkAndAddUser(user);
         return NextResponse.json(
-            { message: result.message },
-            { status: result.status }
+            {
+                message: result.message,
+                status: result.status,
+                user: result.user
+            }
         );
     } catch (error: any) {
         console.error('Error processing POST request:', error);
