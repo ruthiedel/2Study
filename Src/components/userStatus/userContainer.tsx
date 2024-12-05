@@ -1,6 +1,6 @@
-import StudyCard from './studyCard';
-import ProgressCard from './progressCard';
-import Information from './information';
+import StudyCard from './StudyCard';
+import ProgressCard from './ProgressCard';
+import Information from './Information';
 import Recommendations from './Recommendations';
 
 export default function UserContainer() {
@@ -26,3 +26,4 @@ export default function UserContainer() {
     </div>
   );
 }
+
