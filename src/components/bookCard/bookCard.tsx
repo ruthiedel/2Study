@@ -8,7 +8,6 @@ import styles from './bookCard.module.css';
 import image from '../../../public/pictures/garnisht.png'
 import { Book } from '../../types';
 import { updateUser } from '../../services/userService';
-// import RatingComponent from '../rating/rating'
 
 type BookCardProps = {
     book: Book;
@@ -26,15 +25,6 @@ const BookCard: React.FC<BookCardProps> = ({ book, onClose }) => {
         if (foundBook) {
             window.location.href = `study/${book._id}`;
         } else {
-            // const newUserBook: UserBook = {
-            //     book_id: bookId,
-            //     book_name: bookName,
-            //     chapter_id: 1,
-            //     section_id: 1,
-            //     rate: 0,
-            // }
-            // await updateUser({ id: userId, updatedData: updatedUserData });
-            // updateUser(user!._id!, book._id!, book.name);
             console.log(user)
             alert(user)
             window.location.href = `study/${book._id}`;
@@ -60,7 +50,6 @@ const BookCard: React.FC<BookCardProps> = ({ book, onClose }) => {
                     </Grid>
 
                     <Grid item xs={12} sm={8}>
-                        {/* <RatingComponent bookId={book._id!}/> */}
                         <Typography variant="h5" align="right" className={styles.bookTitle}>
                             {book.name}
                         </Typography>
@@ -70,12 +59,6 @@ const BookCard: React.FC<BookCardProps> = ({ book, onClose }) => {
                         <Typography variant="body2" color="textSecondary" align="right" className={styles.text}>
                             {book.category.subject}
                         </Typography>
-                        {/* <Image
-                            src={image}
-                            alt='garnisht'
-                            width={280}
-                            height={150}
-                        /> */}
                         <Typography variant="body2" className={styles.text}>
                             <strong> פרקים: </strong>{book.chapters_num} | <strong> סעיפים: </strong>{book.paragraphs_num}
                         </Typography>

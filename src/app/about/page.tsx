@@ -21,24 +21,20 @@ const AboutPage = () => {
 
         const elements = document.querySelectorAll(`.${styles.hidden}`);
         elements.forEach((el) => observer.observe(el));
-
         return () => observer.disconnect(); 
     }, []);
 
     return (
         <div className={styles.pageContainer}>
-
             <div className={styles.heroSection}>
-                <div className={styles.heroOverlay}>
                     <h1 className={`${styles.heroTitle} ${styles.hidden}`}>אודות</h1>
                     <p className={`${styles.heroDescription} ${styles.hidden}`}>
                         ברוכים הבאים למקום שבו לימוד פוגש השראה. האתר שלנו מציע חוויית לימוד ייחודית ומותאמת אישית לציבור החרדי, עם ספרים נבחרים, כלים מתקדמים, וקבוצות לימוד המחברות בין לומדים. כאן תוכלו לצמוח, להעמיק ולהתקדם בדרך שלכם, עם תמיכה מתמדת ותחושת שייכות אמיתית.
                     </p>
-                </div>
             </div>
 
             <div className={styles.sectionTitleContainer}>
-                <h2 className={`${styles.sectionTitle} ${styles.hidden}`}>לומדים חכמה, צומחים יחד</h2>
+                <h2 className={` ${styles.hidden} `}>לומדים חכמה, צומחים יחד</h2>
                 <div className={`${styles.titleUnderline} ${styles.hidden}`}></div>
             </div>
 
