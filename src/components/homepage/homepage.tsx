@@ -1,18 +1,10 @@
 "use client";
-
 import React from "react";
-import useUserStore from '../../services/zustand/userZustand/userStor';
-import {getBooks} from '../../hooks/booksDetails';
+
+import styles from "./homepage.module.css";
+
 
 const Homepage = () => {
-    const user = useUserStore((state) => state.user);
-    const logout = useUserStore((state) => state.logout);
-    const { data, isLoading, error } = getBooks();
-
-    console.log(data);
-    if (isLoading) return <p>Loading books...</p>;
-    if (error) return <p>Error: {error.message}</p>;
-
    
 
     return (
@@ -56,6 +48,11 @@ const Homepage = () => {
                     Log Out
                 </button>
             </main>
+
+        <div className={styles.homepage}>
+            {/* <h1>!Welcome</h1>
+            <h2>לימוד הלכה ואמונה ב-2 דקות ביום</h2>
+            <p>קטעי לימוד קצרים, מותאמים אישית לציבור החרדי, עם אפשרות לשמירת סימניות ומעקב אחר התקדמותך.</p> */}
             </div>
 
     );

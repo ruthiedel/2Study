@@ -20,26 +20,26 @@ const Chat = ({ bookId }: { bookId: string }) => {
       cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER!,
     });
 
-    if(books){
-    const selectedBook =books.find(book => book._id==bookId)
-    if(selectedBook&&selectedBook.learningGroups&&selectedBook.learningGroups.message){
-    setMessages([...selectedBook?.learningGroups.message])
+    if (books) {
+      const selectedBook = books.find(book => book._id == bookId)
+      if (selectedBook && selectedBook.learningGroups && selectedBook.learningGroups.message) {
+        setMessages([...selectedBook?.learningGroups.message])
+      }
+      else {
+        console.log("No learningGroups", selectedBook)
+      }
     }
-    else{
-    console.log("No learningGroups", selectedBook)
+    else {
+      console.log("No books")
     }
-   }
-   else{
-    console.log("No books")
-   }
-            const channel = pusher.subscribe(`chat-${bookId}`);
+    const channel = pusher.subscribe(`chat-${bookId}`);
     channel.bind('message', (data: Message) => {
       setMessages((prevMessages) => {
-          return [...prevMessages, data];
-        
+        return [...prevMessages, data];
+
       });
     });
-  
+
     return () => {
       pusher.unsubscribe(`chat-${bookId}`);
     };
@@ -93,6 +93,7 @@ const Chat = ({ bookId }: { bookId: string }) => {
     setIsSending(false);
   };
 
+
   return (
     <div className={ChatStyles.container}>
       <div className={ChatStyles.header}>קבוצת לימוד - שם הספר</div>
@@ -100,9 +101,8 @@ const Chat = ({ bookId }: { bookId: string }) => {
         {messages.map((msg, index) => (
           <div
             key={index}
-            className={`${ChatStyles.message} ${
-              msg.username === user?.name ? ChatStyles.selfMessage : ''
-            }`}
+            className={`${ChatStyles.message} ${msg.username === user?.name ? ChatStyles.selfMessage : ''
+              }`}
           >
             <div className={ChatStyles.username}>{msg.username}</div>
             <div className={ChatStyles.text}>{msg.message}</div>
@@ -118,6 +118,12 @@ const Chat = ({ bookId }: { bookId: string }) => {
           value={message}
           placeholder="כתוב הודעה..."
           onChange={(e) => setMessage(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              e.preventDefault(); 
+              sendMessage();
+            }
+          }}
           className={ChatStyles.input}
         />
         <button

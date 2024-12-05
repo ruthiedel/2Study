@@ -34,30 +34,54 @@ export async function GET(request: Request) {
     }
 
     const getSections = (chapterIndex: number, sectionIndex: number, totalSections: number) => {
-      const sections: string[] = [];
+      const sections: { section: string, chapterNumber: number }[] = [];
 
       if (sectionIndex > 0) {
-        sections.push(chapter.paragraphs[sectionIndex - 1]);
+        sections.push({
+          section: chapter.paragraphs[sectionIndex - 1],
+          chapterNumber: chapterIndex + 1
+        });
       } else if (chapterIndex > 0) {
         const prevChapter = book.chapters[chapterIndex - 1];
-        sections.push(prevChapter.paragraphs[prevChapter.paragraphs.length - 1]);
+        sections.push({
+          section: prevChapter.paragraphs[prevChapter.paragraphs.length - 1],
+          chapterNumber: chapterIndex // מספר הפרק הקודם
+        });
       }
 
-      sections.push(chapter.paragraphs[sectionIndex]);
+      sections.push({
+        section: chapter.paragraphs[sectionIndex],
+        chapterNumber: chapterIndex + 1
+      });
 
       if (sectionIndex + 1 < totalSections) {
-        sections.push(chapter.paragraphs[sectionIndex + 1]);
+        sections.push({
+          section: chapter.paragraphs[sectionIndex + 1],
+          chapterNumber: chapterIndex + 1
+        });
       } else if (chapterIndex < book.chapters.length - 1 && book.chapters[chapterIndex + 1].paragraphs.length) {
-        sections.push(book.chapters[chapterIndex + 1].paragraphs[0]);
+        sections.push({
+          section: book.chapters[chapterIndex + 1].paragraphs[0],
+          chapterNumber: chapterIndex + 2 // פרק הבא
+        });
       }
 
       if (sectionIndex + 2 < totalSections) {
-        sections.push(chapter.paragraphs[sectionIndex + 2]);
+        sections.push({
+          section: chapter.paragraphs[sectionIndex + 2],
+          chapterNumber: chapterIndex + 1
+        });
       } else if (sectionIndex === totalSections - 2 && chapterIndex < book.chapters.length - 1) {
         const nextChapter = book.chapters[chapterIndex + 1];
-        sections.push(nextChapter.paragraphs[0]);
+        sections.push({
+          section: nextChapter.paragraphs[0],
+          chapterNumber: chapterIndex + 2
+        });
       } else if (chapterIndex < book.chapters.length - 1 && book.chapters[chapterIndex + 1].paragraphs.length > 1) {
-        sections.push(book.chapters[chapterIndex + 1].paragraphs[1]);
+        sections.push({
+          section: book.chapters[chapterIndex + 1].paragraphs[1],
+          chapterNumber: chapterIndex + 2
+        });
       }
 
       return sections;
