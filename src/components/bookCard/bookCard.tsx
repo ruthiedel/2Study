@@ -5,8 +5,7 @@ import { Card, Grid, IconButton, Button, Typography, Box, Rating } from '@mui/ma
 import CloseIcon from '@mui/icons-material/Close';
 import Image from 'next/image';
 import styles from './bookCard.module.css';
-import image from '../../../public/pictures/garnisht.png'
-import { Book } from '../../types';
+import { Book, UserBook } from '../../types';
 import { updateUser } from '../../services/userService';
 
 type BookCardProps = {
@@ -16,17 +15,25 @@ type BookCardProps = {
 
 const BookCard: React.FC<BookCardProps> = ({ book, onClose }) => {
     const [showMore, setShowMore] = useState(false);
-    const [foundBook, setFoundBook] = useState(false);
     const user = useUserStore((state) => state.user);
 
     const handleReadMore = async () => {
-        console.log(user)
         const foundBook = user?.books.find((userBook) => userBook.book_id === book._id);
         if (foundBook) {
             window.location.href = `study/${book._id}`;
         } else {
-            console.log(user)
-            alert(user)
+            const newUserBook: UserBook = {
+                book_id: book._id!,
+                book_name: book.name,
+                chapter_id: 1,
+                section_id: 1,
+                rate: 0,
+            }
+            const updatedUserData = {
+                ...user!, 
+                books: [...user!.books, newUserBook]
+            }
+            await updateUser({ id: user!._id!, updatedData: updatedUserData });
             window.location.href = `study/${book._id}`;
         }
 
