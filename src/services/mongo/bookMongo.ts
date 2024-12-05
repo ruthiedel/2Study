@@ -92,7 +92,6 @@ export async function fetchAllBooks(client: MongoClient, collection: string) {
   return booksWithImages;
 }
 
-// שליפת ספר לפי ID
 export async function fetchBookById(client: MongoClient, collection: string, bookId: string) {
   const db = client.db('Books');
 
@@ -109,12 +108,12 @@ export async function fetchBookById(client: MongoClient, collection: string, boo
   };
 }
 
-
 export async function updateBook(client: MongoClient, collection: string, bookId: string, updatedData: Partial<Record<string, any>> ) {
   const db = client.db('Books');
 
   const objectId = new ObjectId(bookId);
 
+  // עדכון הספר, גם אם לא השתנה
   const result = await db.collection(collection).updateOne(
     { _id: objectId },
     { $set: updatedData }
@@ -124,16 +123,11 @@ export async function updateBook(client: MongoClient, collection: string, bookId
     throw new Error('Book not found');
   }
 
-  if (result.modifiedCount === 0) {
-    throw new Error('No changes were made to the book');
-  }
-
   return {
     message: 'Book updated successfully',
     updatedFields: updatedData,
   };
 }
-
 
 export async function fetchPartialBooks(client: MongoClient, collection: string) {
   const db = client.db('Books');
@@ -144,4 +138,116 @@ export async function fetchPartialBooks(client: MongoClient, collection: string)
     .toArray();
 
   return books;
+}
+// export async function updateBookQuestion(
+//   client: MongoClient,
+//   collection: string,
+//   bookId: string,
+//   chapterId: number,
+//   paragraphId: number, 
+//   question: { question: string; answer: string }
+// ) {
+//   const db = client.db("Books");
+//   const objectId = new ObjectId(bookId);
+//   console.log('bookId:', objectId);
+//   console.log('chapterId:', chapterId);
+//   console.log('paragraphId:', paragraphId);
+
+//   const result = await db.collection(collection).updateOne(
+//     {
+//       _id: objectId,
+//       "chapters.chapterId": chapterId, // המרת ה-chapterId למספר
+//       "chapters.paragraphs.paragraphId":paragraphId, // המרת ה-paragraphId למספר
+//     },
+//     {
+//       $set: {
+//         "chapters.$.paragraphs.$[paragraph].questions": question,
+//       },
+//     },
+//     {
+//       arrayFilters: [{ "paragraph.paragraphId": paragraphId }],
+//     }
+//   );
+
+//   if (result.matchedCount === 0) {
+//     throw new Error("Book, chapter, or paragraph not found");
+//   }
+
+//   return {
+//     message: "Question added successfully",
+//     bookId,
+//     chapterId,
+//     paragraphId,
+//     question,
+//   };
+// }
+
+export async function updateBookQuestion(
+  client: MongoClient,
+  collection: string,
+  bookId: string,
+  chapterId: number,
+  paragraphId: number, 
+  question: { question: string; answer: string }
+) {
+  const db = client.db("Books");
+  const objectId = new ObjectId(bookId);
+  console.log('bookId:', objectId);
+  console.log('chapterId:', chapterId);
+  console.log('paragraphId:', paragraphId);
+  console.log('New question:', question);
+
+  // תחילה, שלוף את הספר הנוכחי
+  const book = await db.collection(collection).findOne({
+    _id: objectId,
+    "chapters.chapterId": chapterId,
+    "chapters.paragraphs.paragraphId": paragraphId,
+  });
+
+  if (!book) {
+    throw new Error("Book, chapter, or paragraph not found");
+  }
+
+  // שלוף את הפסקה הספציפית
+  const paragraph = book.chapters
+    .find((chapter: any) => chapter.chapterId === chapterId)
+    ?.paragraphs.find((p: any) => p.paragraphId === paragraphId);
+
+  if (!paragraph) {
+    throw new Error("Paragraph not found");
+  }
+
+  // ודא שהשאלות קיימות כערך מערך
+  const updatedQuestions = paragraph.questions 
+    ? [...paragraph.questions, question] // אם השאלות קיימות, הוסף את השאלה
+    : [question]; // אם לא, יצור מערך חדש עם השאלה
+
+  // עדכון השאלות עם $push או $set
+  const result = await db.collection(collection).updateOne(
+    {
+      _id: objectId,
+      "chapters.chapterId": chapterId,
+      "chapters.paragraphs.paragraphId": paragraphId,
+    },
+    {
+      $set: {
+        "chapters.$.paragraphs.$[paragraph].questions": updatedQuestions, // עדכון המערך החדש
+      },
+    },
+    {
+      arrayFilters: [{ "paragraph.paragraphId": paragraphId }],
+    }
+  );
+
+  if (result.matchedCount === 0) {
+    throw new Error("Book, chapter, or paragraph not found");
+  }
+
+  return {
+    message: "Question added successfully",
+    bookId,
+    chapterId,
+    paragraphId,
+    question,
+  };
 }

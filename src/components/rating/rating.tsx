@@ -3,7 +3,7 @@ import Rating from "@mui/material/Rating";
 import styles from "./rating.module.css";
 import { useUpdateBook } from '../../hooks/booksDetails';
 import useUserStore from "../../services/zustand/userZustand/userStor";
-import { getBookById } from '../../services/bookService'
+import { getBookById } from '../../hooks/booksDetails'
 
 
 interface RatingComponentProps {
@@ -12,13 +12,13 @@ interface RatingComponentProps {
 
 const RatingComponent: React.FC<RatingComponentProps> = ({ bookId }) => {
   const updateRating = useUserStore((state) => state.updateRating);
+  const user = useUserStore((state) => state.user);
+
   const updateBookMutation = useUpdateBook();
   const [hoverRating, setHoverRating] = useState<number | null>(null);
   const [rating, setRating] = useState<number | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
-  let evgRating = 0;
-  let num_raters = 0;
 
 
 
@@ -27,19 +27,21 @@ const RatingComponent: React.FC<RatingComponentProps> = ({ bookId }) => {
       setIsSubmitting(true);
       try {
         const book = await getBookById(bookId);
-        const num_raters = book.number_raters > 0 ? book.number_raters + 1 : 1;
-        const evgRating = book.number_raters > 0
-          ? Math.round((book.rating! * book.number_raters + rating) / num_raters)
-          : rating;
-        alert("rating: " + evgRating + " num_raters: " + num_raters);
-        await updateBookMutation.mutate({
-          id: bookId,
-          updatedData: { rating: evgRating, number_raters: num_raters },
-        });
-
-        updateRating(bookId, evgRating);
-        alert("דירוג נשמר בהצלחה!");
-        setIsVisible(false);
+        if (book){
+          const num_raters = book.number_raters > 0 ? book.number_raters + 1 : 1;
+          const evgRating = book.number_raters > 0
+            ? Math.round((book.rating! * book.number_raters + rating) / num_raters)
+            : rating;
+          await updateBookMutation.mutate({
+            id: bookId,
+            updatedData: { rating: evgRating, number_raters: num_raters },
+          });
+          updateRating(bookId, evgRating);
+        
+          alert(rating);
+          alert("דירוג נשמר בהצלחה!");
+          setIsVisible(false);
+        }
       } catch (error) {
         alert("אירעה שגיאה בשמירת הדירוג.");
       } finally {
@@ -59,13 +61,6 @@ const RatingComponent: React.FC<RatingComponentProps> = ({ bookId }) => {
     setHoverRating(Math.min(5, Math.max(1, hoveredValue))); // להבטיח דירוג בטווח 1-5
   };
   
-  
-     
-
-
-  const handleMouseLeave = () => {
-    setHoverRating(null);
-  };
 
   const handleCancel = () => {
     setRating(null);
@@ -93,18 +88,18 @@ const RatingComponent: React.FC<RatingComponentProps> = ({ bookId }) => {
       </div>
       <div className={styles.buttonsContainer}>
         <button
-          className={`${styles.submitButton} ${rating === null ? styles.disabled : ""}`}
-          onClick={handleRatingSubmit}
-          disabled={isSubmitting || rating === null}
-        >
-          שלח דירוג
-        </button>
-        <button
           className={styles.cancelButton}
           onClick={handleCancel}
           disabled={isSubmitting}
         >
           לא הפעם
+        </button>
+        <button
+          className={`${styles.submitButton} ${rating === null ? styles.disabled : ""}`}
+          onClick={handleRatingSubmit}
+          disabled={isSubmitting || rating === null}
+        >
+          שלח דירוג
         </button>
 
       </div>

@@ -26,14 +26,18 @@ export async function generateQuestionAndAnswer(text:string)
       }
   
       const fullContent = contentArray
-        .map((item) => (item.type === 'text' ? item.text : ''))
-        .join('')
-        .trim();
-  
-  
-      const questionPart = fullContent.split('תשובה :')[0].trim(); 
-      const answerPart = fullContent.split('תשובה :')[1]?.trim() || ''; 
-      return { question: questionPart, answer: answerPart };
+      .map((item) => (item.type === 'text' ? item.text : ''))
+      .join('')
+      .trim();
+    
+    const questionPart = fullContent.split('?')[0]?.trim() + '?'; 
+    
+    const answerPart = fullContent.split('?')[1]?.trim() || '';
+    
+    return { 
+      question: questionPart, 
+      answer: answerPart 
+    };
     } catch (error) {
       console.error('Error generating question and answer:', error);
       throw error;
