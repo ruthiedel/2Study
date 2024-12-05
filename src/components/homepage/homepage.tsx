@@ -4,7 +4,6 @@ import React from "react";
 import styles from "./homepage.module.css";
 import useUserStore from '../../services/zustand/userZustand/userStor';
 
-
 const Homepage = () => {
     const user = useUserStore((state) => state.user);
     const logout = useUserStore((state) => state.logout);
@@ -32,7 +31,7 @@ const Homepage = () => {
             </header>
 
             <main className="container mx-auto px-6 mt-12 flex flex-col items-center">
-                <h2 className="text-4xl font-extrabold text-white">
+                {/* <h2 className="text-4xl font-extrabold text-white">
                     Welcome {user?.name}
                 </h2>
                 <p className="text-gray-400 mt-4 text-lg">
@@ -40,7 +39,7 @@ const Homepage = () => {
                 </p>
                 <button onClick={logout} className="mt-8 px-6 py-3 bg-gold text-black rounded-lg shadow hover:bg-opacity-80 transition">
                     Log Out
-                </button>
+                </button> */}
             </main>
 
         <div className={styles.homepage}>
@@ -48,7 +47,10 @@ const Homepage = () => {
             <h2>לימוד הלכה ואמונה ב-2 דקות ביום</h2>
             <p>קטעי לימוד קצרים, מותאמים אישית לציבור החרדי, עם אפשרות לשמירת סימניות ומעקב אחר התקדמותך.</p> */}
             </div>
-        </div>
+
+            </div>
+
+
     );
 };
 

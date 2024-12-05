@@ -1,5 +1,4 @@
 'use client';
-
 import React, { useEffect, useState, useMemo } from 'react';
 import { Box, IconButton, Button } from '@mui/material';
 import useUserStore from '../../../services/zustand/userZustand/userStor';
@@ -114,7 +113,7 @@ console.log('paragraph: ', paragraph);
         });
         setTimeout(() => setShowConfetti(false), 5000);
     };
-
+    
     const currentParagraph = paragraph.find(
         (p) => p.chapterNumber === index?.chapterId && p.section.paragraphId === index?.paragraphId
     );
@@ -144,9 +143,7 @@ console.log('paragraph: ', paragraph);
                             סיימתי ללמוד
                         </Button>
                     )}
-                    {/* { paragraph && paragraph. >  0 &&
-                        <QuestionCard p={paragraph.paragraphs[0]} bookId={bookId} setParagraph={setParagraph} chapterId={1} />} */}
-
+                    {paragraph && paragraph.length > 0 && <QuestionCard p={paragraph[0].section} bookId={bookId} setParagraph={setParagraph} chapterId={paragraph[0].chapterNumber} />}
                     <Rating bookId={bookData?._id || ''} />
                 </div>
                 <Chat bookId={bookId} />
