@@ -1,11 +1,10 @@
 'use client';
-
 import React, { useEffect, useState, useMemo } from 'react';
 import { Box, IconButton, Button } from '@mui/material';
 import useUserStore from '../../../services/zustand/userZustand/userStor';
 import { getSections } from '../../../services/bookService';
 import { useParams } from 'next/navigation';
-import { Chat, ChapterSidebar, ShowParagraph, Loading } from '../../../components';
+import { Chat, ChapterSidebar, ShowParagraph, Loading, QuestionCard } from '../../../components';
 import { Book, Paragraph } from '../../../types';
 import numberToGematria from '../../../lib/clientHelpers/gematriaFunc';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
@@ -113,15 +112,15 @@ const Study = () => {
         });
         setTimeout(() => setShowConfetti(false), 5000);
     };
-
+    
     const currentParagraph = paragraph.find(
         (p) => p.chapterNumber === index?.chapterId && p.section.paragraphId === index?.paragraphId
     );
 
     return (
 
-    
-            
+
+
         (isLoading ? <Loading /> :
             <Box display="flex" height="100vh">
                 <ChapterSidebar
@@ -145,7 +144,7 @@ const Study = () => {
                             סיימתי ללמוד
                         </Button>
                     )}
-                    {paragraph&&paragraph.paragraphs.length>0&&<QuestionCard p={paragraph.paragraphs[0]} bookId={bookId} setParagraph={setParagraph} chapterId={1} />}
+                    {paragraph && paragraph.length > 0 && <QuestionCard p={paragraph[0].section} bookId={bookId} setParagraph={setParagraph} chapterId={paragraph[0].chapterNumber} />}
 
                     <RatingComponent bookId={bookData?._id || ''} />
                 </div>

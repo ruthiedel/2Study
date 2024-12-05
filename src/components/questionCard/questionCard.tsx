@@ -8,7 +8,15 @@ import { generateQuestionAndAnswer } from '../../services/questionService';
 import {  getBookById } from '../../hooks/booksDetails';
 import { updateBook, updateBookQuestionService } from "../../services/bookService";
 
-const QuestionCard = (props: { p: Paragraph, bookId: string, chapterId: number ,setParagraph: React.Dispatch<React.SetStateAction<{ paragraphs:Paragraph[] }>> 
+
+
+interface Paragraphs {
+    section: Paragraph;
+    chapterNumber: number;
+}
+
+
+const QuestionCard = (props: { p: Paragraph, bookId: string, chapterId: number ,setParagraph: React.Dispatch<React.SetStateAction<Paragraphs[]>>
 }) => {
     const [isQuestionOpen, setIsQuestionOpen] = useState(true);
     const [isAnswerOpen, setIsAnswerOpen] = useState(false);
@@ -32,9 +40,9 @@ const QuestionCard = (props: { p: Paragraph, bookId: string, chapterId: number ,
       
               // עדכון הפסקה ב-state המקומי
               props.setParagraph((prev) => {
-                const updatedParagraphs = prev.paragraphs.map((paragraph) =>
-                  paragraph._id === props.p._id
-                    ? { ...paragraph, questions: [...paragraph.questions, { question, answer }] }
+                const updatedParagraphs = prev.map((paragraph) =>
+                  paragraph.section._id === props.p._id
+                    ? { ...paragraph, questions: [...paragraph.section.questions, { question, answer }] }
                     : paragraph
                 );
       
@@ -55,12 +63,15 @@ const QuestionCard = (props: { p: Paragraph, bookId: string, chapterId: number ,
             if (props.p.questions.length < 6) {
                 const { question, answer } = await generateQuestionAndAnswer(props.p.text);
                 const updatedParagraph = { ...props.p, questions: [...props.p.questions, { question, answer }] };
-                props.setParagraph((prev) => {
-                    const updatedParagraphs = prev.paragraphs.map(paragraph => 
-                        paragraph._id === props.p._id ? updatedParagraph : paragraph
+                props.setParagraph((prev: Paragraphs[]) => {
+                    const updatedParagraphs = prev.map(paragraph =>
+                        paragraph.section._id === props.p._id 
+                            ? { ...paragraph, section: { ...props.p, questions: [...props.p.questions] } } 
+                            : paragraph
                     );
-                    return { ...prev, paragraphs: updatedParagraphs };
+                    return updatedParagraphs; // החזרת המערך עצמו, לא עטוף באובייקט
                 });
+                
                 if (book) {
                     const updatedChapters = book.chapters?.map(chapter => {
                         if (chapter.chapterId === props.chapterId) {
