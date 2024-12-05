@@ -15,5 +15,8 @@ export default function numberToGematria(num: number): string {
         num = Math.floor(num / 10);
         index++;
     }
+    if (result === 'יה') { result = 'טו'}
+    if (result === 'יו') { result = 'טז'}
+
     return result;
 }
