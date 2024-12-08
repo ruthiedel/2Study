@@ -1,5 +1,5 @@
 .appBar {
-    background-color: #1e1d1d; 
+    background-color: #1e1d1d !important; 
     box-shadow: none;
     border-bottom: 2px solid #f5f5f5;
   }
