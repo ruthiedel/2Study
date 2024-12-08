@@ -23,6 +23,7 @@ const BookCardComp: React.FC<BookCardProps> = ({ book, onClose }) => {
     const updateUserZustand = useUserStore((state) => state.updateUserZustand);
 
 
+
     const handleReadMore = async () => {
         if (foundBook) {
             window.location.href = `study/${book._id}`;
