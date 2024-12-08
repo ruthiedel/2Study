@@ -6,7 +6,6 @@ import InfoComp from './InfoComp';
 import React, { useEffect, useState } from 'react';
 import Recommendations from './Recommendations';
 import useUserStore from '../../services/zustand/userZustand/userStor';
-import Loading from '../LoadingFolder/Loading';
 
 export default function UserContainer() {
 

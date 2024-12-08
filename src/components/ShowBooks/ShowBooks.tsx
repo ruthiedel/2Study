@@ -1,11 +1,11 @@
 'use client';
 
 import React, { useMemo, useState } from 'react';
-import BookCard from '../bookCard/bookCard';
+import BookCard from '../BookCardFolder/BookCardComp';
 import RequireAuth from '../../layout/RequireAuth';
 import BookDetail from '../BookFolder/BookComp';
 import Filter from '../Filter/Filter';
-import styles from './ShowBook.module.css';
+import styles from './showBookCss.module.css';
 
 import { Book } from '../../types';
 import { getBooks } from '@/hooks/booksDetails';
