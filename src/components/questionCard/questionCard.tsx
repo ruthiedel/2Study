@@ -23,7 +23,7 @@ const QuestionCard = (props: { p: Paragraph, bookId: string, chapterId: number ,
     useEffect(() => {
         const fetchQuestionAndAnswer = async () => {
             setLoading(true); 
-            console.log("questions.length", props.p.questions.length);
+            
             if (props.p.questions.length < idxQuestion + 1) {
                 console.log("No questions");
                 try {
@@ -51,7 +51,7 @@ const QuestionCard = (props: { p: Paragraph, bookId: string, chapterId: number ,
                             return paragraph;
                         });
                     });
-
+                    
                 } catch (error) {
                     console.error("Failed to update the book with the new question and answer:", error);
                 }
@@ -65,13 +65,16 @@ const QuestionCard = (props: { p: Paragraph, bookId: string, chapterId: number ,
     const handleChangeQuestion = () => {
         if (idxQuestion < 4) {
             setIdxQuestion((prev) => prev + 1);
+           
             setIsAnswerOpen(false);
         }
     }
-
+    console.log("current question", props.p.questions)
     if (!props.p || !props.p.questions) {
         return <Typography>נתונים לא זמינים</Typography>;
     }
+    
+    
 
     return (
         <>

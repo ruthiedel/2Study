@@ -66,7 +66,8 @@ console.log('paragraph: ', paragraph);
                 }
                 setParagraph(paragraphs.sections);
                 setCurrentParagraph(paragraph.find(
-                    (p) => p.chapterNumber === index?.chapterId && p.section.paragraphId === index?.paragraphId )!)
+                    (p) => p.chapterNumber === index?.chapterId && p.section.paragraphId === index?.paragraphId
+ )!)
             } catch (error) {
                 console.error('Error fetching paragraphs:', error);
             } finally {
@@ -145,7 +146,7 @@ console.log('paragraph: ', paragraph);
                             סיימתי ללמוד
                         </Button>
                     )}
-                    {paragraph&&currentParagraph && paragraph.length > 0 && <QuestionCard p={currentParagraph.section} bookId={bookId} setParagraph={setParagraph} chapterId={paragraph[0].chapterNumber} />}
+                    {paragraph&&currentParagraph && paragraph.length > 0 && <QuestionCard p={paragraph.find((p) => p.chapterNumber === index?.chapterId && p.section.paragraphId === index?.paragraphId )!.section} bookId={bookId} setParagraph={setParagraph} chapterId={paragraph[0].chapterNumber}    key={currentParagraph?.section._id} />}
                     <Rating bookId={bookData?._id || ''} />
                 </div>
                 <Chat bookId={bookId} />
