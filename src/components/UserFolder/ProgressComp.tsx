@@ -5,7 +5,7 @@ import PeopleIcon from '@mui/icons-material/People';
 import { Card, CardContent, ListItemIcon, Typography, List, ListItem, ListItemText } from "@mui/material";
 import styles from './userStatus.module.css'
 
-export default function ProgressCard() {
+export default function ProgressComp() {
   return (
     <Card className={styles.mycard}>
       <CardContent style={{ textAlign: 'center' }}>

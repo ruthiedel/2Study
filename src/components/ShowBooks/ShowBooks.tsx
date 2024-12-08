@@ -1,10 +1,9 @@
 'use client';
 
 import React, { useMemo, useState } from 'react';
-import BookCard from '../bookCard/bookCard';
-import BookDetail from '../book/book';
-import FilterComponent from '../filterComponent/FilterComponent';
-import styles from './ShowBook.module.css';
+import { BookCard, Filter } from '../../components';
+import BookDetail from '../BookFolder/BookComp';
+import styles from './showBookCss.module.css';
 import { Book } from '../../types';
 import {getBooks} from '@/hooks/booksDetails';
 
@@ -40,7 +39,7 @@ const ShowBooks: React.FC = () => {
     return (
         <div className={styles.container}>
             <div className={styles.sidebarContainer}>
-                <FilterComponent
+                <Filter
                     bookName={bookName}
                     setBookName={setBookName}
                     authorName={authorName}
