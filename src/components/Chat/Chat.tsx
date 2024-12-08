@@ -77,7 +77,6 @@ const Chat = ({ bookId }: { bookId: string }) => {
           bookId,
         }),
       });
-      console.log(res)
       if (res.ok) {
         const savedMessage: Message = await res.json();
         console.log('Message sent successfully', savedMessage);
