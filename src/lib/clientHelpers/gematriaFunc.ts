@@ -4,6 +4,10 @@ export default function numberToGematria(num: number): string {
      ['י', 'כ', 'ל', 'מ', 'נ', 'ס', 'ע', 'פ', 'צ'], 
      ['ק', 'ר', 'ש', 'ת']
     ];
+    const specialCases: Record<string, string> = {
+        יה: 'טו',
+        יו: 'טז',
+    }
 
     let result = '';
     let index = 0;
@@ -15,8 +19,11 @@ export default function numberToGematria(num: number): string {
         num = Math.floor(num / 10);
         index++;
     }
-    if (result === 'יה') { result = 'טו'}
-    if (result === 'יו') { result = 'טז'}
 
+    const lastTwoChars = result.slice(-2);
+    if (specialCases[lastTwoChars]) {
+        result = result.slice(0, -2) + specialCases[lastTwoChars];
+    }
+  
     return result;
 }

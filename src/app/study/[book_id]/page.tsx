@@ -40,12 +40,12 @@ const Study = () => {
 
 console.log('paragraph: ', paragraph);
 
-    useEffect(() => {
-        if (user && bookId && Array.isArray(books)) {
-            const userBook = user.books.find((book) => book.book_id === bookId);
-            setIndex(userBook ? { chapterId: userBook.chapter_id, paragraphId: userBook.section_id } : { chapterId: 1, paragraphId: 1 });
-        }
-    }, [bookId, user]);
+    // useEffect(() => {
+    //     if (user && bookId && Array.isArray(books)) {
+    //         const userBook = user.books.find((book) => book.book_id === bookId);
+    //         setIndex(userBook ? { chapterId: userBook.chapter_id, paragraphId: userBook.section_id } : { chapterId: 1, paragraphId: 1 });
+    //     }
+    // }, [bookId, user]);
 
     useEffect(() => {
         if (books && Array.isArray(books)) {
