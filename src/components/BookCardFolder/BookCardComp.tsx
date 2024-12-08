@@ -18,6 +18,8 @@ const BookCardComp: React.FC<BookCardProps> = ({ book, onClose }) => {
     const [showMore, setShowMore] = useState(false);
     const [foundBook, setFoundBook] = useState(false);
     const user = useUserStore((state) => state.user);
+    const [openModal, setOpenModal] = useState(false);
+
     const updateUserZustand = useUserStore((state) => state.updateUserZustand);
 
 
