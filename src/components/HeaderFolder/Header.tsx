@@ -17,6 +17,16 @@ const Header: React.FC = () => {
         setAnchorEl(event.currentTarget);
     };
 
+    const handleMouseOver = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.currentTarget.style.backgroundColor = '#444';
+        e.currentTarget.style.color = '#fff';
+    };
+
+    const handleMouseOut = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.currentTarget.style.backgroundColor = '';
+        e.currentTarget.style.color = '';
+    };
+
     const handleMenuClose = () => {
         setAnchorEl(null);
     };
@@ -27,10 +37,25 @@ const Header: React.FC = () => {
     };
 
     return (
-        <AppBar position="static" className={styles.appBar}>
-            <Toolbar className={styles.toolbar}>
+        <AppBar position="static"
+            style={{
+                backgroundColor: '#1e1d1d',
+                boxShadow: 'none',
+                borderBottom: '2px solid #f5f5f5',
+            }}>
+            <Toolbar style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                direction: 'rtl',
+            }}>
 
-                <Box className={styles.logo}>
+                <Box style={{
+                    fontSize: '1.5rem',
+                    fontWeight: 'bold',
+                    color: 'gold',
+                    fontFamily: '"Arial", sans-serif',
+                }}>
                     <Link href="/" passHref>
                         <Image
                             src={logo}
@@ -40,15 +65,45 @@ const Header: React.FC = () => {
                     </Link>
                 </Box>
 
-                <Box className={styles.navButtons}>
+                <Box style={{
+                    display: 'flex',
+                    gap: '1rem',
+                }}>
                     <Link href="/" passHref>
-                        <Button className={styles.navButton}>דף הבית</Button>
+                        <Button style={{
+                            color: 'white',
+                            fontSize: '1.2rem',
+                            borderRadius: '20px',
+                            padding: '5px 15px',
+                            transition: 'background-color 0.3s ease',
+                            fontFamily: '"2StudyFont", sans-serif',
+                        }}
+                            onMouseOver={handleMouseOver}
+                            onMouseOut={handleMouseOut}>דף הבית</Button>
                     </Link>
                     <Link href="/about" passHref>
-                        <Button className={styles.navButton}>אודות</Button>
+                        <Button style={{
+                            color: 'white',
+                            fontSize: '1.2rem',
+                            borderRadius: '20px',
+                            padding: '5px 15px',
+                            transition: 'background-color 0.3s ease',
+                            fontFamily: '"2StudyFont", sans-serif',
+                        }}
+                            onMouseOver={handleMouseOver}
+                            onMouseOut={handleMouseOut}>אודות</Button>
                     </Link>
                     <Link href="/bookCatalog" passHref>
-                        <Button className={styles.navButton}>קטלוג ספרים</Button>
+                        <Button style={{
+                            color: 'white',
+                            fontSize: '1.2rem',
+                            borderRadius: '20px',
+                            padding: '5px 15px',
+                            transition: 'background-color 0.3s ease',
+                            fontFamily: '"2StudyFont", sans-serif',
+                        }}
+                            onMouseOver={handleMouseOver}
+                            onMouseOut={handleMouseOut}>קטלוג ספרים</Button>
                     </Link>
                 </Box>
 
