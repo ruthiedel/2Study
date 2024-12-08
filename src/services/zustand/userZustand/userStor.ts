@@ -4,6 +4,7 @@ import { auth } from '../../../lib/firebase';
 import { signOut } from "firebase/auth";
 import { User } from '../../../types';
 
+
 export type UserStore = {
   user: User | null;
   setUser: (user: User) => void;

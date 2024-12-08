@@ -1,26 +1,9 @@
-'use client'
+'use client';
 import React from 'react';
 import { Typography, Box } from '@mui/material';
 import { Paragraph } from '../../types';
 import Loading from '../LoadingFolder/Loading';
-
-const paragraphStyles = {
-  container: {
-    width: '60%',
-    padding: '24px',
-    overflowY: 'auto' as const,
-  },
-  title: {
-    fontSize: '24px',
-    fontWeight: 'bold',
-    marginBottom: '16px',
-    textAlign: 'center' as const,
-  },
-  text: {
-    lineHeight: 1.6,
-    textAlign: 'justify' as const,
-  },
-};
+import styles from './ShowParagraph.module.css';
 
 type Props = {
   paragraph: Paragraph;
@@ -37,14 +20,13 @@ const ParagraphNavigation: React.FC<Props> = (props) => {
   };
 
   return (
-    <Box style={paragraphStyles.container}>
-      <Typography style={paragraphStyles.title}>{chapterTitle}</Typography>
-      <Typography style={paragraphStyles.text}>
-        {paragraph && paragraph.text ? removeHtmlTags(paragraph.text) : <Loading/>}
+    <Box className={styles.container}>
+      <Typography className={styles.title}>{chapterTitle}</Typography>
+      <Typography className={styles.text}>
+        {paragraph && paragraph.text ? removeHtmlTags(paragraph.text) : <Loading />}
       </Typography>
     </Box>
   );
 };
-
 
 export default ParagraphNavigation;
