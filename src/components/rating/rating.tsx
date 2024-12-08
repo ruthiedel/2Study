@@ -5,12 +5,12 @@ import { useUpdateBook } from '../../hooks/booksDetails';
 import useUserStore from "../../services/zustand/userZustand/userStor";
 import { getBookById } from '../../hooks/booksDetails'
 
-
 interface RatingComponentProps {
   bookId: string;
+  handleClose: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const RatingComponent: React.FC<RatingComponentProps> = ({ bookId }) => {
+const RatingComponent: React.FC<RatingComponentProps> = ({ bookId , handleClose}) => {
   const updateRating = useUserStore((state) => state.updateRating);
   const user = useUserStore((state) => state.user);
 
@@ -41,6 +41,7 @@ const RatingComponent: React.FC<RatingComponentProps> = ({ bookId }) => {
           alert(rating);
           alert("דירוג נשמר בהצלחה!");
           setIsVisible(false);
+          handleClose(false);
         }
       } catch (error) {
         alert("אירעה שגיאה בשמירת הדירוג.");
@@ -55,21 +56,20 @@ const RatingComponent: React.FC<RatingComponentProps> = ({ bookId }) => {
     const mouseX = event.clientX - boundingBox.left;
     const width = boundingBox.width;
   
-    // תמיד לחשב דירוג מימין לשמאל
-    const hoveredValue = Math.ceil(((width - mouseX) / width) * 5); 
-  
-    setHoverRating(Math.min(5, Math.max(1, hoveredValue))); // להבטיח דירוג בטווח 1-5
+    const hoveredValue = Math.ceil(((width - mouseX) / width) * 5);   
+    setHoverRating(Math.min(5, Math.max(1, hoveredValue))); 
   };
   
-
   const handleCancel = () => {
     setRating(null);
     setIsVisible(false);
+    handleClose(false);
   };
 
   if (!isVisible) return null;
 
   return (
+    <div className={styles.opacityBG}>
     <div className={styles.ratingContainer}>
       <p className={styles.title}>דרג את הספר</p>
       <div
@@ -103,6 +103,7 @@ const RatingComponent: React.FC<RatingComponentProps> = ({ bookId }) => {
         </button>
 
       </div>
+    </div>
     </div>
   );
 };

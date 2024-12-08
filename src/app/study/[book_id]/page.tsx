@@ -19,7 +19,6 @@ interface Index {
     paragraphId: number;
 }
 
-
 interface Paragraphs {
     section: Paragraph;
     chapterNumber: number;
@@ -35,8 +34,7 @@ const Study = () => {
     const [bookData, setBookData] = useState<Book | null>(null);
     const [showConfetti, setShowConfetti] = useState(false);
     const [loading, setLoading] = useState(false);
-
-console.log('paragraph: ', paragraph);
+    const [showRatingPopUp, setShowRatingPopUp] = useState(false);
 
     useEffect(() => {
         if (user && bookId && Array.isArray(books)) {
@@ -80,6 +78,12 @@ console.log('paragraph: ', paragraph);
         let newChapterId = chapterId;
         let newParagraphId = paragraphId;
 
+        if (bookId && user && user.books && user.books.length > 0){
+            const foundBook = user.books.find(book => book.book_id === bookId);
+                if (foundBook && foundBook.rate > 0) { return }
+                setShowRatingPopUp(true);
+        }
+
         if (direction === 'next') {
             if (paragraphId < bookData.paragraphsCountPerChapter[chapterId - 1]) {
                 newParagraphId = paragraphId + 1;
@@ -121,7 +125,7 @@ console.log('paragraph: ', paragraph);
     return (
             
         (isLoading ? <Loading /> :
-            <Box display="flex" height="100vh">
+            <Box display="flex" height="100vh" position='absolute'>
                 <ChapterSidebar
                     selectedBookId={bookId}
                     onSectionSelect={(chapterIndex, sectionIndex) => setIndex({ chapterId: chapterIndex, paragraphId: sectionIndex })}
@@ -144,7 +148,7 @@ console.log('paragraph: ', paragraph);
                         </Button>
                     )}
                     {paragraph && paragraph.length > 0 && <QuestionCard p={paragraph[0].section} bookId={bookId} setParagraph={setParagraph} chapterId={paragraph[0].chapterNumber} />}
-                    <Rating bookId={bookData?._id || ''} />
+                    { showRatingPopUp && <Rating bookId={bookData?._id || ''} handleClose={setShowRatingPopUp} /> }
                 </div>
                 <Chat bookId={bookId} />
                 <ToastContainer />

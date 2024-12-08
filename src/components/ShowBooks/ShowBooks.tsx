@@ -17,7 +17,7 @@ const ShowBooks: React.FC = () => {
     const { data: books, isLoading, error } = getBooks();
 
     const filteredBooks = useMemo(() => {
-        if (!books || error) return [];
+        if (!books || error || !Array.isArray(books)) return [];
 
         return books.filter((book: Book) => {
             const matchesCategory = categories.length === 0 || categories.some(cat => 
