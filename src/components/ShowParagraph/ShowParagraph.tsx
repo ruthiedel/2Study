@@ -2,7 +2,7 @@
 import React from 'react';
 import { Typography, Box } from '@mui/material';
 import { Paragraph } from '../../types';
-import { Loading } from '..';
+import Loading from '../LoadingFolder/Loading';
 import styles from './ShowParagraph.module.css';
 
 type Props = {

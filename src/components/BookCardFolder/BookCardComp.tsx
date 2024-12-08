@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import React, { useEffect, useState } from 'react';
 import useUserStore from '../../services/zustand/userZustand/userStor';
@@ -8,6 +8,7 @@ import Image from 'next/image';
 import styles from './bookCard.module.css';
 import { Book, UserBook } from '../../types';
 import { updateUser } from '../../services/userService';
+
 import Login from '../Login/Login';
 
 type BookCardProps = {
@@ -15,7 +16,7 @@ type BookCardProps = {
     onClose: () => void;
 };
 
-const BookCard: React.FC<BookCardProps> = ({ book, onClose }) => {
+const BookCardComp: React.FC<BookCardProps> = ({ book, onClose }) => {
     const [showMore, setShowMore] = useState(false);
     const [foundBook, setFoundBook] = useState(false);
     const user = useUserStore((state) => state.user);
@@ -24,11 +25,11 @@ const BookCard: React.FC<BookCardProps> = ({ book, onClose }) => {
 
     useEffect(() => {
         if (user === undefined) {
-            setOpenModal(true); // משתמש לא מוגדר -> פתיחת popup
+            setOpenModal(true);
         } else if (!user) {
-            setOpenModal(true); // משתמש לא מחובר -> פתיחת popup
+            setOpenModal(true);  
         } else {
-            setOpenModal(false); // משתמש מחובר -> סגירת popup
+            setOpenModal(false); 
             const bookExists = user.books.find((userBook) => userBook.book_id === book._id);
             setFoundBook(!!bookExists);
         }
@@ -55,7 +56,7 @@ const BookCard: React.FC<BookCardProps> = ({ book, onClose }) => {
     };
 
     return (
-        <>
+<>
             <Modal
                 open={openModal}
                 aria-labelledby="login-modal"
@@ -145,4 +146,4 @@ const BookCard: React.FC<BookCardProps> = ({ book, onClose }) => {
     );
 };
 
-export default BookCard;
+export default BookCardComp;

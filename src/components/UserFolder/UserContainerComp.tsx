@@ -1,25 +1,26 @@
+import StudyComp from './StudyComp';
+import ProgressComp from './ProgressComp';
+import InfoComp from './InfoComp';
 import React, { useEffect, useState } from 'react';
-import StudyCard from './studyCard';
-import ProgressCard from './progressCard';
-import Information from './information';
 import Recommendations from './Recommendations';
 import useUserStore from '../../services/zustand/userZustand/userStor';
-import Loading from '../Login/Login';
+import Loading from '../LoadingFolder/Loading';
 import Login from '../Login/Login';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 
 export default function UserContainer() {
+
   const user = useUserStore((state) => state.user);
   const [isChecking, setIsChecking] = useState(true);
   const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     if (user === undefined) {
-      setIsChecking(true); // במצב של בדיקה
+      setIsChecking(true); 
     } else {
-      setIsChecking(false); // סיום הבדיקה
-      setOpenModal(!user); // פתיחת ה-popup אם המשתמש לא מחובר
+      setIsChecking(false); 
+      setOpenModal(!user);
     }
   }, [user]);
 
@@ -53,20 +54,18 @@ export default function UserContainer() {
       <div className="grid grid-cols-1 md:grid-cols-2 m-8">
         <div>
           <div>
-            <Information />
+            <InfoComp />
           </div>
           <div>
-            <StudyCard />
+            <StudyComp />
           </div>
         </div>
 
+        <div className="">
+          <ProgressComp />
+        </div>
         <div>
-          <div>
             <Recommendations />
-          </div>
-          <div>
-            <ProgressCard />
-          </div>
         </div>
       </div>
     </>

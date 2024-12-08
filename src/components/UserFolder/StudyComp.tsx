@@ -3,7 +3,7 @@
 import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import { StyledLink } from '../styleComponents/StyledLink';   
+import { StyledLink } from '../StyleComponentsFolder/StyledLink';   
 import Typography from '@mui/material/Typography';
 import styles from './userStatus.module.css'
 import useUserStore from '../../services/zustand/userZustand/userStor';
@@ -42,7 +42,7 @@ const booksData: bookRowProp[] = [
   },
 ];
 
-export default function StudyCard() {
+export default function StudyComp() {
   const user = useUserStore((state) => state.user);
 
   return (
