@@ -7,7 +7,6 @@ import CloseIcon from '@mui/icons-material/Close';
 import Image from 'next/image';
 import styles from './bookCard.module.css';
 import { Book, UserBook } from '../../types';
-import { updateUser } from '../../services/userService';
 
 import Login from '../Login/Login';
 
@@ -20,7 +19,6 @@ const BookCardComp: React.FC<BookCardProps> = ({ book, onClose }) => {
     const [showMore, setShowMore] = useState(false);
     const [foundBook, setFoundBook] = useState(false);
     const user = useUserStore((state) => state.user);
-    const setUser = useUserStore((state) => state.setUser);
     const [openModal, setOpenModal] = useState(false);
     const updateUserZustand = useUserStore((state) => state.updateUserZustand);
 
