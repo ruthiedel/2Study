@@ -1,12 +1,11 @@
 'use client';
 import React, { useEffect, useState } from "react";
-import { Box, TextField, Button, IconButton, Typography } from "@mui/material";
+import { Box, TextField, Button, IconButton, Typography, CircularProgress } from "@mui/material";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import { Paragraph } from '../../types';
 import { generateQuestionAndAnswer } from '../../services/questionService';
-import {  getBookById } from '../../hooks/booksDetails';
-import { updateBook, updateBookQuestionService } from "../../services/bookService";
+import {updateBookQuestionService } from "../../services/bookService";
 
 
 
@@ -15,83 +14,71 @@ interface Paragraphs {
     chapterNumber: number;
 }
 
-
-const QuestionCard = (props: { p: Paragraph, bookId: string, chapterId: number ,setParagraph: React.Dispatch<React.SetStateAction<Paragraphs[]>>
-}) => {
+const QuestionCard = (props: { p: Paragraph, bookId: string, chapterId: number ,setParagraph: React.Dispatch<React.SetStateAction<Paragraphs[]>> }) => {
     const [isQuestionOpen, setIsQuestionOpen] = useState(true);
     const [isAnswerOpen, setIsAnswerOpen] = useState(false);
     const [idxQuestion, setIdxQuestion] = useState(0);
-    const [errorMessage, setErrorMessage] = useState(false);
-    const book = getBookById(props.bookId);
+    const [loading, setLoading] = useState(false); 
+
     useEffect(() => {
         const fetchQuestionAndAnswer = async () => {
-          if (props.p.questions.length === 0) {
-            try {
-              const { question, answer } = await generateQuestionAndAnswer(props.p.text);
-      
-              await updateBookQuestionService({
-                bookId: props.bookId,
-                chapterId: String(props.chapterId),
-                paragraphId: String(props.p.paragraphId),
-                question,
-                answer,
-              });
-              props.setParagraph((prev) => {
-                const updatedParagraphs = prev.map((paragraph) =>
-                  paragraph.section._id === props.p._id
-                    ? { ...paragraph, questions: [...paragraph.section.questions, { question, answer }] }
-                    : paragraph
-                );
-      
-                return { ...prev, paragraphs: updatedParagraphs };
-              });
-            } catch (error) {
-              console.error("Failed to update the book with the new question and answer:", error);
-            }
-          }
-        };
-      
-        fetchQuestionAndAnswer();
-      }, []);
-      
-      useEffect(() => {
-        const fetchQuestionAndAnswer = async () => {
-            if (props.p.questions.length < idxQuestion) { 
-                const { question, answer } = await generateQuestionAndAnswer(props.p.text);
-                const updatedParagraph = { ...props.p, questions: [...props.p.questions, { question, answer }] };
-                
-                props.setParagraph((prev: Paragraphs[]) => {
-                    const updatedParagraphs = prev.map(paragraph =>
-                        paragraph.section._id === props.p._id 
-                            ? { ...paragraph, section: updatedParagraph }
-                            : paragraph
-                    );
-                    return updatedParagraphs; 
-                });
-                
+            setLoading(true); 
+            
+            if (props.p.questions.length < idxQuestion + 1) {
+                console.log("No questions");
                 try {
+                    const { question, answer } = await generateQuestionAndAnswer(props.p.text);
+
                     await updateBookQuestionService({
                         bookId: props.bookId,
                         chapterId: String(props.chapterId),
                         paragraphId: String(props.p.paragraphId),
                         question,
                         answer,
-                      });
+                    });
+
+                    props.setParagraph((prev) => {
+                        return prev.map((paragraph) => {
+                            if (paragraph.section._id === props.p._id) {
+                                return {
+                                    ...paragraph,
+                                    section: {
+                                        ...paragraph.section,
+                                        questions: [...paragraph.section.questions, { question, answer }],
+                                    },
+                                };
+                            }
+                            return paragraph;
+                        });
+                    });
+                    
                 } catch (error) {
-                    console.error("שגיאה בעדכון הפסקה:", error);
+                    console.error("Failed to update the book with the new question and answer:", error);
                 }
-            } else {
-                setErrorMessage(true);
-            }
+            } 
+            setLoading(false); // סיום טעינה
         };
-    
+
         fetchQuestionAndAnswer();
-    }, [idxQuestion]); 
+    }, [idxQuestion]);
+
+    const handleChangeQuestion = () => {
+        if (idxQuestion < 4) {
+            setIdxQuestion((prev) => prev + 1);
+           
+            setIsAnswerOpen(false);
+        }
+    }
+    console.log("current question", props.p.questions)
+    if (!props.p || !props.p.questions) {
+        return <Typography>נתונים לא זמינים</Typography>;
+    }
+    
     
 
     return (
         <>
-            {props.p&& props.p.questions.length > 0 && (
+            {props.p.questions.length > 0 && (
                 <Box
                     sx={{
                         display: "flex",
@@ -102,6 +89,8 @@ const QuestionCard = (props: { p: Paragraph, bookId: string, chapterId: number ,
                         p: 2,
                         width: "600px",
                         position: "relative",
+                        opacity: loading ? 0.5 : 1,
+                        filter: loading ? "blur(3px)" : "none", 
                     }}
                 >
                     <Box
@@ -125,7 +114,7 @@ const QuestionCard = (props: { p: Paragraph, bookId: string, chapterId: number ,
                                 marginBottom: "20px",
                             }}
                         />
-                        {!errorMessage ? (
+                        {idxQuestion < 4 ? (
                             <Button
                                 variant="contained"
                                 sx={{
@@ -133,12 +122,12 @@ const QuestionCard = (props: { p: Paragraph, bookId: string, chapterId: number ,
                                     color: "black",
                                     "&:hover": { backgroundColor: "#ffa726" },
                                 }}
-                                onClick={() => setIdxQuestion(idxQuestion + 1)}
+                                onClick={handleChangeQuestion}
                             >
                                 שנה שאלה
                             </Button>
                         ) : (
-                            <Typography variant="body1" color="error">
+                            <Typography variant="body1" color="error" component="div">
                                 לא ניתן ליצור שאלה נוספת. יש כבר 5 שאלות.
                             </Typography>
                         )}
@@ -161,11 +150,11 @@ const QuestionCard = (props: { p: Paragraph, bookId: string, chapterId: number ,
                                 <IconButton sx={{ color: "black", padding: 0 }}>
                                     {isQuestionOpen ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
                                 </IconButton>
-                                <Typography sx={{ fontWeight: "bold", fontSize: "1rem", flex: 1, color: 'black', backgroundColor: 'white' }}>
+                                <Typography sx={{ fontWeight: "bold", fontSize: "1rem", flex: 1, color: 'black', backgroundColor: 'white' }} component="div">
                                     שאלה לתרגול:
                                 </Typography>
                             </div>
-                            {isQuestionOpen && props.p && (
+                            {isQuestionOpen && props.p.questions[idxQuestion] && (
                                 <TextField
                                     fullWidth
                                     value={props.p.questions[idxQuestion].question}
@@ -175,6 +164,7 @@ const QuestionCard = (props: { p: Paragraph, bookId: string, chapterId: number ,
                                     }}
                                     variant="outlined"
                                     sx={{ mt: 0 }}
+                                    component="div"
                                 />
                             )}
                         </Box>
@@ -196,11 +186,11 @@ const QuestionCard = (props: { p: Paragraph, bookId: string, chapterId: number ,
                                 <IconButton sx={{ color: "black", padding: 0 }}>
                                     {isAnswerOpen ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
                                 </IconButton>
-                                <Typography sx={{ fontWeight: "bold", fontSize: "1rem", flex: 1, color: 'black', backgroundColor: 'white' }}>
+                                <Typography sx={{ fontWeight: "bold", fontSize: "1rem", flex: 1, color: 'black', backgroundColor: 'white' }} component="div">
                                     חשוף את התשובה:
                                 </Typography>
                             </div>
-                            {isAnswerOpen  && (
+                            {isAnswerOpen && props.p && props.p.questions[idxQuestion] && (
                                 <TextField
                                     fullWidth
                                     value={props.p.questions[idxQuestion].answer}
@@ -214,6 +204,7 @@ const QuestionCard = (props: { p: Paragraph, bookId: string, chapterId: number ,
                                         },
                                     }}
                                     variant="outlined"
+                                    component="div"
                                 />
                             )}
                         </Box>
