@@ -1,12 +1,12 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import useUserStore from '../../services/zustand/userZustand/userStor';
 import { Card, Grid, IconButton, Button, Typography, Box, Rating } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import Image from 'next/image';
 import styles from './bookCard.module.css';
-import image from '../../../public/pictures/garnisht.png'
-import { Book } from '../../types';
-// import RatingComponent from '../rating/rating'
+import { Book, UserBook } from '../../types';
+import { updateUser } from '../../services/userService';
 
 type BookCardProps = {
     book: Book;
@@ -15,10 +15,38 @@ type BookCardProps = {
 
 const BookCard: React.FC<BookCardProps> = ({ book, onClose }) => {
     const [showMore, setShowMore] = useState(false);
+    const [foundBook, setFoundBook] = useState(false);
+    const user = useUserStore((state) => state.user);
 
+    useEffect(() => {
+        const bookExists = user?.books.find((userBook) => userBook.book_id === book._id);
+        if (bookExists) {
+            setFoundBook(true);
+        } else {
+            setFoundBook(false);
+        }
+    },[]);
 
-    const handleReadMore = () => {
-        window.location.href = `study/${book._id}`;
+    const handleReadMore = async () => {
+        const bookExists = user?.books.find((userBook) => userBook.book_id === book._id);
+        if (bookExists) {
+            window.location.href = `study/${book._id}`;
+        } else {
+            const newUserBook: UserBook = {
+                book_id: book._id!,
+                book_name: book.name,
+                chapter_id: 1,
+                section_id: 1,
+                rate: 0,
+            }
+            const updatedUserData = {
+                ...user!, 
+                books: [...user!.books, newUserBook]
+            }
+            await updateUser({ id: user!._id!, updatedData: updatedUserData });
+            window.location.href = `study/${book._id}`;
+        }
+
     };
 
     return (
@@ -39,7 +67,6 @@ const BookCard: React.FC<BookCardProps> = ({ book, onClose }) => {
                     </Grid>
 
                     <Grid item xs={12} sm={8}>
-                        {/* <RatingComponent bookId={book._id!}/> */}
                         <Typography variant="h5" align="right" className={styles.bookTitle}>
                             {book.name}
                         </Typography>
@@ -49,12 +76,6 @@ const BookCard: React.FC<BookCardProps> = ({ book, onClose }) => {
                         <Typography variant="body2" color="textSecondary" align="right" className={styles.text}>
                             {book.category.subject}
                         </Typography>
-                        {/* <Image
-                            src={image}
-                            alt='garnisht'
-                            width={280}
-                            height={150}
-                        /> */}
                         <Typography variant="body2" className={styles.text}>
                             <strong> פרקים: </strong>{book.chapters_num} | <strong> סעיפים: </strong>{book.paragraphs_num}
                         </Typography>
@@ -86,7 +107,7 @@ const BookCard: React.FC<BookCardProps> = ({ book, onClose }) => {
 
                     <Grid item xs={12}>
                         <Button variant="contained" className={styles.learnButton} onClick={handleReadMore}>
-                            אני רוצה ללמוד ←
+                            { foundBook ?  "הוסף לרשימת הספרים שלי" : "המשך ללמוד ←"}
                         </Button>
                     </Grid>
                 </Grid>

@@ -1,13 +1,12 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import BookCard from '../bookCard/bookCard';
 import BookDetail from '../book/book';
 import FilterComponent from '../filterComponent/FilterComponent';
 import styles from './ShowBook.module.css';
 import { Book } from '../../types';
 import {getBooks} from '@/hooks/booksDetails';
-
 
 const ShowBooks: React.FC = () => {
     const [selectedBook, setSelectedBook] = useState<Book | null>(null);
@@ -17,15 +16,18 @@ const ShowBooks: React.FC = () => {
 
     const { data: books, isLoading, error } = getBooks();
 
-    if (isLoading) return <div>טעינה...</div>;
-    if (error) return <div>התרחשה שגיאה בהורדת הספרים</div>;
+    const filteredBooks = useMemo(() => {
+        if (!books || error) return [];
 
-    const filteredBooks = books?.filter((book: Book) => {
-        const matchesCategory = categories.length === 0 || categories.includes(book.category.subject) || categories.includes(book.category.type);
-        const matchesBookName = bookName === '' || book.name.toLowerCase().includes(bookName.toLowerCase());
-        const matchesAuthorName = authorName === '' || book.author.toLowerCase().includes(authorName.toLowerCase());
-        return matchesCategory && matchesBookName && matchesAuthorName;
-    });
+        return books.filter((book: Book) => {
+            const matchesCategory = categories.length === 0 || categories.some(cat => 
+                book.category.subject.includes(cat) || 
+                book.category.type.includes(cat)
+              );
+            const matchesBookName = bookName === '' || book.name.toLowerCase().includes(bookName.toLowerCase());
+            const matchesAuthorName = authorName === '' || book.author.toLowerCase().includes(authorName.toLowerCase());
+            return matchesCategory && matchesBookName && matchesAuthorName;
+    })}, [books, categories, bookName, authorName, error]);
 
     const handleBookSelect = (book: Book) => {
         setSelectedBook(book);

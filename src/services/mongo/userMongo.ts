@@ -1,5 +1,5 @@
 import { MongoClient, ObjectId } from 'mongodb';
-import { User, UserBook } from '../../types';
+import { User } from '../../types';
 
 let client: MongoClient;
 let clientPromise: Promise<MongoClient>;
@@ -18,38 +18,37 @@ export async function connectDatabase() {
 
 export async function checkAndAddUser(user: Omit<User, '_id'>) {
   const client = await connectDatabase();
-  const db = client.db('Books'); 
-  const usersCollection = db.collection('users'); 
+  const db = client.db('Books');
+  const usersCollection = db.collection('users');
   const existingUser = await usersCollection.findOne({ email: user.email });
 
   if (!existingUser) {
-    await usersCollection.insertOne(user);
-    return { status: 201, message: 'User added successfully' };
+    const result = await usersCollection.insertOne(user);
+    const userWithId = {
+      ...user,
+      _id: result.insertedId.toString()
+    };
+    return { status: 201, message: userWithId._id, user: userWithId };
   }
-  return { status: 200, message: 'User already exists' };
+  const userWithId = {
+    ...existingUser,
+    _id: existingUser._id.toString()
+  };
+
+  return { status: 200, message: userWithId._id, user: userWithId };
 }
 
-export async function addUserBook(userId: string, bookId: string, bookName: string) {
-  const client = await connectDatabase();
+export async function updateUser(client: MongoClient, collection: string, userId: string, updatedData: User) {
   const db = client.db('Books');
-  const usersCollection = db.collection('users');
-
-  const user = await usersCollection.findOne({ _id: new ObjectId(userId) });
-  if (!user) {
-    return {status: 404, message: 'User not found' };
-  }
-
-  const newUserBook: UserBook = {
-    book_id: bookId,
-    book_name: bookName,
-    chapter_id: 1,
-    section_id: 1,
-    rate: -1,
-  }
-  await usersCollection.updateOne(
-    { _id: new ObjectId(userId) },
-    { $addToSet: { books: { $each: [newUserBook] } } as any }
+  const objectId = typeof userId === 'string' ? new ObjectId(userId) : userId;
+  const { _id, ...dataToUpdate } = updatedData;
+  await db.collection(collection).replaceOne(
+    { _id: objectId },
+    dataToUpdate
   );
 
-  return { status: 200, message: 'Book added to user successfully' };
+  return {
+    message: 'User updated successfully',
+    updatedFields: updatedData,
+  };
 }

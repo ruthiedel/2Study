@@ -1,18 +1,16 @@
-import { NextRequest, NextResponse } from "next/server";
-import { addUserBook } from '../../../../services/mongo/userMongo'
+import { NextResponse } from "next/server";
+import { connectDatabase, updateUser } from '../../../../services/mongo/userMongo'
 
-export async function PATCH(req: NextRequest){
+export async function PUT(request: Request, { params }: { params: { userId: string } }) {
     try {
-        const body = await req.json();
-        const { bookId, bookName } = body;
-
-        const urlParts = req.nextUrl.pathname.split('/');
-        const userId = urlParts[urlParts.length - 1];
-        
-        const result = await addUserBook(userId, bookId, bookName);
-        return NextResponse.json(result, { status: result.status });
-
-    } catch (err) {
-        return NextResponse.json(err);
+      const uid = params.userId;
+      const updatedData = await request.json();
+  
+      const client = await connectDatabase();
+      const user = await updateUser(client, 'users', uid, updatedData);
+      return NextResponse.json(user);
+    } catch (error) {
+      console.error(error);
+      return NextResponse.json({ message: error }, { status: 500 });
     }
-}
+  }

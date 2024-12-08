@@ -16,25 +16,34 @@ const Login = () => {
   const handleGoogleLogin = async () => {
     try {
       const provider = new GoogleAuthProvider();
-      provider.setCustomParameters({
-        prompt: "select_account",  
-      });
+      provider.setCustomParameters({ prompt: "select_account" });
+  
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
-      const localUser = {
+  
+      let localUser = {
         _id: user.uid,
         email: user.email || '',
         name: user.displayName || '',
         books: [],
-        userImagePath: user.photoURL as string,
+        userImagePath: user.photoURL || '',
+      };
+  
+      const response = await logInUser(localUser); // רק אם יש צורך בשמירה בשרת
+  
+      if (response.status === 200) {
+        localUser = response.user;
       }
+  
+      // הגדרת המשתמש בzustand
       setUser(localUser);
-      logInUser(localUser);
+  
     } catch (error) {
       console.error("Error during Google login:", error);
+      // אפשר להוסיף הצגת הודעה למשתמש במקרה של שגיאה
     }
   };
-
+  
   return (
     <Box className={styles.login_card}>
       <Image

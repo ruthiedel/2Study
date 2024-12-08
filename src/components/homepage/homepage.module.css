@@ -1,0 +1,172 @@
+.homeContainer {
+    font-family: 'Arial', sans-serif;
+    background-color: #F9F2D7;
+    color: #333;
+    padding: 50px 10%;
+  }
+  
+  
+  .lefttext{
+    text-align: left;
+
+  }
+  
+  
+  .startButton {
+    background-color: #FFB800; /* חרדל */
+    color: #fff;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .startButton:hover {
+    background-color: #E69400;
+  }
+  
+  
+  .titel {
+    font-size: 3rem;
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .text {
+    font-size: 1.5rem;
+    color: #777;
+    margin-bottom: 30px;
+  }
+  
+  
+  /* תכונות */
+  .features {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 60px;
+  }
+  
+  .featureCard {
+    background-color: #f7f7f7;
+    padding: 30px;
+    border-radius: 8px;
+    width: 30%;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+  }
+  
+  .featureCard:hover {
+    transform: scale(1.05);
+  }
+  
+  .featureCard h2 {
+    font-size: 1.5rem;
+    color: #333;
+  }
+  
+  .featureCard p {
+    font-size: 1rem;
+    color: #777;
+  }
+  
+  /* המלצות */
+  .recommendation {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+  
+  .recommendation h2 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .recommendation p {
+    font-size: 1.2rem;
+    color: #777;
+    margin-bottom: 30px;
+  }
+  
+  /* עדויות */
+  .testimonial {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+  
+  .testimonial h2 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .testimonial p {
+    font-size: 1.2rem;
+    color: #777;
+  }
+  
+  /* אנימציות */
+  @keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes fadeInLeft {
+    0% {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  @keyframes fadeInRight {
+    0% {
+      opacity: 0;
+      transform: translateX(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  @keyframes zoomIn {
+    0% {
+      transform: scale(0.8);
+      opacity: 0;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  
+  /* מחלקות אנימציה */
+  .animateFadeInUp {
+    animation: fadeInUp 1s ease-in-out;
+  }
+  
+  .animateFadeInLeft {
+    animation: fadeInLeft 1s ease-in-out;
+  }
+  
+  .animateFadeInRight {
+    animation: fadeInRight 1s ease-in-out;
+  }
+  
+  .animateZoomIn {
+    animation: zoomIn 0.5s ease-in-out;
+  }
+  
