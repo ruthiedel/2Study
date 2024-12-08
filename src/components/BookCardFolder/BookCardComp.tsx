@@ -34,6 +34,7 @@ const BookCardComp: React.FC<BookCardProps> = ({ book, onClose }) => {
         }
     }, [user]);
 
+
     const handleReadMore = async () => {
         if (foundBook) {
             window.location.href = `study/${book._id}`;
