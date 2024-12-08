@@ -1,5 +1,5 @@
 "use client";
-// import 'animate.css';
+
 import React from "react";
 import styles from './homepage.module.css';
 import useUserStore from '../../services/zustand/userZustand/userStor';

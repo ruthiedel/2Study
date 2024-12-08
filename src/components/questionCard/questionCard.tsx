@@ -23,7 +23,6 @@ const QuestionCard = (props: { p: Paragraph, bookId: string, chapterId: number ,
     const [idxQuestion, setIdxQuestion] = useState(0);
     const [errorMessage, setErrorMessage] = useState(false);
     const book = getBookById(props.bookId);
-    console.log(props.p,"ppppp")
     useEffect(() => {
         const fetchQuestionAndAnswer = async () => {
           if (props.p.questions.length === 0) {
@@ -37,8 +36,6 @@ const QuestionCard = (props: { p: Paragraph, bookId: string, chapterId: number ,
                 question,
                 answer,
               });
-      
-              // עדכון הפסקה ב-state המקומי
               props.setParagraph((prev) => {
                 const updatedParagraphs = prev.map((paragraph) =>
                   paragraph.section._id === props.p._id
@@ -57,51 +54,40 @@ const QuestionCard = (props: { p: Paragraph, bookId: string, chapterId: number ,
         fetchQuestionAndAnswer();
       }, []);
       
-
-    useEffect(() => {
+      useEffect(() => {
         const fetchQuestionAndAnswer = async () => {
-            if (props.p.questions.length < 6) {
+            if (props.p.questions.length < idxQuestion) { 
                 const { question, answer } = await generateQuestionAndAnswer(props.p.text);
                 const updatedParagraph = { ...props.p, questions: [...props.p.questions, { question, answer }] };
+                
                 props.setParagraph((prev: Paragraphs[]) => {
                     const updatedParagraphs = prev.map(paragraph =>
                         paragraph.section._id === props.p._id 
-                            ? { ...paragraph, section: { ...props.p, questions: [...props.p.questions] } } 
+                            ? { ...paragraph, section: updatedParagraph }
                             : paragraph
                     );
-                    return updatedParagraphs; // החזרת המערך עצמו, לא עטוף באובייקט
+                    return updatedParagraphs; 
                 });
                 
-                if (book) {
-                    const updatedChapters = book.chapters?.map(chapter => {
-                        if (chapter.chapterId === props.chapterId) {
-                            const updatedParagraphs = chapter.paragraphs.map(paragraph => 
-                                paragraph._id === props.p._id ? updatedParagraph : paragraph
-                            );
-                            return { ...chapter, paragraphs: updatedParagraphs };
-                        }
-                        return chapter;
-                    });
-
-                    try {
-                        await updateBook({
-                            id: book._id!,
-                            updatedData: {
-                                chapters: updatedChapters,
-                            },
-                        });
-                        console.log("שאלה:", question, "תשובה:", answer);
-                    } catch (error) {
-                        console.error("שגיאה בעדכון הפסקה:", error);
-                    }
+                try {
+                    await updateBookQuestionService({
+                        bookId: props.bookId,
+                        chapterId: String(props.chapterId),
+                        paragraphId: String(props.p.paragraphId),
+                        question,
+                        answer,
+                      });
+                } catch (error) {
+                    console.error("שגיאה בעדכון הפסקה:", error);
                 }
             } else {
                 setErrorMessage(true);
             }
         };
-
+    
         fetchQuestionAndAnswer();
-    }, [idxQuestion]);
+    }, [idxQuestion]); 
+    
 
     return (
         <>
