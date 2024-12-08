@@ -10,10 +10,10 @@ const Chat = ({ bookId }: { bookId: string }) => {
   const user: User | null = useUserStore((state) => state.user);
   const { data: books } = getBooks();
   const updateBookMutation = useUpdateBook();
-
   const [messages, setMessages] = useState<Message[]>([]);
   const [message, setMessage] = useState('');
   const [isSending, setIsSending] = useState(false);
+  const [bookName, setBookName] = useState('');
 
   useEffect(() => {
     const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY!, {
@@ -24,6 +24,7 @@ const Chat = ({ bookId }: { bookId: string }) => {
       const selectedBook = books.find(book => book._id == bookId)
       if (selectedBook && selectedBook.learningGroups && selectedBook.learningGroups.message) {
         setMessages([...selectedBook?.learningGroups.message])
+        setBookName(selectedBook.name);
       }
       else {
         console.log("No learningGroups", selectedBook)
@@ -45,11 +46,18 @@ const Chat = ({ bookId }: { bookId: string }) => {
     };
   }, [books]);
 
+  useEffect(() => {
+    const messageContainer = document.getElementById('messages-container');
+    if (messageContainer) {
+      messageContainer.scrollTop = messageContainer.scrollHeight;
+    }
+  }, [messages]);
+
   const sendMessage = async () => {
     if (!user || message.trim() === '' || isSending) return;
 
     const newMessage: Message = {
-      _id: '', // יווצר בשרת
+      _id: '',
       bookId,
       username: user.name,
       message: message,
@@ -65,7 +73,7 @@ const Chat = ({ bookId }: { bookId: string }) => {
         },
         body: JSON.stringify({
           message: newMessage.message,
-          username: user.name,
+          username: `${user.name} ${user._id}`,
           bookId,
         }),
       });
@@ -93,21 +101,50 @@ const Chat = ({ bookId }: { bookId: string }) => {
     setIsSending(false);
   };
 
+  const getIdFromUserName = (userName: string): string => {
+    const lastSpaceIndex = userName.lastIndexOf(' ');
+    if (lastSpaceIndex !== -1) {
+      return userName.substring(lastSpaceIndex + 1); 
+    }
+    return '';
+  }
+
+  const getNameFromUserName = (userName: string): string => {
+    const lastSpaceIndex = userName.lastIndexOf(' ');
+    if (lastSpaceIndex !== -1) {
+      return userName.substring(0, lastSpaceIndex); 
+    }
+    return '';
+  }
 
   return (
-    <div className={ChatStyles.container}>
-      <div className={ChatStyles.header}>קבוצת לימוד - שם הספר</div>
-      <div className={ChatStyles.messages}>
+    <div className={ChatStyles.container} >
+      <div className={ChatStyles.header}>
+        <>קבוצת לימוד {bookName}</>
+        <div className={ChatStyles.profileContainer}>
+          <div className={ChatStyles.onlineIndicator}></div>
+          <img
+            src={user?.userImagePath || '/default-avatar.png'}
+            alt={user?.name}
+            className={ChatStyles.profileImage}
+          />
+        </div>
+      </div>
+      <div className={ChatStyles.messages} id='messages-container'>
         {messages.map((msg, index) => (
-          <div
-            key={index}
-            className={`${ChatStyles.message} ${msg.username === user?.name ? ChatStyles.selfMessage : ''
-              }`}
-          >
-            <div className={ChatStyles.username}>{msg.username}</div>
-            <div className={ChatStyles.text}>{msg.message}</div>
-            <div className={ChatStyles.timestamp}>
-              {new Date(msg.timestamp).toLocaleTimeString()}
+          <div className={`${ChatStyles.messageContainer}  ${getIdFromUserName(msg.username) === user?._id ? ChatStyles.selfContainer : ''
+            }`}>
+            <div className={ChatStyles.profile}>{msg.username[0]}</div>
+            <div
+              key={index}
+              className={`${ChatStyles.message} ${getIdFromUserName(msg.username) === user?._id  ? ChatStyles.selfMessage : ChatStyles.otherMessage
+                }`}
+            >
+              <div className={ChatStyles.username}>{getNameFromUserName(msg.username)}</div>
+              <div className={ChatStyles.text}>{msg.message}</div>
+              <div className={ChatStyles.timestamp}>
+                {new Date(msg.timestamp).toLocaleTimeString()}
+              </div>
             </div>
           </div>
         ))}
@@ -120,7 +157,7 @@ const Chat = ({ bookId }: { bookId: string }) => {
           onChange={(e) => setMessage(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === 'Enter') {
-              e.preventDefault(); 
+              e.preventDefault();
               sendMessage();
             }
           }}
