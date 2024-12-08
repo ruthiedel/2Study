@@ -1,5 +1,5 @@
 
-const nextConfig = {
+
 const nextConfig = {
   webpack(config) {
     // דחוף את קבצי ה-CSS שלך אחרי כל השאר
@@ -14,6 +14,3 @@ const nextConfig = {
 
 module.exports = nextConfig;
 
-};
-
-  module.exports = nextConfig;
