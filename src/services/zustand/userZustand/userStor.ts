@@ -3,11 +3,12 @@ import { persist } from "zustand/middleware";
 import { auth } from '../../../lib/firebase';
 import { signOut } from "firebase/auth";
 import { User } from '../../../types';
+import { updateUser } from '../../../services/userService';
 
 export type UserStore = {
   user: User | null;
   setUser: (user: User) => void;
-  updateRating: (bookId: string, newRating: number) => void;
+  updateUserZustand: (userId: string, updatedUser: User) => void;
   logout: () => Promise<void>;
 };
 
@@ -17,16 +18,12 @@ const useUserStore = create<UserStore>()(
     (set, get) => ({
       user: null,
       setUser: (user: User) => set({ user }),
-      updateRating: (bookId: string, newRating: number) => {
-        const currentUser = get().user;
-        if (currentUser) {
-          const updatedBooks = currentUser.books.map((book) => {
-            if (book.book_id === bookId) {
-              return { ...book, rate: newRating };
-            }
-            return book;
-          });
-          set({ user: { ...currentUser, books: updatedBooks } });
+      updateUserZustand: async (userId: string, updatedUser: User) => {
+        try {
+          await updateUser({id: userId, updatedData: updatedUser}); 
+          set({ user: updatedUser }); 
+        } catch (error) {
+          console.error("Failed to update user");
         }
       },
       logout: async () => {

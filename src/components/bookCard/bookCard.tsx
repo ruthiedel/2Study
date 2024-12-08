@@ -17,6 +17,7 @@ const BookCard: React.FC<BookCardProps> = ({ book, onClose }) => {
     const [showMore, setShowMore] = useState(false);
     const [foundBook, setFoundBook] = useState(false);
     const user = useUserStore((state) => state.user);
+    const updateUserZustand = useUserStore((state) => state.updateUserZustand);
 
     useEffect(() => {
         const bookExists = user?.books.find((userBook) => userBook.book_id === book._id);
@@ -43,7 +44,7 @@ const BookCard: React.FC<BookCardProps> = ({ book, onClose }) => {
                 ...user!, 
                 books: [...user!.books, newUserBook]
             }
-            await updateUser({ id: user!._id!, updatedData: updatedUserData });
+            await updateUserZustand(user!._id!, updatedUserData );
             window.location.href = `study/${book._id}`;
         }
 
@@ -107,7 +108,7 @@ const BookCard: React.FC<BookCardProps> = ({ book, onClose }) => {
 
                     <Grid item xs={12}>
                         <Button variant="contained" className={styles.learnButton} onClick={handleReadMore}>
-                            { foundBook ?  "הוסף לרשימת הספרים שלי" : "המשך ללמוד ←"}
+                            { foundBook ?   "המשך ללמוד ←" : "הוסף לרשימת הספרים שלי"}
                         </Button>
                     </Grid>
                 </Grid>
