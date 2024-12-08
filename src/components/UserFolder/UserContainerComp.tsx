@@ -1,6 +1,6 @@
-import StudyCard from './studyCard';
-import ProgressCard from './progressCard';
-import Information from './information';
+import StudyComp from './StudyComp';
+import ProgressComp from './ProgressComp';
+import InfoComp from './InfoComp';
 import Recommendations from './Recommendations';
 
 export default function UserContainer() {
@@ -8,10 +8,10 @@ export default function UserContainer() {
     <div className="grid grid-cols-1 md:grid-cols-2 m-8">
       <div className="">
         <div className="">
-          <Information />
+          <InfoComp />
         </div>
         <div className="">
-          <StudyCard />
+          <StudyComp />
         </div>
       </div>
 
@@ -20,7 +20,7 @@ export default function UserContainer() {
           <Recommendations />
         </div>
         <div className="">
-          <ProgressCard />
+          <ProgressComp />
         </div>
       </div>
     </div>

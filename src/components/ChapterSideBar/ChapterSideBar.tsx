@@ -5,7 +5,7 @@ import { ExpandMore, ExpandLess } from '@mui/icons-material'; // אייקוני�
 import { getBooks } from '@/hooks/booksDetails';
 import { Book } from '../../types';
 import numberToGematria from '../../lib/clientHelpers/gematriaFunc';
-import styles from './ChapterSideBar.module.css';
+import styles from './chapterSideBar.module.css';
 
 interface SidebarProps {
     selectedBookId: string;
