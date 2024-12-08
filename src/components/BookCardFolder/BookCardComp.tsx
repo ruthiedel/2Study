@@ -7,9 +7,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import Image from 'next/image';
 import styles from './bookCard.module.css';
 import { Book, UserBook } from '../../types';
-import { updateUser } from '../../services/userService';
 
-import Login from '../Login/Login';
 
 type BookCardProps = {
     book: Book;
@@ -20,21 +18,8 @@ const BookCardComp: React.FC<BookCardProps> = ({ book, onClose }) => {
     const [showMore, setShowMore] = useState(false);
     const [foundBook, setFoundBook] = useState(false);
     const user = useUserStore((state) => state.user);
-    const setUser = useUserStore((state) => state.setUser);
-    const [openModal, setOpenModal] = useState(false);
     const updateUserZustand = useUserStore((state) => state.updateUserZustand);
 
-    useEffect(() => {
-        if (user === undefined) {
-            setOpenModal(true);
-        } else if (!user) {
-            setOpenModal(true);  
-        } else {
-            setOpenModal(false); 
-            const bookExists = user.books.find((userBook) => userBook.book_id === book._id);
-            setFoundBook(!!bookExists);
-        }
-    }, [user]);
 
     const handleReadMore = async () => {
         if (foundBook) {
@@ -58,29 +43,6 @@ const BookCardComp: React.FC<BookCardProps> = ({ book, onClose }) => {
 
     return (
 <>
-            <Modal
-                open={openModal}
-                aria-labelledby="login-modal"
-                aria-describedby="login-modal-description"
-                BackdropProps={{
-                    style: { backgroundColor: 'rgba(0, 0, 0, 0.9)' },
-                }}
-            >
-                <Box
-                    sx={{
-                        position: 'absolute',
-                        top: '50%',
-                        left: '50%',
-                        transform: 'translate(-50%, -50%)',
-                        bgcolor: 'transparent',
-                        p: 0,
-                        boxShadow: 0,
-                    }}
-                >
-                    <Login />
-                </Box>
-            </Modal>
-
             <Card className={styles.bookCard}>
                 <IconButton className={styles.closeButton} aria-label="close" onClick={onClose}>
                     <CloseIcon />

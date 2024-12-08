@@ -1,11 +1,14 @@
 'use client';
 
 import React, { useMemo, useState } from 'react';
-import { BookCard, Filter } from '../../components';
+import BookCard from '../bookCard/bookCard';
+import RequireAuth from '../../layout/RequireAuth';
 import BookDetail from '../BookFolder/BookComp';
-import styles from './showBookCss.module.css';
+import Filter from '../Filter/Filter';
+import styles from './ShowBook.module.css';
+
 import { Book } from '../../types';
-import {getBooks} from '@/hooks/booksDetails';
+import { getBooks } from '@/hooks/booksDetails';
 
 const ShowBooks: React.FC = () => {
     const [selectedBook, setSelectedBook] = useState<Book | null>(null);
@@ -19,14 +22,15 @@ const ShowBooks: React.FC = () => {
         if (!books || error) return [];
 
         return books.filter((book: Book) => {
-            const matchesCategory = categories.length === 0 || categories.some(cat => 
-                book.category.subject.includes(cat) || 
+            const matchesCategory = categories.length === 0 || categories.some(cat =>
+                book.category.subject.includes(cat) ||
                 book.category.type.includes(cat)
-              );
+            );
             const matchesBookName = bookName === '' || book.name.toLowerCase().includes(bookName.toLowerCase());
             const matchesAuthorName = authorName === '' || book.author.toLowerCase().includes(authorName.toLowerCase());
             return matchesCategory && matchesBookName && matchesAuthorName;
-    })}, [books, categories, bookName, authorName, error]);
+        })
+    }, [books, categories, bookName, authorName, error]);
 
     const handleBookSelect = (book: Book) => {
         setSelectedBook(book);
@@ -66,14 +70,19 @@ const ShowBooks: React.FC = () => {
                 </div>
                 {selectedBook && (
                     <>
-                        <div className={styles.overlay} onClick={handleClosePopup}></div>
-                        <div className={styles.popup}>
-                            <BookCard book={selectedBook} onClose={handleClosePopup} />
-                        </div>
+                        <RequireAuth>
+
+                            <div className={styles.overlay} onClick={handleClosePopup}></div>
+                            <div className={styles.popup}>
+                                <BookCard book={selectedBook} onClose={handleClosePopup} />
+
+                            </div>
+                        </RequireAuth>
+
                     </>
                 )}
             </div>
-        </div>
+        </div >
     );
 };
 
