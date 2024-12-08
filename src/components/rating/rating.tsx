@@ -13,7 +13,7 @@ interface RatingComponentProps {
 }
 
 const RatingComponent: React.FC<RatingComponentProps> = ({ bookId }) => {
-  const updateRating = useUserStore((state) => state.updateRating);
+  // const updateRating = useUserStore((state) => state.updateRating);
   const user = useUserStore((state) => state.user);
 
   const updateBookMutation = useUpdateBook();
