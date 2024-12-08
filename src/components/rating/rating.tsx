@@ -48,9 +48,7 @@ const RatingComponent: React.FC<RatingComponentProps> = ({ bookId }) => {
             ...user!,
             books:newbooks || [],
           };
-          updateUser({ id: user?._id || "", updatedData: newuser });
-          // updateRating(bookId, evgRating);
-        
+          updateUser({ id: user?._id || "", updatedData: newuser });        
           alert(rating);
           alert("דירוג נשמר בהצלחה!");
           setIsVisible(false);
@@ -67,10 +65,7 @@ const RatingComponent: React.FC<RatingComponentProps> = ({ bookId }) => {
     const boundingBox = event.currentTarget.getBoundingClientRect();
     const mouseX = event.clientX - boundingBox.left;
     const width = boundingBox.width;
-  
-    // תמיד לחשב דירוג מימין לשמאל
-    const hoveredValue = Math.ceil(((width - mouseX) / width) * 5); 
-  
+      const hoveredValue = Math.ceil(((width - mouseX) / width) * 5); 
     setHoverRating(Math.min(5, Math.max(1, hoveredValue))); // להבטיח דירוג בטווח 1-5
   };
   
