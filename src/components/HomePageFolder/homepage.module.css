@@ -1,29 +1,18 @@
-.home-container {
+.homeContainer {
     font-family: 'Arial', sans-serif;
-    background-color: #fff;
+    background-color: #F9F2D7;
     color: #333;
     padding: 50px 10%;
   }
   
-  .intro {
-    text-align: center;
-    margin-bottom: 60px;
+  
+  .lefttext{
+    text-align: left;
+
   }
   
-  .headline {
-    font-size: 3rem;
-    color: #333;
-    font-weight: bold;
-    margin-bottom: 20px;
-  }
   
-  .subheadline {
-    font-size: 1.5rem;
-    color: #777;
-    margin-bottom: 30px;
-  }
-  
-  .cta-button {
+  .startButton {
     background-color: #FFB800; /* חרדל */
     color: #fff;
     padding: 15px 30px;
@@ -34,18 +23,33 @@
     transition: background-color 0.3s ease;
   }
   
-  .cta-button:hover {
+  .startButton:hover {
     background-color: #E69400;
   }
   
-  /* Features */
+  
+  .titel {
+    font-size: 3rem;
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .text {
+    font-size: 1.5rem;
+    color: #777;
+    margin-bottom: 30px;
+  }
+  
+  
+  /* תכונות */
   .features {
     display: flex;
     justify-content: space-between;
     margin-bottom: 60px;
   }
   
-  .feature-card {
+  .featureCard {
     background-color: #f7f7f7;
     padding: 30px;
     border-radius: 8px;
@@ -55,21 +59,21 @@
     transition: transform 0.3s ease;
   }
   
-  .feature-card:hover {
+  .featureCard:hover {
     transform: scale(1.05);
   }
   
-  .feature-card h2 {
+  .featureCard h2 {
     font-size: 1.5rem;
     color: #333;
   }
   
-  .feature-card p {
+  .featureCard p {
     font-size: 1rem;
     color: #777;
   }
   
-  /* Recommendations */
+  /* המלצות */
   .recommendation {
     text-align: center;
     margin-bottom: 60px;
@@ -87,7 +91,7 @@
     margin-bottom: 30px;
   }
   
-  /* Testimonials */
+  /* עדויות */
   .testimonial {
     text-align: center;
     margin-bottom: 60px;
@@ -104,41 +108,65 @@
     color: #777;
   }
   
-  /* Animations */
+  /* אנימציות */
   @keyframes fadeInUp {
-    0% { opacity: 0; transform: translateY(20px); }
-    100% { opacity: 1; transform: translateY(0); }
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
   
   @keyframes fadeInLeft {
-    0% { opacity: 0; transform: translateX(-20px); }
-    100% { opacity: 1; transform: translateX(0); }
+    0% {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
   }
   
   @keyframes fadeInRight {
-    0% { opacity: 0; transform: translateX(20px); }
-    100% { opacity: 1; transform: translateX(0); }
-  }
-  
-  /* Animation classes */
-  .animate__fadeInUp {
-    animation: fadeInUp 1s ease-in-out;
-  }
-  
-  .animate__fadeInLeft {
-    animation: fadeInLeft 1s ease-in-out;
-  }
-  
-  .animate__fadeInRight {
-    animation: fadeInRight 1s ease-in-out;
-  }
-  
-  .animate__zoomIn {
-    animation: zoomIn 0.5s ease-in-out;
+    0% {
+      opacity: 0;
+      transform: translateX(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
   }
   
   @keyframes zoomIn {
-    0% { transform: scale(0.8); opacity: 0; }
-    100% { transform: scale(1); opacity: 1; }
+    0% {
+      transform: scale(0.8);
+      opacity: 0;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  
+  /* מחלקות אנימציה */
+  .animateFadeInUp {
+    animation: fadeInUp 1s ease-in-out;
+  }
+  
+  .animateFadeInLeft {
+    animation: fadeInLeft 1s ease-in-out;
+  }
+  
+  .animateFadeInRight {
+    animation: fadeInRight 1s ease-in-out;
+  }
+  
+  .animateZoomIn {
+    animation: zoomIn 0.5s ease-in-out;
   }
   

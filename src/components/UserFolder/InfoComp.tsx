@@ -7,7 +7,7 @@ import Box from "@mui/material/Box";
 import styles from "./userStatus.module.css";
 import StarIcon from "@mui/icons-material/Star";
 
-const Information = () => {
+const InfoComp = () => {
   const user = useUserStore((state) => state.user);
 
   // image={user?.userImagePath ? `/proxy?url=${encodeURIComponent(user.userImagePath)}` : "/defaultUser.png"}
@@ -62,4 +62,4 @@ const Information = () => {
   );
 };
 
-export default Information;
+export default InfoComp;

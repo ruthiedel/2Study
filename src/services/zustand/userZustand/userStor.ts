@@ -5,6 +5,7 @@ import { signOut } from "firebase/auth";
 import { User } from '../../../types';
 import { updateUser } from '../../../services/userService';
 
+
 export type UserStore = {
   user: User | null;
   setUser: (user: User) => void;

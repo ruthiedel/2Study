@@ -28,12 +28,16 @@ const RatingComponent: React.FC<RatingComponentProps> = ({ bookId }) => {
     if (rating !== null) {
       setIsSubmitting(true);
       try {
-        const book = await getBookById(bookId);
+        alert("try")
+        const book = getBookById(bookId);
+        alert("user updated")
+
         if (book){
           const num_raters = book.number_raters > 0 ? book.number_raters + 1 : 1;
           const evgRating = book.number_raters > 0
             ? Math.round((book.rating! * book.number_raters + rating) / num_raters)
             : rating;
+
           await updateBookMutation.mutate({
             id: bookId,
             updatedData: { rating: evgRating, number_raters: num_raters },

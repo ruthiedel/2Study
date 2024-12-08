@@ -1,0 +1,67 @@
+.wizard {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  
+  .content {
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 500px;
+    text-align: center;
+    position: relative;
+  }
+  
+  .arrow {
+    background: transparent;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: black;
+    transition: color 0.3s;
+    margin: 15px;
+  }
+  
+  .arrow:hover {
+    color: rgb(53, 53, 53);
+  }
+  
+  .leftArrow {
+    left: -40px;
+  }
+  
+  .rightArrow {
+    right: -40px;
+  }
+  
+  .dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+  }
+  
+  .dot {
+    width: 10px;
+    height: 10px;
+    background-color: #ddd;
+    border-radius: 50%;
+    transition: background-color 0.3s;
+  }
+  
+  .activeDot {
+    background-color: rgb(53, 53, 53);
+  }
+  
