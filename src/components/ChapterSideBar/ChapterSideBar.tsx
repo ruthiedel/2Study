@@ -1,11 +1,11 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { List, ListItem, ListItemText, CircularProgress, IconButton } from '@mui/material';
-import { ExpandMore, ExpandLess } from '@mui/icons-material'; // אייקונים למשולש
+import { ExpandMore, ExpandLess } from '@mui/icons-material'; 
 import { getBooks } from '@/hooks/booksDetails';
 import { Book } from '../../types';
 import numberToGematria from '../../lib/clientHelpers/gematriaFunc';
-import styles from './chapterSideBar.module.css';
+import styles from './chapterSideBarCss.module.css';
 
 interface SidebarProps {
     selectedBookId: string;
