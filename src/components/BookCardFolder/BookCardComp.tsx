@@ -22,6 +22,7 @@ const BookCardComp: React.FC<BookCardProps> = ({ book, onClose }) => {
     const user = useUserStore((state) => state.user);
     const setUser = useUserStore((state) => state.setUser);
     const [openModal, setOpenModal] = useState(false);
+    const updateUserZustand = useUserStore((state) => state.updateUserZustand);
 
     useEffect(() => {
         if (user === undefined) {
@@ -50,7 +51,7 @@ const BookCardComp: React.FC<BookCardProps> = ({ book, onClose }) => {
                 ...user!,
                 books: [...user!.books, newUserBook],
             };
-            await updateUser({ id: user!._id!, updatedData: updatedUserData });
+            await updateUserZustand(user!._id!, updatedUserData );
             window.location.href = `study/${book._id}`;
         }
     };
@@ -135,9 +136,9 @@ const BookCardComp: React.FC<BookCardProps> = ({ book, onClose }) => {
                         )}
 
                         <Grid item xs={12}>
-                            <Button variant="contained" className={styles.learnButton} onClick={handleReadMore}>
-                                {foundBook ? 'הוסף לרשימת הספרים שלי' : 'המשך ללמוד ←'}
-                            </Button>
+                        <Button variant="contained" className={styles.learnButton} onClick={handleReadMore}>
+                            { foundBook ?   "המשך ללמוד ←" : "הוסף לרשימת הספרים שלי"}
+                        </Button>
                         </Grid>
                     </Grid>
                 </div>

@@ -12,7 +12,7 @@ interface RatingComponentProps {
 }
 
 const RatingComp: React.FC<RatingComponentProps> = ({ bookId }) => {
-  const updateRating = useUserStore((state) => state.updateRating);
+  const updateUserZustand = useUserStore((state) => state.updateUserZustand);
   const user = useUserStore((state) => state.user);
 
   const updateBookMutation = useUpdateBook();
@@ -45,8 +45,7 @@ const RatingComp: React.FC<RatingComponentProps> = ({ bookId }) => {
             ...user!,
             books:newbooks || [],
           };
-          updateUser({ id: user?._id || "", updatedData: newuser });
-          // updateRating(bookId, evgRating);
+          updateUserZustand( user?._id || "", newuser );
         
           alert(rating);
           alert("דירוג נשמר בהצלחה!");
