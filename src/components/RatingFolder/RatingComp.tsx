@@ -1,10 +1,9 @@
 import { useState } from "react";
 import Rating from "@mui/material/Rating";
 import styles from "./rating.module.css";
-import { useUpdateBook } from '../../hooks/booksDetails';
+import { getBooks, useUpdateBook } from '../../hooks/booksDetails';
 import useUserStore from "../../services/zustand/userZustand/userStor";
-import { getBookById } from '../../hooks/booksDetails'
-import {updateUser} from '../../services/userService'
+import { updateUser } from '../../services/userService'
 import { User } from '../../types';
 
 interface RatingComponentProps {
@@ -20,13 +19,14 @@ const RatingComp: React.FC<RatingComponentProps> = ({ bookId }) => {
   const [rating, setRating] = useState<number | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
+  const { data: books, isLoading, error } = getBooks();
 
   const handleRatingSubmit = async () => {
     if (rating !== null) {
       setIsSubmitting(true);
       try {
-        const book = await getBookById(bookId);
-        if (book){
+        const book = books?.find((book) => book._id === bookId) || null;
+        if (book) {
           const num_raters = book.number_raters > 0 ? book.number_raters + 1 : 1;
           const evgRating = book.number_raters > 0
             ? Math.round((book.rating! * book.number_raters + rating) / num_raters)
@@ -35,19 +35,18 @@ const RatingComp: React.FC<RatingComponentProps> = ({ bookId }) => {
             id: bookId,
             updatedData: { rating: evgRating, number_raters: num_raters },
           });
-          const newbooks = user?.books.map(book =>{
-            if(book.book_id === bookId){
-              return {...book, rate: rating}
+          const newbooks = user?.books.map(book => {
+            if (book.book_id === bookId) {
+              return { ...book, rate: rating }
             }
             return book;
           })
-          const newuser: User ={
+          const newuser: User = {
             ...user!,
-            books:newbooks || [],
+            books: newbooks || [],
           };
-          updateUserZustand( user?._id || "", newuser );
-        
-          alert(rating);
+          updateUserZustand(user?._id || "", newuser);
+
           alert("דירוג נשמר בהצלחה!");
           setIsVisible(false);
         }
@@ -63,10 +62,10 @@ const RatingComp: React.FC<RatingComponentProps> = ({ bookId }) => {
     const boundingBox = event.currentTarget.getBoundingClientRect();
     const mouseX = event.clientX - boundingBox.left;
     const width = boundingBox.width;
-  
-    const hoveredValue = Math.ceil(((width - mouseX) / width) * 5); 
-  
-    setHoverRating(Math.min(5, Math.max(1, hoveredValue))); 
+
+    const hoveredValue = Math.ceil(((width - mouseX) / width) * 5);
+
+    setHoverRating(Math.min(5, Math.max(1, hoveredValue)));
   };
 
 
