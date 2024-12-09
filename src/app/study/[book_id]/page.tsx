@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState, useMemo } from "react";
-import { Box, IconButton, Button } from "@mui/material";
+import { Box, IconButton, Button, Dialog, DialogContent } from "@mui/material";
 import useUserStore from "../../../services/zustand/userZustand/userStor";
 import { getSections } from "../../../services/bookService";
 import { useParams } from "next/navigation";
@@ -40,10 +40,9 @@ const Study = () => {
     const [bookData, setBookData] = useState<Book | null>(null);
     const [showConfetti, setShowConfetti] = useState(false);
     const [loading, setLoading] = useState(false);
-  
-    const user = useUserStore((state) => state.user);
+    const [showQuiz, setShowQuiz] = useState(false); // מצב הפופאפ
 
-    console.log("paragraph: ", paragraph);
+    const user = useUserStore((state) => state.user);
 
     useEffect(() => {
         const fetchData = () => {
@@ -52,22 +51,18 @@ const Study = () => {
                 setIndex(
                     userBook
                         ? {
-                            chapterId: userBook.chapter_id,
-                            paragraphId: userBook.section_id,
-                        }
+                              chapterId: userBook.chapter_id,
+                              paragraphId: userBook.section_id,
+                          }
                         : { chapterId: 1, paragraphId: 1 }
                 );
             }
             if (books && Array.isArray(books)) {
                 setBookData(books.find((book) => book._id === bookId) || null);
             }
-
         };
         fetchData();
-        console.log("in bookId use Effect")
     }, [bookId]);
-
-
 
     const fetchParagraphs = async (
         bookId: string,
@@ -76,22 +71,19 @@ const Study = () => {
     ) => {
         try {
             const paragraphs = await getSections(bookId, chapterId, paragraphId);
-            console.log("paragraph")
             if (!paragraphs || paragraphs.length === 0) {
                 throw new Error("No paragraphs found");
             }
-            setParagraph(paragraphs.sections);    
+            setParagraph(paragraphs.sections);
         } catch (error) {
             console.error("Error fetching paragraphs:", error);
         } finally {
-            console.log("Done fetching paragraphs")
             setLoading(false);
         }
     };
 
     useEffect(() => {
         if (!bookId) return;
-        console.log("in index useEfect")
         const { chapterId, paragraphId } = index;
         const paragraphExists = paragraph.some(
             (p) =>
@@ -133,7 +125,7 @@ const Study = () => {
         return (
             index?.chapterId === bookData?.chapters_num &&
             index?.paragraphId ===
-            bookData?.paragraphsCountPerChapter?.[bookData.chapters_num - 1]
+                bookData?.paragraphsCountPerChapter?.[bookData.chapters_num - 1]
         );
     }, [index, bookData]);
 
@@ -145,6 +137,9 @@ const Study = () => {
         });
         setTimeout(() => setShowConfetti(false), 5000);
     };
+
+    const openQuiz = () => setShowQuiz(true); // פתיחת פופאפ
+    const closeQuiz = () => setShowQuiz(false); // סגירת פופאפ
 
     return isLoading ? (
         <Loading />
@@ -183,6 +178,34 @@ const Study = () => {
                 >
                     <ExpandMore />
                 </IconButton>
+                <Button
+                    onClick={openQuiz}
+                    variant="contained"
+                    color="primary"
+                    className={Styles.quizButton}
+                >
+                    בחן את עצמך
+                </Button>
+                <Dialog open={showQuiz} onClose={closeQuiz}>
+                    <DialogContent>
+                        {paragraph && index && paragraph.find(
+                                    (p) =>
+                                        p.chapterNumber === index?.chapterId &&
+                                        p.section.paragraphId === index?.paragraphId
+                                )&&(
+                            <QuestionCard
+                                p={paragraph.find(
+                                    (p) =>
+                                        p.chapterNumber === index?.chapterId &&
+                                        p.section.paragraphId === index?.paragraphId
+                                )!.section}
+                                bookId={bookId}
+                                setParagraph={setParagraph}
+                                chapterId={paragraph[0].chapterNumber}
+                            />
+                        )}
+                    </DialogContent>
+                </Dialog>
                 {isLastSection && (
                     <Button
                         onClick={handleFinish}
@@ -193,25 +216,6 @@ const Study = () => {
                         סיימתי ללמוד
                     </Button>
                 )}
-                {paragraph&&index&& paragraph.find(
-                                (p) =>
-                                    p.chapterNumber === index?.chapterId &&
-                                    p.section.paragraphId === index?.paragraphId
-                            )  && paragraph.length > 0 && (
-                    <QuestionCard
-                        p={
-                            paragraph.find(
-                                (p) =>
-                                    p.chapterNumber === index?.chapterId &&
-                                    p.section.paragraphId === index?.paragraphId
-                            )!.section
-                        }
-                        bookId={bookId}
-                        setParagraph={setParagraph}
-                        chapterId={paragraph[0].chapterNumber}
-                    />
-                )}
-                {/* <Rating bookId={bookData?._id || ""} /> */}
             </div>
             <Chat bookId={bookId} />
             <ToastContainer />
