@@ -16,10 +16,10 @@ const Header: React.FC = () => {
     const user = useUserStore((state) => state.user);
     const [showLogin, setShowLogin] = useState(false);
 
-    useEffect(()=>{
-        if(user != null && showLogin)
+    useEffect(() => {
+        if (user != null && showLogin)
             setShowLogin(false);
-    },[user])
+    }, [user])
 
     const handleMenuOpen = (event: MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
@@ -38,7 +38,7 @@ const Header: React.FC = () => {
         setShowLogin(true);
         setAnchorEl(null);
     };
-    
+
 
     const handleLoginClose = () => {
         setShowLogin(false);
@@ -77,8 +77,11 @@ const Header: React.FC = () => {
                         onClick={handleMenuOpen}
                         className={styles.iconButton}
                     >
-
-                        <AccountCircleIcon />
+                        <AccountCircleIcon
+                        sx={{
+                            color: '#fff'
+                        }}
+                        />
                     </IconButton>
 
                     <Menu
