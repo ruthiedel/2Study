@@ -135,7 +135,6 @@ const Chat = ({ bookId }: { bookId: string }) => {
             }`}>
             <div className={ChatStyles.profile}>{msg.username[0]}</div>
             <div
-              key={index}
               className={`${ChatStyles.message} ${getIdFromUserName(msg.username) === user?._id  ? ChatStyles.selfMessage : ChatStyles.otherMessage
                 }`}
             >
