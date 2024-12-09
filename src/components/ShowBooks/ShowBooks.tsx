@@ -2,9 +2,9 @@
 
 import React, { useMemo, useState } from 'react';
 import BookCard from '../BookCardFolder/BookCardComp';
-import RequireAuth from '../../layout/RequireAuth';
 import BookDetail from '../BookFolder/BookComp';
-import Filter from '../Filter/Filter';
+import FilterComponent from '../Filter/Filter';
+import RequireAuth from '../../layout/RequireAuth';
 import styles from './showBookCss.module.css';
 
 import { Book } from '../../types';
@@ -43,7 +43,7 @@ const ShowBooks: React.FC = () => {
     return (
         <div className={styles.container}>
             <div className={styles.sidebarContainer}>
-                <Filter
+                <FilterComponent
                     bookName={bookName}
                     setBookName={setBookName}
                     authorName={authorName}

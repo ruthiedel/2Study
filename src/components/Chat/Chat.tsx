@@ -103,7 +103,7 @@ const Chat = ({ bookId }: { bookId: string }) => {
   const getIdFromUserName = (userName: string): string => {
     const lastSpaceIndex = userName.lastIndexOf(' ');
     if (lastSpaceIndex !== -1) {
-      return userName.substring(lastSpaceIndex + 1); 
+      return userName.substring(lastSpaceIndex + 1);
     }
     return '';
   }
@@ -111,7 +111,7 @@ const Chat = ({ bookId }: { bookId: string }) => {
   const getNameFromUserName = (userName: string): string => {
     const lastSpaceIndex = userName.lastIndexOf(' ');
     if (lastSpaceIndex !== -1) {
-      return userName.substring(0, lastSpaceIndex); 
+      return userName.substring(0, lastSpaceIndex);
     }
     return '';
   }
@@ -135,8 +135,7 @@ const Chat = ({ bookId }: { bookId: string }) => {
             }`}>
             <div className={ChatStyles.profile}>{msg.username[0]}</div>
             <div
-              key={index}
-              className={`${ChatStyles.message} ${getIdFromUserName(msg.username) === user?._id  ? ChatStyles.selfMessage : ChatStyles.otherMessage
+              className={`${ChatStyles.message} ${getIdFromUserName(msg.username) === user?._id ? ChatStyles.selfMessage : ChatStyles.otherMessage
                 }`}
             >
               <div className={ChatStyles.username}>{getNameFromUserName(msg.username)}</div>
