@@ -1,8 +1,8 @@
-.container{
+.container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width:70%;
+    width: 80%; /* הרחבת הקומפוננטה הראשית */
 }
 
 .finishButton {
@@ -18,3 +18,20 @@
 .finishButton:hover {
     background-color: #333; /* אפקט ריחוף */
 }
+
+.questionCard {
+    max-width: 300px; /* הקטנת רוחב הכרטיס */
+    width: 90%; /* התאמת הרוחב למידע */
+    height: auto; /* מניעת גלישה */
+    padding: 10px;
+    margin: 0 auto; /* מרכז הכרטיס אופקית */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    background-color: white;
+    overflow-wrap: break-word; /* שבירת מילים ארוכות */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* תוכן הכרטיס במרכז */
+    justify-content: center; /* תוכן הכרטיס ממורכז אנכית */
+}
+
