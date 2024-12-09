@@ -21,6 +21,7 @@ export default function RootLayout({
       <body>
         <LayoutReactComponent>
           {children}
+
         </LayoutReactComponent>
       </body>
     </html>

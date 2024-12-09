@@ -7,7 +7,6 @@ import CloseIcon from '@mui/icons-material/Close';
 import Image from 'next/image';
 import styles from './bookCard.module.css';
 import { Book, UserBook } from '../../types';
-
 import Login from '../Login/Login';
 
 type BookCardProps = {
