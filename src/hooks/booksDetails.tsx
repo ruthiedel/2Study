@@ -34,17 +34,10 @@ export const useUpdateBook = () => {
 };
 
 export const getBookById = (id: string) => {
-  alert("getBookById0");
-
   const queryClient = useQueryClient();
-  alert("getBookById");
   const books = queryClient.getQueryData<Book[]>(["Books"]);
-  alert("getBookById1");
-
   if (books) {
     return books.find(book => book._id === id);
   }
-  alert("getBookById2");
-
   return null;
 };
