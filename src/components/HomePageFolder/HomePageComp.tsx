@@ -3,6 +3,8 @@
 import React from "react";
 import styles from './homepage.module.css';
 import { useEffect, useState } from 'react';
+import BookAnimation from "../Animate/BookAnimation/BookAnimation";
+import PencilAnimation from "../Animate/PencilAnimation/PencilAnimation";
 
 const Homepage = () => {
   const [animationActive, setAnimationActive] = useState(false);
@@ -26,6 +28,7 @@ const Homepage = () => {
         <button className={styles.startButton}>
           התחלי ללמוד עכשיו
         </button>
+        <PencilAnimation/>
     </div>
   );
 };
