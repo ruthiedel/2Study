@@ -131,7 +131,7 @@ const Chat = ({ bookId }: { bookId: string }) => {
       </div>
       <div className={ChatStyles.messages} id='messages-container'>
         {messages.map((msg, index) => (
-          <div className={`${ChatStyles.messageContainer}  ${getIdFromUserName(msg.username) === user?._id ? ChatStyles.selfContainer : ''
+          <div key={index} className={`${ChatStyles.messageContainer}  ${getIdFromUserName(msg.username) === user?._id ? ChatStyles.selfContainer : ''
             }`}>
             <div className={ChatStyles.profile}>{msg.username[0]}</div>
             <div
