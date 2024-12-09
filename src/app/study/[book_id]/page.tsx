@@ -62,7 +62,7 @@ const Study = () => {
             }
         };
         fetchData();
-    }, [bookId]);
+    }, [bookId,books]);
 
     const fetchParagraphs = async (
         bookId: string,
@@ -92,9 +92,12 @@ const Study = () => {
         if (paragraphExists) return;
 
         fetchParagraphs(bookId, chapterId, paragraphId);
+        
     }, [index]);
 
     const handleNavigation = (direction: "next" | "prev") => {
+        console.log("index",index)
+        console.log("bookData",bookData)
         if (!index || !bookData || !bookData.paragraphsCountPerChapter) return;
         const { chapterId, paragraphId } = index;
 
