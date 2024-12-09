@@ -25,17 +25,20 @@
   }
   
   .navButton {
-    color: white;
-    font-size: 1.2rem;
     border-radius: 20px;
     padding: 5px 15px;
     transition: background-color 0.3s ease;
-    font-family: '2StudyFont', sans-serif;
   }
   
   .navButton:hover {
     background-color: #444;
     color: #fff;
+  }
+
+  .navText{
+    color: white;
+    font-size: 1.2rem;
+    font-family: '2StudyFont', sans-serif;
   }
   
   .iconButton {

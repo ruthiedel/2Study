@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, MouseEvent, useEffect } from "react";
-import { AppBar, Toolbar, IconButton, Button, Menu, MenuItem, Box, Dialog } from "@mui/material";
+import {  IconButton, Menu, MenuItem, Dialog } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Link from "next/link";
 import Image from "next/image";
@@ -60,16 +60,17 @@ const Header: React.FC = () => {
                     </div>
 
                     <div className={styles.navButtons}>
-                        <Link href="/">
-                            <Button className={styles.navButton}>דף הבית</Button>
+                        <Link href="/" className={styles.navButton}>
+                            <button className={styles.navText}>דף הבית</button>
                         </Link>
-                        <Link href="/about">
-                            <Button className={styles.navButton}>אודות</Button>
+                        <Link href="/about" className={styles.navButton}>
+                            <button className={styles.navText}>אודות</button>
                         </Link>
-                        <Link href="/bookCatalog">
-                            <Button className={styles.navButton}>קטלוג ספרים</Button>
+                        <Link href="/bookCatalog" className={styles.navButton}>
+                            <button className={styles.navText}>קטלוג ספרים</button>
                         </Link>
                     </div>
+
 
                     <IconButton
                         edge="end"
