@@ -193,7 +193,7 @@ const Study = () => {
                         סיימתי ללמוד
                     </Button>
                 )}
-                {paragraph&& paragraph.find(
+                {paragraph&&index&& paragraph.find(
                                 (p) =>
                                     p.chapterNumber === index?.chapterId &&
                                     p.section.paragraphId === index?.paragraphId
