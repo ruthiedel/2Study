@@ -21,15 +21,20 @@ const ShowBooks: React.FC = () => {
     const filteredBooks = useMemo(() => {
         if (!books || error) return [];
 
-        return books.filter((book: Book) => {
-            const matchesCategory = categories.length === 0 || categories.some(cat =>
-                book.category.subject.includes(cat) ||
-                book.category.type.includes(cat)
-            );
-            const matchesBookName = bookName === '' || book.name.toLowerCase().includes(bookName.toLowerCase());
-            const matchesAuthorName = authorName === '' || book.author.toLowerCase().includes(authorName.toLowerCase());
-            return matchesCategory && matchesBookName && matchesAuthorName;
-        })
+        if (Array.isArray(books)){
+            return books.filter((book: Book) => {
+                const matchesCategory = categories.length === 0 || categories.some(cat =>
+                    book.category.subject.includes(cat) ||
+                    book.category.type.includes(cat)
+                );
+                const matchesBookName = bookName === '' || book.name.toLowerCase().includes(bookName.toLowerCase());
+                const matchesAuthorName = authorName === '' || book.author.toLowerCase().includes(authorName.toLowerCase());
+                return matchesCategory && matchesBookName && matchesAuthorName;
+            })
+        }
+        else{
+            return []
+        }
     }, [books, categories, bookName, authorName, error]);
 
     const handleBookSelect = (book: Book) => {

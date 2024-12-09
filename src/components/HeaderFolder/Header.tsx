@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, MouseEvent, useEffect } from "react";
-import { AppBar, Toolbar, IconButton, Button, Menu, MenuItem, Box, Dialog } from "@mui/material";
+import {  IconButton, Menu, MenuItem, Dialog } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Link from "next/link";
 import Image from "next/image";
@@ -16,10 +16,10 @@ const Header: React.FC = () => {
     const user = useUserStore((state) => state.user);
     const [showLogin, setShowLogin] = useState(false);
 
-    useEffect(()=>{
-        if(user != null && showLogin)
+    useEffect(() => {
+        if (user != null && showLogin)
             setShowLogin(false);
-    },[user])
+    }, [user])
 
     const handleMenuOpen = (event: MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
@@ -38,7 +38,7 @@ const Header: React.FC = () => {
         setShowLogin(true);
         setAnchorEl(null);
     };
-    
+
 
     const handleLoginClose = () => {
         setShowLogin(false);
@@ -49,7 +49,7 @@ const Header: React.FC = () => {
             <div className={styles.appBar}>
                 <div className={styles.toolbar}>
 
-                    <Box className={styles.logo}>
+                    <div className={styles.logo}>
                         <Link href="/" passHref>
                             <Image
                                 src={logo}
@@ -57,19 +57,20 @@ const Header: React.FC = () => {
                                 className={styles.logoImage}
                             />
                         </Link>
-                    </Box>
+                    </div>
 
-                    <Box className={styles.navButtons}>
-                        <Link href="/" passHref>
-                            <Button className={styles.navButton}>דף הבית</Button>
+                    <div className={styles.navButtons}>
+                        <Link href="/" className={styles.navButton}>
+                            <button className={styles.navText}>דף הבית</button>
                         </Link>
-                        <Link href="/about" passHref>
-                            <Button className={styles.navButton}>אודות</Button>
+                        <Link href="/about" className={styles.navButton}>
+                            <button className={styles.navText}>אודות</button>
                         </Link>
-                        <Link href="/bookCatalog" passHref>
-                            <Button className={styles.navButton}>קטלוג ספרים</Button>
+                        <Link href="/bookCatalog" className={styles.navButton}>
+                            <button className={styles.navText}>קטלוג ספרים</button>
                         </Link>
-                    </Box>
+                    </div>
+
 
                     <IconButton
                         edge="end"
@@ -77,8 +78,11 @@ const Header: React.FC = () => {
                         onClick={handleMenuOpen}
                         className={styles.iconButton}
                     >
-
-                        <AccountCircleIcon />
+                        <AccountCircleIcon
+                        sx={{
+                            color: '#fff'
+                        }}
+                        />
                     </IconButton>
 
                     <Menu
