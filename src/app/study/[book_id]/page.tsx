@@ -4,14 +4,7 @@ import { Box, IconButton, Button } from "@mui/material";
 import useUserStore from "../../../services/zustand/userZustand/userStor";
 import { getSections } from "../../../services/bookService";
 import { useParams } from "next/navigation";
-import {
-    Chat,
-    ChapterSidebar,
-    ShowParagraph,
-    Loading,
-    Rating,
-    QuestionCard,
-} from "../../../components";
+import { Chat, ChapterSidebar, ShowParagraph, Loading, Rating, QuestionCard,} from "../../../components";
 import { Book, Paragraph } from "../../../types";
 import numberToGematria from "../../../lib/clientHelpers/gematriaFunc";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
@@ -80,7 +73,9 @@ const Study = () => {
             if (!paragraphs || paragraphs.length === 0) {
                 throw new Error("No paragraphs found");
             }
-            setParagraph(paragraphs.sections);    
+            setParagraph(paragraphs.sections);  
+            console.log("paragraph: ", paragraphs);
+            setLoading(false);  
         } catch (error) {
             console.error("Error fetching paragraphs:", error);
         } finally {
@@ -103,6 +98,9 @@ const Study = () => {
     }, [index]);
 
     const handleNavigation = (direction: "next" | "prev") => {
+        console.log("handleNavigation index: " , index);
+        console.log("handleNavigation bookData: ", bookData);
+        console.log("handleNavigation start: " , bookData.paragraphsCountPerChapter);
         if (!index || !bookData || !bookData.paragraphsCountPerChapter) return;
         const { chapterId, paragraphId } = index;
 
@@ -193,7 +191,7 @@ const Study = () => {
                         סיימתי ללמוד
                     </Button>
                 )}
-                {paragraph&& paragraph.find(
+                {paragraph && paragraph.find(
                                 (p) =>
                                     p.chapterNumber === index?.chapterId &&
                                     p.section.paragraphId === index?.paragraphId
