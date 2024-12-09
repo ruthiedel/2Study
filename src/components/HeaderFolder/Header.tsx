@@ -49,7 +49,7 @@ const Header: React.FC = () => {
             <div className={styles.appBar}>
                 <div className={styles.toolbar}>
 
-                    <Box className={styles.logo}>
+                    <div className={styles.logo}>
                         <Link href="/" passHref>
                             <Image
                                 src={logo}
@@ -57,19 +57,19 @@ const Header: React.FC = () => {
                                 className={styles.logoImage}
                             />
                         </Link>
-                    </Box>
+                    </div>
 
-                    <Box className={styles.navButtons}>
-                        <Link href="/" passHref>
+                    <div className={styles.navButtons}>
+                        <Link href="/">
                             <Button className={styles.navButton}>דף הבית</Button>
                         </Link>
-                        <Link href="/about" passHref>
+                        <Link href="/about">
                             <Button className={styles.navButton}>אודות</Button>
                         </Link>
-                        <Link href="/bookCatalog" passHref>
+                        <Link href="/bookCatalog">
                             <Button className={styles.navButton}>קטלוג ספרים</Button>
                         </Link>
-                    </Box>
+                    </div>
 
                     <IconButton
                         edge="end"
