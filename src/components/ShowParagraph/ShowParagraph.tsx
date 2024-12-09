@@ -18,7 +18,7 @@ const ParagraphNavigation: React.FC<Props> = (props) => {
     const parsedText = parser.parseFromString(text, 'text/html').body.textContent || '';
     return parsedText;
   };
-
+  console.log(paragraph,"from show paragraph")
   return (
     <Box className={styles.container}>
       <Typography className={styles.title}>{chapterTitle}</Typography>
