@@ -22,7 +22,7 @@ const ParagraphNavigation: React.FC<Props> = (props) => {
   return (
     <Box className={styles.container}>
       <Typography className={styles.title}>{chapterTitle}</Typography>
-      <Typography className={styles.text}>
+      <Typography className={styles.text} component='div'>
         {paragraph && paragraph.text ? removeHtmlTags(paragraph.text) : <Loading />}
       </Typography>
     </Box>
