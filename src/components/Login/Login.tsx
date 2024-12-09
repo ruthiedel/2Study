@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import { Box, Button, Typography } from "@mui/material";
 import { auth } from "../../lib/firebase"; 
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import useUserStore from "../../services/zustand/userZustand/userStor";
@@ -29,39 +28,39 @@ const Login = () => {
         userImagePath: user.photoURL || '',
       };
   
-      const response = await logInUser(localUser); // רק אם יש צורך בשמירה בשרת
+      const response = await logInUser(localUser);
   
       if (response.status === 200) {
         localUser = response.user;
       }
   
-      // הגדרת המשתמש בzustand
       setUser(localUser);
   
     } catch (error) {
       console.error("Error during Google login:", error);
-      // אפשר להוסיף הצגת הודעה למשתמש במקרה של שגיאה
+      
     }
   };
   
   return (
-    <Box className={styles.login_card}>
+    <div className={styles.login_card}>
       <Image
         src={login1}
         alt="Top Icon"
         className={styles.login_card_icon_top}
       />
-      <Typography className={styles.login_card_text}>בוא נחבר אותך:</Typography>
-      <Button onClick={handleGoogleLogin} variant="contained" className={styles.login_card_button}>
+      <p className={styles.login_card_text}>בוא נחבר אותך:</p>
+      <button onClick={handleGoogleLogin} className={styles.login_card_button}>
         המשך עם Google
-      </Button>
+      </button>
       <Image
         src={login2}
         alt="Bottom Icon"
         className={styles.login_card_icon_bottom}
       />
-    </Box>
+    </div>
   );
 };
+
 
 export default Login;
