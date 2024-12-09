@@ -35,6 +35,8 @@ const Study = () => {
     const [bookData, setBookData] = useState<Book | null>(null);
     const [showConfetti, setShowConfetti] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [currentParagraph, setCurrentParagraph] = useState<Paragraphs|null>(null) 
+
 
 console.log('paragraph: ', paragraph);
 
@@ -63,6 +65,9 @@ console.log('paragraph: ', paragraph);
                     throw new Error('No paragraphs found');
                 }
                 setParagraph(paragraphs.sections);
+                setCurrentParagraph(paragraph.find(
+                    (p) => p.chapterNumber === index?.chapterId && p.section.paragraphId === index?.paragraphId
+ )!)
             } catch (error) {
                 console.error('Error fetching paragraphs:', error);
             } finally {
@@ -114,9 +119,7 @@ console.log('paragraph: ', paragraph);
         setTimeout(() => setShowConfetti(false), 5000);
     };
     
-    const currentParagraph = paragraph.find(
-        (p) => p.chapterNumber === index?.chapterId && p.section.paragraphId === index?.paragraphId
-    );
+   
 
     return (
             
@@ -143,7 +146,7 @@ console.log('paragraph: ', paragraph);
                             סיימתי ללמוד
                         </Button>
                     )}
-                    {paragraph && paragraph.length > 0 && <QuestionCard p={paragraph[0].section} bookId={bookId} setParagraph={setParagraph} chapterId={paragraph[0].chapterNumber} />}
+                    {paragraph&&currentParagraph && paragraph.length > 0 && <QuestionCard p={paragraph.find((p) => p.chapterNumber === index?.chapterId && p.section.paragraphId === index?.paragraphId )!.section} bookId={bookId} setParagraph={setParagraph} chapterId={paragraph[0].chapterNumber}    key={currentParagraph?.section._id} />}
                     <Rating bookId={bookData?._id || ''} />
                 </div>
                 <Chat bookId={bookId} />
