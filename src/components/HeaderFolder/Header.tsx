@@ -60,14 +60,14 @@ const Header: React.FC = () => {
                     </div>
 
                     <div className={styles.navButtons}>
-                        <Link href="/">
-                            <Button className={styles.navButton}>דף הבית</Button>
+                        <Link href="/" className={styles.navButton}>
+                            <Button className={styles.navText}>דף הבית</Button>
                         </Link>
-                        <Link href="/about">
-                            <Button className={styles.navButton}>אודות</Button>
+                        <Link href="/about" className={styles.navButton}>
+                            <Button className={styles.navText}>אודות</Button>
                         </Link>
-                        <Link href="/bookCatalog">
-                            <Button className={styles.navButton}>קטלוג ספרים</Button>
+                        <Link href="/bookCatalog" className={styles.navButton}>
+                            <Button className={styles.navText}>קטלוג ספרים</Button>
                         </Link>
                     </div>
 
