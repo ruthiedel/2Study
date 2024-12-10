@@ -69,21 +69,8 @@ const Chat = ({ bookId }: { bookId: string }) => {
     try {
       const username = `${user.name} ${user._id}`;
       const savedMessage: Message = await postMessage(newMessage.message, username, bookId);
-        
-      //   const res = await fetch('/api/chat', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify({
-      //     message: newMessage.message,
-      //     username: `${user.name} ${user._id}`,
-      //     bookId,
-      //   }),
-      // });
 
       if (savedMessage) {
-        // const savedMessage: Message = await res.json();
         console.log('Message sent successfully', savedMessage);
 
         updateBookMutation.mutate({
