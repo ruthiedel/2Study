@@ -64,8 +64,8 @@ function PieCategories() {
         },
       });
     }
-  }, []); 
-
+  }, [books, user, isLoading]); 
+  if (isLoading || !books || !user) return <p>Loading...</p>;
   return <canvas ref={chartRef} width="400" height="400"></canvas>;
 }
 

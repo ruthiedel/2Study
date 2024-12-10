@@ -31,14 +31,14 @@ const BarGraph = () => {
   );
   const progressData = calculateLearningProgress(user.books, userBooksDetails);
 
-  const labels = Object.keys(progressData); // Book names
-  const dataValues = Object.values(progressData); // Percentages
+  const labels = Object.keys(progressData); 
+  const dataValues = Object.values(progressData); 
 
   const data = {
     labels,
     datasets: [
       {
-        label: "Learning Progress (%)",
+        label: "התקדמות באחוזים:",
         data: dataValues,
         backgroundColor: "rgba(75, 192, 192, 0.2)",
         borderColor: "rgba(75, 192, 192, 1)",
@@ -55,22 +55,22 @@ const BarGraph = () => {
       },
       title: {
         display: true,
-        text: "Learning Progress by Book",
+        text: "אחוזי התקדמות בספר:",
       },
     },
     scales: {
       y: {
         beginAtZero: true,
-        max: 100, // Percentage max
+        max: 100, 
         title: {
           display: true,
-          text: "Progress (%)",
+          text: "התקדמות (%)",
         },
       },
       x: {
         title: {
           display: true,
-          text: "Books",
+          text: "ספרים",
         },
       },
     },
