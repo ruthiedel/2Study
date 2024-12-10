@@ -60,10 +60,12 @@ const Header: React.FC = () => {
                     </div>
 
                     <div className={styles.navButtons}>
+
                         <Link href="/" className={`${styles.navButton} ${pathname === '/' ? styles.active : ''}`}>
                             <button className={styles.navText}>דף הבית</button>
                         </Link>
                         <Link href="/about" className={`${styles.navButton} ${pathname === '/about' ? styles.active : ''}`}>
+
                             <button className={styles.navText}>אודות</button>
                         </Link>
                         <Link href="/bookCatalog" className={`${styles.navButton} ${pathname === '/bookCatalog' ? styles.active : ''}`}>
@@ -79,11 +81,13 @@ const Header: React.FC = () => {
                     >
                         <AccountCircleIcon
                             sx={{
+
                                 color: 'white',
                                 fill: 'white',
                                 backgroundColor: 'black',
                                 borderRadius: '50%',
                                 marginLeft: '1rem',
+
                             }}
                         />
                     </IconButton>
