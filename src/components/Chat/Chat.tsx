@@ -116,6 +116,8 @@ const Chat = ({ bookId }: { bookId: string }) => {
     return '';
   }
 
+  console.log('messages: ', messages);
+  
   return (
     <div className={ChatStyles.container} >
       <div className={ChatStyles.header}>

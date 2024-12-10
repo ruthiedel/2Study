@@ -22,8 +22,8 @@ const Filter: React.FC<FilterComponentProps> = ({
     "הלכה",
     "מוסר",
     "שמירת הלשון",
-    "לימוד",
-    "הוראה",
+    "עבודת המידות",
+    "חסידות",
   ];
 
   const handleCategorySelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
