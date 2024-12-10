@@ -6,7 +6,6 @@ import BookDetail from '../BookFolder/BookComp';
 import FilterComponent from '../Filter/Filter';
 import RequireAuth from '../../layout/RequireAuth';
 import styles from './showBookCss.module.css';
-
 import { Book } from '../../types';
 import { getBooks } from '@/hooks/booksDetails';
 
@@ -45,6 +44,30 @@ const ShowBooks: React.FC = () => {
         setSelectedBook(null);
     };
 
+    function getUniqueCategoryStrings(books: Book[]): string[] {
+        const uniqueCategories: string[] = [];   
+        if( books && Array.isArray(books)) {
+            books.forEach(book => {
+                const localType = book.category.type;
+                const localSubject = book.category.subject;
+                if(!uniqueCategories.includes(localType)) {uniqueCategories.push(localType);
+                if(!uniqueCategories.includes(localSubject)) {uniqueCategories.push(localSubject);}
+                }
+            });
+        }  
+        return uniqueCategories;
+    }
+
+    const uniqueCategories = useMemo(() => {
+        if( books && Array.isArray(books)) {
+        return  books.length > 0 ? getUniqueCategoryStrings(books) : ['הלכה'];
+        } else {
+            return ['הלכה'];
+        }
+      }, [books]);
+
+
+
     return (
         <div className={styles.container}>
             <div className={styles.sidebarContainer}>
@@ -55,6 +78,7 @@ const ShowBooks: React.FC = () => {
                     setAuthorName={setAuthorName}
                     categories={categories}
                     setCategories={setCategories}
+                    dropDownCategories={uniqueCategories}
                 />
             </div>
 

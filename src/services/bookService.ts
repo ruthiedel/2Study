@@ -10,16 +10,6 @@ export const getAllBooks = async (): Promise<Book[]> => {
         throw error;
     }
 };
-// הועבר ל bookDetails reactquery
-// export const getBookById = async (id: string): Promise<Book> => {
-//     try {
-//       const response = await http.get(`/book/${id}`);
-//       return response.data;
-//     } catch (error) {
-//       console.error(`Error fetching book with ID ${id}:`, error);
-//       throw error;
-//     }
-//   };
   
 export const getBooksByIds = async (ids: string[]): Promise<Book[]> => {
     try {
@@ -41,9 +31,6 @@ export const getBooksByIds = async (ids: string[]): Promise<Book[]> => {
     }
   };
   
-
-
-
 
 export const getSections = async (
   bookId: string,
