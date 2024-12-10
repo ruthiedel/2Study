@@ -1,55 +1,40 @@
-.login_card {
-  width: 350px;
-  height: 500px; 
-  background-color: black;
-  border-radius: 25px;
-  padding: 20px 30px;
+.login_card{
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  background-color: var(--primary-color);
+  height: 50vh;
+  width: 40vw;
+  justify-content: space-around;
+}
+
+.logo{
+  width: 6rem;
+  height: 6rem;
+}
+
+.login_card_text{
+  font-size: x-large;
+  margin-top: 5%;
+}
+
+.login_card_button{
+  background-color: rgb(48, 48, 48);
+  color: white;
+  border-radius: 5px;
+  padding: 20px;
+}
+
+.animate, .side{
+  max-width:  40%;
+}
+
+.side{
+  background-color: var(--primary-color);
+  display: flex;
+  justify-content: space-around;
   align-items: center;
-  border: 3px solid #8b6b3a;
-  position: relative;
+  height: 100%;
+  flex-direction: column;
+  margin-right: 15px;
 }
 
-.login_card_icon_top {
-  width: 100px;
-  height: 100px;
-  position: absolute;
-  top: 50px; 
-}
-
-.login_card_text {
-  color: white;
-  margin-top: 180px;
-  margin-bottom: 10px; 
-  font-size: 1.2rem;
-  text-align: center;
-  font-family: '2StudyFont', sans-serif;
-}
-
-.login_card_button {
-  background-color: #8b6b3a;
-  color: white;
-  text-transform: none;
-  padding: 10px 25px;
-  font-size: 1rem;
-  font-family: '2StudyFont', sans-serif;
-  border-radius: 4px;
-  margin-top: 10px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  border: none;
-  margin-bottom: auto; 
-}
-
-.login_card_button:hover {
-  background-color: #6c4f23;
-}
-
-.login_card_icon_bottom {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  position: absolute;
-  bottom: 35px;
-}

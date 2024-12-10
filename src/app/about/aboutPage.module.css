@@ -1,5 +1,5 @@
 .pageContainer {
-  background-color: #F9F2D7;
+  background-color:var(--primary-color);
   padding-bottom: 50px;
   direction: rtl;
   font-family: 'Assistant', sans-serif;
@@ -35,14 +35,14 @@
 .heroTitle {
   font-size: 80px;
   font-weight: bold;
-  color: white;
+  color: rgb(0, 0, 0);
 }
 
 .heroDescription {
   max-width: 700px;
   line-height: 1.8;
   font-size: 25px;
-  color: white;
+  color: rgb(6, 6, 6);
   margin-top: 10px;
 }
 .sectionTitleContainer {
