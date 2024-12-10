@@ -1,14 +1,10 @@
 "use client"
 import React from 'react';
-import { Homepage, BarGraph, BarsGraph } from '@/components';
+import { Homepage } from '@/components';
 
 const SomeComponent = () => {
-  
-
   return (
     <div>
-      <BarGraph />  
-      <BarsGraph />
       <Homepage/>
     </div>
   );

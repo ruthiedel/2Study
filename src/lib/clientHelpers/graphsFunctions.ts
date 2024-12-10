@@ -3,26 +3,11 @@ import { getBooks } from '@/hooks/booksDetails';
 
 
 export const getBookCategoriesCount = (books: Book[]): Record<string, number> => {
-  const categoryCount: Record<string, number> = {};
-
-  books.forEach((book) => {
-      if (categoryCount[book.category.type]) {
-        categoryCount[book.category.type]++;
-      } else {
-        categoryCount[book.category.type] = 1;
-      }
-    });
-
-
-    books.forEach((book) => {
-      if (categoryCount[book.category.subject]) {
-        categoryCount[book.category.subject]++;
-      } else {
-        categoryCount[book.category.type] = 1;
-      }
-    });
-
-  return categoryCount;
+  return books.reduce((acc, book) => {
+    const { type } = book.category;
+    acc[type] = (acc[type] || 0) + 1;
+    return acc;
+  }, {} as Record<string, number>);
 };
 
 
