@@ -14,3 +14,5 @@ export { default as UserContainer } from './UserFolder/UserContainerComp';
 export { default as Rating } from './RatingFolder/RatingComp';
 export { default as Wizard } from './Graghs/Wizard/Wizard';
 export { default as PieCategories } from './Graghs/PieCategories';
+export { default as BarGraph } from './Graghs/BarGraph';
+export { default as BarsGraph } from './Graghs/BarsGraph';
