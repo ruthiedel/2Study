@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, MouseEvent, useEffect } from "react";
-import {  IconButton, Menu, MenuItem, Dialog } from "@mui/material";
+import { IconButton, Menu, MenuItem, Dialog } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Link from "next/link";
 import Image from "next/image";
@@ -60,9 +60,13 @@ const Header: React.FC = () => {
                     </div>
 
                     <div className={styles.navButtons}>
-                        <Link href="/" className={styles.navButton}>
-                            <button className={styles.navText}>דף הבית</button>
-                        </Link>
+                        {user==null?
+                            <Link href="/about" className={styles.navButton}>
+                                <button className={styles.navText}>דף הבית</button>
+                            </Link>:<Link href="/bookCatalog" className={styles.navButton}>
+                                <button className={styles.navText}>דף הבית</button>
+                            </Link>
+                        }
                         <Link href="/about" className={styles.navButton}>
                             <button className={styles.navText}>אודות</button>
                         </Link>
@@ -79,9 +83,9 @@ const Header: React.FC = () => {
                         className={styles.iconButton}
                     >
                         <AccountCircleIcon
-                        sx={{
-                            color: '#fff'
-                        }}
+                            sx={{
+                                color: '#fff'
+                            }}
                         />
                     </IconButton>
 
