@@ -1,100 +1,63 @@
-/* Main card container */
 .card {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    background-color: #000; /* Black background */
-    color: white;
-    border-radius: 10px;
-    padding: 20px;
-    width: 400px;
-    font-family: Arial, sans-serif;
-    position: relative;
-  }
-  
-  /* Section styling (Question and Answer sections) */
-  .section {
-    margin-bottom: 15px;
-    width: 100%;
-  }
-  
-  /* Label styling */
-  .label {
-    display: block;
-    margin-bottom: 5px;
-    font-size: 1rem;
-    font-weight: bold;
-  }
-  
-  /* Input container for alignment */
-  .inputContainer {
-    display: flex;
-    align-items: center;
-    position: relative;
-  }
-  
-  /* Inputs styling */
-  .input {
-    width: 100%;
-    padding: 10px;
-    font-size: 1rem;
-    border-radius: 5px;
-    border: none;
-    background-color: #fff;
-    color: #000;
-    box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
-  }
-  
-  /* Toggle button styling for answer reveal */
-  .toggleButton {
-    position: absolute;
-    right: -40px;
-    background-color: transparent;
-    border: none;
-    font-size: 1.5rem;
-    color: white;
-    cursor: pointer;
-  }
-  
-  /* Expandable answer input styles */
-  .answerCollapsed {
-    width: 60%; /* Collapsed state */
-    transition: width 0.3s ease;
-  }
-  
-  .answerExpanded {
-    width: 100%; /* Expanded state */
-    transition: width 0.3s ease;
-  }
-  
-  /* Change Question Button styling */
-  .changeQuestionButton {
-    background-color: #f0a500;
-    color: black;
-    padding: 10px 20px;
-    font-size: 1rem;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    align-self: center;
-    margin-top: 10px;
-  }
-  
-  .changeQuestionButton:hover {
-    background-color: #ffa726;
-  }
-  
-  /* Image container for the sidebar image */
-  .imageContainer {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    width: 80px;
-    height: 80px;
-  }
-  
-  .image {
-    width: 100%;
-    height: auto;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background-color: #000; /* Black background */
+  color: white;
+  border-radius: 10px;
+  padding: 15px;
+  width: 350px; /* הקטנת הרוחב */
+  font-family: Arial, sans-serif;
+  position: relative;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.section {
+  margin-bottom: 10px; /* הקטנת מרווחים */
+  width: 100%;
+}
+
+.label {
+  font-size: 0.9rem; /* הקטנת גודל הטקסט */
+  font-weight: bold;
+}
+
+.input {
+  width: 100%;
+  padding: 8px; /* הקטנת רווח פנימי */
+  font-size: 0.9rem; /* הקטנת גודל הטקסט */
+  border-radius: 5px;
+  border: none;
+  background-color: #fff;
+  color: #000;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+}
+
+.changeQuestionButton {
+  background-color: #f0a500;
+  color: black;
+  padding: 8px 15px; /* הקטנת רווחים */
+  font-size: 0.9rem; /* הקטנת גודל הכפתור */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  align-self: center;
+  margin-top: 10px;
+}
+
+.changeQuestionButton:hover {
+  background-color: #ffa726;
+}
+
+.imageContainer {
+  position: absolute;
+  top: 10px; /* קרבה לחלק העליון */
+  right: 10px; /* קרבה לצד */
+  width: 60px; /* הקטנת התמונה */
+  height: 60px;
+}
+
+.image {
+  width: 100%;
+  height: auto;
+}

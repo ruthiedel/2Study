@@ -8,6 +8,7 @@ interface FilterComponentProps {
   setAuthorName: React.Dispatch<React.SetStateAction<string>>;
   categories: string[];
   setCategories: React.Dispatch<React.SetStateAction<string[]>>;
+  dropDownCategories: string[];
 }
 
 const Filter: React.FC<FilterComponentProps> = ({
@@ -17,14 +18,9 @@ const Filter: React.FC<FilterComponentProps> = ({
   setAuthorName,
   categories,
   setCategories,
+  dropDownCategories,
 }) => {
-  const availableCategories = [
-    "הלכה",
-    "מוסר",
-    "שמירת הלשון",
-    "לימוד",
-    "הוראה",
-  ];
+  const availableCategories = dropDownCategories;
 
   const handleCategorySelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const category = event.target.value;

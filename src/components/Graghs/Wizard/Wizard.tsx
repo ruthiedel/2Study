@@ -9,11 +9,11 @@ const Wizard: React.FC<WizardProps> = ({ steps }) => {
     const [currentStep, setCurrentStep] = useState(0);
 
     const nextStep = () => {
-        setCurrentStep((prev) => (prev + 1) % steps.length); // חישוב מעגלי
+        setCurrentStep((prev) => (prev + 1) % steps.length); 
     };
 
     const prevStep = () => {
-        setCurrentStep((prev) => (prev - 1 + steps.length) % steps.length); // חישוב מעגלי
+        setCurrentStep((prev) => (prev - 1 + steps.length) % steps.length); 
     };
 
     return (
