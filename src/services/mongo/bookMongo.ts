@@ -1,7 +1,6 @@
 import { MongoClient, ObjectId } from 'mongodb';
 import { promises as fs } from 'fs';
 import path from 'path';
-import { Rating } from '@mui/material';
 
 let client: MongoClient;
 let clientPromise: Promise<MongoClient>;
@@ -18,7 +17,6 @@ export async function connectDatabase() {
   return clientPromise;
 }
 
-// שליפת כל הספרים
 export async function fetchAllBooks(client: MongoClient, collection: string) {
   const db = client.db('Books');
   const books = await db.collection(collection).aggregate([
@@ -113,7 +111,6 @@ export async function updateBook(client: MongoClient, collection: string, bookId
 
   const objectId = new ObjectId(bookId);
 
-  // עדכון הספר, גם אם לא השתנה
   const result = await db.collection(collection).updateOne(
     { _id: objectId },
     { $set: updatedData }
@@ -129,59 +126,6 @@ export async function updateBook(client: MongoClient, collection: string, bookId
   };
 }
 
-export async function fetchPartialBooks(client: MongoClient, collection: string) {
-  const db = client.db('Books');
-
-  const books = await db
-    .collection(collection)
-    .find({}, { projection: { chapters: 0 } })
-    .toArray();
-
-  return books;
-}
-// export async function updateBookQuestion(
-//   client: MongoClient,
-//   collection: string,
-//   bookId: string,
-//   chapterId: number,
-//   paragraphId: number, 
-//   question: { question: string; answer: string }
-// ) {
-//   const db = client.db("Books");
-//   const objectId = new ObjectId(bookId);
-//   console.log('bookId:', objectId);
-//   console.log('chapterId:', chapterId);
-//   console.log('paragraphId:', paragraphId);
-
-//   const result = await db.collection(collection).updateOne(
-//     {
-//       _id: objectId,
-//       "chapters.chapterId": chapterId, // המרת ה-chapterId למספר
-//       "chapters.paragraphs.paragraphId":paragraphId, // המרת ה-paragraphId למספר
-//     },
-//     {
-//       $set: {
-//         "chapters.$.paragraphs.$[paragraph].questions": question,
-//       },
-//     },
-//     {
-//       arrayFilters: [{ "paragraph.paragraphId": paragraphId }],
-//     }
-//   );
-
-//   if (result.matchedCount === 0) {
-//     throw new Error("Book, chapter, or paragraph not found");
-//   }
-
-//   return {
-//     message: "Question added successfully",
-//     bookId,
-//     chapterId,
-//     paragraphId,
-//     question,
-//   };
-// }
-
 export async function updateBookQuestion(
   client: MongoClient,
   collection: string,
@@ -192,12 +136,7 @@ export async function updateBookQuestion(
 ) {
   const db = client.db("Books");
   const objectId = new ObjectId(bookId);
-  console.log('bookId:', objectId);
-  console.log('chapterId:', chapterId);
-  console.log('paragraphId:', paragraphId);
-  console.log('New question:', question);
 
-  // תחילה, שלוף את הספר הנוכחי
   const book = await db.collection(collection).findOne({
     _id: objectId,
     "chapters.chapterId": chapterId,
@@ -208,7 +147,6 @@ export async function updateBookQuestion(
     throw new Error("Book, chapter, or paragraph not found");
   }
 
-  // שלוף את הפסקה הספציפית
   const paragraph = book.chapters
     .find((chapter: any) => chapter.chapterId === chapterId)
     ?.paragraphs.find((p: any) => p.paragraphId === paragraphId);
@@ -217,12 +155,10 @@ export async function updateBookQuestion(
     throw new Error("Paragraph not found");
   }
 
-  // ודא שהשאלות קיימות כערך מערך
   const updatedQuestions = paragraph.questions 
-    ? [...paragraph.questions, question] // אם השאלות קיימות, הוסף את השאלה
-    : [question]; // אם לא, יצור מערך חדש עם השאלה
+    ? [...paragraph.questions, question]
+    : [question]; 
 
-  // עדכון השאלות עם $push או $set
   const result = await db.collection(collection).updateOne(
     {
       _id: objectId,
@@ -231,7 +167,7 @@ export async function updateBookQuestion(
     },
     {
       $set: {
-        "chapters.$.paragraphs.$[paragraph].questions": updatedQuestions, // עדכון המערך החדש
+        "chapters.$.paragraphs.$[paragraph].questions": updatedQuestions, 
       },
     },
     {
@@ -250,4 +186,33 @@ export async function updateBookQuestion(
     paragraphId,
     question,
   };
+}
+
+export async function getUniqueCategoryStrings(client: MongoClient, collection: string) {
+  const db = client.db('Books');
+
+  const distinctCategories = await db.collection(collection).aggregate([
+    {
+      $unwind: '$category'
+    },
+    {
+      $group: {
+        _id: {
+          type: '$category.type',
+          subject: '$category.subject'
+        },
+        count: { $sum: 1 } 
+      }
+    },
+    {
+      $project: {
+        type: '$_id.type',
+        subject: '$_id.subject',
+      }
+    }
+  ]).toArray();
+
+  const uniqueCategoryStrings = distinctCategories.map(category => `${category.type} - ${category.subject}`);
+
+  return uniqueCategoryStrings;
 }
