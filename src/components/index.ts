@@ -12,3 +12,5 @@ export { default as ShowParagraph } from './ShowParagraph/ShowParagraph';
 export { default as ChapterSidebar } from './ChapterSideBar/ChapterSideBar';
 export { default as UserContainer } from './UserFolder/UserContainerComp';
 export { default as Rating } from './RatingFolder/RatingComp';
+export { default as Wizard } from './Graghs/Wizard/Wizard';
+export { default as PieCategories } from './Graghs/PieCategories';
