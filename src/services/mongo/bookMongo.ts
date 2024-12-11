@@ -23,25 +23,25 @@ export async function fetchAllBooks(client: MongoClient, collection: string) {
     {
       $project: {
         name: 1,
-        author: 1, 
-        category: 1, 
-        chapters_num: 1, 
-        paragraphs_num: 1, 
-        coverImage: 1, 
+        author: 1,
+        category: 1,
+        chapters_num: 1,
+        paragraphs_num: 1,
+        coverImage: 1,
         rating: 1,
         number_raters: 1,
-        learningGroups:1,
+        learningGroups: 1,
         firstParagraphText: {
           $arrayElemAt: [
             { $ifNull: [{ $arrayElemAt: ["$chapters.paragraphs", 0] }, null] },
             0
-          ] 
+          ]
         },
         paragraphsCountPerChapter: {
           $map: {
-            input: "$chapters", 
+            input: "$chapters",
             as: "chapter",
-            in: { $size: "$$chapter.paragraphs" } 
+            in: { $size: "$$chapter.paragraphs" }
           }
         }
       }
@@ -56,9 +56,9 @@ export async function fetchAllBooks(client: MongoClient, collection: string) {
         coverImage: 1,
         rating: 1,
         number_raters: 1,
-        firstParagraphText: "$firstParagraphText.text", 
-        paragraphsCountPerChapter: 1 ,
-        learningGroups:1
+        firstParagraphText: "$firstParagraphText.text",
+        paragraphsCountPerChapter: 1,
+        learningGroups: 1
       }
     }
   ]).toArray();
@@ -67,8 +67,10 @@ export async function fetchAllBooks(client: MongoClient, collection: string) {
     console.log("No books found.");
     return [];
   }
+
   const picturesPath = path.join(process.cwd(), 'public', 'pictures');
 
+  // שלב הבא להוספת התמונות מהדיסק
   const booksWithImages = await Promise.all(
     books.map(async (book) => {
       const imagePath = path.join(picturesPath, `${book.coverImage}`);
@@ -79,14 +81,15 @@ export async function fetchAllBooks(client: MongoClient, collection: string) {
         coverImageBlob = `data:image/jpeg;base64,${imageBuffer.toString('base64')}`;
       } catch (error) {
         console.error(`Image not found for book: ${book.coverImage}`);
-        coverImageBlob = ''; 
+        coverImageBlob = '';
       }
       return {
-        ...book, 
-        coverImage: coverImageBlob, 
+        ...book,
+        coverImage: coverImageBlob
       };
     })
   );
+  
   return booksWithImages;
 }
 
