@@ -8,6 +8,7 @@ import Image from 'next/image';
 import styles from './bookCard.module.css';
 import { Book, UserBook } from '../../types';
 import Login from '../Login/Login';
+import {removeHtmlTags} from '../../lib/clientHelpers/removeHTMLTags'
 
 type BookCardProps = {
     book: Book;
@@ -124,7 +125,7 @@ const BookCardComp: React.FC<BookCardProps> = ({ book, onClose }) => {
                             variant="body1"
                             className={showMore ? styles.fullText : styles.truncatedText}
                         >
-                            {book.firstParagraphText}
+                            {removeHtmlTags(book.firstParagraphText?book.firstParagraphText:'') }
                         </Typography>
 
                         {book.firstParagraphText && book.firstParagraphText.length > 100 && (
