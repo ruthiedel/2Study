@@ -1,7 +1,6 @@
 'use client';
 import React from "react";
 import { Book as BookType } from '../../types';
-import { Card, CardContent, Typography, Box } from "@mui/material";
 import styles from "./book.module.css"; 
 
 type BookProps = {
