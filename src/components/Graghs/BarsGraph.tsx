@@ -45,14 +45,14 @@ const BarsGraph = () => {
     labels, 
     datasets: [
       {
-        label: 'User Rating',
+        label: 'הדירוג שלי:',
         data: userRatings,
         backgroundColor: 'rgba(255, 99, 132, 0.6)',
         borderColor: 'rgba(255, 99, 132, 1)',
         borderWidth: 1,
       },
       {
-        label: 'General Rating',
+        label: 'הדירוג הכללי:',
         data: generalRatings,
         backgroundColor: 'rgba(54, 162, 235, 0.6)',
         borderColor: 'rgba(54, 162, 235, 1)',
@@ -81,7 +81,7 @@ const BarsGraph = () => {
 
   return (
     <div style={{ width: '80%', margin: '20px auto' }}>
-      <h3 style={{ textAlign: 'center' }}>User Ratings vs General Ratings</h3>
+      <h3 style={{ textAlign: 'center' }}>גרף הדירוגים:</h3>
       <Bar data={data} options={options} />
     </div>
   );

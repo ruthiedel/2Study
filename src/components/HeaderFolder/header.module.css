@@ -1,5 +1,5 @@
 .appBar {
-    background-color: #1e1d1d !important; 
+    background-color: white !important; 
     box-shadow: none;
     border-bottom: 2px solid #f5f5f5;
   }
@@ -12,33 +12,30 @@
   }
   
   
-  .logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: gold;
-    font-family: "Arial", sans-serif;
-  }
-  
   .navButtons {
     display: flex;
     gap: 1rem;
   }
   
   .navButton {
-    border-radius: 20px;
     padding: 5px 15px;
     transition: background-color 0.3s ease;
   }
   
-  .navButton:hover {
-    background-color: #444;
-    color: #fff;
-  }
 
   .navText{
-    color: white;
+    color: black;
     font-size: 1.2rem;
     font-family: '2StudyFont', sans-serif;
+    margin-bottom: 2px;
+
+  }
+
+  .navText:hover, .active .navText
+  {
+    color: var(--dark-gray);
+    border-bottom: 2px black solid;
+    margin-bottom: 0px;
   }
   
   .iconButton {
@@ -59,9 +56,10 @@
   .logoImage {
     cursor: pointer; 
     transition: transform 0.2s ease; 
-    width: 5rem;
-    height: 5rem;
-    border-radius: 50px;
+    width: 4rem;
+    height: 4rem;
+    margin: 10px 20px 10px 10px;
+
   }
   
   .logoImage:hover {

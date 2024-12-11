@@ -27,15 +27,12 @@ body {
   }
 }
 
-.notFoundContainer {
-  background-color: #F9F2D7;
-  padding-bottom: 50px;
-  margin-top: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
+
+:root {
+  --primary-color: #fffae4;
+  --dark-gray: #555050;
+  --light-gray: #efecec;
+  --lightest-gray: #F6F6F6;
 }
 
 .notFoundContainer h2 {
