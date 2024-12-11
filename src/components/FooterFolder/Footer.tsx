@@ -64,7 +64,7 @@ const Footer: React.FC = () => {
                             className={styles.input}
                             disabled={isSubmitting}
                         />
-                        {errors.name ? <p className={styles.error}>{errors.name.message}</p>: <p style={{height: "18px"}}></p>}
+                        {errors.name ? <p className={styles.error}>{errors.name.message}</p>: <p style={{height: "20px"}}></p>}
                     </div>
                     <div className={styles.field}>
                         <input
@@ -73,7 +73,7 @@ const Footer: React.FC = () => {
                             className={styles.input}
                             disabled={isSubmitting}
                         />
-                        {errors.email ? <p className={styles.error}>{errors.email.message}</p>: <p style={{height: "18px"}}></p>}
+                        {errors.email ? <p className={styles.error}>{errors.email.message}</p>: <p style={{height: "20px"}}></p>}
                     </div>
                     <div className={styles.field}>
                         <input
@@ -82,7 +82,7 @@ const Footer: React.FC = () => {
                             className={styles.input}
                             disabled={isSubmitting}
                         />
-                        {errors.message? <p className={styles.error}>{errors.message.message}</p>: <p style={{height: "18px"}}></p>}
+                        {errors.message? <p className={styles.error}>{errors.message.message}</p>: <p style={{height: "20px"}}></p>}
                     </div>
                     <button type="submit" className={styles.button} disabled={isSubmitting}>
                         {isSubmitting ? 'שליחה...' : 'שלח'}
