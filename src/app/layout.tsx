@@ -1,18 +1,28 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
 import "./globals.css";
+import LayoutReactComponent from "@/layout/LayoutReactComponent";
 
-
+export const metadata: Metadata = {
+  title: "2Stady",
+  description: "Study anytime with 2Stady!",
+  icons: {
+    icon: "/ico2Stady.ico",
+  },
+};
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html lang="en">
       <body>
-        {children}
+        <LayoutReactComponent>
+          {children}
+
+        </LayoutReactComponent>
       </body>
     </html>
   );

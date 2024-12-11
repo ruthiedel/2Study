@@ -1,11 +1,9 @@
 'use client';
-
 import React, { ReactNode, useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import useUserStore from '@/services/zustand/userZustand/userStor';
-import LoadingSpinner from '@/app/compnents/loading/loadingSpiner';
-// import Login from '@/app/login/page';
-
+import useUserStore from '../services/zustand/userZustand/userStor';
+import { Loading, Login} from '../components';
+import { Box } from '@mui/material';
+import styles from './modal.module.css';
 interface RequireAuthProps {
   children: ReactNode;
   redirectTo?: string;
@@ -14,21 +12,45 @@ interface RequireAuthProps {
 const RequireAuth = ({ children }: RequireAuthProps) => {
   const user = useUserStore((state) => state.user);
   const [isChecking, setIsChecking] = useState(true);
+  const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
-    setIsChecking(false);
+    if (user === undefined) {
+      setIsChecking(true);
+    } else {
+      setIsChecking(false);
+      if (!user) {
+        setOpenModal(true);
+      }
+    }
   }, [user]);
 
   if (isChecking) {
-    return <LoadingSpinner />;
+    return <Loading />;
   }
 
-  if (!user) {
-    // return <Login />;
-    return <h1>login</h1>
-  }
-
-  return <>{children}</>;
+  return (
+    <>
+      {children}
+      {!user && (
+        <div className={styles.modal}>
+          <Box
+            sx={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              bgcolor: 'transparent', 
+              p: 0,
+              boxShadow: 0,
+            }}
+          >
+            <Login />
+          </Box>
+        </div>
+      )}
+    </>
+  );
 };
 
 export default RequireAuth;

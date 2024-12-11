@@ -1,11 +1,11 @@
-'use client'
+"use client"
 import React from 'react';
+import { Homepage } from '@/components';
 
 const SomeComponent = () => {
-
   return (
     <div>
-      hello
+      <Homepage/>
     </div>
   );
 };

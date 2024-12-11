@@ -1,54 +1,72 @@
-type Section = {
+export type Paragraph = {
     _id?: string;
     text: string;
-    questions: string[];
+    questions: Question[];
+    paragraphId?: number;
 }
-type Chapter = {
+
+type Question = {
+    question :string;
+    answer: string;
+}
+export type Chapter = {
+    chapterId?: number;
+
+    paragraphs: Paragraph[];
+}
+ export type Message = {
     _id?: string;
-    sections: Section[];
+    bookId: string;
+    username: string;
+    message: string;
+    timestamp: Date;
 }
-type Message = {
-    _id?: string;
-    userId: string;
-    userName: string;
-    text: string;
-    time: Date;
-}
+
 type LearningGroupUser = {
     userId: string;
     userName: string;
 }
+
+export type category = {
+    type: string;
+    subject: string;
+}
 export type Book = {
     _id?: string;
-    book_name: string;
+    name: string;
     author: string;
-    categories: string[];
-    chapters: Chapter[];
+    category: category;
+    chapters?: Chapter[];
     coverImage: string;
-    users: string;
-    learningGroups: LearningGroup;
+    learningGroups?: LearningGroup;
+    chapters_num: number;
+    paragraphs_num: number;
+    rating?: number;
+    number_raters: number;
+    firstParagraphText?: string;
+    paragraphsCountPerChapter?: number[];
 }
-type UserBook = {
+export type UserBook = {
     book_id: string;
-    chapter_id: string;
-    section_id: string;
+    book_name: string;
+    chapter_id: number;
+    section_id: number;
     rate: number;
 }
- type LearningGroup = {
-    users: LearningGroupUser[];
+type LearningGroup = {
+    users?: LearningGroupUser[];
     message: Message[];
 }
 export type User = {
     age?: number;
-    userId: string;
+    _id?: string;
     name: string;
     email: string;
     books: UserBook[];
+    userImagePath: string;
 }
-
-
-
-
-
-
-
+export type Mail = {
+    name: string;
+    email: string;
+    message: string
+}

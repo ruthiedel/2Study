@@ -1,0 +1,38 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+    position: relative;
+}
+
+.finishButton {
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.finishButton:hover {
+    background-color: #333;
+}
+
+.questionCard {
+    max-width: 300px;
+    width: 90%; 
+    height: auto;
+    padding: 10px;
+    margin: 0 auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    background-color: white;
+    overflow-wrap: break-word;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+

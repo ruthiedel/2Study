@@ -1,0 +1,40 @@
+.login_card{
+  display: flex;
+  flex-direction: row;
+  background-color: var(--primary-color);
+  height: 50vh;
+  width: 40vw;
+  justify-content: space-around;
+}
+
+.logo{
+  width: 6rem;
+  height: 6rem;
+}
+
+.login_card_text{
+  font-size: x-large;
+  margin-top: 5%;
+}
+
+.login_card_button{
+  background-color: rgb(48, 48, 48);
+  color: white;
+  border-radius: 5px;
+  padding: 20px;
+}
+
+.animate, .side{
+  max-width:  40%;
+}
+
+.side{
+  background-color: var(--primary-color);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 100%;
+  flex-direction: column;
+  margin-right: 15px;
+}
+

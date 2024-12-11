@@ -1,0 +1,88 @@
+.card {
+  background-color: var(--lightest-gray);
+  border-radius: 10px;
+  width: auto;
+  margin: 15px auto;
+  width: 220px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.20); 
+}
+
+.cardHeader {
+  background-color: white;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  overflow: hidden;
+}
+
+.cardImage {
+  width: 100%;
+  height: 130px;
+  object-fit: contain;
+}
+
+.cardTitle {
+  font-weight: bold;
+  text-align: center;
+  font-size: larger;
+  margin-top: 5px;
+}
+
+.cardAuthor {
+  text-align: center;
+  color: #555;
+}
+
+.cardCategories {
+  text-align: center;
+  color: #777;
+  padding: 5px;
+}
+
+.cardDivider {
+  height: 1px;
+  background-color: black;
+  margin: 5px 20px;
+}
+
+.cardFooter {
+  text-align: center;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.cardButton {
+  background-color: black;
+  color: white;
+  border-radius: 5px;
+  padding: 5px 10px;
+  width: 50%;
+  cursor: pointer;
+  border: none;
+  font-size: 14px;
+  transition: background-color 0.3s;
+  font-family: '2StudyFont', sans-serif;
+}
+
+.cardButton:hover {
+  background-color: #474646;
+}
+
+
+.cardTitle,
+.cardAuthor,
+.cardButton {
+  font-family: '2StudyFont', sans-serif;
+}
+
+.content {
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: calc(100% - 130px);
+}
