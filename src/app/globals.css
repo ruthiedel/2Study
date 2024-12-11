@@ -27,7 +27,6 @@ body {
   }
 }
 
-
 :root {
   --primary-color: #fefaea;
   --dark-gray: #555050;
@@ -41,7 +40,6 @@ body {
   font-size: xx-large;
   font-weight: 700;
   margin-bottom: 50px;
-  
   text-align: center;  
   padding-top: 10%;
 }
@@ -63,100 +61,22 @@ body {
   text-decoration: none;
 }
 
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  background-color: #f7f7f7;
-  font-family: Arial, sans-serif;
-  text-align: center;
-  color: #333;
-}
-
-.title {
-  font-size: 2.5rem;
-  margin-bottom: 20px;
-}
-
-.description {
-  font-size: 1.2rem;
-  margin-bottom: 30px;
-  max-width: 600px;
-}
-
-.countdown {
-  display: flex;
-  gap: 20px;
-}
-
-.timeBox {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background: #fff;
-  padding: 15px 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.time {
-  font-size: 2rem;
-  font-weight: bold;
-  color: rgb(110, 110, 204);
-}
-
-.label {
-  font-size: 1rem;
-  color: #555;
-}
-
-
-/* עיצוב קרוסלה */
-
-.carouselContainer {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 20px;
-  position: relative;
-  max-width: 800px;
-  margin: auto;
-}
-
-.carouselButton {
-  background: none;
-  border: none;
-  font-size: 2rem;
-  cursor: pointer;
-  color: #333;
-  z-index: 2;
-}
-
-.carouselImageWrapper {
-  width: 100%;
-  overflow: hidden;
-  border-radius: 10px;
-}
-
-.carouselImage {
-  width: 100%;
-  height: auto;
-  display: block;
-  transition: transform 0.3s ease-in-out;
-  border: 2px solid #ddd;
-}
-
 .mark-button {
   border-radius: 20px;
   cursor: pointer;
-  color: #fba957;
-  padding: 4%;
+  background-color: var(--primary-color);
+  color: black;
+  padding: 1%;
+  font-size: 10px;
+  font-weight: 700;
+  width: 100px;
+  position: absolute;
+  right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .mark-button:hover {
-  background-color: #f58529;
-  color: white;
+  background-color: var(--primary-color);
 }

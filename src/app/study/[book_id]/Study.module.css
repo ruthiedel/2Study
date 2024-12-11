@@ -2,7 +2,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 80%; /* הרחבת הקומפוננטה הראשית */
+    width: 80%;
+    position: relative;
 }
 
 .finishButton {
@@ -16,22 +17,22 @@
 }
 
 .finishButton:hover {
-    background-color: #333; /* אפקט ריחוף */
+    background-color: #333;
 }
 
 .questionCard {
-    max-width: 300px; /* הקטנת רוחב הכרטיס */
-    width: 90%; /* התאמת הרוחב למידע */
-    height: auto; /* מניעת גלישה */
+    max-width: 300px;
+    width: 90%; 
+    height: auto;
     padding: 10px;
-    margin: 0 auto; /* מרכז הכרטיס אופקית */
+    margin: 0 auto;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     background-color: white;
-    overflow-wrap: break-word; /* שבירת מילים ארוכות */
+    overflow-wrap: break-word;
     display: flex;
     flex-direction: column;
-    align-items: center; /* תוכן הכרטיס במרכז */
-    justify-content: center; /* תוכן הכרטיס ממורכז אנכית */
+    align-items: center;
+    justify-content: center;
 }
 
