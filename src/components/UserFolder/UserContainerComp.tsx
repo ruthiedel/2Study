@@ -3,9 +3,8 @@ import StudyComp from './StudyComp';
 import RequireAuth from '../../layout/RequireAuth';
 import ProgressComp from './ProgressComp';
 import InfoComp from './InfoComp';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Recommendations from './Recommendations';
-import useUserStore from '../../services/zustand/userZustand/userStor';
 
 export default function UserContainer() {
 
@@ -26,15 +25,6 @@ export default function UserContainer() {
           </div>
           <div>
             <Recommendations />
-          </div>
-        </div>
-
-        <div>
-          <div className="">
-            <Recommendations />
-          </div>
-          <div className="">
-            <ProgressComp />
           </div>
         </div>
     </RequireAuth >
