@@ -41,6 +41,7 @@ const Study = () => {
     const [showConfetti, setShowConfetti] = useState(false);
     const [loading, setLoading] = useState(false);
     const [showQuiz, setShowQuiz] = useState(false);
+    const [isShowRating, setIsShowRating] = useState(false);
 
     const user = useUserStore((state) => state.user);
 
@@ -120,8 +121,8 @@ const Study = () => {
                     bookData.paragraphsCountPerChapter[newChapterId - 1] || 1;
             }
         }
-
         setIndex({ chapterId: newChapterId, paragraphId: newParagraphId });
+        openRating();
     };
 
     const isLastSection = useMemo(() => {
@@ -146,6 +147,9 @@ const Study = () => {
     const isCurrentSectionMarked = () => {
         return user?.books.some(book => book.book_id === bookId && book.chapter_id === index.chapterId && book.section_id === index.paragraphId);
     };
+    const openRating = () => setIsShowRating(true);
+    const closeRating = () => setIsShowRating(false); 
+
     return isLoading ? (
         <Loading />
     ) : (
@@ -210,6 +214,11 @@ const Study = () => {
                                 chapterId={paragraph[0].chapterNumber}
                             />
                         )}
+                    </DialogContent>
+                </Dialog>
+                <Dialog open={isShowRating} onClose={closeRating}>
+                    <DialogContent>
+                        <Rating bookId={bookId}/>
                     </DialogContent>
                 </Dialog>
                 {isLastSection && (
