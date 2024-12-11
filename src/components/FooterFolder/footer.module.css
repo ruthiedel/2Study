@@ -1,78 +1,102 @@
+.footerContainer {
+    display: flex;
+    
+    height: 45vh;
+    justify-content: space-between;
+    background-color: white;
+  }
+  
+  .column1 {
+    flex: 1.4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    /* padding: 65px; */
+    /* gap: 15px; */
+  }
 
-.form {
+  .column2{
+    flex: 1.9;
     display: flex;
-    bottom: 0;
     flex-direction: column;
-    align-items: center;
-    background-color: #f5f5f3;
-    padding: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
+    font-size: 20px;
+    align-items: right;
+    text-align: right;
+    padding: 2vw;
+    gap: 15px;
+    margin-top: 5vh;
+  }
   
-.heading {
-    margin-bottom: 20px;
+  
+  .column3{
+    flex: 1.4;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    text-align: center;
+    margin-top: 15px;
+    margin-right: 90px;
+  }
+  .logo {
+    width: 120px;
+    height: 120px;
+    margin: center;
+    margin-top: 15vh;
+  }
+  
+  .divider {
+    width: 1px;
+    background-color: #ccc;
+    height: 35vh;
+    margin: 0 20px;
+    margin-top: 5vh;
+  }
+  
+  .form {
+    align-items: flex-start;
+  }
+  
+  .heading {
     color: black;
-    font-size: 24px;
+    font-size: 35px; /* הגדלת גודל הכותרת */
     font-weight: bold;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-}
+    text-align: center; /* יישור לימין */
+    margin-right: 0; /* מרווח לימין */
+  }
   
-.fieldsContainer {
-    display: flex;
-    gap: 10px;
-    width: 100%;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    flex-wrap: wrap;
-}
-  
-.field {
+  .field {
     display: flex;
     flex-direction: column;
-}
+    width: 100%;
+    align-items: flex-start;
+  }
   
-.input {
-    background-color: #fef1cd;
+  .input {
+    background-color: var(--primary-color);
     border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 10px;
+    border-radius: 7px;
+    padding: 10px; 
     color: black;
-    width: 200px;
-}
+    height: 5vh;
+    width: 200px; 
+    font-size: 14px;
+  }
   
-.error {
+  .error {
     color: red;
     font-size: 12px;
-}
+  }
   
-.button {
+  .button {
     background-color: black;
     color: white;
-    padding: 10px 20px;
+    padding: 2px 30px; /* הקטנת הכפתור */
     border: none;
     border-radius: 5px;
     cursor: pointer;
-}
-  
-.logo {
-    right: 5%;
-    width: 7rem;
-    height: 7rem;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: transform 0.2s ease;
-    margin-left: 15px;
-}
+    margin-right: 110px; 
+  }
 
-.footer{
-    display: flex;
-    justify-content: space-between;
-    margin-top: 25px;
-}
 
-.footerSection{
-    margin-left: 30px;
-}
-  
   
