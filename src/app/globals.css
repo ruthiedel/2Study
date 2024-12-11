@@ -150,3 +150,15 @@ body {
   transition: transform 0.3s ease-in-out;
   border: 2px solid #ddd;
 }
+
+.mark-button {
+  border-radius: 20px;
+  cursor: pointer;
+  color: #fba957;
+  padding: 4%;
+}
+
+.mark-button:hover {
+  background-color: #f58529;
+  color: white;
+}
