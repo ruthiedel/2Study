@@ -50,9 +50,9 @@ const Footer: React.FC = () => {
             <div className={styles.divider}></div>
             <div className={styles.column2}>
                 <p>📧  מייל: 054racheli@gmail.com</p>
-                <p>© כל הזכויות שמורות</p>
                 <p>🌟 נשמח לשמוע מכם</p>
                 <p>🖋️השימוש באתר בכפוף לתקנון</p>
+                <p>© כל הזכויות שמורות</p>
             </div>
             <div className={styles.divider}></div>
                 <form onSubmit={handleSubmit(onSubmit)} className={`${styles.column3} ${styles.form}`}>
