@@ -143,7 +143,9 @@ const Study = () => {
 
     const openQuiz = () => setShowQuiz(true);
     const closeQuiz = () => setShowQuiz(false); 
-
+    const isCurrentSectionMarked = () => {
+        return user?.books.some(book => book.book_id === bookId && book.chapter_id === index.chapterId && book.section_id === index.paragraphId);
+    };
     return isLoading ? (
         <Loading />
     ) : (
@@ -161,9 +163,9 @@ const Study = () => {
                 >
                     <ExpandLess />
                 </IconButton>
-                <MarkButton bookId={bookId} chapterId={index.chapterId} paragraphId={index.paragraphId} />
+                <MarkButton bookId={bookId} chapterId={index.chapterId} paragraphId={index.paragraphId} isMarked={isCurrentSectionMarked()} />
                 {paragraph.length === 0 ? (
-                    <p>loading...</p>
+                    <p>אין כרגע טקסט להצגה</p>
                 ) : (
                     <ShowParagraph
                         paragraph={paragraph.find(
