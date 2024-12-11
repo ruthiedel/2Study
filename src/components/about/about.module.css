@@ -1,0 +1,32 @@
+.customerTestimonials {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    padding: 20px;
+    text-align: center;
+}
+
+.customerTestimonial {
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.customerName {
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.fidbackTitle{
+    font-weight: bold;
+    text-align: center;
+    font-size: 30px;
+}
+
+.underline{
+    width: 200px;
+    height: 4px;
+    background-color: #cd9b12;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}

@@ -1,191 +1,97 @@
 .pageContainer {
-  background-color:var(--primary-color);
-  padding-bottom: 50px;
-  direction: rtl;
-  font-family: 'Assistant', sans-serif;
+  background-color: var(--primary-color);
+  font-family: var(--main-font);
 }
 
-.pageContainer h1,
-.pageContainer h2,
-.pageContainer h3,
-.pageContainer h4,
-.pageContainer h5,
-.pageContainer h6,
-.pageContainer p,
-.pageContainer span,
-.pageContainer a,
-.pageContainer li,
-.pageContainer button,
-.pageContainer input,
-.pageContainer textarea {
-  font-family: '2StudyFont', sans-serif;
-}
-
-.heroSection {
-  position: relative;
-  height: 400px;
+.headercontainer {
   background: url('../../../public/pictures/aboutmain.jpg') center/cover no-repeat, rgba(1, 1, 1, 0.2);
+  text-align: center;
+  height: 60vh;
+  position: relative;
+  align-items: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
 }
 
-.heroTitle {
-  font-size: 80px;
+.title {
+  font-size: 50px;
   font-weight: bold;
-  color: rgb(0, 0, 0);
 }
 
-.heroDescription {
-  max-width: 700px;
-  line-height: 1.8;
+.title2{
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.secondTitle,.heroTitle {
   font-size: 25px;
-  color: rgb(6, 6, 6);
-  margin-top: 10px;
-}
-.sectionTitleContainer {
-  text-align: center;
-  margin: 60px 0 40px;
-    font-size: 50px;
-  font-weight: bold;
-  color: black;
 }
 
-.titleUnderline {
-  width: 300px;
-  height: 4px;
-  background-color: #F3DD86;
-  margin: 10px auto;
+.section {
+  font-size: 20px;
+  padding: 10px 250px;
 }
 
-.featureUnderlinedwon {
-  width: 99vw;
-  height: 4px;
-  background-color: #F3DD86;
-  margin: 10px auto;
-}
-
-.featuresContainer {
-  max-width: 1200px;
-  padding: 100px;
-  margin: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
-}
-
-.feature,
-.featureReverse {
-  display: flex;
-  align-items: center;
-  gap: 20px;
+.background {
+  background-color: rgba(254, 250, 234, 0.3);
+  width: 100%;
+  height: 100%;
   padding: 20px;
 }
 
-.featureReverse {
-  flex-direction: row-reverse;
-}
-
-.featureImage {
-  width: 240px;
-  height: 200px;
-  background-color: #F3DD86;
-  background-size: cover;
-  border-radius: 10px;
-}
-
-.feature1 {
-  background-image: url('../../../public/pictures/1.png');
-}
-
-.feature2 {
-  background-image: url('../../../public/pictures/2.png');
-}
-
-.feature3 {
-  background-image: url('../../../public/pictures/3.png');
-}
-
-.feature4 {
-  background-image: url('../../../public/pictures/4.png');
-}
-
-.featureContent {
-  margin-right: 150px;
-  flex: 1;
-}
-
-.featureTitle {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.featureUnderline {
-  width: 180px;
-  height: 4px;
-  background-color: #F3DD86;
-  margin-bottom: 15px;
-}
-
-.featureText {
-  font-size: 18px;
-  line-height: 1.8;
-}
-
-.bottomSection {
-  text-align: center;
-  margin: 60px 0;
-}
-
-.bottomFeatures {
+.sectionContainer{
   display: flex;
-  justify-content: space-around;
-  max-width: 1200px;
-  margin: auto;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 20px;
 }
 
-.bottomFeature {
-  text-align: center;
+.heroDescription{
+  max-width: 400px;
+  margin-top: 20px;
 }
 
-.bottomFeatureImage {
-  width: 115px;
-  height: 100px;
+.heroTitle{
+  margin-top: 30px;
+}
+
+.line{
+  width: 50%;
+  height: 5px;
   background-color: #F3DD86;
-  margin: 0 auto 15px;
-  background-size: cover;
+  margin-bottom: 20px;
+  border-radius: 5px;
 }
 
-.bottomFeatureImage1 {
-  background-image: url('../../../public/pictures/progress.png');
+.container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 25%;
 }
 
-.bottomFeatureImage2 {
-  background-image: url('../../../public/pictures/p.png');
+.bottomFeatures{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-top: 20px;
+  gap: 20px;  
 }
 
-.bottomFeatureImage3 {
-  background-image: url('../../../public/pictures/arive.png');
-}
-
-.bottomFeatureTitle {
-  font-size: 20px;
-  font-weight: bold;
+.bottomFeature{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 300px;
+  text-align: center;
   margin-bottom: 10px;
 }
 
-.bottomFeatureText {
-  font-size: 16px;
-  line-height: 1.8;
-}
 
 .hidden {
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 1.2s ease-out, transform 1.2s ease-out;
+  transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
 .show {
