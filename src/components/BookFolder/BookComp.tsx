@@ -1,7 +1,6 @@
 'use client';
 import React from "react";
 import { Book as BookType } from '../../types';
-import { Card, CardContent, Typography, Box } from "@mui/material";
 import styles from "./book.module.css"; 
 
 type BookProps = {
@@ -15,7 +14,7 @@ const BookComp: React.FC<BookProps> = ({ book, handleClick }) => {
     : URL.createObjectURL(book.coverImage);
 
   return (
-    <Card className={styles.card}>
+    <div className={styles.card}>
       <div className={styles.cardHeader}>
         <img
           src={coverImageSrc} 
@@ -24,26 +23,26 @@ const BookComp: React.FC<BookProps> = ({ book, handleClick }) => {
         />
       </div>
 
-      <CardContent>
-        <Typography className={styles.cardTitle} variant="h6">
+      <div className={styles.content}>
+        <p className={styles.cardTitle}>
           {book.name}
-        </Typography>
+        </p>
 
-        <Typography className={styles.cardAuthor} variant="body2">
+        <p className={styles.cardAuthor}>
           {book.author}
-        </Typography>
+        </p>
 
         <div className={styles.cardDivider}></div>
 
-        <Typography className={styles.cardCategories} variant="body2">
+        <p className={styles.cardCategories}>
         קטגוריות: {book.category.subject}, {book.category.type}
-        </Typography>
+        </p>
 
-        <Box className={styles.cardFooter}>
+        <div className={styles.cardFooter}>
           <button className={styles.cardButton} onClick={()=>handleClick(book)}>לפרטים</button>
-        </Box>
-      </CardContent>
-    </Card>
+        </div>
+      </div>
+    </div>
   );
 };
 

@@ -41,7 +41,7 @@ const Filter: React.FC<FilterComponentProps> = ({
       <label className={styles.title}>שם ספר:</label>
       <input
         type="text"
-        placeholder="מצא לפי שם ספר"
+        placeholder=" מצא לפי שם ספר"
         value={bookName}
         onChange={(e) => setBookName(e.target.value)}
         className={styles.input}

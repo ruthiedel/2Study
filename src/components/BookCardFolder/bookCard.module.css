@@ -19,6 +19,14 @@
   background-color: black;
   color: white;
   left: 8px;
+  padding: 5px;
+  border-radius: 50%;
+}
+
+.closeButton:hover {
+  background-color: var(--light-gray);
+  color: black;
+  border: 1px solid black;
 }
 
 .bookTitle, .bookImage, .starsContainer, .ttext, .learnButton {
@@ -56,6 +64,8 @@
   color: white;
   float: left;
   transition: background-color 0.3s;
+  padding: 10px 20px;
+  border-radius: 5px;
 }
 
 .learnButton:hover {

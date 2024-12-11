@@ -5,7 +5,7 @@ import useUserStore from "../../../services/zustand/userZustand/userStor";
 import { getSections } from "../../../services/bookService";
 import { useParams } from "next/navigation";
 import {
-    Chat,
+    Chat, MarkButton,
     ChapterSidebar,
     ShowParagraph,
     Loading,
@@ -40,7 +40,7 @@ const Study = () => {
     const [bookData, setBookData] = useState<Book | null>(null);
     const [showConfetti, setShowConfetti] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [showQuiz, setShowQuiz] = useState(false); // מצב הפופאפ
+    const [showQuiz, setShowQuiz] = useState(false);
 
     const user = useUserStore((state) => state.user);
 
@@ -141,8 +141,8 @@ const Study = () => {
         setTimeout(() => setShowConfetti(false), 5000);
     };
 
-    const openQuiz = () => setShowQuiz(true); // פתיחת פופאפ
-    const closeQuiz = () => setShowQuiz(false); // סגירת פופאפ
+    const openQuiz = () => setShowQuiz(true);
+    const closeQuiz = () => setShowQuiz(false); 
 
     return isLoading ? (
         <Loading />
@@ -161,6 +161,7 @@ const Study = () => {
                 >
                     <ExpandLess />
                 </IconButton>
+                <MarkButton bookId={bookId} chapterId={index.chapterId} paragraphId={index.paragraphId} />
                 {paragraph.length === 0 ? (
                     <p>loading...</p>
                 ) : (

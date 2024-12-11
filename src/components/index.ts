@@ -16,3 +16,6 @@ export { default as Wizard } from './Graghs/Wizard/Wizard';
 export { default as PieCategories } from './Graghs/PieCategories';
 export { default as BarGraph } from './Graghs/BarGraph';
 export { default as BarsGraph } from './Graghs/BarsGraph';
+export { default as MarkButton } from './MarkButton/MarkButton';
+
+

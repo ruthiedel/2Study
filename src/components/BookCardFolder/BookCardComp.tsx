@@ -8,6 +8,7 @@ import Image from 'next/image';
 import styles from './bookCard.module.css';
 import { Book, UserBook } from '../../types';
 import Login from '../Login/Login';
+import {removeHtmlTags} from '../../lib/clientHelpers/removeHTMLTags'
 
 type BookCardProps = {
     book: Book;
@@ -79,10 +80,10 @@ const BookCardComp: React.FC<BookCardProps> = ({ book, onClose }) => {
                 </Box>
             </Modal>
 
-            <Card className={styles.bookCard}>
-                <IconButton className={styles.closeButton} aria-label="close" onClick={onClose}>
+            <div className={styles.bookCard}>
+                <button className={styles.closeButton} aria-label="close" onClick={onClose}>
                     <CloseIcon />
-                </IconButton>
+                </button>
                 <div className={styles.container}>
                     <Grid container spacing={2}>
                         <Grid item xs={12} sm={4}>
@@ -96,51 +97,50 @@ const BookCardComp: React.FC<BookCardProps> = ({ book, onClose }) => {
                         </Grid>
 
                         <Grid item xs={12} sm={8}>
-                            <Typography variant="h5" align="right" className={styles.bookTitle}>
+                            <p className={styles.bookTitle}>
                                 {book.name}
-                            </Typography>
-                            <Typography variant="subtitle1" align="right" className={styles.text}>
+                            </p>
+                            <p className={styles.text}>
                                 {book.author}
-                            </Typography>
-                            <Typography variant="body2" color="textSecondary" align="right" className={styles.text}>
+                            </p>
+                            <p className={styles.text}>
                                 {book.category.subject}
-                            </Typography>
-                            <Typography variant="body2" className={styles.text}>
+                            </p>
+                            <p className={styles.text}>
                                 <strong>פרקים: </strong>
                                 {book.chapters_num} | <strong>סעיפים: </strong>
                                 {book.paragraphs_num}
-                            </Typography>
+                            </p>
 
-                            <Box className={styles.starsContainer}>
+                            <div className={styles.starsContainer}>
                                 <Rating value={book.rating} readOnly sx={{ color: '#F3F25B' }} />
-                            </Box>
+                            </div>
                         </Grid>
 
-                        <Typography variant="body1" className={styles.ttext}>
+                        <p className={styles.ttext}>
                             <strong>הצצה לספר:</strong>
-                        </Typography>
+                        </p>
 
-                        <Typography
-                            variant="body1"
+                        <div
                             className={showMore ? styles.fullText : styles.truncatedText}
                         >
-                            {book.firstParagraphText}
-                        </Typography>
+                            {removeHtmlTags(book.firstParagraphText?book.firstParagraphText:'') }
+                        </div>
 
                         {book.firstParagraphText && book.firstParagraphText.length > 100 && (
-                            <Button onClick={() => setShowMore(!showMore)} className={styles.readMoreButton}>
+                            <button onClick={() => setShowMore(!showMore)} className={styles.readMoreButton}>
                                 {showMore ? 'פחות' : 'קרא עוד'}
-                            </Button>
+                            </button>
                         )}
 
                         <Grid item xs={12}>
-                        <Button variant="contained" className={styles.learnButton} onClick={handleReadMore}>
+                        <button className={styles.learnButton} onClick={handleReadMore}>
                             { foundBook ?   "המשך ללמוד ←" : "הוסף לרשימת הספרים שלי"}
-                        </Button>
+                        </button>
                         </Grid>
                     </Grid>
                 </div>
-            </Card>
+            </div>
         </>
     );
 };

@@ -1,5 +1,5 @@
 .container{
-    background-color: #F9F2D7;
+    background-color: var(--primary-color);
 }
 
 .bookGrid {
@@ -55,8 +55,6 @@
 }
 
 .sidebarContainer {
-    margin-right: 20px;
-    margin-top: 10px;
     width: 250px;
 }
 

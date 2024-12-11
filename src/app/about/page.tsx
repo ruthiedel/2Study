@@ -1,147 +1,126 @@
+
 'use client';
 import React, { useEffect } from "react";
-import styles from "./aboutPage.module.css";
+import Fidback from "../../components/about/Fidback";
+import { Section, BottomSection } from "../../components/about/Sections";
+import styles from './aboutPage.module.css';
 
-const AboutPage = () => {
+const AboutPage: React.FC = () => {
     useEffect(() => {
         const observer = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
+                    const target = entry.target as HTMLElement;
                     if (entry.isIntersecting) {
-                        entry.target.classList.add(styles.show);
+                        target.style.opacity = '1';
+                        target.style.transform = 'translateY(0)';
+                        target.style.transition = 'opacity 1.5s ease, transform 1s ease-out';
                     } else {
-                        entry.target.classList.remove(styles.show);
+                        target.style.opacity = '0';
+                        target.style.transform = 'translateY(100px)';
+                        target.style.transition = 'opacity 1.5s ease, transform 1s ease-out';
                     }
                 });
             },
-            {
-                threshold: 0.1, 
-            }
+            { threshold: 0.1 }
         );
 
-        const elements = document.querySelectorAll(`.${styles.hidden}`);
-        elements.forEach((el) => observer.observe(el));
-        return () => observer.disconnect(); 
+        const elements = document.querySelectorAll('[data-animate]');
+        elements.forEach((el) => {
+            const element = el as HTMLElement;
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(100px)';
+            observer.observe(element);
+        });
+
+        return () => observer.disconnect();
     }, []);
+
+
+
+    const sections = [
+        {
+            title: 'פתרונות מהירים, הצלחה גדולה',
+            description: 'באתר שלנו, כל הכלים זמינים לך בלחיצת כפתור: סימניות חכמות, שאלות למעקב עצמי, וקבוצות למידה שמשלבות אותך בקהילה תומכת של לומדים.',
+            scriptUrl: 'https://unpkg.com/@lottiefiles/dotlottie-wc@0.3.0/dist/dotlottie-wc.js',
+            animateUrl: 'https://lottie.host/5edb9475-79c4-4256-a41e-d87a23ef812c/Cnwk1qM3PW.lottie'
+        },
+        {
+            title: 'המקום המושלם ללמוד',
+            description: 'האתר שלנו עוצב במיוחד עבור הציבור החרדי, עם דגש על עיצוב נקי ופשוט שמאפשר להתמקד בתוכן. כל פרט תוכנן כדי להעניק חוויית לימוד נוחה, איכותית, ויעילה, תוך התאמה מלאה לערכים ולצרכים המיוחדים של הקהילה.',
+            scriptUrl: 'https://unpkg.com/@lottiefiles/dotlottie-wc@0.3.0/dist/dotlottie-wc.js',
+            animateUrl: 'https://lottie.host/51d71ca3-5345-40bd-847b-3a1dbae345d5/0uXNSSwHY7.lottie'
+        },
+        {
+            title: 'ידע מחבר בין אנשים',
+            description: 'הלמידה כאן אינה לבד: קבוצות הצ\'אט שלנו מחברות בין לומדים מכל מקום, לתמיכה, שיתוף ידע, ושאלות שמביאות לתשובות חדשות.',
+            scriptUrl: 'https://unpkg.com/@lottiefiles/dotlottie-wc@0.3.0/dist/dotlottie-wc.js',
+            animateUrl: 'https://lottie.host/38c286d7-7bb8-429b-8cbc-03aa09ed5e24/tqnGg9OWQU.lottie'
+        },
+        {
+            title: 'התהליך שלך, ההתקדמות שלך',
+            description: 'עם גרפים שמראים לך בדיוק איפה את.ה עומד.ת, ושיטות למידה מותאמות אישית, תוכל.י להרגיש את הצמיחה שלך כל יום מחדש.',
+            scriptUrl: 'https://unpkg.com/@lottiefiles/dotlottie-wc@0.3.0/dist/dotlottie-wc.js',
+            animateUrl: 'https://lottie.host/3265234c-c1ab-4d33-b54d-1794272a5c85/CqluU31R6u.lottie'
+        }
+    ];
+
+    const buttomSections = [
+        {
+            imageUrl: 'pictures/1.png',
+            title: 'התקדמות אישית',
+            content: 'תוכלו לראות את ההתקדמות שלכם ולראו לבד, ששני דקות בכל יום יכולות ליצור שינוי אדיר! '
+        },
+        {
+            imageUrl: 'pictures/2.png',
+            title: 'קל להגיע',
+            content: 'הרבה אנשים חולמים לעבוד מהבית, שלא לדבר על כל הסטודנטים שחולמים ללמוד מהבית, אבל לא תמיד זה מוכיח את עצמו. כאן מקדישים פשוט 2 דקות: בהפסקת קפה, אחרי שהילדים נרדמו, ורואים התקדמות אדירה.'
+        },
+        {
+            imageUrl: 'pictures/3.png',
+            title: 'קידום אישי',
+            content: 'כיף להרגיש שמתקדמים בחיים, במיוחד בתחום הרוחני, ואם יש לי איך לאכוף את זה ולראות את ההתקדמות בעיניים - עוד יותר טוב. במיוחד שיש עוד כ”כ הרבה שותפים ביחד איתי...'
+        },
+    ];
 
     return (
         <div className={styles.pageContainer}>
+            <div className={styles.headercontainer}>
+                <div className={styles.background}>
+                    <h1 className={styles.title} data-animate>2study</h1>
+                    <h2 className={styles.secondTitle} data-animate>ללמוד ב2 דקות</h2>
+                    <p className={styles.section} data-animate>ברוכים הבאים למקום שבו לימוד פוגש השראה. האתר שלנו מציע חוויית לימוד ייחודית ומותאמת אישית לציבור החרדי, עם ספרים נבחרים, כלים מתקדמים, וקבוצות לימוד המחברות בין לומדים. כאן תוכלו לצמוח, להעמיק ולהתקדם בדרך שלכם, עם תמיכה מתמדת ותחושת שייכות אמיתית.</p>
+                </div>
+            </div>
+
+            <div className={styles.container} data-animate>
+                <p className={styles.title2}>לומדים חכמה, צומחים יחד</p>
+                <div className={styles.line}></div>
+            </div>
+
             <div className={styles.heroSection}>
-                    <h1 className={`${styles.heroTitle} ${styles.hidden}`}>אודות</h1>
-                    <p className={`${styles.heroDescription} ${styles.hidden}`}>
-                        ברוכים הבאים למקום שבו לימוד פוגש השראה. האתר שלנו מציע חוויית לימוד ייחודית ומותאמת אישית לציבור החרדי, עם ספרים נבחרים, כלים מתקדמים, וקבוצות לימוד המחברות בין לומדים. כאן תוכלו לצמוח, להעמיק ולהתקדם בדרך שלכם, עם תמיכה מתמדת ותחושת שייכות אמיתית.
-                    </p>
+                {sections.map((section, index) => (
+                    <div data-animate>
+                        <Section key={index} section={section} isEven={index % 2 === 0} data-animate />
+                    </div>
+                ))}
             </div>
-
-            <div className={styles.sectionTitleContainer}>
-                <h2 className={` ${styles.hidden} `}>לומדים חכמה, צומחים יחד</h2>
-                <div className={`${styles.titleUnderline} ${styles.hidden}`}></div>
+            <div data-animate>
+                <Fidback />
             </div>
-
-            <div className={styles.featuresContainer}>
-                <div className={styles.feature}>
-                    <div className={`${styles.featureImage} ${styles.feature1} ${styles.hidden}`} ></div>
-                    <div className={styles.featureContent}>
-                        <h3  className={`${styles.featureTitle} ${styles.hidden}`}>פתרונות מהירים, הצלחה גדולה</h3>
-                        <div className={styles.featureUnderline}></div>
-                        <p  className={`${styles.featureText} ${styles.hidden}`}>
-                            באתר שלנו, כל הכלים זמינים לך בלחיצת כפתור: סימניות חכמות,
-                            <br />
-                            שאלות למעקב עצמי, וקבוצות למידה שמשלבות אותך בקהילה תומכת של לומדים.
-                        </p>
-                    </div>
-                </div>
-
-                <div className={styles.featureReverse}>
-                    <div className={`${styles.featureImage} ${styles.feature2} ${styles.hidden}`} ></div>
-                    <div className={styles.featureContent}>
-                        <h3 className={`${styles.featureTitle} ${styles.hidden}`}>המקום המושלם ללמוד</h3>
-                        <div className={styles.featureUnderline}></div>
-                        <p className={`${styles.featureText} ${styles.hidden}`}>
-                            האתר שלנו עוצב במיוחד עבור הציבור החרדי, עם דגש על עיצוב נקי ופשוט
-                            <br />
-                            שמאפשר להתמקד בתוכן. כל פרט תוכנן כדי להעניק חוויית לימוד נוחה,
-                            <br />
-                            איכותית, ויעילה, תוך התאמה מלאה לערכים ולצרכים המיוחדים של הקהילה.
-                        </p>
-                    </div>
-                </div>
-
-                <div className={styles.feature}>
-                    <div className={`${styles.featureImage} ${styles.feature3} ${styles.hidden}`} ></div>
-                    <div className={styles.featureContent}>
-                        <h3 className={`${styles.featureTitle} ${styles.hidden}`}>ידע מחבר בין אנשים</h3>
-                        <div className={styles.featureUnderline}></div>
-                        <p className={`${styles.featureText} ${styles.hidden}`}>
-                            הלמידה כאן אינה לבד: קבוצות הצ'אט שלנו מחברות בין לומדים מכל מקום,
-                            <br />
-                            לתמיכה, שיתוף ידע, ושאלות שמביאות לתשובות חדשות.
-                        </p>
-                    </div>
-                </div>
-
-                <div className={styles.featureReverse}>
-                    <div className={`${styles.featureImage} ${styles.feature4} ${styles.hidden}`} ></div>
-                    <div className={styles.featureContent}>
-                        <h3 className={`${styles.featureTitle} ${styles.hidden}`}>התהליך שלך, ההתקדמות שלך</h3>
-                        <div className={styles.featureUnderline}></div>
-                        <p className={`${styles.featureText} ${styles.hidden}`}>
-                            עם גרפים שמראים לך בדיוק איפה את.ה עומד.ת,
-                            <br />
-                            ושיטות למידה מותאמות אישית, תוכל.י להרגיש את הצמיחה שלך כל יום מחדש.
-                        </p>
-                    </div>
-                </div>
-            </div>
-
             <div className={styles.bottomSection}>
-                <h2 className={`${styles.sectionTitle} ${styles.hidden}`}>למה דווקא אצלנו?</h2>
-                <div className={styles.titleUnderline}></div>
+                <div className={styles.container} data-animate>
+                    <h2 className={styles.secondTitle}>למה דווקא אצלנו?</h2>
+                    <div className={styles.line}></div>
+                </div>
                 <div className={styles.bottomFeatures}>
-                    <div className={styles.bottomFeature}>
-                        <div className={`${styles.bottomFeatureImage} ${styles.bottomFeatureImage1} ${styles.hidden}`}></div>
-                        <h3 className={`${styles.bottomFeatureTitle} ${styles.hidden}`}>התקדמות אישית</h3>
-                        <p className={`${styles.bottomFeatureText} ${styles.hidden}`}>
-                            תוכלו לראות את ההתקדמות שלכם
-                            <br />
-                            ולראות לבד, ששני דקות בכל יום
-                            <br />
-                            יכולות ליצור שינוי אדיר!
-                        </p>
-                    </div>
-                    <div className={styles.bottomFeature}>
-                        <div className={`${styles.bottomFeatureImage} ${styles.bottomFeatureImage2} ${styles.hidden}`}></div>
-                        <h3 className={`${styles.bottomFeatureTitle} ${styles.hidden}`}>קל להגיע</h3>
-                        <p className={`${styles.bottomFeatureText} ${styles.hidden}`}>
-                            הרבה אנשים חולמים לעבוד מהבית, שלא
-                            <br />
-                            לדבר על כל הסטודנטים שחולמים ללמוד
-                            <br />
-                            מהבית, אבל לא תמיד זה מוכיח את עצמו.
-                            <br />
-                            כאן מקדישים פשוט 2 דקות: בהפסקת קפה,
-                            <br />
-                            אחרי שהילדים נרדמו, ורואים התקדמות אדירה.
-                        </p>
-                    </div>
-                    <div className={styles.bottomFeature}>
-                        <div className={`${styles.bottomFeatureImage} ${styles.bottomFeatureImage3} ${styles.hidden}`}></div>
-                        <h3 className={`${styles.bottomFeatureTitle} ${styles.hidden}`}>קידום אישי</h3>
-                        <p className={`${styles.bottomFeatureText} ${styles.hidden}`}>
-                            כיף להרגיש שמתקדמים בחיים, במיוחד
-                            <br />
-                            בתחום הרוחני, ואם יש לי איך לאכוף
-                            <br />
-                            את זה ולראות את ההתקדמות בעיניים -
-                            <br />
-                            עוד יותר טוב. במיוחד שיש עוד
-                            <br />
-                            כ”כ הרבה שותפים ביחד איתי...
-                        </p>
-                    </div>
+                    {buttomSections.map((section, index) => (
+                        <div data-animate>
+                            <BottomSection key={index} section={section} />
+                        </div>
+                    ))}
                 </div>
             </div>
-            <div className={styles.featureUnderlinedwon}></div>
         </div>
     );
 };

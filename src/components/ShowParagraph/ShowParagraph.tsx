@@ -4,6 +4,7 @@ import { Typography, Box } from '@mui/material';
 import { Paragraph } from '../../types';
 import Loading from '../LoadingFolder/Loading';
 import styles from './ShowParagraph.module.css';
+import {removeHtmlTags} from '../../lib/clientHelpers/removeHTMLTags'
 
 type Props = {
   paragraph: Paragraph;
@@ -12,12 +13,6 @@ type Props = {
 
 const ParagraphNavigation: React.FC<Props> = (props) => {
   const { paragraph, chapterTitle } = props;
-
-  const removeHtmlTags = (text: string) => {
-    const parser = new DOMParser();
-    const parsedText = parser.parseFromString(text, 'text/html').body.textContent || '';
-    return parsedText;
-  };
   console.log(paragraph,"from show paragraph")
   return (
     <Box className={styles.container}>
