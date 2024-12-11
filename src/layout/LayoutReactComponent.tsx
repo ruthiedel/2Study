@@ -15,7 +15,7 @@ function LayoutReactComponent({
     <QueryClientProvider client={queryClient}>
     <Header />
     {children}
-    {/* <Footer /> */}
+    <Footer />
   </QueryClientProvider>
   )
 }
