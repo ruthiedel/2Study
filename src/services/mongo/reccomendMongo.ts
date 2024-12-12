@@ -79,13 +79,14 @@ export async function recommend(userId: string, books: BookWithoutCoverImage[]) 
   let recommendations = getRecommendations(currentUser, users, books);
 
   if (recommendations.length === 0) {
-    // אם אין המלצות, החזר את שני הספרים עם הדירוג הגבוה ביותר
     recommendations = books
-      .sort((a, b) => (b.rating || 0) - (a.rating || 0))
-      .slice(0, 2)
-      .map(book => book._id)
-      .filter((id): id is string => id !== undefined); // סינון undefined
+    .filter(book => !currentUser.books.some(b => b.book_id === book._id)) // סינון ספרים שהמשתמש קרא
+    .sort((a, b) => (b.rating || 0) - (a.rating || 0)) // מיין לפי הדירוג
+    .map(book => book._id) // החזר רק את ה-IDs של הספרים
+    .filter((id): id is string => id !== undefined); // סינון undefined
   }
+  if(recommendations.length >=2)
+     return recommendations.slice(0, 2);
 
-  return recommendations.slice(0, 2);
+  return recommendations
 }

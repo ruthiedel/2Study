@@ -38,10 +38,7 @@ const Recommendations = () => {
   
   return (
     <div className={styles.container}>
-      {
-        recommend.length === 0 ? (
-          <Loading /> 
-        ) : (
+      { recommend.length > 0 &&(
           recommend.map((book) => {
             return (
               <div className={`${styles.recommendcard} fontFamily`} key={book.name}>
