@@ -21,3 +21,5 @@ export const updateUser = async ({ id, updatedData }: { id: string; updatedData:
       throw error; 
     }
   };
+
+
