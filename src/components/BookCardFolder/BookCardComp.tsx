@@ -8,7 +8,8 @@ import Image from 'next/image';
 import styles from './bookCard.module.css';
 import { Book, UserBook } from '../../types';
 import Login from '../Login/Login';
-import {removeHtmlTags} from '../../lib/clientHelpers/removeHTMLTags'
+import { removeHtmlTags } from '../../lib/clientHelpers/removeHTMLTags'
+import { useRouter } from 'next/router';
 
 type BookCardProps = {
     book: Book;
@@ -21,14 +22,15 @@ const BookCardComp: React.FC<BookCardProps> = ({ book, onClose }) => {
     const user = useUserStore((state) => state.user);
     const [openModal, setOpenModal] = useState(false);
     const updateUserZustand = useUserStore((state) => state.updateUserZustand);
+    const router = useRouter();
 
     useEffect(() => {
         if (user === undefined) {
             setOpenModal(true);
         } else if (!user) {
-            setOpenModal(true);  
+            setOpenModal(true);
         } else {
-            setOpenModal(false); 
+            setOpenModal(false);
             const bookExists = user.books.find((userBook) => userBook.book_id === book._id);
             setFoundBook(!!bookExists);
         }
@@ -36,27 +38,30 @@ const BookCardComp: React.FC<BookCardProps> = ({ book, onClose }) => {
 
 
     const handleReadMore = async () => {
-        if (foundBook) {
-            window.location.href = `study/${book._id}`;
-        } else {
+        try {
+          if (!foundBook) {
             const newUserBook: UserBook = {
-                book_id: book._id!,
-                book_name: book.name,
-                chapter_id: 1,
-                section_id: 1,
-                rate: 0,
+              book_id: book._id!,
+              book_name: book.name,
+              chapter_id: 1,
+              section_id: 1,
+              rate: 0,
             };
             const updatedUserData = {
-                ...user!,
-                books: [...user!.books, newUserBook],
+              ...user!,
+              books: [...user!.books, newUserBook],
             };
-            await updateUserZustand(user!._id!, updatedUserData );
-            window.location.href = `study/${book._id}`;
+            await updateUserZustand(user!._id!, updatedUserData);
+          }
+          router.push(`/study/${book._id}`);
+        } catch (error) {
+          console.error("Failed to update user data:", error);
+          alert("אירעה שגיאה במהלך העדכון. נסה שוב מאוחר יותר.");
         }
-    };
-
+      };
+      
     return (
-<>
+        <>
             <Modal
                 open={openModal}
                 aria-labelledby="login-modal"
@@ -124,7 +129,7 @@ const BookCardComp: React.FC<BookCardProps> = ({ book, onClose }) => {
                         <div
                             className={showMore ? styles.fullText : styles.truncatedText}
                         >
-                            {removeHtmlTags(book.firstParagraphText?book.firstParagraphText:'') }
+                            {removeHtmlTags(book.firstParagraphText ? book.firstParagraphText : '')}
                         </div>
 
                         {book.firstParagraphText && book.firstParagraphText.length > 100 && (
@@ -134,9 +139,9 @@ const BookCardComp: React.FC<BookCardProps> = ({ book, onClose }) => {
                         )}
 
                         <Grid item xs={12}>
-                        <button className={styles.learnButton} onClick={handleReadMore}>
-                            { foundBook ?   "המשך ללמוד ←" : "הוסף לרשימת הספרים שלי"}
-                        </button>
+                            <button className={styles.learnButton} onClick={handleReadMore}>
+                                {foundBook ? "המשך ללמוד ←" : "הוסף לרשימת הספרים שלי"}
+                            </button>
                         </Grid>
                     </Grid>
                 </div>
