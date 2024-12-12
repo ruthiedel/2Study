@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect } from "react";
-import { useRouter } from "next/navigation"; // Next.js navigation hook
-import useUserStore from "@/services/zustand/userZustand/userStor"; // Zustand store
+import { useRouter } from "next/navigation"; 
+import useUserStore from "@/services/zustand/userZustand/userStor"; 
 
 const SomeComponent = () => {
   const router = useRouter();
@@ -9,7 +9,7 @@ const SomeComponent = () => {
 
   useEffect(() => {
     if (user) {
-      router.push("/bookCatalog");
+      router.push("/BooksLearning");
     } else {
       router.push("/about");
     }

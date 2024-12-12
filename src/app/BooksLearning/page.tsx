@@ -1,5 +1,5 @@
 
-import BooksLearning from "../../components/BooksLearningFolder/BoosLearningComp";
+import BooksLearning from "../../components/BooksLearningFolder/BooksLearningComp";
 import React from "react";
 
 const BooksLearningPage: React.FC = () => {

@@ -5,12 +5,11 @@
     align-items: center;
     padding: 30px;
     background-color: var(--primary-color);
+    font-family: var(--main-font);
   }
   
   .title {
     font-size: 2.5rem;
-    color: var(--dark-gray);
-    font-family: var(--main-font);
   }
   
   .subtitle {
@@ -71,12 +70,16 @@
   .bookDetails {
     flex-grow: 1;
     margin-left: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    padding-top: 15px;
   }
   
   .bookName {
     font-size: 1.5rem;
     color: var(--dark-gray);
-    margin: 5px 0;
+    width: 30%;
   }
   
   .bookAuthor {
@@ -84,28 +87,16 @@
     color: var(--dark-gray);
   }
   
-  .bookStatus {
-    font-size: 1rem;
-    color: var(--dark-gray);
-    margin-top: 10px;
-  }
-  
-  .bookRating {
-    font-size: 1rem;
-    color: var(--dark-gray);
-    margin-top: 10px;
-  }
-  
   .learnButton {
-    background-color: var(--black);
+    background-color: black;
     color: white;
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     font-size: 1rem;
-    margin-top: 15px;
     transition: background-color 0.3s ease;
+    height: 40px;
   }
   
   .learnButton:hover {
