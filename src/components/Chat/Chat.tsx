@@ -16,10 +16,10 @@ const Chat = ({ bookId }: { bookId: string }) => {
   const [isSending, setIsSending] = useState(false);
   const [bookName, setBookName] = useState('');
 
+  // ===========================
+  // TODO: you can write this without useEffect - please investigate
   useEffect(() => {
-    const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY!, {
-      cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER!,
-    });
+    const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY!, { cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER! });
 
     if (books && Array.isArray(books)) {
       const selectedBook = books.find(book => book._id == bookId)
@@ -27,26 +27,20 @@ const Chat = ({ bookId }: { bookId: string }) => {
         setMessages([...selectedBook?.learningGroups.message])
         setBookName(selectedBook.name);
       }
-      else {
-        console.log("No learningGroups", selectedBook)
-      }
+      else { console.log("No learningGroups", selectedBook) }
     }
-    else {
-      console.log("No books")
-    }
+    else { console.log("No books") }
+
     const channel = pusher.subscribe(`chat-${bookId}`);
     channel.bind('message', (data: Message) => {
-      setMessages((prevMessages) => {
-        return [...prevMessages, data];
-
-      });
+      setMessages((prevMessages) => { return [...prevMessages, data] });
     });
 
-    return () => {
-      pusher.unsubscribe(`chat-${bookId}`);
-    };
+    return () => { pusher.unsubscribe(`chat-${bookId}`) };
   }, [books]);
 
+  // ===========================
+  // TODO: document.getElementById is not recommended, use refs instead OR - use useState to know when to scroll
   useEffect(() => {
     const messageContainer = document.getElementById('messages-container');
     if (messageContainer) {
@@ -54,6 +48,8 @@ const Chat = ({ bookId }: { bookId: string }) => {
     }
   }, [messages]);
 
+  // ===========================
+  // TODO: take this function out of the component - put it in a service (can be here in this folder)
   const sendMessage = async () => {
     if (!user || message.trim() === '' || isSending) return;
 
