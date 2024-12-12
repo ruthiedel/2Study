@@ -97,15 +97,24 @@ const Study = () => {
     }, [index]);
 
     const handleNavigation = (direction: "next" | "prev") => {
-        console.log("index",index)
-        console.log("bookData",bookData)
+
         if (!index || !bookData || !bookData.paragraphsCountPerChapter) return;
         const { chapterId, paragraphId } = index;
-
         let newChapterId = chapterId;
         let newParagraphId = paragraphId;
 
         if (direction === "next") {
+            const isSectionMarked = user?.books.some(
+                (book) =>
+                  book.book_id === bookId &&
+                  book.chapter_id === newChapterId &&
+                  book.section_id === newParagraphId
+              );
+          
+              if (isSectionMarked) {
+                openRating();
+              }
+          
             if (paragraphId < bookData.paragraphsCountPerChapter[chapterId - 1]) {
                 newParagraphId = paragraphId + 1;
             } else if (chapterId < bookData.chapters_num) {
@@ -122,7 +131,7 @@ const Study = () => {
             }
         }
         setIndex({ chapterId: newChapterId, paragraphId: newParagraphId });
-        openRating();
+        // openRating();
     };
 
     const isLastSection = useMemo(() => {
@@ -169,7 +178,7 @@ const Study = () => {
                 </IconButton>
                 <MarkButton bookId={bookId} chapterId={index.chapterId} paragraphId={index.paragraphId} isMarked={isCurrentSectionMarked()} />
                 {paragraph.length === 0 ? (
-                    <p>אין כרגע טקסט להצגה</p>
+                    <p>אין טקסט להצגה כרגע</p>
                 ) : (
                     <ShowParagraph
                         paragraph={paragraph.find(
