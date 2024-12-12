@@ -8,9 +8,11 @@ import { User } from '../../types';
 
 interface RatingComponentProps {
   bookId: string;
+  onClose: () => void;
+
 }
 
-const RatingComp: React.FC<RatingComponentProps> = ({ bookId }) => {
+const RatingComp: React.FC<RatingComponentProps> = ({ bookId, onClose }) => {
   const updateUserZustand = useUserStore((state) => state.updateUserZustand);
   const user = useUserStore((state) => state.user);
 
@@ -54,6 +56,7 @@ const RatingComp: React.FC<RatingComponentProps> = ({ bookId }) => {
         alert("אירעה שגיאה בשמירת הדירוג.");
       } finally {
         setIsSubmitting(false);
+        onClose();
       }
     }
   };
@@ -72,6 +75,7 @@ const RatingComp: React.FC<RatingComponentProps> = ({ bookId }) => {
   const handleCancel = () => {
     setRating(null);
     setIsVisible(false);
+    onClose();
   };
 
   if (!isVisible) return null;

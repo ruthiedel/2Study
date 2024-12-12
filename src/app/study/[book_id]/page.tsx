@@ -95,6 +95,13 @@ const Study = () => {
         fetchParagraphs(bookId, chapterId, paragraphId);
         
     }, [index]);
+    
+    const isCurrentSectionMarked = () => {
+        return user?.books.some(book => book.book_id === bookId 
+                    && book.chapter_id === index.chapterId 
+                    && book.section_id === index.paragraphId
+                );
+    };
 
     const handleNavigation = (direction: "next" | "prev") => {
 
@@ -104,16 +111,17 @@ const Study = () => {
         let newParagraphId = paragraphId;
 
         if (direction === "next") {
-            const isSectionMarked = user?.books.some(
-                (book) =>
-                  book.book_id === bookId &&
-                  book.chapter_id === newChapterId &&
-                  book.section_id === newParagraphId
-              );
-          
-              if (isSectionMarked) {
-                openRating();
-              }
+            if(chapterId !== 1 && paragraphId > 3){
+
+                const isSectionMarked = user?.books.some(
+                    (book) =>
+                      book.book_id === bookId && book.rate < 1
+                  );
+              
+                  if (isSectionMarked) {
+                    openRating();
+                  }
+            }
           
             if (paragraphId < bookData.paragraphsCountPerChapter[chapterId - 1]) {
                 newParagraphId = paragraphId + 1;
@@ -131,7 +139,6 @@ const Study = () => {
             }
         }
         setIndex({ chapterId: newChapterId, paragraphId: newParagraphId });
-        // openRating();
     };
 
     const isLastSection = useMemo(() => {
@@ -153,9 +160,7 @@ const Study = () => {
 
     const openQuiz = () => setShowQuiz(true);
     const closeQuiz = () => setShowQuiz(false); 
-    const isCurrentSectionMarked = () => {
-        return user?.books.some(book => book.book_id === bookId && book.chapter_id === index.chapterId && book.section_id === index.paragraphId);
-    };
+
     const openRating = () => setIsShowRating(true);
     const closeRating = () => setIsShowRating(false); 
 
@@ -206,7 +211,7 @@ const Study = () => {
                     בחן את עצמך
                 </Button>
                 <Dialog open={showQuiz} onClose={closeQuiz}>
-                    <DialogContent>
+                    <DialogContent sx={{ backgroundColor: 'transparent' }}>
                         {paragraph && index && paragraph.find(
                                     (p) =>
                                         p.chapterNumber === index?.chapterId &&
@@ -226,9 +231,7 @@ const Study = () => {
                     </DialogContent>
                 </Dialog>
                 <Dialog open={isShowRating} onClose={closeRating}>
-                    <DialogContent sx={{ backgroundColor: 'transparent' }}>
-                        <Rating bookId={bookId}/>
-                    </DialogContent>
+                        <Rating bookId={bookId} onClose={closeRating}/>
                 </Dialog>
                 {isLastSection && (
                     <Button
