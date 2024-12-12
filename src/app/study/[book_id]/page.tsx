@@ -226,7 +226,7 @@ const Study = () => {
                     </DialogContent>
                 </Dialog>
                 <Dialog open={isShowRating} onClose={closeRating}>
-                    <DialogContent>
+                    <DialogContent sx={{ backgroundColor: 'transparent' }}>
                         <Rating bookId={bookId}/>
                     </DialogContent>
                 </Dialog>
