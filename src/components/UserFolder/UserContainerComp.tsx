@@ -5,6 +5,7 @@ import ProgressComp from './ProgressComp';
 import InfoComp from './InfoComp';
 import React from 'react';
 import Recommendations from './Recommendations';
+import GoalSetting from './Goals/Goals'
 
 export default function UserContainer() {
 
@@ -27,6 +28,7 @@ export default function UserContainer() {
             <Recommendations />
           </div>
         </div>
+        <GoalSetting/>
     </RequireAuth >
   );
 }
