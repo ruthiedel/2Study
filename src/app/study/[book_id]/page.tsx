@@ -39,7 +39,6 @@ const Study = () => {
     const [paragraph, setParagraph] = useState<Paragraphs[]>([]);
     const [bookData, setBookData] = useState<Book | null>(null);
     const [showConfetti, setShowConfetti] = useState(false);
-    const [loading, setLoading] = useState(false);
     const [showQuiz, setShowQuiz] = useState(false);
     const [isShowRating, setIsShowRating] = useState(false);
 
@@ -78,8 +77,6 @@ const Study = () => {
             setParagraph(paragraphs.sections);
         } catch (error) {
             console.error("Error fetching paragraphs:", error);
-        } finally {
-            setLoading(false);
         }
     };
 
@@ -202,21 +199,18 @@ const Study = () => {
                 >
                     <ExpandMore />
                 </IconButton>
-                <Button
+                <button
                     onClick={openQuiz}
-                    variant="contained"
-                    color="primary"
                     className={Styles.quizButton}
                 >
                     בחן את עצמך
-                </Button>
+                </button>
                 <Dialog open={showQuiz} onClose={closeQuiz}>
-                    <DialogContent sx={{ backgroundColor: 'transparent' }}>
                         {paragraph && index && paragraph.find(
                                     (p) =>
                                         p.chapterNumber === index?.chapterId &&
                                         p.section.paragraphId === index?.paragraphId
-                                )&&(
+                                )?(
                             <QuestionCard
                                 p={paragraph.find(
                                     (p) =>
@@ -227,8 +221,7 @@ const Study = () => {
                                 setParagraph={setParagraph}
                                 chapterId={paragraph[0].chapterNumber}
                             />
-                        )}
-                    </DialogContent>
+                        ):<Loading/>}
                 </Dialog>
                 <Dialog open={isShowRating} onClose={closeRating}>
                         <Rating bookId={bookId} onClose={closeRating}/>

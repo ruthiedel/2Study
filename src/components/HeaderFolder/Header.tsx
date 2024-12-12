@@ -10,13 +10,15 @@ import logo from "../../../public/pictures/logo1.png";
 import styles from "./header.module.css";
 import useUserStore from '../../services/zustand/userZustand/userStor';
 import Login from "../Login/Login";
+import { useRouter } from "next/navigation"; 
 
 const Header: React.FC = () => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const logout = useUserStore((state) => state.logout);
     const user = useUserStore((state) => state.user);
     const [showLogin, setShowLogin] = useState(false);
-    const pathname = usePathname(); // קבלת ה-URL הנוכחי
+    const pathname = usePathname(); 
+    const router = useRouter();
 
     useEffect(() => {
         if (user != null && showLogin)
@@ -34,6 +36,7 @@ const Header: React.FC = () => {
     const handleLogout = () => {
         logout();
         setAnchorEl(null);
+        router.push('/about');
     };
 
     const handleLoginOpen = () => {
@@ -50,7 +53,7 @@ const Header: React.FC = () => {
             <div className={styles.appBar}>
                 <div className={styles.toolbar}>
                     <div className={styles.logo}>
-                        <Link href="/" passHref>
+                        <Link href="/bookCatalog" passHref>
                             <Image
                                 src={logo}
                                 alt="2Study Logo"
@@ -61,12 +64,11 @@ const Header: React.FC = () => {
 
                     <div className={styles.navButtons}>
 
-                        <Link href="/" className={`${styles.navButton} ${pathname === '/' ? styles.active : ''}`}>
+                        <Link href="/about" className={`${styles.navButton} ${pathname === '/about' ? styles.active : ''}`}>
                             <button className={styles.navText}>דף הבית</button>
                         </Link>
-                        <Link href="/about" className={`${styles.navButton} ${pathname === '/about' ? styles.active : ''}`}>
-
-                            <button className={styles.navText}>אודות</button>
+                        <Link href="/BooksLearning" className={`${styles.navButton} ${pathname === '/BooksLearning' ? styles.active : ''}`}>
+                            <button className={styles.navText}>ספרים בלמידה</button>
                         </Link>
                         <Link href="/bookCatalog" className={`${styles.navButton} ${pathname === '/bookCatalog' ? styles.active : ''}`}>
                             <button className={styles.navText}>קטלוג ספרים</button>

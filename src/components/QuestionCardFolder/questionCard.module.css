@@ -1,63 +1,75 @@
 .card {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  background-color: #000; /* Black background */
+  flex-direction: row;
+  background-color: black;
   color: white;
-  border-radius: 10px;
-  padding: 15px;
-  width: 350px; /* הקטנת הרוחב */
-  font-family: Arial, sans-serif;
+  padding: 20px;
+  width: 600px;
   position: relative;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.section {
-  margin-bottom: 10px; /* הקטנת מרווחים */
-  width: 100%;
+.loading {
+  opacity: 0.5;
+  filter: blur(3px);
 }
 
-.label {
-  font-size: 0.9rem; /* הקטנת גודל הטקסט */
-  font-weight: bold;
-}
-
-.input {
-  width: 100%;
-  padding: 8px; /* הקטנת רווח פנימי */
-  font-size: 0.9rem; /* הקטנת גודל הטקסט */
-  border-radius: 5px;
-  border: none;
-  background-color: #fff;
-  color: #000;
-  box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
-}
-
-.changeQuestionButton {
-  background-color: #f0a500;
-  color: black;
-  padding: 8px 15px; /* הקטנת רווחים */
-  font-size: 0.9rem; /* הקטנת גודל הכפתור */
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  align-self: center;
-  margin-top: 10px;
-}
-
-.changeQuestionButton:hover {
-  background-color: #ffa726;
-}
-
-.imageContainer {
-  position: absolute;
-  top: 10px; /* קרבה לחלק העליון */
-  right: 10px; /* קרבה לצד */
-  width: 60px; /* הקטנת התמונה */
-  height: 60px;
+.leftPanel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: 150px;
+  padding: 10px;
 }
 
 .image {
-  width: 100%;
-  height: auto;
+  width: 100px;
+  height: 140px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.changeButton {
+  background-color: #f0a500;
+  color: black;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.changeButton:hover {
+  background-color: #ffa726;
+}
+
+.rightPanel {
+  flex: 1;
+  padding-left: 20px;
+}
+
+.toggle {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  border: 1px solid white;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: white;
+  margin-top: 5px;
+}
+
+.toggleText {
+  font-weight: bold;
+  font-size: 1rem;
+  flex: 1;
+  color: black;
+}
+
+.text {
+  background-color: white;
+  border-radius: 5px;
+  padding: 10px;
+  color: black;
+  margin-bottom: 5px;
 }
