@@ -61,12 +61,12 @@ const Header: React.FC = () => {
 
                     <div className={styles.navButtons}>
 
-                        <Link href="/" className={`${styles.navButton} ${pathname === '/' ? styles.active : ''}`}>
+                        <Link href="/about" className={`${styles.navButton} ${pathname === '/' ? styles.active : ''}`}>
                             <button className={styles.navText}>דף הבית</button>
                         </Link>
-                        <Link href="/about" className={`${styles.navButton} ${pathname === '/about' ? styles.active : ''}`}>
+                        <Link href="/BooksLearning" className={`${styles.navButton} ${pathname === '/about' ? styles.active : ''}`}>
 
-                            <button className={styles.navText}>אודות</button>
+                            <button className={styles.navText}>ספרים בלמידה</button>
                         </Link>
                         <Link href="/bookCatalog" className={`${styles.navButton} ${pathname === '/bookCatalog' ? styles.active : ''}`}>
                             <button className={styles.navText}>קטלוג ספרים</button>
