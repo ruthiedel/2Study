@@ -1,11 +1,11 @@
 "use client";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Pusher from 'pusher-js';
 import { useUpdateBook, getBooks } from '../../hooks/booksDetails';
 import { User, Message } from '../../types';
 import ChatStyles from './Chat.module.css';
 import useUserStore from '../../services/zustand/userZustand/userStor';
-import { postMessage } from '../../services/chatService'
+import { postMessage, parseUserName, extractIdAndNameFromMessages } from '../../services/chatService'
 
 const Chat = ({ bookId }: { bookId: string }) => {
   const user: User | null = useUserStore((state) => state.user);
@@ -15,8 +15,10 @@ const Chat = ({ bookId }: { bookId: string }) => {
   const [message, setMessage] = useState('');
   const [isSending, setIsSending] = useState(false);
   const [bookName, setBookName] = useState('');
+  const messageContainerRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
+const studyGroupMembers = extractIdAndNameFromMessages(messages);
+
     const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY!, {
       cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER!,
     });
@@ -27,32 +29,23 @@ const Chat = ({ bookId }: { bookId: string }) => {
         setMessages([...selectedBook?.learningGroups.message])
         setBookName(selectedBook.name);
       }
-      else {
-        console.log("No learningGroups", selectedBook)
-      }
+      else { console.log("No learningGroups", selectedBook)}
     }
-    else {
-      console.log("No books")
-    }
+    else {console.log("No books")}
+
     const channel = pusher.subscribe(`chat-${bookId}`);
     channel.bind('message', (data: Message) => {
-      setMessages((prevMessages) => {
-        return [...prevMessages, data];
-
-      });
+      setMessages((prevMessages) => { return [...prevMessages, data]; });
     });
 
-    return () => {
-      pusher.unsubscribe(`chat-${bookId}`);
-    };
-  }, [books]);
+    return () => { pusher.unsubscribe(`chat-${bookId}`) };
 
   useEffect(() => {
-    const messageContainer = document.getElementById('messages-container');
-    if (messageContainer) {
-      messageContainer.scrollTop = messageContainer.scrollHeight;
+    if (messageContainerRef.current) {
+      messageContainerRef.current.scrollTop = messageContainerRef.current.scrollHeight;
     }
   }, [messages]);
+
 
   const sendMessage = async () => {
     if (!user || message.trim() === '' || isSending) return;
@@ -121,16 +114,16 @@ const Chat = ({ bookId }: { bookId: string }) => {
           />
         </div>
       </div>
-      <div className={ChatStyles.messages} id='messages-container'>
+      <div className={ChatStyles.messages} id='messages-container' ref={messageContainerRef}>
         {messages.map((msg, index) => (
-          <div key={index} className={`${ChatStyles.messageContainer}  ${getIdFromUserName(msg.username) === user?._id ? ChatStyles.selfContainer : ''
+          <div key={index} className={`${ChatStyles.messageContainer}  ${parseUserName(msg.username).id === user?._id ? ChatStyles.selfContainer : ''
             }`}>
             <div className={ChatStyles.profile}>{msg.username[0]}</div>
             <div
               className={`${ChatStyles.message} ${getIdFromUserName(msg.username) === user?._id ? ChatStyles.selfMessage : ChatStyles.otherMessage
                 }`}
             >
-              <div className={ChatStyles.username}>{getNameFromUserName(msg.username)}</div>
+              <div className={ChatStyles.username}>{parseUserName(msg.username).name}</div>
               <div className={ChatStyles.text}>{msg.message}</div>
               <div className={ChatStyles.timestamp}>
                 {new Date(msg.timestamp).toLocaleTimeString()}
