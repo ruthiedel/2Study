@@ -1,0 +1,123 @@
+
+.columns {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  align-items: center;
+  padding: 10px;
+  font-family: var(--main-font);
+}
+
+.title{
+  color: #333;
+  font-weight: bold;
+  font-size: 24px;
+  text-align: center;
+}
+
+.imageColumn {
+  flex: 0.3;
+}
+
+.animate{
+  width: 350px;
+}
+
+.contentColumn {
+  flex: 0.7;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.innerColumns {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.addGoalContainer {
+  flex: 0.5;
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+.inputField {
+  width: 250px;
+  height: 7vh;
+  padding: 10px;
+  border-radius: 40px;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.button {
+  width: 130px;
+  height: 35px;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 40px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-right: 40px;
+  margin-top: 10px;
+}
+
+.goalList {
+  flex: 0.5;
+  list-style: none;
+  transition: transform 0.2s, box-shadow 0.2s; 
+}
+
+.goalText {
+  flex: 1;
+  text-align: right;
+  margin: 0 10px;
+}
+
+.completed .goalText {
+  text-decoration: line-through;
+  color: #aaa;
+}
+
+.checkbox {
+  font-size: 18px;
+  cursor: pointer;
+  color: black;
+}
+
+.goalItem {
+  display: flex;
+  align-items: center;
+  border-radius: 4px;
+  position: relative;
+  padding-right: 30px;
+}
+
+.goalItem:hover {
+  transform: scale(1.05); 
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); 
+}
+
+.deleteButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  color: black;
+  visibility: hidden; 
+  position: absolute; 
+  right: 10px; 
+}
+
+.goalItem:hover .deleteButton {
+  visibility: visible; 
+}
+
+.noGoals {
+  color: #888;
+  font-size: 18px;
+  text-align: center;
+}

@@ -104,7 +104,6 @@ const ShowBooks: React.FC = () => {
                             <div className={styles.overlay} onClick={handleClosePopup}></div>
                             <div className={styles.popup}>
                                 <BookCard book={selectedBook} onClose={handleClosePopup} />
-
                             </div>
                         </RequireAuth>
 

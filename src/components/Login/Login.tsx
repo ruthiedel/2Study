@@ -12,6 +12,28 @@ import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 const Login = () => {
   const setUser = useUserStore((state) => state.setUser);
 
+  const handleLogin = async () => {
+    try {
+      let localUser = {
+        _id: 'kWB2fSx9q1SxmMc1W7vyoWo2QQZ2',
+        email: 'frieman@g.jct.ac.il',
+        name: 'guest',
+        books: [],
+        userImagePath: '',
+      };
+
+      const response = await logInUser(localUser);
+
+      if (response.status === 200) {
+        localUser = response.user;
+      }
+      setUser(localUser);
+    } catch (error) {
+      console.error("Error during login:", error);
+
+    }
+  }
+
   const handleGoogleLogin = async () => {
     try {
       const provider = new GoogleAuthProvider();
@@ -27,13 +49,12 @@ const Login = () => {
         books: [],
         userImagePath: user.photoURL || '',
       };
-
+      console.log(localUser);
       const response = await logInUser(localUser);
 
       if (response.status === 200) {
         localUser = response.user;
       }
-
       setUser(localUser);
 
     } catch (error) {
@@ -48,6 +69,9 @@ const Login = () => {
         <p className={styles.login_card_text}><strong>התחברות</strong></p>
         <button onClick={handleGoogleLogin} className={styles.login_card_button}>
           המשך עם Google
+        </button>
+        <button onClick={handleLogin} className={styles.login_guest}>
+          התחבר כאורח
         </button>
         <Image
           src={logo}
