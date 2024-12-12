@@ -93,6 +93,7 @@
   align-items: center;
   border-radius: 4px;
   position: relative;
+  padding-right: 30px;
 }
 
 .goalItem:hover {
@@ -108,7 +109,7 @@
   color: black;
   visibility: hidden; 
   position: absolute; 
-  right: -20px; 
+  right: 10px; 
 }
 
 .goalItem:hover .deleteButton {
