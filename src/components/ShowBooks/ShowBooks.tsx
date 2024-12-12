@@ -34,7 +34,7 @@ const ShowBooks: React.FC = () => {
         else{
             return []
         }
-    }, [books, categories, bookName, authorName, error]);
+    }, [books, categories, bookName, authorName]);
 
     const handleBookSelect = (book: Book) => {
         setSelectedBook(book);
