@@ -20,16 +20,18 @@ export default function StudyComp() {
         {(user && user.books && user.books.length > 0 ) ? (
           user.books.map(book => {
             return (
-              <StyledLink key={book.book_name}>
-                <b>{book.book_name}</b>
-                <div className='bg-black rounded-full absolute bottom-[-8px] left-[50%] w-[15px] h-[15px] z-10'></div>
-                <p>פרק: {numberToGematria(book.chapter_id)} סעיף: {numberToGematria(book.section_id)}</p>
-              </StyledLink>
+              <a href={`study/${book.book_id}`}>
+                <StyledLink key={book.book_name}>
+                  <b>{book.book_name}</b>
+                  <div className='bg-black rounded-full absolute bottom-[-8px] left-[50%] w-[15px] h-[15px] z-10'></div>
+                  <p>פרק: {numberToGematria(book.chapter_id)} סעיף: {numberToGematria(book.section_id)}</p>
+                </StyledLink>
+              </a>
             );
           }
           )
         ) : (
-          <p className='mt-6 mb-6'>כאן יופיעו הספרים כאשר תתחיל ללמוד</p>
+          <p className='mt-6 mb-6'>כאן יופיעו הספרים שתבחר, כאשר תתחיל ללמוד</p>
         )}
       </div>
 
