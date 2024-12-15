@@ -15,8 +15,6 @@ import useUserStore from '../../services/zustand/userZustand/userStor';
 import { Book, UserBook } from '@/types';
 import { getBooks } from "@/hooks/booksDetails";
 
-
-// הרגיסטרציה של היכולות של Chart.js
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -82,6 +80,7 @@ const BarsGraph = () => {
   return (
     <div style={{ width: '80%', margin: '20px auto' }}>
       <h3 style={{ textAlign: 'center' }}>גרף הדירוגים:</h3>
+      {(user && user.books && user.books.length === 0) && <p className='text-xs'>כאן יופיע פילוח הקטגוריות של הספרים בהם תלמד</p>}
       <Bar data={data} options={options} />
     </div>
   );

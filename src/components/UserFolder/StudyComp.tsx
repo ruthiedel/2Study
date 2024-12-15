@@ -1,19 +1,10 @@
 'use client'
 
 import * as React from 'react';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
 import { StyledLink } from '../StyleComponentsFolder/StyledLink';
-import Typography from '@mui/material/Typography';
 import styles from './userStatus.module.css'
 import useUserStore from '../../services/zustand/userZustand/userStor';
 import numberToGematria from '@/lib/clientHelpers/gematriaFunc';
-
-export type bookRowProp = {
-  bookName: string;
-  chapterName: string;
-  sectionName: string;
-};
 
 export default function StudyComp() {
   const user = useUserStore((state) => state.user);
@@ -26,7 +17,7 @@ export default function StudyComp() {
             ספרים בלמידה
           </strong>
         </p>
-        {user && user.books && user.books.length > 0 && (
+        {(user && user.books && user.books.length > 0 ) ? (
           user.books.map(book => {
             return (
               <StyledLink key={book.book_name}>
@@ -37,18 +28,9 @@ export default function StudyComp() {
             );
           }
           )
+        ) : (
+          <p className='mt-6 mb-6'>כאן יופיעו הספרים כאשר תתחיל ללמוד</p>
         )}
-        {/* {booksData.map(book =>
-          {
-            return (
-              <StyledLink key={book.bookName}>
-                <b>{book.bookName}</b>
-                <div className='bg-black rounded-full absolute bottom-[-8px] left-[50%] w-[15px] h-[15px] z-10'></div>
-                <p>{book.chapterName} {book.sectionName}</p> 
-              </StyledLink>
-            );
-          }
-        )} */}
       </div>
 
     </div>

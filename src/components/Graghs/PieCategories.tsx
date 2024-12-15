@@ -13,6 +13,7 @@ function PieCategories() {
   useEffect(() => {
     if (isLoading || !books || !user) return;
 
+    if (books && Array.isArray(books)){
     const userBooksDetails = books.filter((book) =>
       user.books.some((userBook) => userBook.book_id === book._id)
     );
@@ -65,9 +66,11 @@ function PieCategories() {
           },
         },
       });
-    }
+    }}
   }, [books, user, isLoading]); 
+
   if (isLoading || !books || !user) return <p>Loading...</p>;
+  if (user.books && user.books.length === 0) return <p>כאן יופיע פילוח הקטגוריות של הספרים בהם תלמד</p>;
   return <canvas ref={chartRef} width="400" height="400"></canvas>;
 }
 
