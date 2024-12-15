@@ -80,6 +80,9 @@ const Header: React.FC = () => {
                         color="inherit"
                         onClick={handleMenuOpen}
                         className={styles.iconButton}
+                        sx={{
+                            marginLeft: '1rem',
+                        }}
                     >
                         <AccountCircleIcon
                             sx={{
@@ -88,8 +91,6 @@ const Header: React.FC = () => {
                                 fill: 'white',
                                 backgroundColor: 'black',
                                 borderRadius: '50%',
-                                marginLeft: '1rem',
-
                             }}
                         />
                     </IconButton>
