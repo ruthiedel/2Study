@@ -1,42 +1,91 @@
+.mainContainer {
+    display: flex;
+    flex-direction: column;
+    padding: 50px 100px;
+    background-color: var(--primary-color);
+    font-family: var(--main-font);
+}
 
-.container {
+.firstLine , .secondLine{
     display: flex;
 }
 
-.mycard {
-    background-color: #F9F2D7;
-    border-radius: 5px;
-    margin: 10px;
+.secondLine{
+ margin-top: 15px;
 }
 
+.container {
+    display: flex;
+    background-color: white;
+}
+
+.mycard, .mystudycard, .myinfocard, .myprogresscard {
+    position: relative;
+    padding: 20px 20px 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+}
+
+.myinfocard{
+    flex: 50%;
+}
+
+.mystudycard{
+    flex: 40%;
+    margin-left: 10px;
+}
+
+.myprogresscard{
+    flex: 60%;
+}
+
+.studyContent {
+    height: 300px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.recommendContainer {
+    display: flex;
+    flex: 50%;
+    padding: 0px;
+}
+
+
 .recommendcard {
-    background-color: #F9F2D7;
-    border-radius: 5px;
-    margin: 10px;
+    border-radius: 10px;
+    margin-right: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px;
 }
 
 .userbox {
-    color: #000000;
-    padding: 10px 20px;
-    background-color: #F6F6F6;
-    margin: 70px;
-    display: flex;
-    flex-direction: column;
+    padding: 20px;
+    text-align: center;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.text{
+    background-color: white;
+    border-radius: 25px;
+    padding: 0px 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .infoContainer {
-    margin: 1% 50% 0 8% ;
-    font-weight: 400;
-    display: flex;
-    flex-direction: row;
-
+    margin-right: 170px;
+    text-align: right;
 }
 
-.info1{
+.info1 {
     margin-top: 120%;
     margin-bottom: 60%;
     padding: 3%;
@@ -52,9 +101,9 @@
     text-align: center;
     padding: 3%;
     font-size: 8px;
-    display: inline-block; 
+    display: inline-block;
     white-space: normal;
-    box-sizing: border-box; 
+    box-sizing: border-box;
 }
 
 
@@ -67,68 +116,81 @@
     transition: background-color 0.3s ease;
     font-family: '2StudyFont', sans-serif;
 }
-  
+
 .readMoreButton:hover {
     background-color: #444;
     color: #fff;
 }
 
-.numOfBooksContainer{
+.numOfBooks {
     display: flex;
     align-items: center;
-    justify-items: center;
-}
-
-.numOfBooks {
-    font-size: 8px;
+    justify-content: center;
+    gap: 8px;
     font-weight: bold;
-    background-color: rgba(232, 203, 85, 0.63);;
-    color: #000000;
-    width: 70%;
-    height: 40%;
-    text-align: center;
-    
-    margin: 15%;
-    padding: 3%;
-    border-radius: 6px;
-    box-shadow: 0px 7px 4px rgba(0, 0, 0, 0.25);
-
+    color: #333;
 }
 
-.starIcon{
-    color: #F6F6F6;
-    width: 10px;
-    height: 10px;
-    margin-left: 12%;
-    margin-right: 12%;
+.starIcon {
+    color: gold;
+}
+
+.userContainer {
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin-top: 55px;
+}
+
+.userName {
+    margin-bottom: 8px;
+    margin-top: 10px;
+}
+
+.numOfBooksContainer {
+    margin-top: 60px;
+    text-align: center;
+    background-color:white;
+    border-radius: 25px;
+    margin: 60px 80px 0px 80px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.imageWrapper {
+    position: absolute;
+    top: -50px;
+    right: 20px;
 }
 
 .imgUser {
-    margin: 3%;
-    position: absolute;
-    top: 15%;
-    right: 3%;
-    max-width: 100px;
-    max-width: 100px;
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
-    border: #000000 2px solid;
-    object-fit: cover;
+    border: 4px solid #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.infoContainer2{
+.colorContainer {
+    background-color: var(--lightest-gray);
+    padding-bottom: 50px;
+    border-radius: 5px;
+    margin: 0px 20px;
+}
+
+.infoContainer2 {
     display: flex;
     flex-direction: row;
     max-height: 20px;
     font-size: small;
 }
 
-.infoContainerMain{
+.infoContainerMain {
     float: left;
     margin-right: 30%;
-    margin-top: 5px;
+    margin-top: 40px;
 }
 
-.infobutto{
+.infobutto {
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 10px;
     margin-right: 8px;
@@ -138,4 +200,9 @@
 .titles {
     padding: 3%;
 
+}
+
+.small {
+    font-size: 12px;
+    color: var(--dark-gray);
 }
