@@ -71,3 +71,11 @@ export type Mail = {
     email: string;
     message: string
 }
+export type localMessage = {
+  messageId: string;
+  username: string;
+  userId: string;
+  bookId: string;
+  message: string;
+  timestamp: Date;
+}
