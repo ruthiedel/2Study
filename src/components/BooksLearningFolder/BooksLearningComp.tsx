@@ -6,6 +6,8 @@ import { UserBook } from "../../types";
 import useUserStore from "../../services/zustand/userZustand/userStor";
 import RequireAuth from "../../layout/RequireAuth";
 import BookItem from "./BookItem/BookItem";
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+
 
 
 
@@ -31,56 +33,69 @@ const BooksLearning = () => {
 
   function handleStarted(event: React.MouseEvent<HTMLButtonElement>): void {
     try {
-        router.push(`/bookCatalog`);
+      router.push(`/bookCatalog`);
     }
     catch (error) {
-        console.error('Error handling started event:', error);
+      console.error('Error handling started event:', error);
     }
-}
+  }
 
 
-return (
-  <RequireAuth>
-    <div className={styles.container}>
-      <h1 className={styles.title}>איזור למידה</h1>
-      
-      {filteredUserBooks.length > 0 && (
-        <>
-          <p className={styles.subtitle}>בחר ספר מהרשימה כדי להתחיל ללמוד 📚</p>
-          <div className={styles.searchWrapper}>
-            <input
-              className={styles.searchInput}
-              type="text"
-              placeholder="חפש ספר..."
-              value={searchQuery}
-              onChange={handleSearchChange}
-            />
-          </div>
-        </>
-      )}
-      
-      <div className={styles.booksList}>
-        {filteredUserBooks.length === 0 ? (
-          <div className={styles.buttonContainer}>
-            <p>עדיין לא בחרת ספרים ללמוד ...
-              אתה יכול לבחור ממש עכשיו ↓</p>
-            <button className={styles.buttonStart} onClick={handleStarted}>get started</button>
-          </div>
-        ) : (
-          filteredUserBooks.map((book, index) => {
-            const bookData = getBookData(book);
-            return (
-              <BookItem
-                key={book.book_id}
-                book={book}
-                index={index}
-                bookData={bookData}
+  return (
+    <RequireAuth>
+      <div className={styles.container}>
+        <h1 className={styles.title}>איזור למידה</h1>
+
+        {userBooks.length > 0 && (
+          <>
+            <p className={styles.subtitle}>בחר ספר מהרשימה כדי להתחיל ללמוד 📚</p>
+            <div className={styles.searchWrapper}>
+              <input
+                className={styles.searchInput}
+                type="text"
+                placeholder="חפש ספר..."
+                value={searchQuery}
+                onChange={handleSearchChange}
               />
-            );
-          })
+            </div>
+          </>
         )}
+
+        <div className={styles.booksList}>
+          {userBooks.length === 0 ? (
+            <div className={styles.buttonContainer}>
+              <p>עדיין לא בחרת ספרים ללמוד ...
+                אתה יכול לבחור ממש עכשיו ↓</p>
+              <br />
+              <button className={styles.buttonStart} onClick={handleStarted}>get started</button>
+              <div className={styles.imageColumn}>
+                <DotLottieReact
+                  src="https://lottie.host/f95cfacb-6440-40e9-a37f-15d6ded82ce0/W0zginnfWq.lottie"
+                  autoplay
+                  loop
+                  className={styles.animate}
+                ></DotLottieReact>
+              </div>
+              <div className={styles.books}>
+                <p className={styles.text}>כאן יופיעו הספרים שלך </p>
+              </div>
+            </div>
+          ) : (
+            filteredUserBooks.map((book, index) => {
+              const bookData = getBookData(book);
+              return (
+                <BookItem
+                  key={book.book_id}
+                  book={book}
+                  index={index}
+                  bookData={bookData}
+                />
+              );
+            })
+          )}
+        </div>
       </div>
-    </div>
-  </RequireAuth>
-);}
+    </RequireAuth>
+  );
+}
 export default BooksLearning;

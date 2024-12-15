@@ -8,6 +8,55 @@
   font-family: var(--main-font);
 }
 
+  .buttonContainer {
+    display: flex;
+    flex-direction: column;
+    width: 420px;
+    justify-content: center;
+  }
+
+  .imageColumn{
+    width: 400px;
+    height:200px;
+  }
+
+  .books{
+    width: auto;
+    height: 100px;
+    background-color: white;
+    text-align:center ;
+ 
+  }
+
+  .text{
+    font-size: 30px;
+    font-family: var(--main-font);
+    color: #7e7b7b;
+    margin-top: 10px;
+  }
+  
+  .buttonStart{
+    background-color: black;
+    color: white;
+    font-size: 20px;
+    font-family: var(--main-font);
+    width: 220px;
+    margin-right: 70px;
+    /* padding: 5px 15px; */
+    border: none;
+    border-radius: 40px;
+    cursor: pointer;
+  }
+  
+  .booksList {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    max-width: 1200px;
+  }
+
 .title {
   font-size: 2.5rem;
 }
@@ -32,14 +81,6 @@
   border: 2px solid var(--dark-gray);
   border-radius: 5px;
   font-size: 1rem;
-}
-
-.booksList {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  width: 100%;
-  max-width: 1200px;
 }
 
 .bookItem {
