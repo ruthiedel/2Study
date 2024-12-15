@@ -18,10 +18,10 @@ const InfoComp = () => {
             />
           </div>
           <div className={styles.infoContainer}>
-            <p  className={styles.userName}>
-            <strong>  שם משתמש: </strong> <p className={styles.text}>{user?.name}</p>
-            </p>
-            <p> <strong>מייל: </strong><p className={styles.text}>{user?.email}</p></p>
+            <div  className={styles.userName}>
+            <strong>  שם משתמש: </strong> <div className={styles.text}>{user?.name}</div>
+            </div>
+            <div> <strong>מייל: </strong><div className={styles.text}>{user?.email}</div></div>
           </div>
         </div>
         <div className={styles.numOfBooksContainer}>
