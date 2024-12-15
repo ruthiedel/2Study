@@ -80,11 +80,22 @@ export async function recommend(userId: string, books: BookWithoutCoverImage[]) 
 
   if (recommendations.length === 0) {
     recommendations = books
-    .filter(book => !currentUser.books.some(b => b.book_id === book._id)) // סינון ספרים שהמשתמש קרא
-    .sort((a, b) => (b.rating || 0) - (a.rating || 0)) // מיין לפי הדירוג
-    .map(book => book._id) // החזר רק את ה-IDs של הספרים
-    .filter((id): id is string => id !== undefined); // סינון undefined
+    .filter(book => !currentUser.books.some(b => b.book_id === book._id))
+    .sort((a, b) => (b.rating || 0) - (a.rating || 0)) 
+    .map(book => book._id) 
+    .filter((id): id is string => id !== undefined);
   }
+
+  if (recommendations.length === 1) {
+      const highestRatedBook = books
+      .filter(book => !currentUser.books.some(b => b.book_id === book._id) && !recommendations.includes(book._id!)) 
+      .sort((a, b) => (b.rating || 0) - (a.rating || 0))[0]; 
+
+    if (highestRatedBook && highestRatedBook._id) {
+      recommendations.push(highestRatedBook._id); 
+    }
+  }
+
   if(recommendations.length >=2)
      return recommendations.slice(0, 2);
 
