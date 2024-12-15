@@ -1,64 +1,38 @@
-"use client";
-
 import React from "react";
-import useUserStore from '../../services/zustand/userZustand/userStor';
-import { Card, CardMedia, Typography } from "@mui/material";
-import Box from "@mui/material/Box";
+import useUserStore from "../../services/zustand/userZustand/userStor";
 import styles from "./userStatus.module.css";
 import StarIcon from "@mui/icons-material/Star";
 
 const InfoComp = () => {
   const user = useUserStore((state) => state.user);
 
-  // image={user?.userImagePath ? `/proxy?url=${encodeURIComponent(user.userImagePath)}` : "/defaultUser.png"}
-
   return (
-    <Card className={styles.mycard}>
-      <Box>
-        <CardMedia
-          component="img"
-          image={user?.userImagePath}
-          alt={user?.name || "User"}
-          loading="lazy"
-          className={styles.imgUser}
-        />
-      </Box>
-      <div className={styles.userbox}>
-
-        <div className={styles.infoContainerMain}>
-          <div className={styles.infoContainer2}>
-            <strong>
-              <div className={styles.titles}>שם:</div>
-            </strong>
-            <div className={styles.infobutto}>{user?.name}</div>
+    <div className={styles.myinfocard}>
+      <div className={styles.colorContainer}>
+        <div className={styles.userContainer}>
+          <div className={styles.imageWrapper}>
+            <img
+              src={user?.userImagePath || "/default-avatar.png"}
+              alt={user?.name}
+              className={styles.imgUser}
+            />
           </div>
-          <div className={styles.infoContainer2}>
-            <strong>
-              <div>מייל:</div>
-            </strong>
-            <div className={styles.infobutto}>{user?.email}</div>
+          <div className={styles.infoContainer}>
+            <p  className={styles.userName}>
+            <strong>  שם משתמש: </strong> <p className={styles.text}>{user?.name}</p>
+            </p>
+            <p> <strong>מייל: </strong><p className={styles.text}>{user?.email}</p></p>
           </div>
-          {user?.age && user?.age > 0 &&
-            <div className={styles.infoContainer2}>
-              <strong>
-                <div>גיל:</div>
-              </strong>
-              <div className={styles.infobutto}>{user?.age}
-              </div>
-            </div>
-          }
         </div>
-
-        <Box className={styles.numOfBooksContainer}>
-          {/* {user.books.sum(if(mark !== -1))} */}
-          <Typography className={styles.numOfBooks}>
+        <div className={styles.numOfBooksContainer}>
+          <p className={styles.numOfBooks}>
             <StarIcon className={styles.starIcon} />
-              {user?.books.length} ספרים בלמידה
+            {user?.books.length} ספרים בלמידה \ נלמדו
             <StarIcon className={styles.starIcon} />
-          </Typography>
-        </Box>
+          </p>
+        </div>
       </div>
-    </Card>
+    </div>
   );
 };
 

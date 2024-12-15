@@ -47,18 +47,18 @@ const BarsGraph = () => {
       {
         label: 'הדירוג שלי:',
         data: userRatings,
-        backgroundColor: 'rgba(255, 99, 132, 0.6)',
-        borderColor: 'rgba(255, 99, 132, 1)',
+        backgroundColor: 'rgba(217, 195, 156, 0.6)',
+        borderColor: 'rgba(217, 195, 156, 1)',
         borderWidth: 1,
       },
       {
         label: 'הדירוג הכללי:',
         data: generalRatings,
-        backgroundColor: 'rgba(54, 162, 235, 0.6)',
-        borderColor: 'rgba(54, 162, 235, 1)',
+        backgroundColor: 'rgba(169, 169, 169, 0.6)', 
+        borderColor: 'rgba(169, 169, 169, 1)',
         borderWidth: 1,
-      },
-    ],
+      },      
+    ],    
   };
 
   const options = {

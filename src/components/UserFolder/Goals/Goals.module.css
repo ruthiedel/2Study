@@ -1,4 +1,3 @@
-
 .columns {
   display: flex;
   width: 100%;
@@ -6,9 +5,12 @@
   align-items: center;
   padding: 10px;
   font-family: var(--main-font);
+  background-color: var(--primary-color);
+  padding-top: 50px;
+  padding-bottom: 50px;
 }
 
-.title{
+.title {
   color: #333;
   font-weight: bold;
   font-size: 24px;
@@ -19,7 +21,7 @@
   flex: 0.3;
 }
 
-.animate{
+.animate {
   width: 350px;
 }
 
@@ -68,7 +70,7 @@
 .goalList {
   flex: 0.5;
   list-style: none;
-  transition: transform 0.2s, box-shadow 0.2s; 
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .goalText {
@@ -97,8 +99,8 @@
 }
 
 .goalItem:hover {
-  transform: scale(1.05); 
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); 
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
 .deleteButton {
@@ -107,13 +109,13 @@
   cursor: pointer;
   font-size: 18px;
   color: black;
-  visibility: hidden; 
-  position: absolute; 
-  right: 10px; 
+  visibility: hidden;
+  position: absolute;
+  right: 10px;
 }
 
 .goalItem:hover .deleteButton {
-  visibility: visible; 
+  visibility: visible;
 }
 
 .noGoals {
