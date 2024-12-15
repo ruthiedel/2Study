@@ -1,4 +1,3 @@
-
 .container {
   display: flex;
   flex-direction: column;
@@ -8,54 +7,54 @@
   font-family: var(--main-font);
 }
 
-  .buttonContainer {
-    display: flex;
-    flex-direction: column;
-    width: 420px;
-    justify-content: center;
-  }
+.buttonContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+}
 
-  .imageColumn{
-    width: 400px;
-    height:200px;
-  }
+.imageColumn {
+  width: 400px;
+  height: 200px;
+}
 
-  .books{
-    width: auto;
-    height: 100px;
-    background-color: white;
-    text-align:center ;
- 
-  }
+.books {
+  width: auto;
+  height: 100px;
+  background-color: white;
+  text-align: center;
 
-  .text{
-    font-size: 30px;
-    font-family: var(--main-font);
-    color: #7e7b7b;
-    margin-top: 10px;
-  }
-  
-  .buttonStart{
-    background-color: black;
-    color: white;
-    font-size: 20px;
-    font-family: var(--main-font);
-    width: 220px;
-    margin-right: 70px;
-    /* padding: 5px 15px; */
-    border: none;
-    border-radius: 40px;
-    cursor: pointer;
-  }
-  
-  .booksList {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    gap: 15px;
-    width: 100%;
-    max-width: 1200px;
-  }
+}
+
+.text {
+  font-size: 30px;
+  font-family: var(--main-font);
+  color: #7e7b7b;
+  margin-top: 10px;
+  padding: 10px;
+}
+
+.buttonStart {
+  background-color: black;
+  color: white;
+  font-size: 20px;
+  font-family: var(--main-font);
+  width: 220px;
+  /* padding: 5px 15px; */
+  border: none;
+  border-radius: 40px;
+  cursor: pointer;
+}
+
+.booksList {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+  max-width: 1200px;
+}
 
 .title {
   font-size: 2.5rem;
@@ -92,7 +91,8 @@
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  border: 1px solid var(--light-gray);  /* קו דק מסביב לכרטיס */
+  border: 1px solid var(--light-gray);
+  /* קו דק מסביב לכרטיס */
 }
 
 .bookItem:hover {
