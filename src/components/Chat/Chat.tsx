@@ -1,56 +1,47 @@
 "use client";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Pusher from 'pusher-js';
 import { useUpdateBook, getBooks } from '../../hooks/booksDetails';
-import { User, Message } from '../../types';
+import { User, Message, localMessage } from '../../types';
 import ChatStyles from './Chat.module.css';
 import useUserStore from '../../services/zustand/userZustand/userStor';
-import { postMessage } from '../../services/chatService'
+import { postMessage, convertMessagesToLocalMessages, convertLocalMessagesToMessages } from '../../services/chatService'
 
 const Chat = ({ bookId }: { bookId: string }) => {
   const user: User | null = useUserStore((state) => state.user);
   const { data: books } = getBooks();
   const updateBookMutation = useUpdateBook();
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<localMessage[]>([]);
   const [message, setMessage] = useState('');
   const [isSending, setIsSending] = useState(false);
   const [bookName, setBookName] = useState('');
+  const messageContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY!, {
-      cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER!,
-    });
+    const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY!, { cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER!, });
 
     if (books && Array.isArray(books)) {
       const selectedBook = books.find(book => book._id == bookId)
       if (selectedBook && selectedBook.learningGroups && selectedBook.learningGroups.message) {
-        setMessages([...selectedBook?.learningGroups.message])
+        setMessages(convertMessagesToLocalMessages([...selectedBook?.learningGroups.message]))
         setBookName(selectedBook.name);
       }
-      else {
-        console.log("No learningGroups", selectedBook)
-      }
+      else { console.log("No learningGroups", selectedBook)}
     }
-    else {
-      console.log("No books")
-    }
+    else { console.log("No books") }
+
     const channel = pusher.subscribe(`chat-${bookId}`);
     channel.bind('message', (data: Message) => {
-      setMessages((prevMessages) => {
-        return [...prevMessages, data];
-
-      });
+      const newMessage = convertMessagesToLocalMessages([data])[0];
+      setMessages((prevMessages) => [...prevMessages, newMessage]);
     });
 
-    return () => {
-      pusher.unsubscribe(`chat-${bookId}`);
-    };
+    return () => { pusher.unsubscribe(`chat-${bookId}`); };
   }, [books]);
 
   useEffect(() => {
-    const messageContainer = document.getElementById('messages-container');
-    if (messageContainer) {
-      messageContainer.scrollTop = messageContainer.scrollHeight;
+    if (messageContainerRef.current) {
+      messageContainerRef.current.scrollTop = messageContainerRef.current.scrollHeight;
     }
   }, [messages]);
 
@@ -72,12 +63,21 @@ const Chat = ({ bookId }: { bookId: string }) => {
 
       if (savedMessage) {
         console.log('Message sent successfully', savedMessage);
+        const newLocalMessage: localMessage = {
+          messageId: savedMessage._id || '',
+          username: user.name,
+          userId: user._id || '',
+          bookId: savedMessage.bookId,
+          message: savedMessage.message,
+          timestamp: savedMessage.timestamp,
+        };
+        const updatedMessages = convertLocalMessagesToMessages([...messages, newLocalMessage]);
 
         updateBookMutation.mutate({
           id: bookId,
           updatedData: {
             learningGroups: {
-              message: [...messages, savedMessage],
+              message: updatedMessages,
             },
           },
         });
@@ -91,22 +91,6 @@ const Chat = ({ bookId }: { bookId: string }) => {
     setMessage('');
     setIsSending(false);
   };
-
-  const getIdFromUserName = (userName: string): string => {
-    const lastSpaceIndex = userName.lastIndexOf(' ');
-    if (lastSpaceIndex !== -1) {
-      return userName.substring(lastSpaceIndex + 1);
-    }
-    return '';
-  }
-
-  const getNameFromUserName = (userName: string): string => {
-    const lastSpaceIndex = userName.lastIndexOf(' ');
-    if (lastSpaceIndex !== -1) {
-      return userName.substring(0, lastSpaceIndex);
-    }
-    return '';
-  }
 
   return (
     <div className={ChatStyles.container} >
@@ -123,14 +107,14 @@ const Chat = ({ bookId }: { bookId: string }) => {
       </div>
       <div className={ChatStyles.messages} id='messages-container'>
         {messages.map((msg, index) => (
-          <div key={index} className={`${ChatStyles.messageContainer}  ${getIdFromUserName(msg.username) === user?._id ? ChatStyles.selfContainer : ''
+          <div key={index} className={`${ChatStyles.messageContainer} ${(msg.userId && msg.userId === user?._id) ? ChatStyles.selfContainer : ''
             }`}>
             <div className={ChatStyles.profile}>{msg.username[0]}</div>
             <div
-              className={`${ChatStyles.message} ${getIdFromUserName(msg.username) === user?._id ? ChatStyles.selfMessage : ChatStyles.otherMessage
+              className={`${ChatStyles.message} ${(msg.userId && msg.userId === user?._id) ? ChatStyles.selfMessage : ChatStyles.otherMessage
                 }`}
             >
-              <div className={ChatStyles.username}>{getNameFromUserName(msg.username)}</div>
+              <div className={ChatStyles.username}>{msg.username}</div>
               <div className={ChatStyles.text}>{msg.message}</div>
               <div className={ChatStyles.timestamp}>
                 {new Date(msg.timestamp).toLocaleTimeString()}

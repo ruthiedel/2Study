@@ -9,7 +9,7 @@ import styles from './bookCard.module.css';
 import { Book, UserBook } from '../../types';
 import Login from '../Login/Login';
 import { removeHtmlTags } from '../../lib/clientHelpers/removeHTMLTags'
-import { useRouter } from 'next/router';
+import { useRouter } from "next/navigation";
 
 type BookCardProps = {
     book: Book;

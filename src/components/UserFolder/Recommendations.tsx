@@ -37,20 +37,17 @@ const Recommendations = () => {
   },[books,user])
   
   return (
-    <div className={styles.container}>
-      {
-        recommend.length === 0 ? (
-          <Loading /> 
-        ) : (
+    <div className={styles.recommendContainer}>
+      { recommend.length > 0 ?(
           recommend.map((book) => {
             return (
-              <div className={`${styles.recommendcard} fontFamily`} key={book.name}>
+              <div className={styles.recommendcard} key={book.name}>
                 <div>
-                  <div className="text-sm mt-4 fontFamily">מומלץ בשבילך🌟</div>
-                  <div className="text-[8px] fontFamily">
+                  <p>מומלץ בשבילך🌟</p>
+                  <p className={styles.small}>
                     מערכת ההמלצה שלנו חיפשה את הספר המתאים ביותר עבורך בהתבסס על
                     בחירות ודירוגים קודמים
-                  </div>
+                  </p>
                   <Book
                     key={book.name}
                     book={book}
@@ -62,7 +59,7 @@ const Recommendations = () => {
               </div>
             );
           })
-        )
+        ):(<Loading/>)
       }
     </div>
   );

@@ -13,6 +13,7 @@ function PieCategories() {
   useEffect(() => {
     if (isLoading || !books || !user) return;
 
+    if (books && Array.isArray(books)){
     const userBooksDetails = books.filter((book) =>
       user.books.some((userBook) => userBook.book_id === book._id)
     );
@@ -32,12 +33,14 @@ function PieCategories() {
           label: 'מספר ספרים',
           data: dataValues,
           backgroundColor: [
-            'rgb(255, 99, 132)',
-            'rgb(54, 162, 235)',
-            'rgb(255, 205, 86)',
-            'rgb(75, 192, 192)',
-            'rgb(153, 102, 255)',
-          ],
+            '#F1E1B3', 
+            '#D9C39C', 
+            '#B69F68', 
+            '#F5F5F5',
+            '#D1D1D1', 
+            '#7A7A7A',
+            '#333333', 
+          ],             
           hoverOffset: 4,
         },
       ],
@@ -63,9 +66,11 @@ function PieCategories() {
           },
         },
       });
-    }
+    }}
   }, [books, user, isLoading]); 
+
   if (isLoading || !books || !user) return <p>Loading...</p>;
+  if (user.books && user.books.length === 0) return <p>כאן יופיע פילוח הקטגוריות של הספרים בהם תלמד</p>;
   return <canvas ref={chartRef} width="400" height="400"></canvas>;
 }
 

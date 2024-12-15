@@ -10,7 +10,7 @@ import styles from './footer.module.css';
 
 const contactSchema = z.object({
     name: z.string().min(1, '*שדה חובה'),
-    email: z.string().nonempty('*שדה חובה') .email('*כתובת מייל לא תקינה'),
+    email: z.string().nonempty('*שדה חובה').email('*כתובת מייל לא תקינה'),
     message: z.string().min(1, '*שדה חובה'),
 });
 
@@ -55,40 +55,42 @@ const Footer: React.FC = () => {
                 <p>© כל הזכויות שמורות</p>
             </div>
             <div className={styles.divider}></div>
-                <form onSubmit={handleSubmit(onSubmit)} className={`${styles.column3} ${styles.form}`}>
-                    <h2 className={styles.heading}>נשמור על קשר</h2>
-                    <div className={styles.field}>
-                        <input
-                            {...register('name')}
-                            placeholder="שם מלא "
-                            className={styles.input}
-                            disabled={isSubmitting}
-                        />
-                        {errors.name ? <p className={styles.error}>{errors.name.message}</p>: <p style={{height: "20px"}}></p>}
-                    </div>
-                    <div className={styles.field}>
-                        <input
-                            {...register('email')}
-                            placeholder="מייל"
-                            className={styles.input}
-                            disabled={isSubmitting}
-                        />
-                        {errors.email ? <p className={styles.error}>{errors.email.message}</p>: <p style={{height: "20px"}}></p>}
-                    </div>
-                    <div className={styles.field}>
-                        <input
-                            {...register('message')}
-                            placeholder="תוכן הפנייה"
-                            className={styles.input}
-                            disabled={isSubmitting}
-                        />
-                        {errors.message? <p className={styles.error}>{errors.message.message}</p>: <p style={{height: "20px"}}></p>}
-                    </div>
+            <form onSubmit={handleSubmit(onSubmit)} className={`${styles.column3} ${styles.form}`}>
+                <h2 className={styles.heading}>נשמור על קשר</h2>
+                <div className={styles.field}>
+                    <input
+                        {...register('name')}
+                        placeholder="שם מלא "
+                        className={styles.input}
+                        disabled={isSubmitting}
+                    />
+                    {errors.name ? <p className={styles.error}>{errors.name.message}</p> : <p style={{ height: "20px" }}></p>}
+                </div>
+                <div className={styles.field}>
+                    <input
+                        {...register('email')}
+                        placeholder="מייל"
+                        className={styles.input}
+                        disabled={isSubmitting}
+                    />
+                    {errors.email ? <p className={styles.error}>{errors.email.message}</p> : <p style={{ height: "20px" }}></p>}
+                </div>
+                <div className={styles.field}>
+                    <input
+                        {...register('message')}
+                        placeholder="תוכן הפנייה"
+                        className={styles.input}
+                        disabled={isSubmitting}
+                    />
+                    {errors.message ? <p className={styles.error}>{errors.message.message}</p> : <p style={{ height: "20px" }}></p>}
+                </div>
+                <div className={styles.buttonContainer}>
                     <button type="submit" className={styles.button} disabled={isSubmitting}>
                         {isSubmitting ? 'שליחה...' : 'שלח'}
                     </button>
-                </form>
-            </div>
+                </div>
+            </form>
+        </div>
 
     );
 };

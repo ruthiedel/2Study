@@ -52,6 +52,7 @@ export type UserBook = {
     chapter_id: number;
     section_id: number;
     rate: number;
+    status?:boolean;
 }
 type LearningGroup = {
     users?: LearningGroupUser[];
@@ -69,4 +70,12 @@ export type Mail = {
     name: string;
     email: string;
     message: string
+}
+export type localMessage = {
+  messageId: string;
+  username: string;
+  userId: string;
+  bookId: string;
+  message: string;
+  timestamp: Date;
 }

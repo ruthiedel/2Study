@@ -1,82 +1,38 @@
 'use client'
 
 import * as React from 'react';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import { StyledLink } from '../StyleComponentsFolder/StyledLink';   
-import Typography from '@mui/material/Typography';
+import { StyledLink } from '../StyleComponentsFolder/StyledLink';
 import styles from './userStatus.module.css'
 import useUserStore from '../../services/zustand/userZustand/userStor';
-
-export type bookRowProp = {
-  bookName: string;
-  chapterName: string;
-  sectionName: string;
-};
-
-const booksData: bookRowProp[] = [
-  {
-    bookName: "הארי פוטר  ",
-    chapterName: "  מגלה את האמת",
-    sectionName: "הַבִּיטָה בְּעֵינַיִם  ",
-  },
-  {
-    bookName: "הHobbit",
-    chapterName: "An  Party",
-    sectionName: "Bilbo Baggins",
-  },
-  {
-    bookName: "1984",
-    chapterName: "Part One",
-    sectionName: "Chapter 1",
-  },
-  {
-    bookName: "Pride",
-    chapterName: "Volume I",
-    sectionName: "Chapter 1",
-  },
-  {
-    bookName: "The Lord",
-    chapterName: "The Fellowship",
-    sectionName: "Prologue",
-  },
-];
+import numberToGematria from '@/lib/clientHelpers/gematriaFunc';
 
 export default function StudyComp() {
   const user = useUserStore((state) => state.user);
 
   return (
-    <Card className={styles.mycard}>
-      <CardContent style={{ textAlign: 'center' }}>
-        <Typography gutterBottom variant="h5" component="div" className='fontFamily'>
-          ספרים בלמידה
-        </Typography>
-        {user && user.books && user.books.length > 0 && (
-          user.books.map(book =>
-            {
-              return (
-                <StyledLink key={book.book_name}>
-                  <b className='fontFamily'>{book.book_name}</b>
-                  <div className='bg-black rounded-full absolute bottom-[-8px] left-[50%] w-[15px] h-[15px] z-10'></div>
-                  <p className='fontFamily'>{book.section_id} {book.chapter_id}</p> 
-                </StyledLink>
-              );
-            }
-          )
-        )}
-        {/* {booksData.map(book =>
-          {
+    <div className={styles.mystudycard}>
+      <div style={{ textAlign: 'center' }} className={styles.studyContent}>
+        <p>
+          <strong>
+            ספרים בלמידה
+          </strong>
+        </p>
+        {(user && user.books && user.books.length > 0 ) ? (
+          user.books.map(book => {
             return (
-              <StyledLink key={book.bookName}>
-                <b>{book.bookName}</b>
+              <StyledLink key={book.book_name}>
+                <b>{book.book_name}</b>
                 <div className='bg-black rounded-full absolute bottom-[-8px] left-[50%] w-[15px] h-[15px] z-10'></div>
-                <p>{book.chapterName} {book.sectionName}</p> 
+                <p>פרק: {numberToGematria(book.chapter_id)} סעיף: {numberToGematria(book.section_id)}</p>
               </StyledLink>
             );
           }
-        )} */}
-      </CardContent>   
+          )
+        ) : (
+          <p className='mt-6 mb-6'>כאן יופיעו הספרים כאשר תתחיל ללמוד</p>
+        )}
+      </div>
 
-    </Card>
+    </div>
   );
 }

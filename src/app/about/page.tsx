@@ -1,11 +1,14 @@
 
-'use client';
+"use client";
 import React, { useEffect } from "react";
 import Fidback from "../../components/about/Fidback";
 import { Section, BottomSection } from "../../components/about/Sections";
 import styles from './aboutPage.module.css';
+import { useRouter } from "next/navigation";
 
 const AboutPage: React.FC = () => {
+    const router = useRouter();
+
     useEffect(() => {
         const observer = new IntersectionObserver(
             (entries) => {
@@ -83,6 +86,16 @@ const AboutPage: React.FC = () => {
         },
     ];
 
+    function handleStarted(event: React.MouseEvent<HTMLButtonElement>): void {
+        try {
+            router.push(`/BooksLearning`);
+        }
+        catch (error) {
+            console.error('Error handling started event:', error);
+        }
+    }
+
+
     return (
         <div className={styles.pageContainer}>
             <div className={styles.headercontainer}>
@@ -107,6 +120,9 @@ const AboutPage: React.FC = () => {
             </div>
             <div data-animate>
                 <Fidback />
+            </div>
+            <div className={styles.buttonContainer}>
+                <button className={styles.buttonStart} onClick={handleStarted}>get started ←</button>
             </div>
             <div className={styles.bottomSection}>
                 <div className={styles.container} data-animate>

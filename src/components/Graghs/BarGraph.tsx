@@ -15,7 +15,6 @@ import { calculateLearningProgress } from "../../lib/clientHelpers/graphsFunctio
 import { getBooks } from "@/hooks/booksDetails";
 import { Book } from "@/types";
 
-// Register the required components for Chart.js
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const BarGraph = () => {
@@ -40,8 +39,8 @@ const BarGraph = () => {
       {
         label: "התקדמות באחוזים:",
         data: dataValues,
-        backgroundColor: "rgba(75, 192, 192, 0.2)",
-        borderColor: "rgba(75, 192, 192, 1)",
+        backgroundColor: 'rgba(239, 236, 204, 0.6)', 
+        borderColor: 'rgba(239, 236, 204, 1)', 
         borderWidth: 1,
       },
     ],
@@ -78,6 +77,7 @@ const BarGraph = () => {
 
   return (
     <div>
+      {(user && user.books && user.books.length === 0) && <p className='text-xs'>כאן יופיע פילוח הקטגוריות של הספרים בהם תלמד</p>}
       <Bar data={data} options={options} />
     </div>
   );

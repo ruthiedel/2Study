@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   title: "2Stady",
   description: "Study anytime with 2Stady!",
   icons: {
-    icon: "/ico2Stady.ico",
+    icon: "/2StadyIco.ico",
   },
 };
 
