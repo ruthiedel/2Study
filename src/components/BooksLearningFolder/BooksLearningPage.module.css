@@ -1,126 +1,104 @@
 
-  .container {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-    padding: 30px;
-    background-color: var(--primary-color);
-    font-family: var(--main-font);
-  }
-  
-  .title {
-    font-size: 2.5rem;
-  }
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px;
+  background-color: var(--primary-color);
+  font-family: var(--main-font);
+}
 
-  .buttonContainer {
-    display: flex;
-    flex-direction: column;
-    width: 420px;
-    justify-content: center;
-  }
-  
-  .buttonStart{
-    background-color: black;
-    color: white;
-    font-size: 20px;
-    font-family: var(--main-font);
-    /* width: 220px; */
-    padding: 5px 20px;
-    border: none;
-    border-radius: 40px;
-    cursor: pointer;
-  }
-  
-  .subtitle {
-    font-size: 1.2rem;
-    color: var(--dark-gray);
-    margin-top: 10px;
-    margin-bottom: 30px;
-  }
-  
-  .searchWrapper {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 30px;
-    width: 100%;
-  }
-  
-  .searchInput {
-    padding: 10px;
-    width: 300px;
-    border: 2px solid var(--dark-gray);
-    border-radius: 5px;
-    font-size: 1rem;
-  }
-  
-  .booksList {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    gap: 15px;
-    width: 100%;
-    max-width: 1200px;
-  }
-  
-  .bookItem {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    background-color: white;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border: 1px solid var(--light-gray);  /* קו דק מסביב לכרטיס */
-  }
-  
-  .bookItem:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-  }
-  
-  .bookImage {
-    width: 100px;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 5px;
-    margin-right: 15px;
-  }
-  
-  .bookDetails {
-    flex-grow: 1;
-    margin-left: 20px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    padding-top: 15px;
-  }
-  
-  .bookName {
-    font-size: 1.5rem;
-    color: var(--dark-gray);
-    width: 30%;
-  }
-  
-  .bookAuthor {
-    font-size: 1.1rem;
-    color: var(--dark-gray);
-  }
-  
-  .learnButton {
-    background-color: black;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: background-color 0.3s ease;
-    height: 40px;
-  }
-  
-  .learnButton:hover {
-    background-color: #666;
-  }
-  
+.title {
+  font-size: 2.5rem;
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  color: var(--dark-gray);
+  margin-top: 10px;
+  margin-bottom: 30px;
+}
+
+.searchWrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+  width: 100%;
+}
+
+.searchInput {
+  padding: 10px;
+  width: 300px;
+  border: 2px solid var(--dark-gray);
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.booksList {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.bookItem {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  background-color: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid var(--light-gray);  /* קו דק מסביב לכרטיס */
+}
+
+.bookItem:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.bookImage {
+  width: 100px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 5px;
+  margin-right: 15px;
+}
+
+.bookDetails {
+  flex-grow: 1;
+  margin-left: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  padding-top: 15px;
+}
+
+.bookName {
+  font-size: 1.5rem;
+  color: var(--dark-gray);
+  width: 30%;
+}
+
+.bookAuthor {
+  font-size: 1.1rem;
+  color: var(--dark-gray);
+}
+
+.learnButton {
+  background-color: black;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+  height: 40px;
+}
+
+.learnButton:hover {
+  background-color: #666;
+}
