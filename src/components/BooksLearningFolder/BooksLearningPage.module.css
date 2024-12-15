@@ -1,6 +1,7 @@
 
   .container {
     display: flex;
+    justify-content: center;
     flex-direction: column;
     align-items: center;
     padding: 30px;
@@ -10,6 +11,25 @@
   
   .title {
     font-size: 2.5rem;
+  }
+
+  .buttonContainer {
+    display: flex;
+    flex-direction: column;
+    width: 420px;
+    justify-content: center;
+  }
+  
+  .buttonStart{
+    background-color: black;
+    color: white;
+    font-size: 20px;
+    font-family: var(--main-font);
+    /* width: 220px; */
+    padding: 5px 20px;
+    border: none;
+    border-radius: 40px;
+    cursor: pointer;
   }
   
   .subtitle {
@@ -36,6 +56,7 @@
   
   .booksList {
     display: flex;
+    align-items: center;
     flex-direction: column;
     gap: 15px;
     width: 100%;
