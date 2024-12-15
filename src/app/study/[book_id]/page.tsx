@@ -41,8 +41,8 @@ const Study = () => {
     const [showConfetti, setShowConfetti] = useState(false);
     const [showQuiz, setShowQuiz] = useState(false);
     const [isShowRating, setIsShowRating] = useState(false);
-
     const user = useUserStore((state) => state.user);
+    const updateUserZustand = useUserStore((state) => state.updateUserZustand);
 
     useEffect(() => {
         const fetchData = () => {
@@ -147,7 +147,18 @@ const Study = () => {
     }, [index, bookData]);
 
     const handleFinish = () => {
+
         setShowConfetti(true);
+        if (user) {
+            const updatedUser = {
+                ...user,
+                books: user!.books.map((book) =>
+                  book.book_id === bookId ? { ...book, status: false } : book
+                ),
+              };
+              updateUserZustand(user!._id!, updatedUser);     
+        }
+        
         toast.success("סיימת ללמוד! כל הכבוד 🎉", {
             position: "top-center",
             autoClose: 3000,

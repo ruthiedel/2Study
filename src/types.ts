@@ -52,6 +52,7 @@ export type UserBook = {
     chapter_id: number;
     section_id: number;
     rate: number;
+    status?:boolean;
 }
 type LearningGroup = {
     users?: LearningGroupUser[];
