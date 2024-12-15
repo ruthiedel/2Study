@@ -19,14 +19,35 @@
     width: 420px;
     justify-content: center;
   }
+
+  .imageColumn{
+    width: 400px;
+    height:200px;
+  }
+
+  .books{
+    width: auto;
+    height: 100px;
+    background-color: white;
+    text-align:center ;
+ 
+  }
+
+  .text{
+    font-size: 30px;
+    font-family: var(--main-font);
+    color: #7e7b7b;
+    margin-top: 10px;
+  }
   
   .buttonStart{
     background-color: black;
     color: white;
     font-size: 20px;
     font-family: var(--main-font);
-    /* width: 220px; */
-    padding: 5px 20px;
+    width: 220px;
+    margin-right: 70px;
+    /* padding: 5px 15px; */
     border: none;
     border-radius: 40px;
     cursor: pointer;
