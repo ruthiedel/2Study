@@ -49,7 +49,6 @@ const RatingComp: React.FC<RatingComponentProps> = ({ bookId, onClose }) => {
           };
           updateUserZustand(user?._id || "", newuser);
 
-          alert("דירוג נשמר בהצלחה!");
           setIsVisible(false);
         }
       } catch (error) {
