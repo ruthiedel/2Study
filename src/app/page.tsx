@@ -11,7 +11,7 @@ const SomeComponent = () => {
     if (user) {
       router.push("/BooksLearning");
     } else {
-      router.push("/about");
+      router.push("/home");
     }
   }, [user]);
 

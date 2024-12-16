@@ -1,9 +1,8 @@
-
 "use client";
+
 import React, { useEffect } from "react";
-import Fidback from "../../components/about/Fidback";
-import { Section, BottomSection } from "../../components/about/Sections";
-import styles from './aboutPage.module.css';
+import { Feedback, Section, BottomSection } from "../../components";
+import styles from './homePage.module.css';
 import { useRouter } from "next/navigation";
 import { Trade_Winds} from 'next/font/google';
 
@@ -12,7 +11,7 @@ const TradeWinds = Trade_Winds({
     subsets: ['latin'],
   });
 
-const AboutPage: React.FC = () => {
+const HomePage: React.FC = () => {
     const router = useRouter();
 
     useEffect(() => {
@@ -125,7 +124,7 @@ const AboutPage: React.FC = () => {
                 ))}
             </div>
             <div data-animate>
-                <Fidback />
+                <Feedback />
             </div>
             <div className={styles.buttonContainer} data-animate>
                 <button className={styles.buttonStart} onClick={handleStarted} data-animate>get started ←</button>
@@ -147,4 +146,4 @@ const AboutPage: React.FC = () => {
     );
 };
 
-export default AboutPage;
+export default HomePage;
