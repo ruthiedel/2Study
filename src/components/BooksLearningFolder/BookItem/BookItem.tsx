@@ -24,7 +24,6 @@ interface BookItemProps {
     return (
       <div className={styles.bookItem} key={book.book_id}>
         <div className={styles.bookDetails}>
-          <p className={styles.bookAuthor}>{index + 1}</p>
           <h3 className={styles.bookName}>{book.book_name}</h3>
           <p className={styles.bookAuthor}>
             מיקומך בפרק: {numberToGematria(bookData?.chapter_id || 1)}, סעיף:{" "}
