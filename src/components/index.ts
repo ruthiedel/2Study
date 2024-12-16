@@ -17,5 +17,8 @@ export { default as PieCategories } from './Graghs/PieCategories';
 export { default as BarGraph } from './Graghs/BarGraph';
 export { default as BarsGraph } from './Graghs/BarsGraph';
 export { default as MarkButton } from './MarkButton/MarkButton';
-export {default as BooksLearning } from './BooksLearningFolder/BooksLearningComp';
+export { default as BooksLearning } from './BooksLearningFolder/BooksLearningComp';
+export { default as Feedback } from './homeComponents/Feedback';
+export { Section, BottomSection } from './homeComponents/Sections';
+
 

@@ -11,7 +11,7 @@ export default function NotFound() {
       <DotLottieReact src="https://lottie.host/31f1cc86-b8a9-4229-b91a-a0d2eac91ab3/moTx65qnNG.lottie" autoplay loop className={styles.animate}></DotLottieReact>
       <h2 className={styles.heading}>העמוד שחיפשת לא קיים</h2>
       <p className={styles.message}>נראה כי עמוד זה הוסר או לא קיים יותר.</p>
-      <Link href="/" className={styles.homeLink}>
+      <Link href="/home" className={styles.homeLink}>
         חזרה לדף הבית
       </Link>
     </div>
