@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './about.module.css';
+import styles from './homeComponents.module.css';
 
 const customerTestimonials = [
     {
@@ -22,7 +22,7 @@ const customerTestimonials = [
     },
 ];
 
-function Fidback() {
+function Feedback() {
     return (
         <div className={styles.fidbackContainer}>
             <h1 className={styles.fidbackTitle}>לקוחות ממליצות</h1>
@@ -52,4 +52,4 @@ function Fidback() {
     );
 }
 
-export default Fidback;
+export default Feedback;

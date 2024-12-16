@@ -36,7 +36,7 @@ const Header: React.FC = () => {
     const handleLogout = () => {
         logout();
         setAnchorEl(null);
-        router.push('/about');
+        router.push('/home');
     };
 
     const handleLoginOpen = () => {
@@ -64,7 +64,7 @@ const Header: React.FC = () => {
 
                     <div className={styles.navButtons}>
 
-                        <Link href="/about" className={`${styles.navButton} ${pathname === '/about' ? styles.active : ''}`}>
+                        <Link href="/home" className={`${styles.navButton} ${pathname === '/home' ? styles.active : ''}`}>
                             <button className={styles.navText}>דף הבית</button>
                         </Link>
                         <Link href="/BooksLearning" className={`${styles.navButton} ${pathname === '/BooksLearning' ? styles.active : ''}`}>

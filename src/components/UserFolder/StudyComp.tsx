@@ -21,13 +21,11 @@ export default function StudyComp() {
         {(user && user.books && user.books.length > 0 ) ? (
           user.books.map(book => {
             return (
-              <Link href={`/study/${book.book_id}`} passHref>
-                <StyledLink key={book.book_name}>
+                <StyledLink key={book.book_name} href={`/study/${book.book_id}`}>
                   <b>{book.book_name}</b>
                   <div className='bg-black rounded-full absolute bottom-[-8px] left-[50%] w-[15px] h-[15px] z-10'></div>
                   <p>פרק: {numberToGematria(book.chapter_id)} סעיף: {numberToGematria(book.section_id)}</p>
                 </StyledLink>
-              </Link>
             );
           }
           )
