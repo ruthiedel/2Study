@@ -43,26 +43,22 @@ const Study = () => {
     const [isShowRating, setIsShowRating] = useState(false);
     const user = useUserStore((state) => state.user);
     const updateUserZustand = useUserStore((state) => state.updateUserZustand);
-
     useEffect(() => {
-        const fetchData = () => {
-            if (user && bookId && Array.isArray(books)) {
-                const userBook = user.books.find((book) => book.book_id === bookId);
-                setIndex(
-                    userBook
-                        ? {
-                              chapterId: userBook.chapter_id,
-                              paragraphId: userBook.section_id,
-                          }
-                        : { chapterId: 1, paragraphId: 1 }
-                );
-            }
-            if (books && Array.isArray(books)) {
-                setBookData(books.find((book) => book._id === bookId) || null);
-            }
-        };
-        fetchData();
-    }, [bookId,books]);
+        if (!user || !books || !Array.isArray(books)) return;
+    
+        const userBook = user.books.find((book) => book.book_id === bookId);
+        if (userBook) {
+            setIndex({
+                chapterId: userBook.chapter_id,
+                paragraphId: userBook.section_id,
+            });
+        } else {
+            setIndex({ chapterId: 1, paragraphId: 1 });
+        }
+    
+        const currentBook = books.find((book) => book._id === bookId);
+        setBookData(currentBook || null);
+    }, [bookId, books, user]);
 
     const fetchParagraphs = async (
         bookId: string,
@@ -81,17 +77,18 @@ const Study = () => {
     };
 
     useEffect(() => {
-        if (!bookId) return;
-        const { chapterId, paragraphId } = index;
+        if (!bookId || !index.chapterId || !index.paragraphId) return;
+    
         const paragraphExists = paragraph.some(
             (p) =>
-                p.chapterNumber === chapterId && p.section.paragraphId === paragraphId
+                p.chapterNumber === index.chapterId &&
+                p.section.paragraphId === index.paragraphId
         );
-        if (paragraphExists) return;
-
-        fetchParagraphs(bookId, chapterId, paragraphId);
-        
-    }, [index]);
+    
+        if (!paragraphExists) {
+            fetchParagraphs(bookId, index.chapterId, index.paragraphId);
+        }
+    }, [bookId, index, paragraph]);
     
     const isCurrentSectionMarked = () => {
         return user?.books.some(book => book.book_id === bookId 

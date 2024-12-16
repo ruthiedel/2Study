@@ -1,7 +1,7 @@
 .card {
   display: flex;
   flex-direction: row;
-  background-color: black;
+  background-color:rgb(69, 66, 66);
   color: white;
   padding: 20px;
   width: 600px;
