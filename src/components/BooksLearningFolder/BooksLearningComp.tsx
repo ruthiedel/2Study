@@ -15,8 +15,8 @@ const BooksLearning = () => {
   const user = useUserStore((state) => state.user);
   const [searchQuery, setSearchQuery] = useState("");
   const router = useRouter();
-  const userBooks: UserBook[] = user?.books.filter(book=>{book.status||book.status===undefined}) || [];
-
+  const userBooks: UserBook[] = user?.books || [];
+  console.log("user books",userBooks)
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
   };
