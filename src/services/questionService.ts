@@ -17,8 +17,6 @@ export async function generateQuestionAndAnswer(text:string)
         ],
       });
   
-      console.log('Raw Response:', response);
-  
       const contentArray = response.message?.content;
   
       if (!contentArray || contentArray.length === 0) {

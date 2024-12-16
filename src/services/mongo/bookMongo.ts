@@ -73,8 +73,6 @@ export async function fetchAllBooks(client: MongoClient, collection: string) {
   }
 
   const picturesPath = path.join(process.cwd(), 'public', 'pictures');
-
-  // שלב הבא להוספת התמונות מהדיסק
   const booksWithImages = await Promise.all(
     books.map(async (book) => {
       const imagePath = path.join(picturesPath, `${book.coverImage}`);

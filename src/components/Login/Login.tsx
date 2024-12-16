@@ -52,7 +52,6 @@ const Login = () => {
         books: [],
         userImagePath: user.photoURL || '',
       };
-      console.log(localUser);
       const response = await logInUser(localUser);
 
       if (response.status === 200) {

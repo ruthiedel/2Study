@@ -17,8 +17,7 @@ const GoalSetting: React.FC = () => {
     const user = useUserStore((state) => state.user);
 
     const localStorageKey = user?._id ? `userGoals_${user._id}` : null;
-
-    // Load goals from localStorage when user or localStorageKey changes
+    
     useEffect(() => {
         if (localStorageKey) {
             const storedGoals = JSON.parse(localStorage.getItem(localStorageKey) || '[]');

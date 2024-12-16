@@ -15,7 +15,6 @@ export const postMessage = async (message: string, username: string, bookId: str
   }
 };
 
-// client side function
 
 export const convertMessagesToLocalMessages = (messages: Message[]): localMessage[] => {
   return messages.map((msg) => {

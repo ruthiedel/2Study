@@ -2,7 +2,7 @@ import { User, Book } from "../../types";
 import { MongoClient, ObjectId } from 'mongodb';
 import { promises as fs } from 'fs';
 
-type BookWithoutCoverImage = Omit<Book, 'coverImage'>; // טיפוס חדש ללא coverImage
+type BookWithoutCoverImage = Omit<Book, 'coverImage'>; 
 
 let client: MongoClient;
 let clientPromise: Promise<MongoClient>;
