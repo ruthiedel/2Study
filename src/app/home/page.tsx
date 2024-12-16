@@ -4,9 +4,9 @@ import React, { useEffect } from "react";
 import { Feedback, Section, BottomSection } from "../../components";
 import styles from './homePage.module.css';
 import { useRouter } from "next/navigation";
-import { Trade_Winds} from 'next/font/google';
+import { Noto_Serif} from 'next/font/google';
 
-const TradeWinds = Trade_Winds({
+const NotoSerif = Noto_Serif({
     weight: ['400'],
     subsets: ['latin'],
   });
@@ -105,9 +105,17 @@ const HomePage: React.FC = () => {
         <div className={styles.pageContainer}>
             <div className={styles.headercontainer}>
                 <div className={styles.background}>
-                    <h1 className={`${styles.title} ${TradeWinds.className}`} data-animate>2study</h1>
+                    <h1 className={`${styles.title} ${NotoSerif.className}`} data-animate>2study</h1>
                     <h2 className={styles.secondTitle} data-animate>ללמוד ב2 דקות</h2>
-                    <p className={styles.section} data-animate>ברוכים הבאים למקום שבו לימוד פוגש השראה. האתר שלנו מציע חוויית לימוד ייחודית ומותאמת אישית לציבור החרדי, עם ספרים נבחרים, כלים מתקדמים, וקבוצות לימוד המחברות בין לומדים. כאן תוכלו לצמוח, להעמיק ולהתקדם בדרך שלכם, עם תמיכה מתמדת ותחושת שייכות אמיתית.</p>
+                    <p className={styles.section} data-animate>ברוכים הבאים למקום שבו לימוד פוגש השראה.
+                        <br/>
+                         האתר שלנו מציע חוויית לימוד ייחודית ומותאמת אישית לציבור החרדי, 
+                         <br/>
+                         עם ספרים נבחרים,
+                         
+                     כלים מתקדמים, וקבוצות לימוד המחברות בין לומדים.
+                     <br/>
+                      כאן תוכלו לצמוח, להעמיק ולהתקדם בדרך שלכם, עם תמיכה מתמדת ותחושת שייכות אמיתית.</p>
                 </div>
             </div>
 
@@ -118,8 +126,8 @@ const HomePage: React.FC = () => {
 
             <div className={styles.heroSection}>
                 {sections.map((section, index) => (
-                    <div data-animate>
-                        <Section key={index} section={section} isEven={index % 2 === 0} data-animate />
+                    <div key={index} data-animate>
+                        <Section section={section} isEven={index % 2 === 0} data-animate />
                     </div>
                 ))}
             </div>
@@ -136,8 +144,8 @@ const HomePage: React.FC = () => {
                 </div>
                 <div className={styles.bottomFeatures}>
                     {buttomSections.map((section, index) => (
-                        <div data-animate>
-                            <BottomSection key={index} section={section} />
+                        <div key={index} data-animate>
+                            <BottomSection section={section} />
                         </div>
                     ))}
                 </div>

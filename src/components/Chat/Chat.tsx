@@ -62,7 +62,6 @@ const Chat = ({ bookId }: { bookId: string }) => {
       const savedMessage: Message = await postMessage(newMessage.message, username, bookId);
 
       if (savedMessage) {
-        console.log('Message sent successfully', savedMessage);
         const newLocalMessage: localMessage = {
           messageId: savedMessage._id || '',
           username: user.name,

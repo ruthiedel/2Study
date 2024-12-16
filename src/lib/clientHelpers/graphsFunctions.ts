@@ -49,15 +49,12 @@ export function calculateBookRatings(
   const ratings: Record<string, { userRating: number; generalRating: number }> = {};
 
   userBooks.forEach((userBook) => {
-    // חיפוש הספר הרלוונטי במערך הספרים הכללי
     const book = books.find((b) => b._id === userBook.book_id);
 
     if (book) {
-      // קביעת דירוג משתמש ודירוג כללי
-      const userRating = userBook.rate || 0; // אם אין דירוג משתמש, נחשב כ-0
-      const generalRating = book.rating || 0; // אם אין דירוג כללי, נחשב כ-0
+      const userRating = userBook.rate || 0; 
+      const generalRating = book.rating || 0; 
 
-      // הוספת השם של הספר עם הדירוגים לתוך התוצאה
       ratings[book.name] = {
         userRating,
         generalRating,

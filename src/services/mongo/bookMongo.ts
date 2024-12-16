@@ -14,8 +14,12 @@ export async function connectDatabase() {
     client = new MongoClient(dbConnectionString);
     clientPromise = client.connect();
   }
-  return clientPromise;
+
+  await clientPromise;
+  return client;
 }
+
+
 
 export async function fetchAllBooks(client: MongoClient, collection: string) {
   const db = client.db('Books');
@@ -69,8 +73,6 @@ export async function fetchAllBooks(client: MongoClient, collection: string) {
   }
 
   const picturesPath = path.join(process.cwd(), 'public', 'pictures');
-
-  // שלב הבא להוספת התמונות מהדיסק
   const booksWithImages = await Promise.all(
     books.map(async (book) => {
       const imagePath = path.join(picturesPath, `${book.coverImage}`);

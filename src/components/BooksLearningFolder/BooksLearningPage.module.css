@@ -123,6 +123,7 @@
 
 .bookAuthor {
   font-size: 1.1rem;
+  font-family: 'Natural';
   color: var(--dark-gray);
 }
 

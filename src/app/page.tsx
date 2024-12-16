@@ -14,7 +14,7 @@ const SomeComponent = () => {
     } else {
       router.push("/home");
     }
-  }, [user]);
+  }, []);
 
   return null; 
 };

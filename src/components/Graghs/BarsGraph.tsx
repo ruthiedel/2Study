@@ -80,7 +80,7 @@ const BarsGraph = () => {
   return (
     <div style={{ width: '80%', margin: '20px auto' }}>
       <h3 style={{ textAlign: 'center' }}>גרף הדירוגים:</h3>
-      {(user && user.books && user.books.length === 0) && <p className='text-xs'>כאן יופיע פילוח הקטגוריות של הספרים בהם תלמד</p>}
+      {(user && user.books && user.books.length === 0) && <p className='text-xs'>כאן יופיע הדירוגים הכללים והדירוגים שלך לכל ספר שאתה לומד</p>}
       <Bar data={data} options={options} />
     </div>
   );

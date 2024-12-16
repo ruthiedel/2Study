@@ -8,8 +8,11 @@ import Image from "next/image";
 import logo from '../../../public/pictures/logo1.png';
 import styles from "./login.module.css";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
+import { useRouter } from "next/navigation"; 
+
 
 const Login = () => {
+  const router = useRouter();
   const setUser = useUserStore((state) => state.setUser);
 
   const handleLogin = async () => {
@@ -49,7 +52,6 @@ const Login = () => {
         books: [],
         userImagePath: user.photoURL || '',
       };
-      console.log(localUser);
       const response = await logInUser(localUser);
 
       if (response.status === 200) {
@@ -62,6 +64,9 @@ const Login = () => {
 
     }
   };
+  const handleGoHome = () => {
+    router.push('/home');
+  };
 
   return (
     <div className={styles.login_card}>
@@ -73,6 +78,8 @@ const Login = () => {
         <button onClick={handleLogin} className={styles.login_guest}>
           התחבר כאורח
         </button>
+        <button onClick={handleGoHome} className={styles.goHhomeBtn}>חזרה לעמוד הבית</button>
+
         <Image
           src={logo}
           alt="logo image"

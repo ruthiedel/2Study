@@ -12,6 +12,7 @@ import useUserStore from '../../services/zustand/userZustand/userStor';
 import Login from "../Login/Login";
 import { useRouter } from "next/navigation"; 
 
+
 const Header: React.FC = () => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const logout = useUserStore((state) => state.logout);
@@ -36,7 +37,6 @@ const Header: React.FC = () => {
     const handleLogout = () => {
         logout();
         setAnchorEl(null);
-        router.push('/home');
     };
 
     const handleLoginOpen = () => {
@@ -65,7 +65,7 @@ const Header: React.FC = () => {
                     <div className={styles.navButtons}>
 
                         <Link href="/home" className={`${styles.navButton} ${pathname === '/home' ? styles.active : ''}`}>
-                            <button className={styles.navText}>דף הבית</button>
+                            <button className={styles.navText} >דף הבית</button>
                         </Link>
                         <Link href="/BooksLearning" className={`${styles.navButton} ${pathname === '/BooksLearning' ? styles.active : ''}`}>
                             <button className={styles.navText}>ספרים בלמידה</button>
