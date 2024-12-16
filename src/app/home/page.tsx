@@ -118,8 +118,8 @@ const HomePage: React.FC = () => {
 
             <div className={styles.heroSection}>
                 {sections.map((section, index) => (
-                    <div data-animate>
-                        <Section key={index} section={section} isEven={index % 2 === 0} data-animate />
+                    <div key={index} data-animate>
+                        <Section section={section} isEven={index % 2 === 0} data-animate />
                     </div>
                 ))}
             </div>
@@ -136,8 +136,8 @@ const HomePage: React.FC = () => {
                 </div>
                 <div className={styles.bottomFeatures}>
                     {buttomSections.map((section, index) => (
-                        <div data-animate>
-                            <BottomSection key={index} section={section} />
+                        <div key={index} data-animate>
+                            <BottomSection section={section} />
                         </div>
                     ))}
                 </div>
