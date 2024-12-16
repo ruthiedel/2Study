@@ -14,8 +14,12 @@ export async function connectDatabase() {
     client = new MongoClient(dbConnectionString);
     clientPromise = client.connect();
   }
-  return clientPromise;
+
+  await clientPromise;
+  return client;
 }
+
+
 
 export async function fetchAllBooks(client: MongoClient, collection: string) {
   const db = client.db('Books');

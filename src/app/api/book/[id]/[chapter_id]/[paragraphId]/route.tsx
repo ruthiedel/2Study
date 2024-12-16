@@ -27,8 +27,7 @@ export async function PATCH(
         parseInt(paragraphId),
         { question: updatedData.question, answer: updatedData.answer }
       );
-        await client.close();
-  
+      // await client.close();
       return NextResponse.json(updatedBook);
     } catch (error) {
       console.error(error);
