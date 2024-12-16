@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import LayoutReactComponent from "@/layout/LayoutReactComponent";
+import { ToastContainer } from "react-toastify";
 
 export const metadata: Metadata = {
   title: "2Stady",
@@ -20,8 +21,8 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <LayoutReactComponent>
-          {children}
-
+          <ToastContainer/>
+            {children}
         </LayoutReactComponent>
       </body>
     </html>

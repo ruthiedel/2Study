@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState, useMemo } from "react";
-import { Box, IconButton, Button, Dialog, DialogContent } from "@mui/material";
+import { Box, IconButton, Button, Dialog } from "@mui/material";
 import useUserStore from "../../../services/zustand/userZustand/userStor";
 import { getSections } from "../../../services/bookService";
 import { useParams } from "next/navigation";
@@ -17,7 +17,7 @@ import numberToGematria from "../../../lib/clientHelpers/gematriaFunc";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import { getBooks } from "../../../hooks/booksDetails";
 import Styles from "./Study.module.css";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Confetti from "react-confetti";
 
@@ -249,7 +249,6 @@ const Study = () => {
                 )}
             </div>
             <Chat bookId={bookId} />
-            <ToastContainer />
             {showConfetti && <Confetti />}
         </Box>
     );
