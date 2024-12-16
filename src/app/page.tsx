@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useEffect } from "react";
 import { useRouter } from "next/navigation"; 
 import useUserStore from "@/services/zustand/userZustand/userStor"; 
@@ -11,7 +12,7 @@ const SomeComponent = () => {
     if (user) {
       router.push("/BooksLearning");
     } else {
-      router.push("/about");
+      router.push("/home");
     }
   }, []);
 

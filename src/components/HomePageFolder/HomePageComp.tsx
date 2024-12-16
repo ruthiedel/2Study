@@ -4,7 +4,6 @@ import React, { useEffect } from "react";
 import styles from './homepage.module.css';
 import GoalSetting from './Goals/Goals';
 
-
 const UserRecommendations = () => {
   return (
     <div className={styles.recommendations}>
