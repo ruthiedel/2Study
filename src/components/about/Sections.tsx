@@ -1,7 +1,7 @@
 
 import React from "react";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
-import styles from "../../../src/app/about/aboutPage.module.css";
+import styles from "../../../src/app/home/homePage.module.css";
 
 type SectionProps = {
     section: {
