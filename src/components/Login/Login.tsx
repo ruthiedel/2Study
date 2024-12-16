@@ -66,7 +66,7 @@ const Login = () => {
     }
   };
   const handleGoHome = () => {
-    router.push('/Home');
+    router.push('/home');
   };
 
   return (
