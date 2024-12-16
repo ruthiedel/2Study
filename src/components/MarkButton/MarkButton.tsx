@@ -1,5 +1,6 @@
 import useUserStore from "@/services/zustand/userZustand/userStor";
 import markbook from "../../../public/pictures/bookmark.svg";
+import emptyMarkbook from "../../../public/pictures/empty-bookmark1.svg";
 import Image from "next/image";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -50,7 +51,7 @@ export default function MarkButton({
   return (
     <div>
       <button onClick={handleIndex} className='mark-button'>
-        <Image src={markbook} alt="markbook"></Image>
+        <Image src={(isMarked) ? markbook : emptyMarkbook} alt="markbook"></Image>
         {(isMarked) ? 'עצרתי כאן' : 'עדכן סימניה'}
       </button>
       <ToastContainer />

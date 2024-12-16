@@ -80,3 +80,9 @@ body {
 .mark-button:hover {
   background-color: #b9b088;
 }
+
+.mark-button img {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+}
