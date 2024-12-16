@@ -121,8 +121,8 @@ const AboutPage: React.FC = () => {
             <div data-animate>
                 <Fidback />
             </div>
-            <div className={styles.buttonContainer}>
-                <button className={styles.buttonStart} onClick={handleStarted}>get started ←</button>
+            <div className={styles.buttonContainer} data-animate>
+                <button className={styles.buttonStart} onClick={handleStarted} data-animate>get started ←</button>
             </div>
             <div className={styles.bottomSection}>
                 <div className={styles.container} data-animate>
