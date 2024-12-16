@@ -30,7 +30,10 @@ interface BookItemProps {
             מיקומך בפרק: {numberToGematria(bookData?.chapter_id || 1)}, סעיף:{" "}
             {numberToGematria(bookData?.section_id || 1)}
           </p>
+          {bookData?.rate && bookData?.rate > 0 ?
           <p className={styles.bookAuthor}>דירוג: {bookData?.rate} ⭐</p>
+        : <p className={styles.bookAuthor}>לא דירגת עדיין</p>}
+          
           <button
             className={styles.learnButton}
             onClick={() => router.push(`/study/${book.book_id}`)}

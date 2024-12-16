@@ -42,7 +42,6 @@
   font-size: 20px;
   font-family: var(--main-font);
   width: 220px;
-  /* padding: 5px 15px; */
   border: none;
   border-radius: 40px;
   cursor: pointer;
@@ -92,7 +91,6 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   border: 1px solid var(--light-gray);
-  /* קו דק מסביב לכרטיס */
 }
 
 .bookItem:hover {
