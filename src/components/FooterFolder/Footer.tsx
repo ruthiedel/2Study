@@ -6,6 +6,8 @@ import { sendMail } from '@/services/mailService';
 import logo from '../../../public/pictures/logo1.png';
 import { Mail } from '../../types';
 import Image from 'next/image';
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import styles from './footer.module.css';
 
 const contactSchema = z.object({
@@ -35,15 +37,21 @@ const Footer: React.FC = () => {
             };
             await sendMail(mail);
             reset();
-            alert('המייל נשלח בהצלחה!');
+            toast.success("תודה על פנייתך! 🙏 נשמח לעזור ונחזור אליך בהקדם. 😊", {
+                position: "top-center",
+              });                             
         } catch (error) {
             console.error('Error sending email:', error);
-            alert('הייתה שגיאה בשליחת המייל, נסה שוב מאוחר יותר.');
+            toast.error("הייתה שגיאה בשליחת המייל 😥, אנא נסה שוב מאוחר יותר. ⚠️", {
+                position: "top-center", 
+                style: { backgroundColor: "#f5f5dc" }, 
+              });              
         }
     };
 
     return (
         <div className={styles.footerContainer}>
+            <ToastContainer />
             <div className={styles.column1}>
                 <Image src={logo} alt="logo" className={styles.logo} />
             </div>
