@@ -9,6 +9,13 @@
   font-style: normal;
 }
 
+@font-face{
+  font-family: 'Natural';
+  src: url('https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&family=Fugaz+One&family=Knewave&family=Permanent+Marker&family=Trade+Winds&display=swap');
+  font-weight: normal;
+  font-style: normal;
+}
+
 body {
   color: #010101;
   background: #fff;
