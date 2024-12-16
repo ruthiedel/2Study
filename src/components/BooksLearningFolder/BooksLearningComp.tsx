@@ -16,7 +16,6 @@ const BooksLearning = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const router = useRouter();
   const userBooks: UserBook[] = user?.books || [];
-  console.log("user books",userBooks)
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
   };

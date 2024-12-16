@@ -40,11 +40,11 @@ const Recommendations = () => {
   }, [books, user]);
 
   const handleBookClick = (book: BookType) => {
-    setSelectedBook(book); // שמירת הספר שנבחר
+    setSelectedBook(book); 
   };
 
   const handleClosePopup = () => {
-    setSelectedBook(null); // סגירת הפופאפ
+    setSelectedBook(null); 
   };
 
   return (
@@ -62,7 +62,7 @@ const Recommendations = () => {
                 <BookComp
                   key={book.name}
                   book={book}
-                  handleClick={() => handleBookClick(book)} // הפעלת לחיצה
+                  handleClick={() => handleBookClick(book)} 
                 />
               </div>
             </div>

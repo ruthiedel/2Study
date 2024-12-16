@@ -31,7 +31,6 @@ const useUserStore = create<UserStore>()(
         try {
           await signOut(auth);
           set({ user: null });
-          console.log("User logged out successfully");
         } catch (error) {
           console.error("Error during logout:", error);
           throw error;

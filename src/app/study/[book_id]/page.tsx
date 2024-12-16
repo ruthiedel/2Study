@@ -43,58 +43,40 @@ const Study = () => {
     const [isShowRating, setIsShowRating] = useState(false);
     const user = useUserStore((state) => state.user);
     const updateUserZustand = useUserStore((state) => state.updateUserZustand);
+
     useEffect(() => {
         if (!user || !books || !Array.isArray(books)) return;
-    
+
         const userBook = user.books.find((book) => book.book_id === bookId);
         if (userBook) {
-            setIndex({
-                chapterId: userBook.chapter_id,
-                paragraphId: userBook.section_id,
-            });
+            handleChangeIndex(userBook.chapter_id, userBook.section_id);
         } else {
-            setIndex({ chapterId: 1, paragraphId: 1 });
+            handleChangeIndex(1,1);
         }
-    
+
         const currentBook = books.find((book) => book._id === bookId);
         setBookData(currentBook || null);
-    }, [bookId, books, user]);
+    }, [books, user]);
 
-    const fetchParagraphs = async (
-        bookId: string,
-        chapterId: number,
-        paragraphId: number
-    ) => {
-        try {
-            const paragraphs = await getSections(bookId, chapterId, paragraphId);
-            if (!paragraphs || paragraphs.length === 0) {
-                throw new Error("No paragraphs found");
+    const fetchParagraphs = async (chapterId: number, paragraphId: number) => {
+        if (paragraph.length === 0 || chapterId !== paragraph[0].chapterNumber) {
+            try {
+                const paragraphs = await getSections(bookId, chapterId, paragraphId);
+                if (!paragraphs || paragraphs.length === 0) {
+                    throw new Error("No paragraphs found");
+                }
+                setParagraph(paragraphs.sections);
+            } catch (error) {
+                console.error("Error fetching paragraphs:", error);
             }
-            setParagraph(paragraphs.sections);
-        } catch (error) {
-            console.error("Error fetching paragraphs:", error);
         }
     };
 
-    useEffect(() => {
-        if (!bookId || !index.chapterId || !index.paragraphId) return;
-    
-        const paragraphExists = paragraph.some(
-            (p) =>
-                p.chapterNumber === index.chapterId &&
-                p.section.paragraphId === index.paragraphId
-        );
-    
-        if (!paragraphExists) {
-            fetchParagraphs(bookId, index.chapterId, index.paragraphId);
-        }
-    }, [bookId, index, paragraph]);
-    
     const isCurrentSectionMarked = () => {
-        return user?.books.some(book => book.book_id === bookId 
-                    && book.chapter_id === index.chapterId 
-                    && book.section_id === index.paragraphId
-                );
+        return user?.books.some(book => book.book_id === bookId
+            && book.chapter_id === index.chapterId
+            && book.section_id === index.paragraphId
+        );
     };
 
     const handleNavigation = (direction: "next" | "prev") => {
@@ -105,18 +87,18 @@ const Study = () => {
         let newParagraphId = paragraphId;
 
         if (direction === "next") {
-            
 
-                const isSectionMarked = user?.books.some(
-                    (book) =>
-                      book.book_id === bookId && book.rate < 1
-                  );
-              
-                  if (isSectionMarked) {
-                    openRating();
-                  }
-            
-          
+
+            const isSectionMarked = user?.books.some(
+                (book) =>
+                    book.book_id === bookId && book.rate < 1
+            );
+
+            if (isSectionMarked) {
+                openRating();
+            }
+
+
             if (paragraphId < bookData.paragraphsCountPerChapter[chapterId - 1]) {
                 newParagraphId = paragraphId + 1;
             } else if (chapterId < bookData.chapters_num) {
@@ -132,14 +114,19 @@ const Study = () => {
                     bookData.paragraphsCountPerChapter[newChapterId - 1] || 1;
             }
         }
-        setIndex({ chapterId: newChapterId, paragraphId: newParagraphId });
+        handleChangeIndex(newChapterId, newParagraphId);
+    };
+
+    const handleChangeIndex = (chapterId: number, paragraphId: number) => {
+        setIndex({ chapterId, paragraphId });
+        fetchParagraphs(chapterId, paragraphId);
     };
 
     const isLastSection = useMemo(() => {
         return (
             index?.chapterId === bookData?.chapters_num &&
             index?.paragraphId ===
-                bookData?.paragraphsCountPerChapter?.[bookData.chapters_num - 1]
+            bookData?.paragraphsCountPerChapter?.[bookData.chapters_num - 1]
         );
     }, [index, bookData]);
 
@@ -150,12 +137,12 @@ const Study = () => {
             const updatedUser = {
                 ...user,
                 books: user!.books.map((book) =>
-                  book.book_id === bookId ? { ...book, status: false } : book
+                    book.book_id === bookId ? { ...book, status: false } : book
                 ),
-              };
-              updateUserZustand(user!._id!, updatedUser);     
+            };
+            updateUserZustand(user!._id!, updatedUser);
         }
-        
+
         toast.success("סיימת ללמוד! כל הכבוד 🎉", {
             position: "top-center",
             autoClose: 3000,
@@ -164,10 +151,10 @@ const Study = () => {
     };
 
     const openQuiz = () => setShowQuiz(true);
-    const closeQuiz = () => setShowQuiz(false); 
+    const closeQuiz = () => setShowQuiz(false);
 
     const openRating = () => setIsShowRating(true);
-    const closeRating = () => setIsShowRating(false); 
+    const closeRating = () => setIsShowRating(false);
 
     return isLoading ? (
         <Loading />
@@ -175,9 +162,9 @@ const Study = () => {
         <Box display="flex" height="100vh">
             <ChapterSidebar
                 selectedBookId={bookId}
-                onSectionSelect={(chapterIndex, sectionIndex) =>
-                    setIndex({ chapterId: chapterIndex, paragraphId: sectionIndex })
-                }
+                onSectionSelect={(chapterIndex, sectionIndex) => {
+                    handleChangeIndex(chapterIndex, sectionIndex);
+                }}
             />
             <div className={Styles.container}>
                 <IconButton
@@ -214,25 +201,25 @@ const Study = () => {
                     בחן את עצמך
                 </button>
                 <Dialog open={showQuiz} onClose={closeQuiz}>
-                        {paragraph && index && paragraph.find(
-                                    (p) =>
-                                        p.chapterNumber === index?.chapterId &&
-                                        p.section.paragraphId === index?.paragraphId
-                                )?(
-                            <QuestionCard
-                                p={paragraph.find(
-                                    (p) =>
-                                        p.chapterNumber === index?.chapterId &&
-                                        p.section.paragraphId === index?.paragraphId
-                                )!.section}
-                                bookId={bookId}
-                                setParagraph={setParagraph}
-                                chapterId={paragraph[0].chapterNumber}
-                            />
-                        ):<Loading/>}
+                    {paragraph && index && paragraph.find(
+                        (p) =>
+                            p.chapterNumber === index?.chapterId &&
+                            p.section.paragraphId === index?.paragraphId
+                    ) ? (
+                        <QuestionCard
+                            p={paragraph.find(
+                                (p) =>
+                                    p.chapterNumber === index?.chapterId &&
+                                    p.section.paragraphId === index?.paragraphId
+                            )!.section}
+                            bookId={bookId}
+                            setParagraph={setParagraph}
+                            chapterId={paragraph[0].chapterNumber}
+                        />
+                    ) : <Loading />}
                 </Dialog>
                 <Dialog open={isShowRating} onClose={closeRating}>
-                        <Rating bookId={bookId} onClose={closeRating}/>
+                    <Rating bookId={bookId} onClose={closeRating} />
                 </Dialog>
                 {isLastSection && (
                     <Button
