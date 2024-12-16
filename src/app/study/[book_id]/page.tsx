@@ -108,7 +108,7 @@ const Study = () => {
         let newParagraphId = paragraphId;
 
         if (direction === "next") {
-            if(chapterId !== 1 && paragraphId > 3){
+            
 
                 const isSectionMarked = user?.books.some(
                     (book) =>
@@ -118,7 +118,7 @@ const Study = () => {
                   if (isSectionMarked) {
                     openRating();
                   }
-            }
+            
           
             if (paragraphId < bookData.paragraphsCountPerChapter[chapterId - 1]) {
                 newParagraphId = paragraphId + 1;
