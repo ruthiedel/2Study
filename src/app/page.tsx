@@ -13,7 +13,7 @@ const SomeComponent = () => {
     } else {
       router.push("/about");
     }
-  }, [user]);
+  }, []);
 
   return null; 
 };

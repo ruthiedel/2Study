@@ -36,7 +36,6 @@ const Header: React.FC = () => {
     const handleLogout = () => {
         logout();
         setAnchorEl(null);
-        router.push('/about');
     };
 
     const handleLoginOpen = () => {

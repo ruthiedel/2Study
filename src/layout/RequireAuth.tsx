@@ -1,9 +1,10 @@
 'use client';
 import React, { ReactNode, useEffect, useState } from 'react';
 import useUserStore from '../services/zustand/userZustand/userStor';
-import { Loading, Login} from '../components';
+import { Loading, Login } from '../components';
 import { Box } from '@mui/material';
 import styles from './modal.module.css';
+
 interface RequireAuthProps {
   children: ReactNode;
   redirectTo?: string;
@@ -15,14 +16,8 @@ const RequireAuth = ({ children }: RequireAuthProps) => {
   const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
-    if (user === undefined) {
-      setIsChecking(true);
-    } else {
-      setIsChecking(false);
-      if (!user) {
-        setOpenModal(true);
-      }
-    }
+    setIsChecking(false);
+    setOpenModal(!user);
   }, [user]);
 
   if (isChecking) {
@@ -32,7 +27,7 @@ const RequireAuth = ({ children }: RequireAuthProps) => {
   return (
     <>
       {children}
-      {!user && (
+      {openModal && (
         <div className={styles.modal}>
           <Box
             sx={{
@@ -40,7 +35,7 @@ const RequireAuth = ({ children }: RequireAuthProps) => {
               top: '50%',
               left: '50%',
               transform: 'translate(-50%, -50%)',
-              bgcolor: 'transparent', 
+              bgcolor: 'transparent',
               p: 0,
               boxShadow: 0,
             }}
