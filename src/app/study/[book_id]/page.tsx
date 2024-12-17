@@ -54,8 +54,10 @@ const Study = () => {
 
     const fetchParagraphs = async (chapterId: number, paragraphId: number) => {
 
-        if (chapterId !== paragraph[0].chapterNumber && user?.books?.find((book) => book.book_id === bookId)?.rate && user!.books!.find((book) => book.book_id === bookId)!.rate < 1) { 
-            openRating();}
+        if (paragraph && paragraph.length && paragraph.length > 0 && paragraph[0].chapterNumber !== undefined){
+            if (chapterId !== paragraph[0].chapterNumber && user?.books?.find((book) => book.book_id === bookId)?.rate && user!.books!.find((book) => book.book_id === bookId)!.rate < 1) { 
+                openRating();}
+        }
 
         if (paragraph.length === 0 || chapterId !== paragraph[0].chapterNumber) {
             try {
