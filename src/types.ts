@@ -6,7 +6,7 @@ export type Paragraph = {
 }
 
 type Question = {
-    question :string;
+    question: string;
     answer: string;
 }
 export type Chapter = {
@@ -14,7 +14,7 @@ export type Chapter = {
 
     paragraphs: Paragraph[];
 }
- export type Message = {
+export type Message = {
     _id?: string;
     bookId: string;
     username: string;
@@ -52,7 +52,7 @@ export type UserBook = {
     chapter_id: number;
     section_id: number;
     rate: number;
-    status?:boolean;
+    status?: boolean;
 }
 type LearningGroup = {
     users?: LearningGroupUser[];
@@ -65,17 +65,22 @@ export type User = {
     email: string;
     books: UserBook[];
     userImagePath: string;
-}
+};
+
+export type UserWithPassword = User & {
+    password: string; 
+};
+
 export type Mail = {
     name: string;
     email: string;
     message: string
 }
 export type localMessage = {
-  messageId: string;
-  username: string;
-  userId: string;
-  bookId: string;
-  message: string;
-  timestamp: Date;
+    messageId: string;
+    username: string;
+    userId: string;
+    bookId: string;
+    message: string;
+    timestamp: Date;
 }
