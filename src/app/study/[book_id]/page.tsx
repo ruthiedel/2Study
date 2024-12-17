@@ -53,8 +53,9 @@ const Study = () => {
     }, [books, user]);
 
     const fetchParagraphs = async (chapterId: number, paragraphId: number) => {
-        
-        if (chapterId !== paragraph[0].chapterNumber) { openRating();}
+
+        if (chapterId !== paragraph[0].chapterNumber && user?.books?.find((book) => book.book_id === bookId)?.rate && user!.books!.find((book) => book.book_id === bookId)!.rate < 1) { 
+            openRating();}
 
         if (paragraph.length === 0 || chapterId !== paragraph[0].chapterNumber) {
             try {
@@ -67,7 +68,7 @@ const Study = () => {
                     throw new Error("No paragraphs found");
                 }
                 setParagraph(paragraphs.sections);
-                
+
             } catch (error) {
                 console.error("Error fetching paragraphs:", error);
             }
