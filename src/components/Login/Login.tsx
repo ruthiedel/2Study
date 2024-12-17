@@ -15,55 +15,55 @@ const Login = () => {
   const router = useRouter();
   const setUser = useUserStore((state) => state.setUser);
 
-  const handleLogin = async () => {
-    try {
-      let localUser = {
-        _id: 'kWB2fSx9q1SxmMc1W7vyoWo2QQZ2',
-        email: 'frieman@g.jct.ac.il',
-        name: 'guest',
-        books: [],
-        userImagePath: '',
-      };
+  // const handleLogin = async () => {
+  //   try {
+  //     let localUser = {
+  //       _id: 'kWB2fSx9q1SxmMc1W7vyoWo2QQZ2',
+  //       email: 'frieman@g.jct.ac.il',
+  //       name: 'guest',
+  //       books: [],
+  //       userImagePath: '',
+  //     };
 
-      const response = await logInUser(localUser);
+  //     const response = await logInUser(localUser);
 
-      if (response.status === 200) {
-        localUser = response.user;
-      }
-      setUser(localUser);
-    } catch (error) {
-      console.error("Error during login:", error);
+  //     if (response.status === 200) {
+  //       localUser = response.user;
+  //     }
+  //     setUser(localUser);
+  //   } catch (error) {
+  //     console.error("Error during login:", error);
 
-    }
-  }
+  //   }
+  // }
 
-  const handleGoogleLogin = async () => {
-    try {
-      const provider = new GoogleAuthProvider();
-      provider.setCustomParameters({ prompt: "select_account" });
+  // const handleGoogleLogin = async () => {
+  //   try {
+  //     const provider = new GoogleAuthProvider();
+  //     provider.setCustomParameters({ prompt: "select_account" });
 
-      const result = await signInWithPopup(auth, provider);
-      const user = result.user;
+  //     const result = await signInWithPopup(auth, provider);
+  //     const user = result.user;
 
-      let localUser = {
-        _id: user.uid,
-        email: user.email || '',
-        name: user.displayName || '',
-        books: [],
-        userImagePath: user.photoURL || '',
-      };
-      const response = await logInUser(localUser);
+  //     let localUser = {
+  //       _id: user.uid,
+  //       email: user.email || '',
+  //       name: user.displayName || '',
+  //       books: [],
+  //       userImagePath: user.photoURL || '',
+  //     };
+  //     const response = await logInUser(localUser);
 
-      if (response.status === 200) {
-        localUser = response.user;
-      }
-      setUser(localUser);
+  //     if (response.status === 200) {
+  //       localUser = response.user;
+  //     }
+  //     setUser(localUser);
 
-    } catch (error) {
-      console.error("Error during Google login:", error);
+  //   } catch (error) {
+  //     console.error("Error during Google login:", error);
 
-    }
-  };
+  //   }
+  // };
   const handleGoHome = () => {
     router.push('/home');
   };
@@ -72,12 +72,12 @@ const Login = () => {
     <div className={styles.login_card}>
       <div className={styles.side}>
         <p className={styles.login_card_text}><strong>התחברות</strong></p>
-        <button onClick={handleGoogleLogin} className={styles.login_card_button}>
+        <button className={styles.login_card_button}>
           המשך עם Google
         </button>
-        <button onClick={handleLogin} className={styles.login_guest}>
+        {/* <button onClick={handleLogin} className={styles.login_guest}>
           התחבר כאורח
-        </button>
+        </button> */}
         <button onClick={handleGoHome} className={styles.goHhomeBtn}>חזרה לעמוד הבית</button>
 
         <Image

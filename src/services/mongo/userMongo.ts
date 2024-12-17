@@ -21,19 +21,17 @@ export async function checkAndAddUser(user: UserWithPassword) {
   const client = await connectDatabase();
   const db = client.db('Books');
   const usersCollection = db.collection('users');
+  const hashedPassword:string = await bcrypt.hash(user.password, 10);
+  const result = await usersCollection.insertOne({
+    ...user, 
+    _id: new ObjectId(user._id), 
+    password: hashedPassword
+  });
 
-  const existingUser = await usersCollection.findOne({ email: user.email });
-
-  if (!existingUser) {
-    const hashedPassword:string = await bcrypt.hash(user.password, 10);
-    const result = await usersCollection.insertOne({ ...user,_id: new ObjectId(user._id), password: hashedPassword });
-    const userWithId = { ...user, _id: result.insertedId.toString() };
-    return { status: 201, message: 'המשתמש נרשם בהצלחה', user: userWithId };
-  }
-
-  const userWithId = { ...existingUser, _id: existingUser._id.toString() };
-  return { status: 200, message: 'המשתמש כבר קיים', user: userWithId };
+  const userWithId = { ...user, _id: result.insertedId.toString() };
+  return { status: 201, message: 'המשתמש נרשם בהצלחה', user: userWithId };
 }
+
 
 export async function findUserByEmailAndPassword(email: string, password: string) {
   const client = await connectDatabase();

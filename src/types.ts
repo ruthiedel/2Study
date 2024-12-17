@@ -71,6 +71,11 @@ export type UserWithPassword = User & {
     password: string; 
 };
 
+export type LoginCredentials = {
+    email: string;
+    password: string;
+};
+
 export type Mail = {
     name: string;
     email: string;

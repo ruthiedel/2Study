@@ -5,6 +5,7 @@ import { Feedback, Section, BottomSection } from "../../components";
 import styles from './homePage.module.css';
 import { useRouter } from "next/navigation";
 import { Noto_Serif} from 'next/font/google';
+import AuthForm from "@/components/Login/Check";
 
 const NotoSerif = Noto_Serif({
     weight: ['400'],
