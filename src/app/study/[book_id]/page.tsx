@@ -4,8 +4,8 @@ import { Box, IconButton, Button, Dialog, DialogContent } from "@mui/material";
 import useUserStore from "../../../services/zustand/userZustand/userStor";
 import { getSections } from "../../../services/bookService";
 import { useParams } from "next/navigation";
-import { Chat, MarkButton, ChapterSidebar, ShowParagraph, Loading, Rating, QuestionCard,
-} from "../../../components";
+import { Chat, MarkButton,ChapterSidebar,ShowParagraph,Loading,Rating,QuestionCard} from "../../../components";
+
 import { Book, Paragraph } from "../../../types";
 import numberToGematria from "../../../lib/clientHelpers/gematriaFunc";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
@@ -61,6 +61,7 @@ const Study = () => {
                     throw new Error("No paragraphs found");
                 }
                 setParagraph(paragraphs.sections);
+                
             } catch (error) {
                 console.error("Error fetching paragraphs:", error);
             }

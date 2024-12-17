@@ -19,8 +19,8 @@ export async function connectDatabase() {
 }
 
 function calculateSimilarity(userA: User, userB: User): number {
-  const booksA = userA.books.map(book => ({ book_id: book.book_id, rate: book.rate }));
-  const booksB = userB.books.map(book => ({ book_id: book.book_id, rate: book.rate }));
+  const booksA = userA.books?.map(book => ({ book_id: book.book_id, rate: book.rate })) || [];
+  const booksB = userB.books?.map(book => ({ book_id: book.book_id, rate: book.rate })) || [];
 
   const commonBooks = booksA.filter(bookA => booksB.some(bookB => bookA.book_id === bookB.book_id));
 
@@ -33,6 +33,7 @@ function calculateSimilarity(userA: User, userB: User): number {
 
   return 1 / (1 + sumSimilarity);
 }
+
 
 async function getAllUsers(): Promise<User[]> {
   const client = await connectDatabase();
