@@ -28,7 +28,11 @@
     display: flex;
     flex-direction: column;
     gap: 5px;
-}
+    height: 100%;
+    max-height: calc(97vh - 100px); 
+    scroll-behavior: smooth;
+    animation: scrollAnimation 2s ease-in-out;
+  }  
 
 .messages::-webkit-scrollbar {
     width: 8px;   
