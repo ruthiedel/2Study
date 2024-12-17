@@ -3,7 +3,6 @@
 import React, { useEffect } from "react";
 import { useRouter } from "next/navigation"; 
 import useUserStore from "@/services/zustand/userZustand/userStor"; 
-import Home from '../components/HomePageFolder/HomePageComp';
 
 const SomeComponent = () => {
   const router = useRouter();
