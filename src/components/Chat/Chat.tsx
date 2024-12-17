@@ -41,9 +41,13 @@ const Chat = ({ bookId }: { bookId: string }) => {
 
   useEffect(() => {
     if (messageContainerRef.current) {
-      messageContainerRef.current.scrollTop = messageContainerRef.current.scrollHeight;
+      messageContainerRef.current.scrollTo({
+        top: messageContainerRef.current.scrollHeight,
+        behavior: 'smooth',
+      });
     }
-  }, [messages]);
+  }, [messages]); 
+  
 
   const sendMessage = async () => {
     if (!user || message.trim() === '' || isSending) return;
@@ -104,7 +108,7 @@ const Chat = ({ bookId }: { bookId: string }) => {
           />
         </div>
       </div>
-      <div className={ChatStyles.messages} id='messages-container'>
+      <div className={ChatStyles.messages} ref={messageContainerRef} id='messages-container'>
         {messages.map((msg, index) => (
           <div key={index} className={`${ChatStyles.messageContainer} ${(msg.userId && msg.userId === user?._id) ? ChatStyles.selfContainer : ''
             }`}>
