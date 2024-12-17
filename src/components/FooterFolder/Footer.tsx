@@ -6,7 +6,7 @@ import { sendMail } from '@/services/mailService';
 import logo from '../../../public/pictures/logo1.png';
 import { Mail } from '../../types';
 import Image from 'next/image';
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styles from './footer.module.css';
 
@@ -51,7 +51,6 @@ const Footer: React.FC = () => {
 
     return (
         <div className={styles.footerContainer}>
-            <ToastContainer />
             <div className={styles.column1}>
                 <Image src={logo} alt="logo" className={styles.logo} />
             </div>
