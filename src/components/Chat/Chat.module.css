@@ -34,26 +34,6 @@
     animation: scrollAnimation 2s ease-in-out;
   }  
 
-.messages::-webkit-scrollbar {
-    width: 8px;   
-    height: 8px;  
-  }
-  
-  .messages::-webkit-scrollbar-thumb {
-    background-color: #888;  
-    border-radius: 10px;      
-    border: 2px solid #fff;  
-  }
-  
-  .messages::-webkit-scrollbar-thumb:hover {
-    background-color: #555; 
-  }
-  
-  .messages::-webkit-scrollbar-track {
-    background: #f1f1f1;    
-    border-radius: 10px;     
-  }
-
 .message {
     display: flex;
     flex-direction: column;
