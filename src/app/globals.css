@@ -16,6 +16,13 @@
   font-style: normal;
 }
 
+@font-face{
+  font-family: 'Rubik';
+  src: url('https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&family=Fugaz+One&family=Knewave&family=Noto+Serif:ital,wght@0,100..900;1,100..900&family=Permanent+Marker&family=Rubik:ital,wght@0,300..900;1,300..900&family=Trade+Winds&display=swap');
+  font-weight: normal;
+  font-style: normal;
+}
+
 body {
   color: #010101;
   background: #fff;
@@ -97,4 +104,24 @@ body {
 ::-moz-selection {
   background-color: #f5f5dc; 
   color: #333; 
+}
+
+::-webkit-scrollbar {
+  width: 8px;   /* רוחב פס הגלילה */
+  height: 8px;  /* גובה פס הגלילה עבור גלילה אופקית */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #888;  /* צבע פס הגלילה */
+  border-radius: 10px;     /* פינות מעוגלות */
+  border: 2px solid #fff;  /* רווח פנימי */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #555;  /* צבע פס הגלילה בהובר */
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;     /* צבע הרקע */
+  border-radius: 10px;     /* פינות מעוגלות */
 }

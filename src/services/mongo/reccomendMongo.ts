@@ -1,6 +1,5 @@
 import { User, Book } from "../../types";
-import { MongoClient, ObjectId } from 'mongodb';
-import { promises as fs } from 'fs';
+import { MongoClient} from 'mongodb';
 
 type BookWithoutCoverImage = Omit<Book, 'coverImage'>; 
 

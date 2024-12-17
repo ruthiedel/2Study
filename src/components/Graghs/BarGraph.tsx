@@ -77,7 +77,7 @@ const BarGraph = () => {
 
   return (
     <div>
-      {(user && user.books && user.books.length === 0) && <p className='text-xs'>כאן יופיע פילוח הקטגוריות של הספרים בהם תלמד</p>}
+      {(user && user.books && user.books.length === 0) && <p className='text-xs'>כאן יופיע ההתקדמות שלך בספרים בלמידה</p>}
       <Bar data={data} options={options} />
     </div>
   );
