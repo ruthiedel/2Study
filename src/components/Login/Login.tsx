@@ -11,9 +11,13 @@ import styles from "./login.module.css";
 import { LoginCredentials, UserWithPassword } from "../../types";
 import { logInUser, logInWithGoogle, registerUser } from "../../services/userService";
 import useUserStore from "../../services/zustand/userZustand/userStor";
+<<<<<<< HEAD
 import { IconButton } from "@mui/material";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../../lib/firebase";
+=======
+import {forgetPassword} from "../../services/mailService";
+>>>>>>> 2ac8c6436afdd381eab18fb40c4a1c753857bdc7
 
 const loginSchema = z.object({
   email: z.string().email("אימייל לא חוקי"),
@@ -32,9 +36,14 @@ function Login() {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
+    watch,
   } = useForm({
     resolver: zodResolver(schema),
   });
+
+  const email = watch("email");
+
 
   const onSubmit = async (data: any) => {
     try {
@@ -96,6 +105,7 @@ function Login() {
     }
   };
 
+<<<<<<< HEAD
   const handleLoginWithGoogle = async () => {
     try {
       const provider = new GoogleAuthProvider();
@@ -134,6 +144,39 @@ function Login() {
       });
     }
   }
+=======
+
+  
+  
+  const handleForgotPassword = async () => {
+    
+    if (!email) {
+      Swal.fire({
+        icon: "error",
+        title: "שגיאה",
+        text: "יש למלא את המייל",
+      });
+      return;
+    }
+  
+    try {
+      const response = await forgetPassword(email);
+      Swal.fire({
+        icon: "success",
+        title: "הסיסמה נשלחה בהצלחה!",
+        text: "הסיסמה החדשה נשלחה למייל שלך. אנא העתק אותה מהמייל.",
+      });
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "שגיאה",
+        text: "המערכת נתקלה בבעיה בשליחת הסיסמה לתיבת המייל שלך",
+      });
+    }
+  };
+  
+  
+>>>>>>> 2ac8c6436afdd381eab18fb40c4a1c753857bdc7
 
   return (
     <div className={styles.formContainer}>
@@ -185,7 +228,7 @@ function Login() {
             <button
               type="button"
               className={styles.forgotPassword}
-              onClick={() => alert("כאן ניתן יהיה להוסיף לוגיקה לשכחת סיסמה.")}
+              onClick={handleForgotPassword}
             >
               שכחתי סיסמה
             </button>
