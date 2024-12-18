@@ -37,7 +37,7 @@ const Study = () => {
   const { book_id } = useParams() as { book_id: string | string[] };
   const bookId = Array.isArray(book_id) ? book_id[0] : book_id;
   const { data: books, isLoading } = getBooks();
-  const [index, setIndex] = useState<Index>({ chapterId: 1, paragraphId: 1 });
+  const [index, setIndex] = useState<Index>({ chapterId: -1, paragraphId: -1 });
   const [paragraph, setParagraph] = useState<Paragraphs[]>([]);
   const [bookData, setBookData] = useState<Book | null>(null);
   const [showConfetti, setShowConfetti] = useState(false);
@@ -52,13 +52,13 @@ const Study = () => {
 
   useEffect(() => {
     if (!user || !books || !Array.isArray(books)) return;
-
-    if (currentUserBook) {
-      handleChangeIndex(currentUserBook.chapter_id, currentUserBook.section_id);
-    } else {
-      handleChangeIndex(1, 1);
+    if(index.chapterId ===-1){
+      if (currentUserBook) {
+        handleChangeIndex(currentUserBook.chapter_id, currentUserBook.section_id);
+      } else {
+        handleChangeIndex(1,1);
+      }
     }
-
     const currentBook = books.find((book) => book._id === bookId);
     setBookData(currentBook || null);
   }, [books, user]);
@@ -84,9 +84,7 @@ const Study = () => {
   };
 
   const isCurrentSectionMarked = () => {
-    if (!currentUserBook) {
-      return false;
-    }
+    if (!currentUserBook) { return false; }
 
     return (
       currentUserBook.chapter_id === index.chapterId &&
