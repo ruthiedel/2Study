@@ -10,6 +10,7 @@ import styles from "./login.module.css";
 import { LoginCredentials, UserWithPassword } from "../../types";
 import { logInUser, registerUser } from "../../services/userService";
 import useUserStore from "../../services/zustand/userZustand/userStor";
+import {forgetPassword} from "../../services/mailService";
 
 const loginSchema = z.object({
   email: z.string().email("אימייל לא חוקי"),
@@ -28,9 +29,14 @@ function Login() {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
+    watch,
   } = useForm({
     resolver: zodResolver(schema),
   });
+
+  const email = watch("email");
+
 
   const onSubmit = async (data: any) => {
     try {
@@ -92,6 +98,38 @@ function Login() {
     }
   };
 
+
+  
+  
+  const handleForgotPassword = async () => {
+    
+    if (!email) {
+      Swal.fire({
+        icon: "error",
+        title: "שגיאה",
+        text: "יש למלא את המייל",
+      });
+      return;
+    }
+  
+    try {
+      const response = await forgetPassword(email);
+      Swal.fire({
+        icon: "success",
+        title: "הסיסמה נשלחה בהצלחה!",
+        text: "הסיסמה החדשה נשלחה למייל שלך. אנא העתק אותה מהמייל.",
+      });
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "שגיאה",
+        text: "המערכת נתקלה בבעיה בשליחת הסיסמה לתיבת המייל שלך",
+      });
+    }
+  };
+  
+  
+
   return (
     <div className={styles.formContainer}>
       <div>
@@ -142,7 +180,7 @@ function Login() {
             <button
               type="button"
               className={styles.forgotPassword}
-              onClick={() => alert("כאן ניתן יהיה להוסיף לוגיקה לשכחת סיסמה.")}
+              onClick={handleForgotPassword}
             >
               שכחתי סיסמה
             </button>
