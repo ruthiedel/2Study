@@ -1,20 +1,6 @@
-import { checkAndAddUser, findUserByEmail } from "@/services/mongo/userMongo";
-import { UserWithPassword } from "@/types";
+
 import { NextResponse } from "next/server";
-
-async function registerUser(user: UserWithPassword) {
-    const existingUser = await findUserByEmail(user.email);
-    if (existingUser) {
-        return { message: 'המייל הזה כבר קיים במערכת. אנא בחר מייל אחר.', status: 400 };
-    }
-
-    const result = await checkAndAddUser(user);
-    return {
-        message: result.message || 'ההרשמה בוצעה בהצלחה! ברוכה הבאה!',
-        status: result.status || 200,
-        user: result.user
-    };
-}
+import {registerUser} from '../../../services/mongo/userMongo';
 
 export async function POST(request: Request) {
     try {

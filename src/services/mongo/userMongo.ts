@@ -17,18 +17,23 @@ export async function connectDatabase() {
   return clientPromise;
 }
 
-export async function checkAndAddUser(user: UserWithPassword) {
-  const client = await connectDatabase();
+export async function checkAndAddUser(client: MongoClient, user: UserWithPassword) {
   const db = client.db('Books');
   const usersCollection = db.collection('users');
-  const hashedPassword:string = await bcrypt.hash(user.password, 10);
+  const hashedPassword: string = await bcrypt.hash(user.password, 10);
   const result = await usersCollection.insertOne({
-    ...user, 
-    _id: new ObjectId(user._id), 
+    ...user,
+    _id: new ObjectId(user._id),
     password: hashedPassword
   });
 
-  const userWithId = { ...user, _id: result.insertedId.toString() };
+  const userWithId = {
+    _id: result.insertedId.toString(),
+    name: user.name,
+    email: user.email,
+    books: user.books,
+    userImagePath: user.userImagePath
+  };
   return { status: 201, message: 'המשתמש נרשם בהצלחה', user: userWithId };
 }
 
@@ -44,12 +49,17 @@ export async function findUserByEmailAndPassword(email: string, password: string
   const isPasswordValid = await bcrypt.compare(password, user.password);
   if (!isPasswordValid) return null;
 
-  const userWithId = { ...user, _id: user._id.toString() };
+  const userWithId = {
+    _id: user._id.toString(),
+    name: user.name,
+    email: user.email,
+    books: user.books,
+    userImagePath: user.userImagePath
+  };
   return userWithId;
 }
 
-export async function findUserByEmail(email: string): Promise<User | null> {
-  const client = await connectDatabase();
+export async function findUserByEmail(client: MongoClient, email: string): Promise<User | null> {
   const db = client.db('Books');
   const usersCollection = db.collection('users');
 
@@ -64,6 +74,27 @@ export async function findUserByEmail(email: string): Promise<User | null> {
     email: user.email,
     books: user.books,
     userImagePath: user.userImagePath
+  };
+}
+
+export async function registerUser(user: UserWithPassword) {
+  const client = await connectDatabase();
+  const existingUser = await findUserByEmail(client, user.email);
+  if (existingUser) {
+    return { message: 'המייל הזה כבר קיים במערכת. אנא בחר מייל אחר.', status: 400 };
+  }
+
+  const result = await checkAndAddUser(client, user);
+  return {
+    message: result.message || 'ההרשמה בוצעה בהצלחה! ברוכה הבאה!',
+    status: result.status || 200,
+    user: {
+      _id: result.user._id,
+      name: result.user.name,
+      email: result.user.email,
+      books: result.user.books,
+      userImagePath: result.user.userImagePath
+    }
   };
 }
 
