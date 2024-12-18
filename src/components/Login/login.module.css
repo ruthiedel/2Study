@@ -1,11 +1,15 @@
-
 .formContainer {
   width: 300px;
   margin: auto;
   text-align: center;
   padding: 30px;
   font-family: var(--main-font);
-}
+  display: flex; 
+  flex-direction: column;
+  justify-content: center; 
+  align-items: center; 
+  overflow: hidden; 
+  }
 
 .title {
   font-size: 24px;
@@ -42,6 +46,22 @@
   cursor: pointer;
   text-decoration: underline;
 }
+
+.forgotPassword {
+  background: none;
+  border: none;
+  color: blue;
+  cursor: pointer;
+  text-decoration: underline;
+  font-size: 14px;
+  margin-top: 5px;
+  padding: 0;
+}
+
+.forgotPassword:hover {
+  color: darkblue;
+}
+
 
 
 

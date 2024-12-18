@@ -4,10 +4,11 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
+import Swal from "sweetalert2";
 import image from "../../../public/pictures/unnamed.png";
 import styles from "./login.module.css";
-import { LoginCredentials, UserWithPassword } from "@/types";
-import { logInUser, registerUser } from "@/services/userService";
+import { LoginCredentials, UserWithPassword } from "../../types";
+import { logInUser, registerUser } from "../../services/userService";
 import useUserStore from "../../services/zustand/userZustand/userStor";
 
 const loginSchema = z.object({
@@ -39,44 +40,62 @@ function Login() {
           email: data.email,
           password: data.password,
         };
-        response = await logInUser(loginData); 
-  
+        response = await logInUser(loginData);
+
         if (response.status === 200) {
-          alert(`ההתחברות בוצעה בהצלחה! ברוך הבא, ${response.user.name}`);
-          console.log('userrrrrrrr', response.user);
+          Swal.fire({
+            icon: "success",
+            title: "ההתחברות בוצעה בהצלחה!",
+            text: `ברוך הבא, ${response.user.name}`,
+          });
           setUser(response.user);
         } else {
-          alert(response.message || "ההתחברות נכשלה.");
+          Swal.fire({
+            icon: "error",
+            title: "שגיאה",
+            text: response.message || "ההתחברות נכשלה.",
+          });
         }
-      } 
-      else if (status === "הרשמה") {
+      } else if (status === "הרשמה") {
         const userData: UserWithPassword = {
           name: data.username,
           email: data.email,
           password: data.password,
-          books: [], 
-          userImagePath: "", 
+          books: [],
+          userImagePath: "",
         };
-        response = await registerUser(userData); 
-  
-        if (response.status === 200) {
-          console.log('userrrrrrrr', response.user);
+        response = await registerUser(userData);
+
+        if (response.status === 200 || response.status === 201) {
+          Swal.fire({
+            icon: "success",
+            title: "הרשמה בוצעה בהצלחה!",
+            text: "ברוך הבא למערכת",
+          });
           setUser(response.user);
+          setStatus("התחברות");
         } else {
-          alert(response.message || "ההרשמה נכשלה.");
+          Swal.fire({
+            icon: "error",
+            title: "שגיאה",
+            text: response.message || "ההרשמה נכשלה.",
+          });
         }
       }
     } catch (error) {
       console.error("Error during submission:", error);
-      alert("אירעה שגיאה פנימית במערכת. נסה שוב מאוחר יותר.");
+      Swal.fire({
+        icon: "error",
+        title: "שגיאה",
+        text: "אירעה שגיאה פנימית במערכת. נסה שוב מאוחר יותר.",
+      });
     }
   };
-  
 
   return (
     <div className={styles.formContainer}>
       <div>
-        <Image src={image} alt="login image" width={200} height={200}/>
+        <Image src={image} alt="login image" width={200} height={200} />
       </div>
 
       <p className={styles.title}>{status}</p>
@@ -118,7 +137,18 @@ function Login() {
           {errors.password && (
             <p className={styles.error}>{errors.password.message as string}</p>
           )}
+
+          {status === "התחברות" && (
+            <button
+              type="button"
+              className={styles.forgotPassword}
+              onClick={() => alert("כאן ניתן יהיה להוסיף לוגיקה לשכחת סיסמה.")}
+            >
+              שכחתי סיסמה
+            </button>
+          )}
         </div>
+
 
         <button className={styles.button} type="submit">
           {status}
@@ -128,16 +158,21 @@ function Login() {
       <p className={styles.switchStatus}>
         {status === "התחברות" ? (
           <>
-            אין לך חשבון?{" "}
-            <span onClick={() => setStatus("הרשמה")}>הרשמה</span>
+            אין לך חשבון? <span onClick={() => setStatus("הרשמה")}>הרשמה</span>
           </>
         ) : (
           <>
-            כבר יש לך חשבון?{" "}
-            <span onClick={() => setStatus("התחברות")}>התחברות</span>
+            כבר יש לך חשבון? <span onClick={() => setStatus("התחברות")}>התחברות</span>
           </>
         )}
       </p>
+
+      <button
+        className={styles.googleButton}
+        onClick={() => Swal.fire("פונקציונליות התחברות עם גוגל בדרך!")}
+      >
+        התחבר עם Google
+      </button>
     </div>
   );
 }
