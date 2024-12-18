@@ -54,11 +54,6 @@ const Study = () => {
 
     const fetchParagraphs = async (chapterId: number, paragraphId: number) => {
 
-        if (paragraph && paragraph.length && paragraph.length > 0 && paragraph[0].chapterNumber !== undefined){
-            if (chapterId !== paragraph[0].chapterNumber && user?.books?.find((book) => book.book_id === bookId)?.rate && user!.books!.find((book) => book.book_id === bookId)!.rate < 1) { 
-                openRating();}
-        }
-
         if (paragraph.length === 0 || chapterId !== paragraph[0].chapterNumber) {
             try {
                 const paragraphs = await getSections(bookId, chapterId, paragraphId);
@@ -111,6 +106,7 @@ const Study = () => {
     };
 
     const handleChangeIndex = (chapterId: number, paragraphId: number) => {
+        if ( paragraphId === 1 && chapterId !== 1 ){ openRating(); }//אם שולח לסעיף א בפרק שונה מהפרק הראשון
         setIndex({ chapterId, paragraphId });
         fetchParagraphs(chapterId, paragraphId);
     };
