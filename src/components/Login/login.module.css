@@ -1,4 +1,112 @@
-.login_card{
+.formContainer {
+  width: 300px;
+  margin: auto;
+  text-align: center;
+  padding: 30px;
+  font-family: var(--main-font);
+  display: flex; 
+  flex-direction: column;
+  justify-content: center; 
+  align-items: center; 
+  overflow: hidden; 
+  background-color: white;
+  }
+
+.title {
+  font-size: 24px;
+  margin: 10px 0;
+}
+
+.input {
+  width: 100%;
+  padding: 8px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.button {
+  width: 100%;
+  padding: 10px;
+  background-color: #f3e5b8;
+  border: none;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #e3d5a8;
+}
+
+.error {
+  color: red;
+  font-size: 12px;
+}
+
+.switchStatus span {
+  color: blue;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.forgotPassword {
+  background: none;
+  border: none;
+  color: blue;
+  cursor: pointer;
+  text-decoration: underline;
+  font-size: 14px;
+  margin-top: 5px;
+  padding: 0;
+}
+
+.forgotPassword:hover {
+  color: darkblue;
+}
+
+.textWithLine {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+}
+
+.textWithLine::before,
+.textWithLine::after {
+  content: '';
+  flex-grow: 1;
+  height: 1px;
+  background-color: #F8E185; 
+}
+
+.textWithLine::before {
+  margin-left: 4px; 
+}
+
+.textWithLine::after {
+  margin-right: 4px; 
+}
+
+.textWithLine span {
+  padding: 0 4px; 
+  background-color: #fff; 
+}
+
+.googleButton{
+  border: 1.2px solid black;
+  margin: 3px;
+  border-radius: 50%;
+  padding: 2px;
+}
+
+.googleButtonImage{
+  border-radius: 50%;
+
+}
+
+
+
+
+/* .login_card{
   display: flex;
   flex-direction: row;
   background-color: var(--primary-color);
@@ -37,4 +145,4 @@
   flex-direction: column;
   margin-right: 15px;
 }
-
+ */
