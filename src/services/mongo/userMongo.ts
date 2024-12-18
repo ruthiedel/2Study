@@ -1,5 +1,5 @@
 import { MongoClient, ObjectId } from 'mongodb';
-import { User, UserWithPassword } from '../../types';
+import { LoginCredentials, User, UserWithPassword } from '../../types';
 import bcrypt from 'bcryptjs';
 
 let client: MongoClient;
@@ -96,6 +96,24 @@ export async function registerUser(user: UserWithPassword) {
       userImagePath: result.user.userImagePath
     }
   };
+}
+
+export async function loginUser(credentials: LoginCredentials) {
+  const user = await findUserByEmailAndPassword(credentials.email, credentials.password);
+  if (!user) {
+    return { message: 'המייל או הסיסמה שגויים. נסה שוב.', status: 401 };
+  }
+
+  return { message: 'ההתחברות בוצעה בהצלחה!', status: 200, user };
+}
+
+export async function googleUser(user: UserWithPassword) {
+  const result = await loginUser({ email: user.email, password: user.password });
+  if (result.status === 200) {
+    return result;
+  }
+  else
+    return await checkAndAddUser(client, user);
 }
 
 

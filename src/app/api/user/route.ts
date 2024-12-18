@@ -1,16 +1,5 @@
-import {  findUserByEmailAndPassword } from '../../../services/mongo/userMongo';
-import { NextResponse } from 'next/server';
-import { LoginCredentials } from '../../../types';
-
-
-async function loginUser(credentials: LoginCredentials) {
-    const user = await findUserByEmailAndPassword(credentials.email, credentials.password);
-    if (!user) {
-        return { message: 'המייל או הסיסמה שגויים. נסה שוב.', status: 401 };
-    }
-
-    return { message: 'ההתחברות בוצעה בהצלחה!', status: 200, user };
-}
+import {   loginUser } from '../../../services/mongo/userMongo';
+import { NextResponse } from 'next/server'
 
 export async function POST(request: Request) {
     try {
