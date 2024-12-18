@@ -37,13 +37,16 @@ const Study = () => {
     const [isShowRating, setIsShowRating] = useState(false);
     const user = useUserStore((state) => state.user);
     const updateUserZustand = useUserStore((state) => state.updateUserZustand);
+    
+    const currentUserBook = useMemo(() => {
+        return user?.books.find((book) => book.book_id === bookId);
+    }, [user, bookId]);
 
     useEffect(() => {
         if (!user || !books || !Array.isArray(books)) return;
 
-        const userBook = user.books.find((book) => book.book_id === bookId);
-        if (userBook) {
-            handleChangeIndex(userBook.chapter_id, userBook.section_id);
+        if (currentUserBook) {
+            handleChangeIndex(currentUserBook.chapter_id, currentUserBook.section_id);
         } else {
             handleChangeIndex(1,1);
         }
@@ -106,7 +109,11 @@ const Study = () => {
     };
 
     const handleChangeIndex = (chapterId: number, paragraphId: number) => {
-        if ( paragraphId === 1 && chapterId !== 1 ){ openRating(); }//אם שולח לסעיף א בפרק שונה מהפרק הראשון
+        if ( paragraphId === 1 && chapterId !== 1 ){ //אם שולח לסעיף א בפרק שונה מהפרק הראשון
+            if (currentUserBook && currentUserBook.rate === 0) {
+                openRating(); 
+            }    
+        }
         setIndex({ chapterId, paragraphId });
         fetchParagraphs(chapterId, paragraphId);
     };
