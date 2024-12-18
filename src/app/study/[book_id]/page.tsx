@@ -1,11 +1,10 @@
 "use client";
 import React, { useEffect, useState, useMemo } from "react";
-import { Box, IconButton, Button, Dialog, DialogContent } from "@mui/material";
+import { Box, IconButton, Button, Dialog } from "@mui/material";
 import useUserStore from "../../../services/zustand/userZustand/userStor";
 import { getSections } from "../../../services/bookService";
 import { useParams } from "next/navigation";
-import { Chat, MarkButton, ChapterSidebar, ShowParagraph, Loading, Rating, QuestionCard,
-} from "../../../components";
+import { Chat, MarkButton,ChapterSidebar,ShowParagraph,Loading,Rating,QuestionCard} from "../../../components";
 import { Book, Paragraph } from "../../../types";
 import numberToGematria from "../../../lib/clientHelpers/gematriaFunc";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
@@ -54,13 +53,21 @@ const Study = () => {
     }, [books, user]);
 
     const fetchParagraphs = async (chapterId: number, paragraphId: number) => {
+        
+        if (chapterId !== paragraph[0].chapterNumber) { openRating();}
+
         if (paragraph.length === 0 || chapterId !== paragraph[0].chapterNumber) {
             try {
                 const paragraphs = await getSections(bookId, chapterId, paragraphId);
                 if (!paragraphs || paragraphs.length === 0) {
+                    toast.error('הפרק הבא עדיין לא נטען', {
+                        position: "top-center",
+                        autoClose: 3000,
+                    });
                     throw new Error("No paragraphs found");
                 }
                 setParagraph(paragraphs.sections);
+                
             } catch (error) {
                 console.error("Error fetching paragraphs:", error);
             }
@@ -82,18 +89,6 @@ const Study = () => {
         let newParagraphId = paragraphId;
 
         if (direction === "next") {
-
-
-            const isSectionMarked = user?.books.some(
-                (book) =>
-                    book.book_id === bookId && book.rate < 1
-            );
-
-            if (isSectionMarked) {
-                openRating();
-            }
-
-
             if (paragraphId < bookData.paragraphsCountPerChapter[chapterId - 1]) {
                 newParagraphId = paragraphId + 1;
             } else if (chapterId < bookData.chapters_num) {
