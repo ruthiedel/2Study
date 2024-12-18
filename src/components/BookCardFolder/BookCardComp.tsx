@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import useUserStore from '../../services/zustand/userZustand/userStor';
-import { Card, Grid, IconButton, Button, Typography, Box, Rating, Modal } from '@mui/material';
+import {Grid, Box, Rating, Modal } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import Image from 'next/image';
 import styles from './bookCard.module.css';

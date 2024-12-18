@@ -1,25 +1,19 @@
 "use client";
 import React, { useEffect, useState, useMemo } from "react";
-import { Box, IconButton, Button, Dialog, DialogContent } from "@mui/material";
+import { Box, IconButton, Button, Dialog } from "@mui/material";
 import useUserStore from "../../../services/zustand/userZustand/userStor";
 import { getSections } from "../../../services/bookService";
 import { useParams } from "next/navigation";
-import {
-    Chat, MarkButton,
-    ChapterSidebar,
-    ShowParagraph,
-    Loading,
-    Rating,
-    QuestionCard,
-} from "../../../components";
+import { Chat, MarkButton,ChapterSidebar,ShowParagraph,Loading,Rating,QuestionCard} from "../../../components";
 import { Book, Paragraph } from "../../../types";
 import numberToGematria from "../../../lib/clientHelpers/gematriaFunc";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import { getBooks } from "../../../hooks/booksDetails";
 import Styles from "./Study.module.css";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Confetti from "react-confetti";
+import RequireAuth from "../../../layout/RequireAuth";
 
 interface Index {
     chapterId: number;
@@ -43,13 +37,16 @@ const Study = () => {
     const [isShowRating, setIsShowRating] = useState(false);
     const user = useUserStore((state) => state.user);
     const updateUserZustand = useUserStore((state) => state.updateUserZustand);
+    
+    const currentUserBook = useMemo(() => {
+        return user?.books.find((book) => book.book_id === bookId);
+    }, [user, bookId]);
 
     useEffect(() => {
         if (!user || !books || !Array.isArray(books)) return;
 
-        const userBook = user.books.find((book) => book.book_id === bookId);
-        if (userBook) {
-            handleChangeIndex(userBook.chapter_id, userBook.section_id);
+        if (currentUserBook) {
+            handleChangeIndex(currentUserBook.chapter_id, currentUserBook.section_id);
         } else {
             handleChangeIndex(1,1);
         }
@@ -59,13 +56,19 @@ const Study = () => {
     }, [books, user]);
 
     const fetchParagraphs = async (chapterId: number, paragraphId: number) => {
+
         if (paragraph.length === 0 || chapterId !== paragraph[0].chapterNumber) {
             try {
                 const paragraphs = await getSections(bookId, chapterId, paragraphId);
                 if (!paragraphs || paragraphs.length === 0) {
+                    toast.error('הפרק הבא עדיין לא נטען', {
+                        position: "top-center",
+                        autoClose: 3000,
+                    });
                     throw new Error("No paragraphs found");
                 }
                 setParagraph(paragraphs.sections);
+
             } catch (error) {
                 console.error("Error fetching paragraphs:", error);
             }
@@ -73,10 +76,10 @@ const Study = () => {
     };
 
     const isCurrentSectionMarked = () => {
-        return user?.books.some(book => book.book_id === bookId
-            && book.chapter_id === index.chapterId
-            && book.section_id === index.paragraphId
-        );
+        if (!currentUserBook) { return false; }
+        
+        return currentUserBook.chapter_id === index.chapterId 
+            && currentUserBook.section_id === index.paragraphId;
     };
 
     const handleNavigation = (direction: "next" | "prev") => {
@@ -87,18 +90,6 @@ const Study = () => {
         let newParagraphId = paragraphId;
 
         if (direction === "next") {
-
-
-            const isSectionMarked = user?.books.some(
-                (book) =>
-                    book.book_id === bookId && book.rate < 1
-            );
-
-            if (isSectionMarked) {
-                openRating();
-            }
-
-
             if (paragraphId < bookData.paragraphsCountPerChapter[chapterId - 1]) {
                 newParagraphId = paragraphId + 1;
             } else if (chapterId < bookData.chapters_num) {
@@ -118,6 +109,11 @@ const Study = () => {
     };
 
     const handleChangeIndex = (chapterId: number, paragraphId: number) => {
+        if ( paragraphId === 1 && chapterId !== 1 ){ 
+            if (currentUserBook && currentUserBook.rate === 0) {
+                openRating(); 
+            }    
+        }
         setIndex({ chapterId, paragraphId });
         fetchParagraphs(chapterId, paragraphId);
     };
@@ -131,16 +127,13 @@ const Study = () => {
     }, [index, bookData]);
 
     const handleFinish = () => {
-
         setShowConfetti(true);
-        if (user) {
-            const updatedUser = {
-                ...user,
-                books: user!.books.map((book) =>
-                    book.book_id === bookId ? { ...book, status: false } : book
-                ),
-            };
-            updateUserZustand(user!._id!, updatedUser);
+
+    if (user && currentUserBook) {
+        currentUserBook.status = false;
+        const newBooks = [...user.books];
+        newBooks[newBooks.indexOf(currentUserBook)] = currentUserBook;  
+        updateUserZustand(user!._id!, { ...user, books: newBooks });
         }
 
         toast.success("סיימת ללמוד! כל הכבוד 🎉", {
@@ -159,83 +152,84 @@ const Study = () => {
     return isLoading ? (
         <Loading />
     ) : (
+    <RequireAuth>
         <Box display="flex" height="100vh">
             <ChapterSidebar
                 selectedBookId={bookId}
                 onSectionSelect={(chapterIndex, sectionIndex) => {
-                    handleChangeIndex(chapterIndex, sectionIndex);
-                }}
-            />
-            <div className={Styles.container}>
-                <IconButton
-                    onClick={() => handleNavigation("prev")}
-                    disabled={index?.chapterId === 1 && index?.paragraphId === 1}
-                >
-                    <ExpandLess />
-                </IconButton>
-                <MarkButton bookId={bookId} chapterId={index.chapterId} paragraphId={index.paragraphId} isMarked={isCurrentSectionMarked()} />
-                {paragraph.length === 0 ? (
-                    <p>אין טקסט להצגה כרגע</p>
-                ) : (
-                    <ShowParagraph
-                        paragraph={paragraph.find(
-                            (p) =>
-                                p.chapterNumber === index?.chapterId &&
-                                p.section.paragraphId === index?.paragraphId
-                        )?.section!}
-                        chapterTitle={`פרק ${numberToGematria(
-                            index?.chapterId || 1
-                        )} סעיף ${numberToGematria(index?.paragraphId || 1)}`}
-                    />
-                )}
-                <IconButton
-                    onClick={() => handleNavigation("next")}
-                    disabled={isLastSection}
-                >
-                    <ExpandMore />
-                </IconButton>
-                <button
-                    onClick={openQuiz}
-                    className={Styles.quizButton}
-                >
-                    בחן את עצמך
-                </button>
-                <Dialog open={showQuiz} onClose={closeQuiz}>
-                    {paragraph && index && paragraph.find(
+                handleChangeIndex(chapterIndex, sectionIndex);
+            }}
+        />
+        <div className={Styles.container}>
+            <IconButton
+                onClick={() => handleNavigation("prev")}
+                disabled={index?.chapterId === 1 && index?.paragraphId === 1}
+            >
+                <ExpandLess />
+            </IconButton>
+            <MarkButton bookId={bookId} chapterId={index.chapterId} paragraphId={index.paragraphId} isMarked={isCurrentSectionMarked()} />
+            {paragraph.length === 0 ? (
+                <p>אין טקסט להצגה כרגע</p>
+            ) : (
+                <ShowParagraph
+                    paragraph={paragraph.find(
                         (p) =>
                             p.chapterNumber === index?.chapterId &&
                             p.section.paragraphId === index?.paragraphId
-                    ) ? (
-                        <QuestionCard
-                            p={paragraph.find(
-                                (p) =>
-                                    p.chapterNumber === index?.chapterId &&
-                                    p.section.paragraphId === index?.paragraphId
-                            )!.section}
-                            bookId={bookId}
-                            setParagraph={setParagraph}
-                            chapterId={paragraph[0].chapterNumber}
-                        />
-                    ) : <Loading />}
-                </Dialog>
-                <Dialog open={isShowRating} onClose={closeRating}>
-                    <Rating bookId={bookId} onClose={closeRating} />
-                </Dialog>
-                {isLastSection && (
-                    <Button
-                        onClick={handleFinish}
-                        variant="contained"
-                        color="primary"
-                        className={Styles.finishButton}
-                    >
-                        סיימתי ללמוד
-                    </Button>
-                )}
-            </div>
+                    )?.section!}
+                    chapterTitle={`פרק ${numberToGematria(
+                        index?.chapterId || 1
+                    )} סעיף ${numberToGematria(index?.paragraphId || 1)}`}
+                />
+            )}
+            <IconButton
+                onClick={() => handleNavigation("next")}
+                disabled={isLastSection}
+            >
+                <ExpandMore />
+            </IconButton>
+            <button
+                onClick={openQuiz}
+                className={Styles.quizButton}
+            >
+                בחן את עצמך
+            </button>
+            <Dialog open={showQuiz} onClose={closeQuiz}>
+                {paragraph && index && paragraph.find(
+                    (p) =>
+                        p.chapterNumber === index?.chapterId &&
+                        p.section.paragraphId === index?.paragraphId
+                ) ? (
+                    <QuestionCard
+                        p={paragraph.find(
+                            (p) =>
+                                p.chapterNumber === index?.chapterId &&
+                                p.section.paragraphId === index?.paragraphId
+                        )!.section}
+                        bookId={bookId}
+                        setParagraph={setParagraph}
+                        chapterId={paragraph[0].chapterNumber}
+                    />
+                ) : <Loading />}
+            </Dialog>
+            <Dialog open={isShowRating} onClose={closeRating}>
+                <Rating bookId={bookId} onClose={closeRating} />
+            </Dialog>
+            {isLastSection && (
+                <Button
+                    onClick={handleFinish}
+                    variant="contained"
+                    color="primary"
+                    className={Styles.finishButton}
+                >
+                    סיימתי ללמוד
+                </Button>
+            )}
+        </div>
             <Chat bookId={bookId} />
-            <ToastContainer />
             {showConfetti && <Confetti />}
         </Box>
+    </RequireAuth>
     );
 };
 

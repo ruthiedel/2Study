@@ -7,6 +7,7 @@ import Image from "next/image";
 import Swal from "sweetalert2";
 import image from "../../../public/pictures/unnamed.png";
 import googleImage from "../../../public/pictures/google.jpg";
+
 import styles from "./login.module.css";
 import { LoginCredentials, UserWithPassword } from "../../types";
 import { logInUser, logInWithGoogle, registerUser } from "../../services/userService";
@@ -169,7 +170,6 @@ function Login() {
       });
     }
   };
-  
   
   return (
     <div className={styles.formContainer}>
