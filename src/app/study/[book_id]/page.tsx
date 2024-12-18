@@ -256,3 +256,4 @@ const Study = () => {
 };
 
 export default Study;
+
