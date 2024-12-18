@@ -28,21 +28,7 @@ const RequireAuth = ({ children }: RequireAuthProps) => {
     <>
       {children}
       {openModal && (
-        <div className={styles.modal}>
-          <Box
-            sx={{
-              position: 'absolute',
-              top: '50%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-              bgcolor: 'transparent',
-              p: 0,
-              boxShadow: 0,
-            }}
-          >
-            <Login />
-          </Box>
-        </div>
+        <Login onClickDialog={()=>{}} />
       )}
     </>
   );

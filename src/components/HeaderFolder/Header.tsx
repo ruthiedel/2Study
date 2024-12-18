@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, MouseEvent, useEffect } from "react";
-import { IconButton, Menu, MenuItem, Dialog } from "@mui/material";
+import { IconButton, Menu, MenuItem } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Link from "next/link";
 import Image from "next/image";
@@ -10,7 +10,7 @@ import logo from "../../../public/pictures/logo1.png";
 import styles from "./header.module.css";
 import useUserStore from '../../services/zustand/userZustand/userStor';
 import Login from "../Login/Login";
-import { useRouter } from "next/navigation"; 
+import { useRouter } from "next/navigation";
 
 
 const Header: React.FC = () => {
@@ -18,7 +18,7 @@ const Header: React.FC = () => {
     const logout = useUserStore((state) => state.logout);
     const user = useUserStore((state) => state.user);
     const [showLogin, setShowLogin] = useState(false);
-    const pathname = usePathname(); 
+    const pathname = usePathname();
     const router = useRouter();
 
     useEffect(() => {
@@ -110,9 +110,9 @@ const Header: React.FC = () => {
                     </Menu>
                 </div>
             </div>
-            <Dialog open={showLogin} onClose={handleLoginClose}>
-                <Login />
-            </Dialog>
+            {showLogin ?
+                <Login onClickDialog={handleLoginClose} /> :
+                <></>}
         </>
     );
 };
