@@ -76,10 +76,10 @@ const Study = () => {
     };
 
     const isCurrentSectionMarked = () => {
-        return user?.books.some(book => book.book_id === bookId
-            && book.chapter_id === index.chapterId
-            && book.section_id === index.paragraphId
-        );
+        if (!currentUserBook) { return false; }
+        
+        return currentUserBook.chapter_id === index.chapterId 
+            && currentUserBook.section_id === index.paragraphId;
     };
 
     const handleNavigation = (direction: "next" | "prev") => {
@@ -109,7 +109,7 @@ const Study = () => {
     };
 
     const handleChangeIndex = (chapterId: number, paragraphId: number) => {
-        if ( paragraphId === 1 && chapterId !== 1 ){ //אם שולח לסעיף א בפרק שונה מהפרק הראשון
+        if ( paragraphId === 1 && chapterId !== 1 ){ 
             if (currentUserBook && currentUserBook.rate === 0) {
                 openRating(); 
             }    
@@ -127,16 +127,13 @@ const Study = () => {
     }, [index, bookData]);
 
     const handleFinish = () => {
-
         setShowConfetti(true);
-        if (user) {
-            const updatedUser = {
-                ...user,
-                books: user!.books.map((book) =>
-                    book.book_id === bookId ? { ...book, status: false } : book
-                ),
-            };
-            updateUserZustand(user!._id!, updatedUser);
+
+    if (user && currentUserBook) {
+        currentUserBook.status = false;
+        const newBooks = [...user.books];
+        newBooks[newBooks.indexOf(currentUserBook)] = currentUserBook;  
+        updateUserZustand(user!._id!, { ...user, books: newBooks });
         }
 
         toast.success("סיימת ללמוד! כל הכבוד 🎉", {
