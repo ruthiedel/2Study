@@ -2,7 +2,6 @@
 import React from "react";
 import { Header, Footer } from "../components";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ToastContainer } from "react-toastify";
 
 function LayoutReactComponent({
   children,
@@ -13,7 +12,6 @@ function LayoutReactComponent({
 
   return (
     <QueryClientProvider client={queryClient}>
-      <ToastContainer />
       <Header />
         {children}
       <Footer />
