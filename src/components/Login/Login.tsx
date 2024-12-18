@@ -11,13 +11,10 @@ import styles from "./login.module.css";
 import { LoginCredentials, UserWithPassword } from "../../types";
 import { logInUser, logInWithGoogle, registerUser } from "../../services/userService";
 import useUserStore from "../../services/zustand/userZustand/userStor";
-<<<<<<< HEAD
 import { IconButton } from "@mui/material";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../../lib/firebase";
-=======
-import {forgetPassword} from "../../services/mailService";
->>>>>>> 2ac8c6436afdd381eab18fb40c4a1c753857bdc7
+import { forgetPassword } from "@/services/mailService";
 
 const loginSchema = z.object({
   email: z.string().email("אימייל לא חוקי"),
@@ -105,7 +102,6 @@ function Login() {
     }
   };
 
-<<<<<<< HEAD
   const handleLoginWithGoogle = async () => {
     try {
       const provider = new GoogleAuthProvider();
@@ -144,7 +140,6 @@ function Login() {
       });
     }
   }
-=======
 
   
   
@@ -176,8 +171,6 @@ function Login() {
   };
   
   
->>>>>>> 2ac8c6436afdd381eab18fb40c4a1c753857bdc7
-
   return (
     <div className={styles.formContainer}>
       <div>
