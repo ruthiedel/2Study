@@ -6,6 +6,8 @@ import useUserStore from "../../services/zustand/userZustand/userStor";
 import { logInUser } from "../../services/userService";
 import Image from "next/image";
 import logo from '../../../public/pictures/logo1.png';
+import Default_User from '../../../public/Default_User.png';
+
 import styles from "./login.module.css";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import { useRouter } from "next/navigation"; 
@@ -50,7 +52,7 @@ const Login = () => {
         email: user.email || '',
         name: user.displayName || '',
         books: [],
-        userImagePath: user.photoURL || '',
+        userImagePath: user.photoURL || Default_User.src,
       };
       const response = await logInUser(localUser);
 
@@ -61,9 +63,9 @@ const Login = () => {
 
     } catch (error) {
       console.error("Error during Google login:", error);
-
     }
   };
+
   const handleGoHome = () => {
     router.push('/home');
   };
