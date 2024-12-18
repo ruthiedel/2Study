@@ -9,6 +9,7 @@
   justify-content: center; 
   align-items: center; 
   overflow: hidden; 
+  background-color: white;
   }
 
 .title {
@@ -60,6 +61,46 @@
 
 .forgotPassword:hover {
   color: darkblue;
+}
+
+.textWithLine {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+}
+
+.textWithLine::before,
+.textWithLine::after {
+  content: '';
+  flex-grow: 1;
+  height: 1px;
+  background-color: #F8E185; 
+}
+
+.textWithLine::before {
+  margin-left: 4px; 
+}
+
+.textWithLine::after {
+  margin-right: 4px; 
+}
+
+.textWithLine span {
+  padding: 0 4px; 
+  background-color: #fff; 
+}
+
+.googleButton{
+  border: 1.2px solid black;
+  margin: 3px;
+  border-radius: 50%;
+  padding: 2px;
+}
+
+.googleButtonImage{
+  border-radius: 50%;
+
 }
 
 

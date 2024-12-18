@@ -21,9 +21,12 @@ export async function checkAndAddUser(client: MongoClient, user: UserWithPasswor
   const db = client.db('Books');
   const usersCollection = db.collection('users');
   const hashedPassword: string = await bcrypt.hash(user.password, 10);
+  
+  const userId = user._id && user._id.length === 24 ? new ObjectId(user._id) : new ObjectId();
+
   const result = await usersCollection.insertOne({
     ...user,
-    _id: new ObjectId(user._id),
+    _id: userId,  
     password: hashedPassword
   });
 
@@ -34,9 +37,9 @@ export async function checkAndAddUser(client: MongoClient, user: UserWithPasswor
     books: user.books,
     userImagePath: user.userImagePath
   };
+
   return { status: 201, message: 'המשתמש נרשם בהצלחה', user: userWithId };
 }
-
 
 export async function findUserByEmailAndPassword(email: string, password: string) {
   const client = await connectDatabase();
@@ -50,12 +53,12 @@ export async function findUserByEmailAndPassword(email: string, password: string
   if (!isPasswordValid) return null;
 
   const userWithId = {
-    _id: user._id.toString(),
+    _id: user._id instanceof ObjectId ? user._id.toHexString() : user._id, 
     name: user.name,
     email: user.email,
     books: user.books,
     userImagePath: user.userImagePath
-  };
+  };  
   return userWithId;
 }
 
@@ -108,7 +111,10 @@ export async function loginUser(credentials: LoginCredentials) {
 }
 
 export async function googleUser(user: UserWithPassword) {
+  console.log('mongooooooooooooooo', user)
+  console.log('--------------------------------',{ email: user.email, password: user.password });
   const result = await loginUser({ email: user.email, password: user.password });
+  console.log('--------------------------------',result);
   if (result.status === 200) {
     return result;
   }

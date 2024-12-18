@@ -5,13 +5,9 @@ import { NextResponse } from 'next/server';
 export async function POST(request: Request) {
     try {
         const body = await request.json();
+        console.log('API ----------------', body);
         
-        const { _id, ...userWithoutId } = body; 
-        const user = {
-            ...userWithoutId,  
-        };
-        
-        const result = await googleUser(user);
+        const result = await googleUser(body);
         return NextResponse.json(
             {
                 message: result.message,

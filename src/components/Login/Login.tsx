@@ -6,10 +6,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import Swal from "sweetalert2";
 import image from "../../../public/pictures/unnamed.png";
+import googleImage from "../../../public/pictures/google.jpg";
 import styles from "./login.module.css";
 import { LoginCredentials, UserWithPassword } from "../../types";
-import { logInUser, registerUser } from "../../services/userService";
+import { logInUser, logInWithGoogle, registerUser } from "../../services/userService";
 import useUserStore from "../../services/zustand/userZustand/userStor";
+import { IconButton } from "@mui/material";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { auth } from "../../lib/firebase";
 
 const loginSchema = z.object({
   email: z.string().email("אימייל לא חוקי"),
@@ -92,6 +96,45 @@ function Login() {
     }
   };
 
+  const handleLoginWithGoogle = async () => {
+    try {
+      const provider = new GoogleAuthProvider();
+      provider.setCustomParameters({ prompt: "select_account" });
+
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+
+      let localUser = {
+        _id: user.uid,
+        email: user.email || '',
+        name: user.displayName || '',
+        books: [],
+        userImagePath: user.photoURL || '',
+        password: user.uid
+      };
+
+      const response = await logInWithGoogle(localUser);
+
+      if (response.status === 200) {
+        localUser = response.user;
+      }
+      setUser(localUser);
+      Swal.fire({
+        icon: "success",
+        title: "ההתחברות בוצעה בהצלחה!",
+        text: `ברוך הבא, ${response.user.name}`,
+      });
+
+    } catch (error) {
+      console.error("Error during Google login:", error);
+      Swal.fire({
+        icon: "error",
+        title: "שגיאה",
+        text: " ההרשמה נכשלה 😥. נסה שוב מאוחר יותר.",
+      });
+    }
+  }
+
   return (
     <div className={styles.formContainer}>
       <div>
@@ -154,6 +197,17 @@ function Login() {
           {status}
         </button>
       </form>
+      <div className={styles.textWithLine}>
+        <span>או התחבר עם google</span>
+      </div>
+      <IconButton
+        edge="end"
+        color="inherit"
+        className={styles.iconButton}
+      >
+        <Image onClick={()=>handleLoginWithGoogle()} className={styles.googleButtonImage} src={googleImage} alt="login image" width={30} height={30} />
+      </IconButton>
+
 
       <p className={styles.switchStatus}>
         {status === "התחברות" ? (
@@ -166,13 +220,6 @@ function Login() {
           </>
         )}
       </p>
-
-      <button
-        className={styles.googleButton}
-        onClick={() => Swal.fire("פונקציונליות התחברות עם גוגל בדרך!")}
-      >
-        התחבר עם Google
-      </button>
     </div>
   );
 }
