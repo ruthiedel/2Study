@@ -16,11 +16,13 @@ const Sidebar: React.FC<SidebarProps> = ({ selectedBookId, onSectionSelect }) =>
     const { data: books, isLoading, error } = getBooks();
     const [selectedBook, setSelectedBook] = useState<Book | null>(null);
     const [expandedChapter, setExpandedChapter] = useState<number | null>(null);
+    const [bookName, setBookName] = useState<string | null>(null);
 
     useEffect(() => {
         if (books && books.length > 0 && selectedBookId) {
             const book = books.find((book) => book._id === selectedBookId);
             setSelectedBook(book || null);
+            setBookName(book?.name || null);
         }
     }, [books, selectedBookId]);
 
@@ -42,7 +44,7 @@ const Sidebar: React.FC<SidebarProps> = ({ selectedBookId, onSectionSelect }) =>
 
     return (
         <div className={styles.container}>
-            <h2>2study</h2>
+            <h2>{bookName}</h2>
             <List>
                 {selectedBook.paragraphsCountPerChapter.map((sectionCount, chapterIndex) => (
                     <React.Fragment key={chapterIndex}>

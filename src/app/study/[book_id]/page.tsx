@@ -37,13 +37,16 @@ const Study = () => {
     const [isShowRating, setIsShowRating] = useState(false);
     const user = useUserStore((state) => state.user);
     const updateUserZustand = useUserStore((state) => state.updateUserZustand);
+    
+    const currentUserBook = useMemo(() => {
+        return user?.books.find((book) => book.book_id === bookId);
+    }, [user, bookId]);
 
     useEffect(() => {
         if (!user || !books || !Array.isArray(books)) return;
 
-        const userBook = user.books.find((book) => book.book_id === bookId);
-        if (userBook) {
-            handleChangeIndex(userBook.chapter_id, userBook.section_id);
+        if (currentUserBook) {
+            handleChangeIndex(currentUserBook.chapter_id, currentUserBook.section_id);
         } else {
             handleChangeIndex(1,1);
         }
@@ -53,8 +56,6 @@ const Study = () => {
     }, [books, user]);
 
     const fetchParagraphs = async (chapterId: number, paragraphId: number) => {
-        
-        if (chapterId !== paragraph[0].chapterNumber) { openRating();}
 
         if (paragraph.length === 0 || chapterId !== paragraph[0].chapterNumber) {
             try {
@@ -67,7 +68,7 @@ const Study = () => {
                     throw new Error("No paragraphs found");
                 }
                 setParagraph(paragraphs.sections);
-                
+
             } catch (error) {
                 console.error("Error fetching paragraphs:", error);
             }
@@ -75,10 +76,10 @@ const Study = () => {
     };
 
     const isCurrentSectionMarked = () => {
-        return user?.books.some(book => book.book_id === bookId
-            && book.chapter_id === index.chapterId
-            && book.section_id === index.paragraphId
-        );
+        if (!currentUserBook) { return false; }
+        
+        return currentUserBook.chapter_id === index.chapterId 
+            && currentUserBook.section_id === index.paragraphId;
     };
 
     const handleNavigation = (direction: "next" | "prev") => {
@@ -108,6 +109,11 @@ const Study = () => {
     };
 
     const handleChangeIndex = (chapterId: number, paragraphId: number) => {
+        if ( paragraphId === 1 && chapterId !== 1 ){ 
+            if (currentUserBook && currentUserBook.rate === 0) {
+                openRating(); 
+            }    
+        }
         setIndex({ chapterId, paragraphId });
         fetchParagraphs(chapterId, paragraphId);
     };
@@ -121,16 +127,13 @@ const Study = () => {
     }, [index, bookData]);
 
     const handleFinish = () => {
-
         setShowConfetti(true);
-        if (user) {
-            const updatedUser = {
-                ...user,
-                books: user!.books.map((book) =>
-                    book.book_id === bookId ? { ...book, status: false } : book
-                ),
-            };
-            updateUserZustand(user!._id!, updatedUser);
+
+    if (user && currentUserBook) {
+        currentUserBook.status = false;
+        const newBooks = [...user.books];
+        newBooks[newBooks.indexOf(currentUserBook)] = currentUserBook;  
+        updateUserZustand(user!._id!, { ...user, books: newBooks });
         }
 
         toast.success("סיימת ללמוד! כל הכבוד 🎉", {
