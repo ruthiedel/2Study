@@ -12,7 +12,7 @@ const InfoComp = () => {
         <div className={styles.userContainer}>
           <div className={styles.imageWrapper}>
             <img
-              src={user?.userImagePath || "/default-avatar.png"}
+              src={user?.userImagePath || "/Default_User.png"}
               alt={user?.name}
               className={styles.imgUser}
             />
