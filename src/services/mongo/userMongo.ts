@@ -21,7 +21,7 @@ export async function checkAndAddUser(client: MongoClient, user: UserWithPasswor
   const db = client.db('Books');
   const usersCollection = db.collection('users');
   const hashedPassword: string = await bcrypt.hash(user.password, 10);
-  
+
   const userId = user._id && user._id.length === 24 ? new ObjectId(user._id) : new ObjectId();
 
   const result = await usersCollection.insertOne({
@@ -111,12 +111,12 @@ export async function loginUser(credentials: LoginCredentials) {
 }
 
 export async function googleUser(user: UserWithPassword) {
-  console.log('mongooooooooooooooo', user)
-  console.log('--------------------------------',{ email: user.email, password: user.password });
-  const result = await loginUser({ email: user.email, password: user.password });
-  console.log('--------------------------------',result);
-  if (result.status === 200) {
-    return result;
+ 
+  const client = await connectDatabase();
+  const result = await findUserByEmail(client, user.email);
+  
+  if (result !== null) {
+    return { message: 'ההתחברות בוצעה בהצלחה!', status: 200, user:result };
   }
   else
     return await checkAndAddUser(client, user);
