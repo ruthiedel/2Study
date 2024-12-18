@@ -42,7 +42,8 @@ const Footer: React.FC = () => {
                 icon: "success",
                 timer: 3000,
                 confirmButtonText: "נהדר",
-            })        } catch (error) {
+            })        
+        } catch (error) {
             console.error('Error sending email:', error);
             Swal.fire({
                 title: "הייתה שגיאה בשליחת המייל 😥",

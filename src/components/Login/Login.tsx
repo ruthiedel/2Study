@@ -26,7 +26,11 @@ const registerSchema = loginSchema.extend({
   username: z.string().min(3, "שם המשתמש חייב להכיל לפחות 3 תווים"),
 });
 
-function Login() {
+interface LoginProp {
+  onClickDialog: () => void;
+}
+
+function Login({ onClickDialog }: LoginProp) {
   const [status, setStatus] = useState<"התחברות" | "הרשמה">("התחברות");
   const setUser = useUserStore((state) => state.setUser);
   const schema = status === "הרשמה" ? registerSchema : loginSchema;
@@ -142,10 +146,10 @@ function Login() {
     }
   }
 
-  
-  
+
+
   const handleForgotPassword = async () => {
-    
+
     if (!email) {
       Swal.fire({
         icon: "error",
@@ -154,7 +158,7 @@ function Login() {
       });
       return;
     }
-  
+
     try {
       const response = await forgetPassword(email);
       Swal.fire({
@@ -170,92 +174,94 @@ function Login() {
       });
     }
   };
-  
+
   return (
-    <div className={styles.formContainer}>
-      <div>
-        <Image src={image} alt="login image" width={200} height={200} />
-      </div>
+    <div className={styles.dialog} onClick={onClickDialog}>
+      <div className={styles.formContainer}>
+        <div>
+          <Image src={image} alt="login image" width={200} height={200} />
+        </div>
 
-      <p className={styles.title}>{status}</p>
+        <p className={styles.title}>{status}</p>
 
-      <form onSubmit={handleSubmit(onSubmit)}>
-        {status === "הרשמה" && (
+        <form onSubmit={handleSubmit(onSubmit)}>
+          {status === "הרשמה" && (
+            <div>
+              <input
+                className={styles.input}
+                type="text"
+                placeholder="שם משתמש"
+                {...register("username")}
+              />
+              {errors.username && (
+                <p className={styles.error}>{errors.username.message as string}</p>
+              )}
+            </div>
+          )}
+
           <div>
             <input
               className={styles.input}
-              type="text"
-              placeholder="שם משתמש"
-              {...register("username")}
+              type="email"
+              placeholder="אימייל"
+              {...register("email")}
             />
-            {errors.username && (
-              <p className={styles.error}>{errors.username.message as string}</p>
+            {errors.email && (
+              <p className={styles.error}>{errors.email.message as string}</p>
             )}
           </div>
-        )}
 
-        <div>
-          <input
-            className={styles.input}
-            type="email"
-            placeholder="אימייל"
-            {...register("email")}
-          />
-          {errors.email && (
-            <p className={styles.error}>{errors.email.message as string}</p>
-          )}
+          <div>
+            <input
+              className={styles.input}
+              type="password"
+              placeholder="סיסמה"
+              {...register("password")}
+            />
+            {errors.password && (
+              <p className={styles.error}>{errors.password.message as string}</p>
+            )}
+
+            {status === "התחברות" && (
+              <button
+                type="button"
+                className={styles.forgotPassword}
+                onClick={handleForgotPassword}
+              >
+                שכחתי סיסמה
+              </button>
+            )}
+          </div>
+
+
+          <button className={styles.button} type="submit">
+            {status}
+          </button>
+        </form>
+        <div className={styles.textWithLine}>
+          <span>או התחבר עם google</span>
         </div>
+        <IconButton
+          edge="end"
+          color="inherit"
+          className={styles.iconButton}
+        >
+          <Image onClick={() => handleLoginWithGoogle()} className={styles.googleButtonImage} src={googleImage} alt="login image" width={30} height={30} />
+        </IconButton>
 
-        <div>
-          <input
-            className={styles.input}
-            type="password"
-            placeholder="סיסמה"
-            {...register("password")}
-          />
-          {errors.password && (
-            <p className={styles.error}>{errors.password.message as string}</p>
+
+        <p className={styles.switchStatus}>
+          {status === "התחברות" ? (
+            <>
+              אין לך חשבון? <span onClick={() => setStatus("הרשמה")}>הרשמה</span>
+            </>
+          ) : (
+            <>
+              כבר יש לך חשבון? <span onClick={() => setStatus("התחברות")}>התחברות</span>
+            </>
           )}
-
-          {status === "התחברות" && (
-            <button
-              type="button"
-              className={styles.forgotPassword}
-              onClick={handleForgotPassword}
-            >
-              שכחתי סיסמה
-            </button>
-          )}
-        </div>
-
-
-        <button className={styles.button} type="submit">
-          {status}
-        </button>
-      </form>
-      <div className={styles.textWithLine}>
-        <span>או התחבר עם google</span>
+        </p>
       </div>
-      <IconButton
-        edge="end"
-        color="inherit"
-        className={styles.iconButton}
-      >
-        <Image onClick={()=>handleLoginWithGoogle()} className={styles.googleButtonImage} src={googleImage} alt="login image" width={30} height={30} />
-      </IconButton>
-
-
-      <p className={styles.switchStatus}>
-        {status === "התחברות" ? (
-          <>
-            אין לך חשבון? <span onClick={() => setStatus("הרשמה")}>הרשמה</span>
-          </>
-        ) : (
-          <>
-            כבר יש לך חשבון? <span onClick={() => setStatus("התחברות")}>התחברות</span>
-          </>
-        )}
-      </p>
     </div>
   );
 }
