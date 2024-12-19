@@ -25,8 +25,8 @@ const HomePage: React.FC = () => {
                         target.style.opacity = '1';
                         target.style.transform = 'translateY(0)';
                         target.style.transition = 'opacity 1.5s ease, transform 1s ease-out';
-                        target.classList.add('animated'); 
-                        observer.unobserve(target); 
+                        // target.classList.add('animated'); 
+                        // observer.unobserve(target); 
                     } else {
                         target.style.opacity = '0';
                         target.style.transform = 'translateY(100px)';
