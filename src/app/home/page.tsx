@@ -1,17 +1,19 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Feedback, Section, BottomSection } from "../../components";
 import styles from './homePage.module.css';
 import { useRouter } from "next/navigation";
-import { Noto_Serif} from 'next/font/google';
+import { Noto_Serif } from 'next/font/google';
 
 const NotoSerif = Noto_Serif({
     weight: ['400'],
     subsets: ['latin'],
-  });
+});
 
 const HomePage: React.FC = () => {
+    const [isSending, setIsSending] = useState(false);
+
     const router = useRouter();
 
     useEffect(() => {
@@ -20,7 +22,7 @@ const HomePage: React.FC = () => {
                 entries.forEach((entry) => {
                     const target = entry.target as HTMLElement;
                     if (entry.isIntersecting) {
-                        
+
                         target.style.opacity = '1';
                         target.style.transform = 'translateY(0)';
                         target.style.transition = 'opacity 1.5s ease, transform 1s ease-out';
@@ -95,12 +97,15 @@ const HomePage: React.FC = () => {
     ];
 
     function handleStarted(event: React.MouseEvent<HTMLButtonElement>): void {
-        try {
-            router.push(`/BooksLearning`);
-        }
-        catch (error) {
-            console.error('Error handling started event:', error);
-        }
+        if (isSending) return; 
+        setIsSending(true); 
+            try {
+                router.push(`/BooksLearning`); 
+            } catch (error) {
+                console.error('Error navigating to BooksLearning:', error);
+            } finally {
+                setIsSending(false); 
+            }
     }
 
 
@@ -111,14 +116,14 @@ const HomePage: React.FC = () => {
                     <h1 className={`${styles.title} ${NotoSerif.className}`} data-animate>2study</h1>
                     <h2 className={styles.secondTitle} data-animate>ללמוד ב2 דקות</h2>
                     <p className={styles.section} data-animate>ברוכים הבאים למקום שבו לימוד פוגש השראה.
-                        <br/>
-                         האתר שלנו מציע חוויית לימוד ייחודית ומותאמת אישית לציבור החרדי, 
-                         <br/>
-                         עם ספרים נבחרים,
-                         
-                     כלים מתקדמים, וקבוצות לימוד המחברות בין לומדים.
-                     <br/>
-                      כאן תוכלו לצמוח, להעמיק ולהתקדם בדרך שלכם, עם תמיכה מתמדת ותחושת שייכות אמיתית.</p>
+                        <br />
+                        האתר שלנו מציע חוויית לימוד ייחודית ומותאמת אישית לציבור החרדי,
+                        <br />
+                        עם ספרים נבחרים,
+
+                        כלים מתקדמים, וקבוצות לימוד המחברות בין לומדים.
+                        <br />
+                        כאן תוכלו לצמוח, להעמיק ולהתקדם בדרך שלכם, עם תמיכה מתמדת ותחושת שייכות אמיתית.</p>
                 </div>
             </div>
 
@@ -138,7 +143,8 @@ const HomePage: React.FC = () => {
                 <Feedback />
             </div>
             <div className={styles.buttonContainer} data-animate>
-                <button className={styles.buttonStart} onClick={handleStarted} data-animate>get started ←</button>
+                <button className={styles.buttonStart} onClick={handleStarted} data-animate disabled={isSending}
+                > {isSending ? 'כבר מתחילים...' : 'התחל ללמוד ←'}</button>
             </div>
             <div className={styles.bottomSection}>
                 <div className={styles.container} data-animate>

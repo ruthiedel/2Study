@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import useUserStore from '../../services/zustand/userZustand/userStor';
-import {Grid, Box, Rating, Modal } from '@mui/material';
+import { Grid, Box, Rating, Modal } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import Image from 'next/image';
 import styles from './bookCard.module.css';
@@ -21,6 +21,7 @@ const BookCardComp: React.FC<BookCardProps> = ({ book, onClose }) => {
     const [foundBook, setFoundBook] = useState(false);
     const user = useUserStore((state) => state.user);
     const [openModal, setOpenModal] = useState(false);
+    const [isSending, setIsSending] = useState(false);
     const updateUserZustand = useUserStore((state) => state.updateUserZustand);
     const router = useRouter();
 
@@ -38,28 +39,33 @@ const BookCardComp: React.FC<BookCardProps> = ({ book, onClose }) => {
 
 
     const handleReadMore = async () => {
+        if (isSending) return;
+        setIsSending(true);
         try {
-          if (!foundBook) {
-            const newUserBook: UserBook = {
-              book_id: book._id!,
-              book_name: book.name,
-              chapter_id: 1,
-              section_id: 1,
-              rate: 0,
-            };
-            const updatedUserData = {
-              ...user!,
-              books: [...user!.books, newUserBook],
-            };
-            await updateUserZustand(user!._id!, updatedUserData);
-          }
-          router.push(`/study/${book._id}`);
+            if (!foundBook) {
+                const newUserBook: UserBook = {
+                    book_id: book._id!,
+                    book_name: book.name,
+                    chapter_id: 1,
+                    section_id: 1,
+                    rate: 0,
+                };
+                const updatedUserData = {
+                    ...user!,
+                    books: [...user!.books, newUserBook],
+                };
+                await updateUserZustand(user!._id!, updatedUserData);
+            }
+            router.push(`/study/${book._id}`);
         } catch (error) {
-          console.error("Failed to update user data:", error);
-          alert("אירעה שגיאה במהלך העדכון. נסה שוב מאוחר יותר.");
+            console.error("Failed to update user data:", error);
+            alert("אירעה שגיאה במהלך העדכון. נסה שוב מאוחר יותר.");
         }
-      };
-      
+        finally {
+            setIsSending(false);
+        }
+    };
+
     return (
         <>
             <Modal
@@ -140,7 +146,7 @@ const BookCardComp: React.FC<BookCardProps> = ({ book, onClose }) => {
 
                         <Grid item xs={12}>
                             <button className={styles.learnButton} onClick={handleReadMore}>
-                                {foundBook ? "המשך ללמוד ←" : "הוסף לרשימת הספרים שלי"}
+                            {isSending ? 'כבר מתחילים...' : (foundBook ? "המשך ללמוד ←" : "הוסף לרשימת הספרים שלי")}
                             </button>
                         </Grid>
                     </Grid>
