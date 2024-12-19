@@ -7,7 +7,6 @@ import Image from "next/image";
 import Swal from "sweetalert2";
 import image from "../../../public/pictures/unnamed.png";
 import googleImage from "../../../public/pictures/google.jpg";
-
 import styles from "./login.module.css";
 import { LoginCredentials, UserWithPassword } from "../../types";
 import { logInUser, logInWithGoogle, registerUser } from "../../services/userService";
@@ -175,9 +174,13 @@ function Login({ onClickDialog }: LoginProp) {
     }
   };
 
+  const handleDialogClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation(); 
+  };
+
   return (
     <div className={styles.dialog} onClick={onClickDialog}>
-      <div className={styles.formContainer}>
+      <div className={styles.formContainer} onClick={handleDialogClick}>
         <div>
           <Image src={image} alt="login image" width={200} height={200} />
         </div>
