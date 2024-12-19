@@ -55,7 +55,7 @@
   font-size: 12px;
 }
 
-.switchStatus span {
+.switchStatus span, .guest {
   color: blue;
   cursor: pointer;
   text-decoration: underline;
