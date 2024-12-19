@@ -9,7 +9,8 @@ const Loading = () => {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        height: '100vh',
+        height: '45%',
+
       }}
     >
       <script src="https://unpkg.com/@lottiefiles/dotlottie-wc@0.3.0/dist/dotlottie-wc.js" type="module"></script>
@@ -18,7 +19,7 @@ const Loading = () => {
         autoplay loop
         style={{
           width: '200px',
-          height: '200px',
+          height: '170px',
         }}
       >
       </DotLottieReact>
