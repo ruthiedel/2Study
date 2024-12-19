@@ -15,6 +15,7 @@ import { IconButton } from "@mui/material";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../../lib/firebase";
 import { forgetPassword } from "@/services/mailService";
+import Loading from "../LoadingFolder/Loading";
 
 const loginSchema = z.object({
   email: z.string().email("אימייל לא חוקי"),
@@ -32,6 +33,7 @@ interface LoginProp {
 function Login({ onClickDialog }: LoginProp) {
   const [status, setStatus] = useState<"התחברות" | "הרשמה">("התחברות");
   const setUser = useUserStore((state) => state.setUser);
+  const [loading, setLoading] = useState<boolean>(false);
   const schema = status === "הרשמה" ? registerSchema : loginSchema;
   const {
     register,
@@ -47,6 +49,7 @@ function Login({ onClickDialog }: LoginProp) {
 
 
   const onSubmit = async (data: any) => {
+    setLoading(true);
     try {
       let response;
       if (status === "התחברות") {
@@ -103,10 +106,13 @@ function Login({ onClickDialog }: LoginProp) {
         title: "שגיאה",
         text: "אירעה שגיאה פנימית במערכת. נסה שוב מאוחר יותר.",
       });
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleLoginWithGoogle = async () => {
+    setLoading(true);
     try {
       const provider = new GoogleAuthProvider();
       provider.setCustomParameters({ prompt: "select_account" });
@@ -142,19 +148,22 @@ function Login({ onClickDialog }: LoginProp) {
         title: "שגיאה",
         text: " ההרשמה נכשלה 😥. נסה שוב מאוחר יותר.",
       });
+    } finally {
+      setLoading(false);
     }
   }
 
 
 
   const handleForgotPassword = async () => {
-
+    setLoading(true);
     if (!email) {
       Swal.fire({
         icon: "error",
         title: "שגיאה",
         text: "יש למלא את המייל",
       });
+      setLoading(false);
       return;
     }
 
@@ -171,99 +180,130 @@ function Login({ onClickDialog }: LoginProp) {
         title: "שגיאה",
         text: "המערכת נתקלה בבעיה בשליחת הסיסמה לתיבת המייל שלך",
       });
+    } finally {
+      setLoading(false);
     }
   };
 
+  const handleLoginGuest = async () => {
+    setLoading(true);
+    try {
+      let localUser = {
+        _id: 'kWB2fSx9q1SxmMc1W7vyoWo2QQZ2',
+        email: 'frieman@g.jct.ac.il',
+        name: 'guest',
+        books: [],
+        userImagePath: '',
+        password: 'dhvLXn'
+      };
+
+      const response = await logInUser(localUser);
+
+      if (response.status === 200) {
+        localUser = response.user;
+      }
+      setUser(localUser);
+    } catch (error) {
+      console.error("Error during login:", error);
+    } finally {
+      setLoading(false);
+    }
+  }
+
   const handleDialogClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    e.stopPropagation(); 
+    e.stopPropagation();
   };
 
   return (
     <div className={styles.dialog} onClick={onClickDialog}>
       <div className={styles.formContainer} onClick={handleDialogClick}>
-        <div>
-          <Image src={image} alt="login image" width={200} height={200} />
-        </div>
-
-        <p className={styles.title}>{status}</p>
-
-        <form onSubmit={handleSubmit(onSubmit)}>
-          {status === "הרשמה" && (
+        {loading ? <Loading /> :
+          <>
             <div>
-              <input
-                className={styles.input}
-                type="text"
-                placeholder="שם משתמש"
-                {...register("username")}
-              />
-              {errors.username && (
-                <p className={styles.error}>{errors.username.message as string}</p>
-              )}
+              <Image src={image} alt="login image" width={200} height={200} />
             </div>
-          )}
 
-          <div>
-            <input
-              className={styles.input}
-              type="email"
-              placeholder="אימייל"
-              {...register("email")}
-            />
-            {errors.email && (
-              <p className={styles.error}>{errors.email.message as string}</p>
-            )}
-          </div>
+            <p className={styles.title}>{status}</p>
 
-          <div>
-            <input
-              className={styles.input}
-              type="password"
-              placeholder="סיסמה"
-              {...register("password")}
-            />
-            {errors.password && (
-              <p className={styles.error}>{errors.password.message as string}</p>
-            )}
+            <form onSubmit={handleSubmit(onSubmit)}>
+              {status === "הרשמה" && (
+                <div>
+                  <input
+                    className={styles.input}
+                    type="text"
+                    placeholder="שם משתמש"
+                    {...register("username")}
+                  />
+                  {errors.username && (
+                    <p className={styles.error}>{errors.username.message as string}</p>
+                  )}
+                </div>
+              )}
 
-            {status === "התחברות" && (
-              <button
-                type="button"
-                className={styles.forgotPassword}
-                onClick={handleForgotPassword}
-              >
-                שכחתי סיסמה
+              <div>
+                <input
+                  className={styles.input}
+                  type="email"
+                  placeholder="אימייל"
+                  {...register("email")}
+                />
+                {errors.email && (
+                  <p className={styles.error}>{errors.email.message as string}</p>
+                )}
+              </div>
+
+              <div>
+                <input
+                  className={styles.input}
+                  type="password"
+                  placeholder="סיסמה"
+                  {...register("password")}
+                />
+                {errors.password && (
+                  <p className={styles.error}>{errors.password.message as string}</p>
+                )}
+
+                {status === "התחברות" && (
+                  <button
+                    type="button"
+                    className={styles.forgotPassword}
+                    onClick={handleForgotPassword}
+                  >
+                    שכחתי סיסמה
+                  </button>
+                )}
+              </div>
+
+
+              <button className={styles.button} type="submit">
+                {status}
               </button>
-            )}
-          </div>
+            </form>
+            <div className={styles.textWithLine}>
+              <span>או התחבר עם google</span>
+            </div>
+            <IconButton
+              edge="end"
+              color="inherit"
+              className={styles.iconButton}
+            >
+              <Image onClick={() => handleLoginWithGoogle()} className={styles.googleButtonImage} src={googleImage} alt="login image" width={30} height={30} />
+            </IconButton>
 
 
-          <button className={styles.button} type="submit">
-            {status}
-          </button>
-        </form>
-        <div className={styles.textWithLine}>
-          <span>או התחבר עם google</span>
-        </div>
-        <IconButton
-          edge="end"
-          color="inherit"
-          className={styles.iconButton}
-        >
-          <Image onClick={() => handleLoginWithGoogle()} className={styles.googleButtonImage} src={googleImage} alt="login image" width={30} height={30} />
-        </IconButton>
-
-
-        <p className={styles.switchStatus}>
-          {status === "התחברות" ? (
-            <>
-              אין לך חשבון? <span onClick={() => setStatus("הרשמה")}>הרשמה</span>
-            </>
-          ) : (
-            <>
-              כבר יש לך חשבון? <span onClick={() => setStatus("התחברות")}>התחברות</span>
-            </>
-          )}
-        </p>
+            <p className={styles.switchStatus}>
+              {status === "התחברות" ? (
+                <>
+                  אין לך חשבון? <span onClick={() => setStatus("הרשמה")}>הרשמה</span>
+                </>
+              ) : (
+                <>
+                  כבר יש לך חשבון? <span onClick={() => setStatus("התחברות")}>התחברות</span>
+                </>
+              )}
+            </p>
+            <span className={styles.guest} onClick={() => handleLoginGuest()}>התחבר כאורח</span>
+          </>}
       </div>
     </div>
   );
