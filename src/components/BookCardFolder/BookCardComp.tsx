@@ -2,15 +2,14 @@
 
 import React, { useEffect, useState } from 'react';
 import useUserStore from '../../services/zustand/userZustand/userStor';
-import { Grid, Box, Rating, Modal } from '@mui/material';
+import {Grid, Rating } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import Image from 'next/image';
 import styles from './bookCard.module.css';
 import { Book, UserBook } from '../../types';
-import Login from '../Login/Login';
 import { removeHtmlTags } from '../../lib/clientHelpers/removeHTMLTags'
 import { useRouter } from "next/navigation";
-import RequireAuth from '@/layout/RequireAuth';
+import RequireAuth from '../../layout/RequireAuth';
 
 type BookCardProps = {
     book: Book;
@@ -125,6 +124,7 @@ const BookCardComp: React.FC<BookCardProps> = ({ book, onClose }) => {
                         </Grid>
                     </div>
                 </div>
+
             </RequireAuth>
         </>
     );
