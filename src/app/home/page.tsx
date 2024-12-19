@@ -141,6 +141,7 @@ const HomePage: React.FC = () => {
             <div className={styles.buttonContainer} data-animate>
                 <button className={styles.buttonStart} onClick={handleStarted} data-animate>get started ←</button>
             </div>
+            <div style={{height:'100px'}}></div>
             <div className={styles.bottomSection}>
                 <div className={styles.container} data-animate>
                     <h2 className={styles.secondTitle}>למה דווקא אצלנו?</h2>
