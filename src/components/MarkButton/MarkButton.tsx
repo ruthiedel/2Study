@@ -2,8 +2,7 @@ import useUserStore from "@/services/zustand/userZustand/userStor";
 import markbook from "../../../public/pictures/bookmark.svg";
 import emptyMarkbook from "../../../public/pictures/empty-bookmark1.svg";
 import Image from "next/image";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import Swal from "sweetalert2";
 
 interface markProp {
   bookId: string;
@@ -38,13 +37,22 @@ export default function MarkButton({
           ),
         };
         updateUserZustand(user._id!, updatedUser);
-        toast.success(" הסימניה עודכנה בהצלחה!", {
-          position: "top-center",
-          autoClose: 3000,
+        
+        Swal.fire({
+          title: "מעולה!",
+          text: "הסימניה שלך עודכנה למיקום החדש בהצלחה.",
+          icon: "success",
+          confirmButtonText: "נהדר",
+          timer: 3000,
         });
       }
     } catch (e) {
-      console.log(e);
+      Swal.fire({
+        title: "שגיאה!",
+        text: "משהו השתבש, הסימניה לא עודכנה. נסה שוב מאוחר יותר.",
+        icon: "error",
+        confirmButtonText: "סגור",
+      });
     }
   }
 
@@ -54,7 +62,6 @@ export default function MarkButton({
         <Image src={(isMarked) ? markbook : emptyMarkbook} alt="markbook"></Image>
         {(isMarked) ? 'עצרתי כאן' : 'עדכן סימניה'}
       </button>
-      <ToastContainer />
     </div>
   );
 }

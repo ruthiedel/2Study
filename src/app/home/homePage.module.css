@@ -33,6 +33,11 @@
   background-color: rgb(90, 87, 87);
 }
 
+.buttonStart :disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+}
+
 .title {
   font-size: 60px;
   font-weight: bold;
@@ -120,4 +125,10 @@
 .show {
   opacity: 1;
   transform: translateY(0);
+}
+
+.animated {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+  transition: none !important; 
 }

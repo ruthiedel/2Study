@@ -123,7 +123,7 @@
 
 .bookAuthor {
   font-size: 1.1rem;
-  font-family: 'Natural';
+  font-family: 'Rubik' , sans-serif;
   color: var(--dark-gray);
 }
 
@@ -141,4 +141,9 @@
 
 .learnButton:hover {
   background-color: #666;
+}
+
+.learnButton :disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
 }

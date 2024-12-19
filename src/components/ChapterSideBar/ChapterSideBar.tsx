@@ -1,7 +1,5 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import { List, ListItem, ListItemText, CircularProgress, IconButton } from '@mui/material';
-import { ExpandMore, ExpandLess } from '@mui/icons-material'; 
 import { getBooks } from '@/hooks/booksDetails';
 import { Book } from '../../types';
 import numberToGematria from '../../lib/clientHelpers/gematriaFunc';
@@ -16,18 +14,20 @@ const Sidebar: React.FC<SidebarProps> = ({ selectedBookId, onSectionSelect }) =>
     const { data: books, isLoading, error } = getBooks();
     const [selectedBook, setSelectedBook] = useState<Book | null>(null);
     const [expandedChapter, setExpandedChapter] = useState<number | null>(null);
+    const [bookName, setBookName] = useState<string | null>(null);
 
     useEffect(() => {
         if (books && books.length > 0 && selectedBookId) {
             const book = books.find((book) => book._id === selectedBookId);
             setSelectedBook(book || null);
+            setBookName(book?.name || null);
         }
     }, [books, selectedBookId]);
 
     if (isLoading) {
         return (
             <div className={styles.container}>
-                <CircularProgress />
+                <p>...טוען פרקים...</p>
             </div>
         );
     }
@@ -35,49 +35,44 @@ const Sidebar: React.FC<SidebarProps> = ({ selectedBookId, onSectionSelect }) =>
     if (error || !selectedBook || !selectedBook.paragraphsCountPerChapter) {
         return (
             <div className={styles.container}>
-                <p>Error loading book or no book selected.</p>
+                <p>שגיאה בטעינת הספר.</p>
             </div>
         );
     }
 
     return (
         <div className={styles.container}>
-            <h2>2study</h2>
-            <List>
+            <h1 className={styles.title}>{bookName}</h1>
+            <div>
                 {selectedBook.paragraphsCountPerChapter.map((sectionCount, chapterIndex) => (
-                    <React.Fragment key={chapterIndex}>
-                        <ListItem
-                            className={`${styles.listItem} ${expandedChapter === chapterIndex ? styles.selected : ''
-                                } `}
+                    <div key={chapterIndex}>
+                        <div
+                            className={`${styles.listItem} ${expandedChapter === chapterIndex ? styles.selected : ''}`}
                             onClick={() => setExpandedChapter(expandedChapter === chapterIndex ? null : chapterIndex)}
                         >
-                            <ListItemText
-                                primary={`פרק ${numberToGematria(chapterIndex + 1)}`}
-                                sx={{ fontFamily: '2StudyFont, sans-serif' }}
-                            />
-                            <IconButton edge="end">
-                                {expandedChapter === chapterIndex ? <ExpandLess /> : <ExpandMore />}
-                            </IconButton>
-                        </ListItem>
+                            <span>פרק {numberToGematria(chapterIndex + 1)}</span>
+                            <button className={styles.iconButton}>
+                                <span className={styles.icon}>
+                                    {expandedChapter === chapterIndex ? '▲' : '▼'}
+                                </span>
+                            </button>
+                        </div>
                         {expandedChapter === chapterIndex && (
-                            <List className={styles.nestedList}>
+                            <div className={styles.nestedList}>
                                 {[...Array(sectionCount)].map((_, sectionIndex) => (
-                                    <ListItem
+                                    <div
                                         key={sectionIndex}
                                         className={styles.innerListItem}
                                         onClick={() => onSectionSelect(chapterIndex + 1, sectionIndex + 1)}
                                     >
-                                        <ListItemText
-                                            primary={`סעיף ${numberToGematria(sectionIndex + 1)}`}
-                                            sx={{ fontFamily: '2StudyFont, sans-serif' }}
-                                        />
-                                    </ListItem>
+                                        סעיף {numberToGematria(sectionIndex + 1)}
+                                    </div>
                                 ))}
-                            </List>
+                            </div>
                         )}
-                    </React.Fragment>
+                    </div>
                 ))}
-            </List>
+            </div>
         </div>
     );
 };

@@ -1,11 +1,11 @@
-import {   loginUser } from '../../../services/mongo/userMongo';
-import { NextResponse } from 'next/server'
+
+import { NextResponse } from "next/server";
+import {registerUser} from '../../../services/mongo/userMongo';
 
 export async function POST(request: Request) {
     try {
         const body = await request.json();
-        const { email, password } = body;
-        const result = await loginUser({ email, password });
+        const result = await registerUser(body); 
 
         return NextResponse.json({
             message: result.message,
@@ -13,7 +13,7 @@ export async function POST(request: Request) {
             user: result.user
         });
     } catch (error: any) {
-        console.error('Error processing POST request for login:', error);
+        console.error('Error processing POST request for register:', error);
         return NextResponse.json(
             { message: 'אירעה שגיאה פנימית במערכת. נסה שוב מאוחר יותר.', error: error.message },
             { status: 500 }

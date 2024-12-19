@@ -1,20 +1,21 @@
 .container {
-    width: 60%;
-    padding: 24px;
-    overflow-y: auto;
-  }
-  
-  .title {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 16px;
-    text-align: center;
-    font-family: '2StudyFont', sans-serif;
-  }
-  
-  .text {
-    line-height: 1.6;
-    text-align: justify;
-    font-family: '2StudyFont', sans-serif;
-  }
+  width: 67%;
+  padding: 24px;
+  overflow-y: auto;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 16px;
+  text-align: center;
+  font-family: '2StudyFont', sans-serif;
+}
+
+.text {
+  line-height: 1.6;
+  text-align: justify;
+  font-family: '2StudyFont', sans-serif;
+}
+
   

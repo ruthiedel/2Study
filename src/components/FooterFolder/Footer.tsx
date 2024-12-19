@@ -6,9 +6,8 @@ import { sendMail } from '@/services/mailService';
 import logo from '../../../public/pictures/logo1.png';
 import { Mail } from '../../types';
 import Image from 'next/image';
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import styles from './footer.module.css';
+import Swal from "sweetalert2";
 
 const contactSchema = z.object({
     name: z.string().min(1, '*שדה חובה'),
@@ -37,21 +36,26 @@ const Footer: React.FC = () => {
             };
             await sendMail(mail);
             reset();
-            toast.success("תודה על פנייתך! 🙏 נשמח לעזור ונחזור אליך בהקדם. 😊", {
-                position: "top-center",
-              });                             
+            Swal.fire({
+                title: "תודה על פנייתך! 🙏",
+                text: " נשמח לעזור ונחזור אליך בהקדם. 😊",
+                icon: "success",
+                timer: 3000,
+                confirmButtonText: "נהדר",
+            })        
         } catch (error) {
             console.error('Error sending email:', error);
-            toast.error("הייתה שגיאה בשליחת המייל 😥, אנא נסה שוב מאוחר יותר. ⚠️", {
-                position: "top-center", 
-                style: { backgroundColor: "#f5f5dc" }, 
-              });              
-        }
+            Swal.fire({
+                title: "הייתה שגיאה בשליחת המייל 😥",
+                text: "אנא נסה שוב מאוחר יותר. ⚠️",
+                icon: "error",
+                timer: 3000,
+                confirmButtonText: "סגור",
+            })             }
     };
 
     return (
         <div className={styles.footerContainer}>
-            <ToastContainer />
             <div className={styles.column1}>
                 <Image src={logo} alt="logo" className={styles.logo} />
             </div>
