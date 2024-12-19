@@ -15,8 +15,8 @@ const ParagraphNavigation: React.FC<Props> = (props) => {
   const { paragraph, chapterTitle } = props;
   return (
     <Box className={styles.container}>
-      <Typography className={styles.title}>{chapterTitle}</Typography>
-      <Typography className={styles.text} component='div'>
+      <Typography className={styles.title} sx={{ fontFamily: '2StudyFont, sans-serif' }}>{chapterTitle}</Typography>
+      <Typography className={styles.text} component='div' sx={{ fontFamily: '2StudyFont, sans-serif' }}>
         {paragraph && paragraph.text ? removeHtmlTags(paragraph.text) : <Loading />}
       </Typography>
     </Box>
