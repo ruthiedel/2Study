@@ -1,7 +1,6 @@
 
-
 export const removeHtmlTags = (text: string) => {
-    const parser = new DOMParser();
-    const parsedText = parser.parseFromString(text, 'text/html').body.textContent || '';
-    return parsedText;
-  };
+    let parser = new DOMParser().parseFromString(text, 'text/html');
+    parser.body.querySelectorAll('br, li, div, h1, h2, h3').forEach(c => c.after(parser.createTextNode(' ')));
+    return parser.body.textContent;
+};
