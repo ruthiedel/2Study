@@ -21,6 +21,7 @@ const BookCardComp: React.FC<BookCardProps> = ({ book, onClose }) => {
     const [foundBook, setFoundBook] = useState(false);
     const user = useUserStore((state) => state.user);
     const [openModal, setOpenModal] = useState(false);
+    const [isSending, setIsSending] = useState(false);
     const updateUserZustand = useUserStore((state) => state.updateUserZustand);
     const router = useRouter();
 
@@ -38,6 +39,8 @@ const BookCardComp: React.FC<BookCardProps> = ({ book, onClose }) => {
 
 
     const handleReadMore = async () => {
+        if (isSending) return;
+        setIsSending(true);
         try {
             if (!foundBook) {
                 const newUserBook: UserBook = {
@@ -57,6 +60,9 @@ const BookCardComp: React.FC<BookCardProps> = ({ book, onClose }) => {
         } catch (error) {
             console.error("Failed to update user data:", error);
             alert("אירעה שגיאה במהלך העדכון. נסה שוב מאוחר יותר.");
+        }
+        finally {
+            setIsSending(false);
         }
     };
 
@@ -115,11 +121,12 @@ const BookCardComp: React.FC<BookCardProps> = ({ book, onClose }) => {
                                     {showMore ? 'פחות' : 'קרא עוד'}
                                 </button>
                             )}
+                       
 
-                            <Grid item xs={12}>
-                                <button className={styles.learnButton} onClick={handleReadMore}>
-                                    {foundBook ? "המשך ללמוד ←" : "הוסף לרשימת הספרים שלי"}
-                                </button>
+                        <Grid item xs={12}>
+                            <button className={styles.learnButton} onClick={handleReadMore}>
+                            {isSending ? 'כבר מתחילים...' : (foundBook ? "המשך ללמוד ←" : "הוסף לרשימת הספרים שלי")}
+                            </button>
                             </Grid>
                         </Grid>
                     </div>

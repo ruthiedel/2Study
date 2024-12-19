@@ -142,3 +142,8 @@
 .learnButton:hover {
   background-color: #666;
 }
+
+.learnButton :disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+}
