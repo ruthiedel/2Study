@@ -112,42 +112,51 @@ function Login({ onClickDialog }: LoginProp) {
   };
 
   const handleLoginWithGoogle = async () => {
-    setLoading(true);
     try {
       const provider = new GoogleAuthProvider();
       provider.setCustomParameters({ prompt: "select_account" });
 
       const result = await signInWithPopup(auth, provider);
+      setLoading(true);
       const user = result.user;
+      if (user != null) {
+        let localUser = {
+          _id: user.uid,
+          email: user.email || '',
+          name: user.displayName || '',
+          books: [],
+          userImagePath: user.photoURL || '',
+          password: user.uid
+        };
 
-      let localUser = {
-        _id: user.uid,
-        email: user.email || '',
-        name: user.displayName || '',
-        books: [],
-        userImagePath: user.photoURL || '',
-        password: user.uid
-      };
+        const response = await logInWithGoogle(localUser);
 
-      const response = await logInWithGoogle(localUser);
-
-      if (response.status === 200) {
-        localUser = response.user;
+        if (response.status === 200) {
+          localUser = response.user;
+        }
+        setUser(localUser);
+        Swal.fire({
+          icon: "success",
+          title: "ההתחברות בוצעה בהצלחה!",
+          text: `ברוך הבא, ${response.user.name}`,
+        });
       }
-      setUser(localUser);
-      Swal.fire({
-        icon: "success",
-        title: "ההתחברות בוצעה בהצלחה!",
-        text: `ברוך הבא, ${response.user.name}`,
-      });
-
     } catch (error) {
-      console.error("Error during Google login:", error);
-      Swal.fire({
-        icon: "error",
-        title: "שגיאה",
-        text: " ההרשמה נכשלה 😥. נסה שוב מאוחר יותר.",
-      });
+      if (
+        typeof error === "object" &&
+        error !== null &&
+        "code" in error &&
+        (error as { code: string }).code === "auth/popup-closed-by-user"
+      ) {
+        console.log("User closed the Google login popup.");
+      } else {
+        console.error("Error during Google login:", error);
+        Swal.fire({
+          icon: "error",
+          title: "שגיאה",
+          text: " ההרשמה נכשלה 😥. נסה שוב מאוחר יותר.",
+        });
+      }
     } finally {
       setLoading(false);
     }

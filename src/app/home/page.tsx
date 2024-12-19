@@ -26,13 +26,13 @@ const HomePage: React.FC = () => {
 
                         target.style.opacity = '1';
                         target.style.transform = 'translateY(0)';
-                        target.style.transition = 'opacity 1.5s ease, transform 1s ease-out';
+                        target.style.transition = 'opacity 1s ease, transform 1s ease-out';
                         // target.classList.add('animated'); 
                         // observer.unobserve(target); 
                     } else {
                         target.style.opacity = '0';
-                        target.style.transform = 'translateY(100px)';
-                        target.style.transition = 'opacity 1.5s ease, transform 1s ease-out';
+                        target.style.transform = 'translateY(20px)';
+                        target.style.transition = 'opacity 1s ease, transform 1s ease-out';
                     }
                 });
             },
@@ -147,7 +147,6 @@ const HomePage: React.FC = () => {
                 <button className={styles.buttonStart} onClick={handleStarted} data-animate disabled={isSending}
                 > {isSending ? 'כבר מתחילים...' : 'התחל ללמוד ←'}</button>
             </div>
-            <div style={{height:'100px'}}></div>
             <div className={styles.bottomSection}>
                 <div className={styles.container} data-animate>
                     <h2 className={styles.secondTitle}>למה דווקא אצלנו?</h2>
