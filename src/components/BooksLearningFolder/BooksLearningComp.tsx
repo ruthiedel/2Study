@@ -24,6 +24,10 @@ const BooksLearning = () => {
     book.book_name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  const filterloading = userBooks.filter((book) =>
+    book.status != false
+  );
+
   const getBookData = (book: UserBook) => ({
     chapter_id: book.chapter_id || 1,
     section_id: book.section_id || 1,
@@ -45,7 +49,7 @@ const BooksLearning = () => {
       <div className={styles.container}>
         <h1 className={styles.title}>איזור למידה</h1>
 
-        {userBooks.length > 0 && (
+        {filterloading.length > 0 && (
           <>
             <p className={styles.subtitle}>בחר ספר מהרשימה כדי להתחיל ללמוד 📚</p>
             <div className={styles.searchWrapper}>
@@ -63,7 +67,7 @@ const BooksLearning = () => {
         )}
 
         <div className={styles.booksList}>
-          {userBooks.length === 0 ? (
+          {filterloading.length === 0 ? (
             <div className={styles.buttonContainer}>
               <p>עדיין לא בחרת ספרים ללמוד ...
                 אתה יכול לבחור ממש עכשיו ↓</p>
