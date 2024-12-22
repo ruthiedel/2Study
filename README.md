@@ -41,11 +41,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## Deploy on Vercel
 
-Welcome to visit VERCEL to see the app in action: [2-study.vercel.app](https://2-study.vercel.app  target="_blank")
-
-<a href="https://www.google.com/url/sa=E&source=gmail&q=q=https://2-study.vercel.app" target="_blank">Open in new tab</a>
-
-[Open in new tab](https://www.google.com/url/sa=E&source=gmail&q=q=https://2-study.vercel.app){:target="_blank"}
+Welcome to visit VERCEL to see the app in action: [2-study.vercel.app](https://2-study.vercel.app)
 
 
 
