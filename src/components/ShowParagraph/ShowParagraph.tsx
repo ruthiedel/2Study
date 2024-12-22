@@ -2,7 +2,7 @@
 import React from 'react';
 import styles from './ShowParagraph.module.css';
 import { Paragraph } from '../../types';
-import Loading from '../LoadingFolder/Loading';
+import {Loading} from '../index';
 import { removeHtmlTags } from '../../lib/clientHelpers/removeHTMLTags';
 
 type Props = {

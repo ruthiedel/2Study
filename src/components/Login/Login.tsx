@@ -15,7 +15,7 @@ import { IconButton } from "@mui/material";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../../lib/firebase";
 import { forgetPassword } from "@/services/mailService";
-import Loading from "../LoadingFolder/Loading";
+import {Loading} from '../index';
 
 const loginSchema = z.object({
   email: z.string().email("אימייל לא חוקי"),
