@@ -23,6 +23,8 @@
   align-items: center; 
   overflow: hidden; 
   background-color: white;
+  max-height: 100vh;
+  overflow-y: auto;
   }
 
 .title {
@@ -115,6 +117,23 @@
   border-radius: 50%;
 
 }
+
+.termsContainer {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.termsContainer input {
+  margin-right: 5px;
+}
+
+.termsContainer a {
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 
 
 
