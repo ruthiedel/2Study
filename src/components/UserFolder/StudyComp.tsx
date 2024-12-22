@@ -21,7 +21,7 @@ export default function StudyComp() {
 
   return (
     <div className={styles.mystudycard}>
-      <div style={{ textAlign: 'center' }} className={styles.studyContent}>
+      <div style={{ textAlign: 'center' }}>
         <p>
           <strong>
             ספרים בלמידה
@@ -43,7 +43,7 @@ export default function StudyComp() {
         )}
       </div>
 
-      <div style={{ textAlign: 'center' }} className={styles.studyContent}>
+      <div style={{ textAlign: 'center' }} >
         <p>
           <strong>
             ספרים שסויימו
