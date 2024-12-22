@@ -55,6 +55,7 @@
 .error {
   color: red;
   font-size: 12px;
+  text-align: right;
 }
 
 .switchStatus span, .guest {
