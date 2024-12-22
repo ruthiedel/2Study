@@ -18,7 +18,7 @@ const Chat = ({ bookId }: { bookId: string }) => {
   const [bookName, setBookName] = useState('');
   const messageContainerRef = useRef<HTMLDivElement>(null);
   console.log(books,"books in chat")
-
+   const queryClient = useQueryClient()
 
   useEffect(() => {
     const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY!, { cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER!, });
@@ -69,14 +69,30 @@ const Chat = ({ bookId }: { bookId: string }) => {
       const savedMessage: Message = await postMessage(newMessage.message, `${user.name} ${user._id}`, bookId);
       console.log(savedMessage,"message");
       if (savedMessage) {
-        console.log(savedMessage)
-        updateBookMutation.mutate({
+        const newMessage={
           id: bookId,
           updatedData: {
             learningGroups: {
               message: [...(books?.find((b) => b._id === bookId)?.learningGroups?.message || []), savedMessage],
             },
           },
+        }
+        console.log(savedMessage)
+        updateBookMutation.mutate(newMessage);
+        queryClient.setQueryData<Book[] | undefined>(["Books"], (oldBooks) => {
+          if (!oldBooks) return oldBooks;
+          return oldBooks.map((book) => {
+            if (book._id === bookId) {
+              return {
+                ...book,
+                learningGroups: {
+                  ...book.learningGroups,
+                  message: [...(book.learningGroups?.message || []), savedMessage],
+                },
+              };
+            }
+            return book;
+          });
         });
       }
     } catch (error) {
