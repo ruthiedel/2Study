@@ -1,11 +1,11 @@
 import { NextResponse } from 'next/server';
-import { getMassagesByBookId } from '../../../../services/mongo/massagesMongo';
+import { getMessagesByBookId } from '../../../../services/mongo/messagesMongo';
 
 export async function GET(req: Request, { params }: { params: { book_id: string } }) {
   try {
     const { book_id } = params;
 
-    const message = await getMassagesByBookId(book_id);
+    const message = await getMessagesByBookId(book_id);
     console.log(message);
     return NextResponse.json(message);
   } catch (error) {

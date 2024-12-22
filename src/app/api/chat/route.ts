@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import Pusher from 'pusher';
-import { addMessageToLearningGroup } from '../../../services/mongo/massagesMongo'
+import { addMessageToLearningGroup } from '../../../services/mongo/messagesMongo'
 
 const pusher = new Pusher({
   appId: process.env.PUSHER_APP_ID!,

@@ -16,7 +16,7 @@ export async function connectDatabase() {
   return clientPromise;
 }
 
-export async function getMassagesByBookId(bookId: string): Promise<LearningGroup> {
+export async function getMessagesByBookId(bookId: string): Promise<LearningGroup> {
   const client = await connectDatabase();  
   const db = client.db(); 
   const collection = db.collection('LearningGroup'); 
