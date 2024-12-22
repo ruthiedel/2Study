@@ -18,15 +18,14 @@ export const postMessage = async (message: string, username: string, bookId: str
 
 export const convertMessagesToLocalMessages = (messages: Message[]): localMessage[] => {
   return messages.map((msg) => {
-    const lastSpaceIndex = msg.username.lastIndexOf(' ');
-    const username = lastSpaceIndex !== -1 ? msg.username.substring(0, lastSpaceIndex) : '';
-    const userId = lastSpaceIndex !== -1 ? msg.username.substring(lastSpaceIndex + 1) : '';
+    const lastSpaceIndex = msg.userName.lastIndexOf(' ');
+    const username = lastSpaceIndex !== -1 ? msg.userName.substring(0, lastSpaceIndex) : '';
+    const userId = lastSpaceIndex !== -1 ? msg.userName.substring(lastSpaceIndex + 1) : '';
 
     return {
       messageId: msg._id || '', 
       username,
       userId,
-      bookId: msg.bookId,
       message: msg.message,
       timestamp: msg.timestamp,
     };
@@ -36,8 +35,7 @@ export const convertMessagesToLocalMessages = (messages: Message[]): localMessag
 export const convertLocalMessagesToMessages = (localMessages: localMessage[]): Message[] => {
   return localMessages.map((localMessage) => ({
     _id: localMessage.messageId,
-    bookId: localMessage.bookId, 
-    username: `${localMessage.username} ${localMessage.userId}`,
+    userName: `${localMessage.username} ${localMessage.userId}`,
     message: localMessage.message,
     timestamp: localMessage.timestamp,
   }));
