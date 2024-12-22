@@ -16,14 +16,8 @@ export type Chapter = {
 export type Message = {
     _id?: string;
     userName: string;
-    userId: string;
     message: string;
     timestamp: Date;
-}
-
-type LearningGroupUser = {
-    userId: string;
-    userName: string;
 }
 
 export type category = {
@@ -52,7 +46,7 @@ export type UserBook = {
     rate: number;
     status?: boolean;
 }
-type Messages = {
+export type LearningGroup = {
     book_id: string;
     messages: Message[];
 }
