@@ -1,11 +1,8 @@
 
-import StudyComp from './StudyComp';
+import {StudyComp, ProgressComp, InfoComp, GoalSetting} from '../index';
 import RequireAuth from '../../layout/RequireAuth';
-import ProgressComp from './ProgressComp';
-import InfoComp from './InfoComp';
 import React from 'react';
 import Recommendations from './Recommendations';
-import GoalSetting from './Goals/Goals';
 import styles from './userStatus.module.css'
 
 export default function UserContainer() {

@@ -12,8 +12,8 @@ import {
 } from 'chart.js';
 import { calculateBookRatings } from '../../lib/clientHelpers/graphsFunctions';
 import useUserStore from '../../services/zustand/userZustand/userStor';
-import { Book, UserBook } from '@/types';
-import { getBooks } from "@/hooks/booksDetails";
+import { Book } from '../../types';
+import { getBooks } from '../../hooks/booksDetails';
 
 ChartJS.register(
   CategoryScale,

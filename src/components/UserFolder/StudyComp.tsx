@@ -6,7 +6,6 @@ import styles from './userStatus.module.css'
 import useUserStore from '../../services/zustand/userZustand/userStor';
 import numberToGematria from '@/lib/clientHelpers/gematriaFunc';
 import { UserBook } from "../../types";
-import Link from "next/link";
 
 export default function StudyComp() {
   const user = useUserStore((state) => state.user);
