@@ -45,7 +45,7 @@ export async function addMessageToLearningGroup(bookId: string, message: Message
       book_id: bookId,
       messages: [message],
     };
-    
+
     await collection.insertOne(newLearningGroup);
     return newLearningGroup;
   } else {
