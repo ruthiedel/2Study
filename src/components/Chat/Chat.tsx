@@ -23,11 +23,11 @@ const Chat = ({ bookId }: { bookId: string }) => {
   useEffect(() => {
     const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY!, { cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER!, });
 
-    if (books && Array.isArray(books)) {
-      const selectedBook = books.find(book => book._id == bookId)
-      if (selectedBook && selectedBook.learningGroups && selectedBook.learningGroups.message) {
-        setMessages(convertMessagesToLocalMessages([...selectedBook?.learningGroups.message]))
-        setBookName(selectedBook.name);
+    if (messages && Array.isArray(messages)) {
+      const learningGroup = messages.find(message => message._id == messageId)
+      if (learningGroup && learningGroup.message) {
+        setMessages(convertMessagesToLocalMessages([...learningGroup.message]))
+        setBookName('name from props');
       }
       else { console.log("No learningGroups", selectedBook)}
     }
@@ -58,7 +58,6 @@ const Chat = ({ bookId }: { bookId: string }) => {
     const newMessage: Message = {
       _id: '',
       userName: user.name,
-      userId: user._id || '',
       message: message,
       timestamp: new Date(),
     };
@@ -79,9 +78,9 @@ const Chat = ({ bookId }: { bookId: string }) => {
         }
         console.log(savedMessage)
         updateBookMutation.mutate(newMessage);
-        queryClient.setQueryData<Book[] | undefined>(["Books"], (oldBooks) => {
-          if (!oldBooks) return oldBooks;
-          return oldBooks.map((book) => {
+        queryClient.setQueryData<Message[] | undefined>(["Messages"], (oldMessages) => {
+          if (!oldMessages) return oldMessages;
+          return oldMessages.map((message) => {
             if (book._id === bookId) {
               return {
                 ...book,
