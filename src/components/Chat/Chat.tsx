@@ -2,10 +2,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Pusher from 'pusher-js';
 import { useUpdateBook, getBooks } from '../../hooks/booksDetails';
-import { User, Message, localMessage } from '../../types';
+import { User, Message, localMessage, Book } from '../../types';
 import ChatStyles from './Chat.module.css';
 import useUserStore from '../../services/zustand/userZustand/userStor';
 import { postMessage, convertMessagesToLocalMessages, convertLocalMessagesToMessages } from '../../services/chatService'
+import { useQueryClient } from '@tanstack/react-query';
 
 const Chat = ({ bookId }: { bookId: string }) => {
   const user: User | null = useUserStore((state) => state.user);
@@ -16,6 +17,7 @@ const Chat = ({ bookId }: { bookId: string }) => {
   const [isSending, setIsSending] = useState(false);
   const [bookName, setBookName] = useState('');
   const messageContainerRef = useRef<HTMLDivElement>(null);
+
 
   useEffect(() => {
     const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY!, { cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER!, });
@@ -51,7 +53,7 @@ const Chat = ({ bookId }: { bookId: string }) => {
 
   const sendMessage = async () => {
     if (!user || message.trim() === '' || isSending) return;
-
+  
     const newMessage: Message = {
       _id: '',
       bookId,
@@ -59,41 +61,31 @@ const Chat = ({ bookId }: { bookId: string }) => {
       message: message,
       timestamp: new Date(),
     };
-
+  
     setIsSending(true);
+  
     try {
-      const username = `${user.name} ${user._id}`;
-      const savedMessage: Message = await postMessage(newMessage.message, username, bookId);
-
+      const savedMessage: Message = await postMessage(newMessage.message, `${user.name} ${user._id}`, bookId);
+  
       if (savedMessage) {
-        const newLocalMessage: localMessage = {
-          messageId: savedMessage._id || '',
-          username: user.name,
-          userId: user._id || '',
-          bookId: savedMessage.bookId,
-          message: savedMessage.message,
-          timestamp: savedMessage.timestamp,
-        };
-        const updatedMessages = convertLocalMessagesToMessages([...messages, newLocalMessage]);
-
+        // השתמשי ב-useUpdateBook לעדכון הספר
         updateBookMutation.mutate({
           id: bookId,
           updatedData: {
             learningGroups: {
-              message: updatedMessages,
+              message: [...(books?.find((b) => b._id === bookId)?.learningGroups?.message || []), savedMessage],
             },
           },
         });
-      } else {
-        console.error('Error sending message');
       }
     } catch (error) {
       console.error('Error sending message', error);
     }
-
+  
     setMessage('');
     setIsSending(false);
   };
+  
 
   return (
     <div className={ChatStyles.container} >
