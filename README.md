@@ -41,4 +41,4 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## Deploy on Vercel
 
-Welcome to visit VERCEL to see the app in action: []()
+Welcome to visit VERCEL to see the app in action: [2-study.vercel.app](2-study.vercel.app)
