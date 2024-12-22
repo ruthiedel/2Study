@@ -24,6 +24,9 @@ const loginSchema = z.object({
 
 const registerSchema = loginSchema.extend({
   username: z.string().min(3, "שם המשתמש חייב להכיל לפחות 3 תווים"),
+  acceptTerms: z.literal(true, {
+    errorMap: () => ({ message: "חובה לאשר את התקנון כדי להירשם" }),
+  }),
 });
 
 interface LoginProp {
@@ -271,6 +274,29 @@ function Login({ onClickDialog }: LoginProp) {
                 {errors.password && (
                   <p className={styles.error}>{errors.password.message as string}</p>
                 )}
+
+                {status === "הרשמה" &&
+                  (<div className={styles.termsContainer}>
+                    <input
+                      type="checkbox"
+                      id="acceptTerms"
+                      {...register("acceptTerms")}
+                    />
+                    <label htmlFor="acceptTerms">
+                      אני מסכים/ה ל
+                      <a
+                        href="/termsOfService"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        תקנון
+                      </a>
+                    </label>
+                    {errors.acceptTerms && (
+                      <p className={styles.error}>{errors.acceptTerms.message as string}</p>
+                    )}
+                  </div>)
+                }
 
                 {status === "התחברות" && (
                   <button
