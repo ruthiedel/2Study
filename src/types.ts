@@ -11,13 +11,12 @@ type Question = {
 }
 export type Chapter = {
     chapterId?: number;
-
     paragraphs: Paragraph[];
 }
 export type Message = {
     _id?: string;
-    bookId: string;
-    username: string;
+    userName: string;
+    userId: string;
     message: string;
     timestamp: Date;
 }
@@ -38,7 +37,6 @@ export type Book = {
     category: category;
     chapters?: Chapter[];
     coverImage: string;
-    learningGroups?: LearningGroup;
     chapters_num: number;
     paragraphs_num: number;
     rating?: number;
@@ -54,9 +52,9 @@ export type UserBook = {
     rate: number;
     status?: boolean;
 }
-type LearningGroup = {
-    users?: LearningGroupUser[];
-    message: Message[];
+type Messages = {
+    book_id: string;
+    messages: Message[];
 }
 export type User = {
     age?: number;

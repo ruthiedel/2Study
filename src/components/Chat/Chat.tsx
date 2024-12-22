@@ -57,8 +57,8 @@ const Chat = ({ bookId }: { bookId: string }) => {
   
     const newMessage: Message = {
       _id: '',
-      bookId,
-      username: user.name,
+      userName: user.name,
+      userId: user._id || '',
       message: message,
       timestamp: new Date(),
     };
