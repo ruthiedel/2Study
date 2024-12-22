@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { connectDatabase, updateBook, fetchBookById } from '../../../../services/mongo/bookMongo';
 
-export async function PUT(request: Request, { params }: { params: { id: string } }) {
+export async function POST(request: Request, { params }: { params: { id: string } }) {
   try {
     const { id } = params; 
     const updatedData = await request.json();
