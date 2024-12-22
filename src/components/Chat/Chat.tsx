@@ -17,6 +17,7 @@ const Chat = ({ bookId }: { bookId: string }) => {
   const [isSending, setIsSending] = useState(false);
   const [bookName, setBookName] = useState('');
   const messageContainerRef = useRef<HTMLDivElement>(null);
+  console.log(books,"books in chat")
 
 
   useEffect(() => {
@@ -66,9 +67,9 @@ const Chat = ({ bookId }: { bookId: string }) => {
   
     try {
       const savedMessage: Message = await postMessage(newMessage.message, `${user.name} ${user._id}`, bookId);
-  
+      console.log(savedMessage,"message");
       if (savedMessage) {
-        // השתמשי ב-useUpdateBook לעדכון הספר
+        console.log(savedMessage)
         updateBookMutation.mutate({
           id: bookId,
           updatedData: {
