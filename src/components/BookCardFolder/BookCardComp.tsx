@@ -49,6 +49,7 @@ const BookCardComp: React.FC<BookCardProps> = ({ book, onClose }) => {
                     chapter_id: 1,
                     section_id: 1,
                     rate: 0,
+                    status:true,
                 };
                 const updatedUserData = {
                     ...user!,
