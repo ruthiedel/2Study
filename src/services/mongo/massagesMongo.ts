@@ -1,4 +1,4 @@
-import { LearningGroup } from '../../types'; 
+import { LearningGroup, Message } from '../../types'; 
 import { MongoClient, WithId } from 'mongodb';
 
 let client: MongoClient;
@@ -33,4 +33,31 @@ export async function getMassagesByBookId(bookId: string): Promise<LearningGroup
   };
 }
 
-  
+export async function addMessageToLearningGroup(bookId: string, message: Message): Promise<LearningGroup> {
+  const client = await connectDatabase();  
+  const db = client.db(); 
+  const collection = db.collection('LearningGroup'); 
+
+  const learningGroup = await collection.findOne({ 'book_id': bookId });
+
+  if (!learningGroup) {
+    const newLearningGroup: LearningGroup = {
+      book_id: bookId,
+      messages: [message],
+    };
+    
+    await collection.insertOne(newLearningGroup);
+    return newLearningGroup;
+  } else {
+    learningGroup.messages.push(message);
+    await collection.updateOne(
+      { 'book_id': bookId },
+      { $set: { messages: learningGroup.messages } }
+    );
+
+    return {
+      book_id: learningGroup.book_id,
+      messages: learningGroup.messages,
+    };
+  }
+}
