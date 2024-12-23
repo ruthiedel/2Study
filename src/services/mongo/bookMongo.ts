@@ -1,6 +1,7 @@
 import { MongoClient, ObjectId } from 'mongodb';
 import { promises as fs } from 'fs';
 import path from 'path';
+import { Book } from '../../types';
 
 let client: MongoClient;
 let clientPromise: Promise<MongoClient>;
@@ -221,4 +222,25 @@ export async function getUniqueCategoryStrings(client: MongoClient, collection: 
   const uniqueCategoryStrings = distinctCategories.map(category => `${category.type} - ${category.subject}`);
 
   return uniqueCategoryStrings;
+}
+
+
+export async function addBook(client: MongoClient, collection: string, newBook: Book) {
+  const db = client.db('Books');
+
+  const bookToInsert = {
+    ...newBook,
+    _id: newBook._id ? new ObjectId(newBook._id) : undefined,
+  };
+
+  const result = await db.collection(collection).insertOne(bookToInsert);
+
+  if (!result.acknowledged) {
+    throw new Error('Failed to add the book');
+  }
+
+  return {
+    message: 'Book added successfully',
+    bookId: result.insertedId,
+  };
 }
