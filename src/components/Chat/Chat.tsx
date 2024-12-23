@@ -23,12 +23,14 @@ const Chat = ({ bookId, bookName }: { bookId: string; bookName: string }) => {
   }, [initialMessages]);
 
   useEffect(() => {
-    const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY!, {
-      cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER!,
-    });
+    const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY!, { cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER!, });
+
 
     const channel = pusher.subscribe(`chat-${bookId}`);
-    channel.bind("message", () => {});
+    channel.bind('message', (data: Message) => {
+      const newMessage = convertMessagesToLocalMessages([data])[0];
+      setMessages((prevMessages) => [...prevMessages, newMessage]);
+    });
 
     return () => {
       pusher.unsubscribe(`chat-${bookId}`);
