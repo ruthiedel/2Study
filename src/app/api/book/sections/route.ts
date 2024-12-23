@@ -53,7 +53,6 @@ export async function GET(request: Request) {
         name: book.book_name
       }
     };
-    client.close(); 
 
 
     return NextResponse.json(result);

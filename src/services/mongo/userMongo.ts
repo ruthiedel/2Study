@@ -47,7 +47,6 @@ export async function findUserByEmailAndPassword(email: string, password: string
   const usersCollection = db.collection('users');
 
   const user = await usersCollection.findOne({ email });
-  client.close(); 
 
   if (!user) return null;
 
@@ -86,12 +85,10 @@ export async function registerUser(user: UserWithPassword) {
   const client = await connectDatabase();
   const existingUser = await findUserByEmail(client, user.email);
   if (existingUser) {
-    client.close(); 
     return { message: 'המייל הזה כבר קיים במערכת. אנא בחר מייל אחר.', status: 400 };
   }
 
   const result = await checkAndAddUser(client, user);
-  client.close(); 
 
   return {
     message: result.message || 'ההרשמה בוצעה בהצלחה! ברוכה הבאה!',
@@ -119,7 +116,6 @@ export async function googleUser(user: UserWithPassword) {
  
   const client = await connectDatabase();
   const result = await findUserByEmail(client, user.email);
-  client.close(); 
 
   if (result !== null) {
     return { message: 'ההתחברות בוצעה בהצלחה!', status: 200, user:result };
@@ -134,7 +130,6 @@ export async function updateUser(client: MongoClient, collection: string, userId
   const objectId = typeof userId === 'string' ? new ObjectId(userId) : userId;
   const { _id, ...dataToUpdate } = updatedData;
   await db.collection(collection).replaceOne({ _id: objectId }, dataToUpdate);
-  client.close(); 
 
   return { message: 'User updated successfully', updatedFields: updatedData };
 }
