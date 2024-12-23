@@ -22,8 +22,8 @@ export async function POST(req: Request) {
       userId
     };
 
-    await pusher.trigger(`chat-${bookId}`, 'message', newMessage);
     await addMessageToLearningGroup(bookId, {userName: userName, message, timestamp: new Date(),userId: userId});
+    await pusher.trigger(`chat-${bookId}`, 'message', newMessage);
     return NextResponse.json(newMessage, { status: 200 });
   } catch (error) {
     console.error('Error triggering Pusher:', error);
