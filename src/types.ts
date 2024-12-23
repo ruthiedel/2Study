@@ -77,7 +77,6 @@ export type localMessage = {
     messageId: string;
     username: string;
     userId: string;
-    bookId: string;
     message: string;
     timestamp: Date;
 }

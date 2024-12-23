@@ -1,128 +1,86 @@
 "use client";
-import React, { useState, useEffect, useRef } from 'react';
-import Pusher from 'pusher-js';
-import { useUpdateBook, getBooks } from '../../hooks/booksDetails';
-import { User, Message, localMessage, Book } from '../../types';
-import ChatStyles from './Chat.module.css';
-import useUserStore from '../../services/zustand/userZustand/userStor';
-import { postMessage, convertMessagesToLocalMessages, convertLocalMessagesToMessages } from '../../services/chatService'
-import { useQueryClient } from '@tanstack/react-query';
+import React, { useState, useEffect, useRef } from "react";
+import Pusher from "pusher-js";
+import { useMessages, useUpdateMessage } from "../../hooks/messagesDetailes";
+import { User, Message, localMessage } from "../../types";
+import ChatStyles from "./Chat.module.css";
+import useUserStore from "../../services/zustand/userZustand/userStor";
+import { convertMessagesToLocalMessages, convertToLocalMessage } from "../../services/chatService";
 
-const Chat = ({ bookId }: { bookId: string }) => {
+const Chat = ({ bookId, bookName }: { bookId: string; bookName: string }) => {
   const user: User | null = useUserStore((state) => state.user);
-  const { data: books } = getBooks();
-  const updateBookMutation = useUpdateBook();
+  const { data: initialMessages, refetch } = useMessages(bookId);
   const [messages, setMessages] = useState<localMessage[]>([]);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
   const [isSending, setIsSending] = useState(false);
-  const [bookName, setBookName] = useState('');
   const messageContainerRef = useRef<HTMLDivElement>(null);
-  console.log(books,"books in chat")
-   const queryClient = useQueryClient()
+  const updateMessagesMutation = useUpdateMessage();
 
   useEffect(() => {
-    const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY!, { cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER!, });
-
-    if (messages && Array.isArray(messages)) {
-      const learningGroup = messages.find(message => message._id == messageId)
-      if (learningGroup && learningGroup.message) {
-        setMessages(convertMessagesToLocalMessages([...learningGroup.message]))
-        setBookName('name from props');
-      }
-      else { console.log("No learningGroups", selectedBook)}
+    if (initialMessages) {
+      setMessages(convertMessagesToLocalMessages(initialMessages.messages));
     }
-    else { console.log("No books") }
+  }, [initialMessages]);
 
-    const channel = pusher.subscribe(`chat-${bookId}`);
-    channel.bind('message', (data: Message) => {
-      const newMessage = convertMessagesToLocalMessages([data])[0];
-      setMessages((prevMessages) => [...prevMessages, newMessage]);
+  useEffect(() => {
+    const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY!, {
+      cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER!,
     });
 
-    return () => { pusher.unsubscribe(`chat-${bookId}`); };
-  }, [books]);
+    const channel = pusher.subscribe(`chat-${bookId}`);
+    channel.bind("message", () => {});
+
+    return () => {
+      pusher.unsubscribe(`chat-${bookId}`);
+    };
+  }, [bookId]);
 
   useEffect(() => {
     if (messageContainerRef.current) {
       messageContainerRef.current.scrollTo({
         top: messageContainerRef.current.scrollHeight,
-        behavior: 'smooth',
+        behavior: "smooth",
       });
     }
-  }, [messages]); 
-  
+  }, [messages]);
 
   const sendMessage = async () => {
-    if (!user || message.trim() === '' || isSending) return;
-  
-    const newMessage: Message = {
-      _id: '',
-      userName: user.name,
-      message: message,
-      timestamp: new Date(),
-    };
-  
+    if (!user || message.trim() === "" || isSending) return;
+
     setIsSending(true);
-  
     try {
-      const savedMessage: Message = await postMessage(newMessage.message, `${user.name} ${user._id}`, bookId);
-      console.log(savedMessage,"message");
-      if (savedMessage) {
-        const newMessage={
-          id: bookId,
-          updatedData: {
-            learningGroups: {
-              message: [...(books?.find((b) => b._id === bookId)?.learningGroups?.message || []), savedMessage],
-            },
-          },
-        }
-        console.log(savedMessage)
-        updateBookMutation.mutate(newMessage);
-        queryClient.setQueryData<Message[] | undefined>(["Messages"], (oldMessages) => {
-          if (!oldMessages) return oldMessages;
-          return oldMessages.map((message) => {
-            if (book._id === bookId) {
-              return {
-                ...book,
-                learningGroups: {
-                  ...book.learningGroups,
-                  message: [...(book.learningGroups?.message || []), savedMessage],
-                },
-              };
-            }
-            return book;
-          });
-        });
-      }
+      await updateMessagesMutation.mutate({ book_id: bookId, message: message, userName: `${user.name} ${user._id}` })
     } catch (error) {
-      console.error('Error sending message', error);
+      console.error("Error sending message:", error);
+    } finally {
+      setMessage("");
+      setIsSending(false);
     }
-  
-    setMessage('');
-    setIsSending(false);
   };
-  
 
   return (
-    <div className={ChatStyles.container} >
+    <div className={ChatStyles.container}>
       <div className={ChatStyles.header}>
         <>קבוצת לימוד {bookName}</>
         <div className={ChatStyles.profileContainer}>
           <div className={ChatStyles.onlineIndicator}></div>
           <img
-            src={user?.userImagePath || '/default-avatar.png'}
+            src={user?.userImagePath || "/default-avatar.png"}
             alt={user?.name}
             className={ChatStyles.profileImage}
           />
         </div>
       </div>
-      <div className={ChatStyles.messages} ref={messageContainerRef} id='messages-container'>
+      <div className={ChatStyles.messages} ref={messageContainerRef} id="messages-container">
         {messages.map((msg, index) => (
-          <div key={index} className={`${ChatStyles.messageContainer} ${(msg.userId && msg.userId === user?._id) ? ChatStyles.selfContainer : ''
-            }`}>
+          <div
+            key={index}
+            className={`${ChatStyles.messageContainer} ${msg.userId === user?._id ? ChatStyles.selfContainer : ""
+              }`}
+          >
             <div className={ChatStyles.profile}>{msg.username[0]}</div>
             <div
-              className={`${ChatStyles.message} ${(msg.userId && msg.userId === user?._id) ? ChatStyles.selfMessage : ChatStyles.otherMessage
+              className={`${ChatStyles.message} ${msg.userId === user?._id ? ChatStyles.selfMessage : ChatStyles.otherMessage
                 }`}
             >
               <div className={ChatStyles.username}>{msg.username}</div>
@@ -141,19 +99,15 @@ const Chat = ({ bookId }: { bookId: string }) => {
           placeholder="כתוב הודעה..."
           onChange={(e) => setMessage(e.target.value)}
           onKeyDown={(e) => {
-            if (e.key === 'Enter') {
+            if (e.key === "Enter") {
               e.preventDefault();
               sendMessage();
             }
           }}
           className={ChatStyles.input}
         />
-        <button
-          onClick={sendMessage}
-          className={ChatStyles.sendButton}
-          disabled={isSending}
-        >
-          {isSending ? 'שולח...' : 'שלח'}
+        <button onClick={sendMessage} className={ChatStyles.sendButton} disabled={isSending}>
+          {isSending ? "שולח..." : "שלח"}
         </button>
       </div>
     </div>

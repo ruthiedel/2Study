@@ -253,7 +253,7 @@ const Study = () => {
                         </Button>
                     )}
                 </div>
-                <Chat bookId={bookId} />
+                <Chat bookId={bookId} bookName={bookData?.name || ""} />
                 {showConfetti && <Confetti />}
             </Box>
         </RequireAuth>

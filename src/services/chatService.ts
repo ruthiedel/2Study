@@ -8,36 +8,47 @@ export const postMessage = async (message: string, username: string, bookId: str
       username,
       bookId,
     });
-    return response.data;  
+    return response.data;
   } catch (error) {
-    console.error("Error posting message:", error);  
+    console.error("Error posting message:", error);
     throw error;
   }
 };
 
+export const convertToLocalMessage = (message: Message): localMessage => {
+  let username = 'racheli';
+  let userId = '770';
+
+  if (message.userName) {
+    const lastSpaceIndex = message.userName.lastIndexOf(' ');
+    username = lastSpaceIndex !== -1 ? message.userName.substring(0, lastSpaceIndex) : '';
+    userId = lastSpaceIndex !== -1 ? message.userName.substring(lastSpaceIndex + 1) : '';
+  }
+
+  return {
+    messageId: message._id || '',
+    username,
+    userId,
+    message: message.message,
+    timestamp: message.timestamp,
+  };
+}
+
 
 export const convertMessagesToLocalMessages = (messages: Message[]): localMessage[] => {
-  return messages.map((msg) => {
-    const lastSpaceIndex = msg.username.lastIndexOf(' ');
-    const username = lastSpaceIndex !== -1 ? msg.username.substring(0, lastSpaceIndex) : '';
-    const userId = lastSpaceIndex !== -1 ? msg.username.substring(lastSpaceIndex + 1) : '';
+  if (!messages) {
+    return [];
+  }
 
-    return {
-      messageId: msg._id || '', 
-      username,
-      userId,
-      bookId: msg.bookId,
-      message: msg.message,
-      timestamp: msg.timestamp,
-    };
+  return messages.map((msg) => {
+    return convertToLocalMessage(msg);
   });
 };
 
 export const convertLocalMessagesToMessages = (localMessages: localMessage[]): Message[] => {
   return localMessages.map((localMessage) => ({
     _id: localMessage.messageId,
-    bookId: localMessage.bookId, 
-    username: `${localMessage.username} ${localMessage.userId}`,
+    userName: `${localMessage.username} ${localMessage.userId}`,
     message: localMessage.message,
     timestamp: localMessage.timestamp,
   }));

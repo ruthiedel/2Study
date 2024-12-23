@@ -16,9 +16,9 @@ export async function connectDatabase() {
   return clientPromise;
 }
 
-export async function getMassagesByBookId(bookId: string): Promise<LearningGroup> {
+export async function getMessagesByBookId(bookId: string): Promise<LearningGroup> {
   const client = await connectDatabase();  
-  const db = client.db(); 
+  const db = client.db('Books');
   const collection = db.collection('LearningGroup'); 
 
   const learningGroup = await collection.findOne({ 'book_id': bookId });
@@ -33,9 +33,9 @@ export async function getMassagesByBookId(bookId: string): Promise<LearningGroup
   };
 }
 
-export async function addMessageToLearningGroup(bookId: string, message: Message): Promise<LearningGroup> {
+export async function addMessageToLearningGroup(bookId: string, message: Message): Promise<Message> {
   const client = await connectDatabase();  
-  const db = client.db(); 
+  const db = client.db('Books');
   const collection = db.collection('LearningGroup'); 
 
   const learningGroup = await collection.findOne({ 'book_id': bookId });
@@ -47,17 +47,13 @@ export async function addMessageToLearningGroup(bookId: string, message: Message
     };
 
     await collection.insertOne(newLearningGroup);
-    return newLearningGroup;
+    return message;
   } else {
     learningGroup.messages.push(message);
     await collection.updateOne(
       { 'book_id': bookId },
       { $set: { messages: learningGroup.messages } }
     );
-
-    return {
-      book_id: learningGroup.book_id,
-      messages: learningGroup.messages,
-    };
+    return message;
   }
 }

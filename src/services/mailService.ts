@@ -13,7 +13,6 @@ export const sendMail = async (mail:Mail) => {
 
 
 export const forgetPassword = async (email:string):Promise<any>=>{
-    console.log("email from services",email);
     try{
         const response =await http.put ("/mail/forgot_password",{ email })
         return response.data; 
