@@ -1,6 +1,6 @@
 import * as React from "react";
 import styles from './userStatus.module.css'
-import { Wizard, PieCategories, BarGraph, BarsGraph } from '../../components'
+import { Wizard, PieCategories, BarGraph, BarsGraph } from '../index'
 
 export default function ProgressComp() {
 

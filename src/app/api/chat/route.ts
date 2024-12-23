@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import Pusher from 'pusher';
+import { addMessageToLearningGroup } from '../../../services/mongo/messagesMongo'
 
 const pusher = new Pusher({
   appId: process.env.PUSHER_APP_ID!,
@@ -12,17 +13,17 @@ const pusher = new Pusher({
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { message, username, bookId } = body;
+    const { message, userName, bookId, userId } = body;
 
     const newMessage = {
       message,
-      username,
-      bookId,
+      userName,
       timestamp: new Date().toISOString(),
+      userId
     };
 
+    await addMessageToLearningGroup(bookId, {userName: userName, message, timestamp: new Date(),userId: userId});
     await pusher.trigger(`chat-${bookId}`, 'message', newMessage);
-
     return NextResponse.json(newMessage, { status: 200 });
   } catch (error) {
     console.error('Error triggering Pusher:', error);

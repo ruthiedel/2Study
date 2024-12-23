@@ -3,7 +3,6 @@ import Rating from "@mui/material/Rating";
 import styles from "./rating.module.css";
 import { getBooks, useUpdateBook } from '../../hooks/booksDetails';
 import useUserStore from "../../services/zustand/userZustand/userStor";
-import { updateUser } from '../../services/userService'
 import { User } from '../../types';
 
 interface RatingComponentProps {

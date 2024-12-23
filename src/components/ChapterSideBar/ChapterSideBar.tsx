@@ -4,6 +4,7 @@ import { getBooks } from '@/hooks/booksDetails';
 import { Book } from '../../types';
 import numberToGematria from '../../lib/clientHelpers/gematriaFunc';
 import styles from './chapterSideBarCss.module.css';
+import { ExpandLess, ExpandMore } from '@mui/icons-material';
 
 interface SidebarProps {
     selectedBookId: string;
@@ -53,7 +54,7 @@ const Sidebar: React.FC<SidebarProps> = ({ selectedBookId, onSectionSelect }) =>
                             <span>פרק {numberToGematria(chapterIndex + 1)}</span>
                             <button className={styles.iconButton}>
                                 <span className={styles.icon}>
-                                    {expandedChapter === chapterIndex ? '▲' : '▼'}
+                                    {expandedChapter === chapterIndex ? <ExpandLess /> : <ExpandMore />}
                                 </span>
                             </button>
                         </div>

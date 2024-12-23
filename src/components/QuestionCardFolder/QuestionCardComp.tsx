@@ -4,7 +4,7 @@ import { Paragraph } from '../../types';
 import { generateQuestionAndAnswer } from '../../services/questionService';
 import { updateBookQuestionService } from "../../services/bookService";
 import styles from './questionCard.module.css';
-import Loading from "../LoadingFolder/Loading";
+import {Loading} from '../index';
 
 interface Paragraphs {
     section: Paragraph;

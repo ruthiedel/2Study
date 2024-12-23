@@ -47,6 +47,7 @@ export async function findUserByEmailAndPassword(email: string, password: string
   const usersCollection = db.collection('users');
 
   const user = await usersCollection.findOne({ email });
+
   if (!user) return null;
 
   const isPasswordValid = await bcrypt.compare(password, user.password);
@@ -88,6 +89,7 @@ export async function registerUser(user: UserWithPassword) {
   }
 
   const result = await checkAndAddUser(client, user);
+
   return {
     message: result.message || 'ההרשמה בוצעה בהצלחה! ברוכה הבאה!',
     status: result.status || 200,
@@ -114,7 +116,7 @@ export async function googleUser(user: UserWithPassword) {
  
   const client = await connectDatabase();
   const result = await findUserByEmail(client, user.email);
-  
+
   if (result !== null) {
     return { message: 'ההתחברות בוצעה בהצלחה!', status: 200, user:result };
   }

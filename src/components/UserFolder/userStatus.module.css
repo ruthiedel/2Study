@@ -34,16 +34,13 @@
 .mystudycard{
     flex: 40%;
     margin-left: 10px;
+    height: 400px;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .myprogresscard{
     flex: 60%;
-}
-
-.studyContent {
-    height: 300px;
-    overflow-y: auto;
-    overflow-x: hidden;
 }
 
 .recommendContainer {

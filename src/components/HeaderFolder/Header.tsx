@@ -9,7 +9,7 @@ import { usePathname } from 'next/navigation';
 import logo from "../../../public/pictures/logo1.png";
 import styles from "./header.module.css";
 import useUserStore from '../../services/zustand/userZustand/userStor';
-import Login from "../Login/Login";
+import {Login} from '../index';
 import { useRouter } from "next/navigation";
 
 

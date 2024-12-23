@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 
 import styles from "./userStatus.module.css";
 import { Book as BookComp, Loading } from '../../components';
-import BookCard from "../BookCardFolder/BookCardComp";
+import {BookCard} from '../index';
 import RequireAuth from "../../layout/RequireAuth";
 import { Book as BookType } from "@/types";
 import useUserStore from "../../services/zustand/userZustand/userStor";

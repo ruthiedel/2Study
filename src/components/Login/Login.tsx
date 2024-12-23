@@ -15,7 +15,7 @@ import { IconButton } from "@mui/material";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../../lib/firebase";
 import { forgetPassword } from "@/services/mailService";
-import Loading from "../LoadingFolder/Loading";
+import {Loading} from '../index';
 
 const loginSchema = z.object({
   email: z.string().email("אימייל לא חוקי"),
@@ -24,6 +24,9 @@ const loginSchema = z.object({
 
 const registerSchema = loginSchema.extend({
   username: z.string().min(3, "שם המשתמש חייב להכיל לפחות 3 תווים"),
+  acceptTerms: z.literal(true, {
+    errorMap: () => ({ message: "חובה לאשר את התקנון כדי להירשם" }),
+  }),
 });
 
 interface LoginProp {
@@ -148,7 +151,6 @@ function Login({ onClickDialog }: LoginProp) {
         "code" in error &&
         (error as { code: string }).code === "auth/popup-closed-by-user"
       ) {
-        console.log("User closed the Google login popup.");
       } else {
         console.error("Error during Google login:", error);
         Swal.fire({
@@ -271,6 +273,29 @@ function Login({ onClickDialog }: LoginProp) {
                 {errors.password && (
                   <p className={styles.error}>{errors.password.message as string}</p>
                 )}
+
+                {status === "הרשמה" &&
+                  (<div className={styles.termsContainer}>
+                    <input
+                      type="checkbox"
+                      id="acceptTerms"
+                      {...register("acceptTerms")}
+                    />
+                    <label htmlFor="acceptTerms">
+                      אני מסכים/ה ל
+                      <a
+                        href="/termsOfService"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        תקנון
+                      </a>
+                    </label>
+                    {errors.acceptTerms && (
+                      <p className={styles.error}>{errors.acceptTerms.message as string}</p>
+                    )}
+                  </div>)
+                }
 
                 {status === "התחברות" && (
                   <button

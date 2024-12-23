@@ -7,8 +7,8 @@
 }
 
 .finishButton {
-    background-color: black;
-    color: white;
+    background-color: #e1e1e1;
+    color: black;
     border: none;
     padding: 10px 20px;
     border-radius: 5px;
@@ -19,7 +19,7 @@
 }
 
 .finishButton:hover {
-    background-color: #333;
+    background-color: rgb(197, 195, 195);
 }
 
 .questionCard {
@@ -39,8 +39,8 @@
 }
 
 .quizButton{
-    background-color: black;
-    color:white;
+    background-color: #e1e1e1;
+    color:black;
     border-radius: 5px;
     padding: 10px 20px;
     cursor: pointer;
@@ -50,7 +50,6 @@
 }
 
 .quizButton:hover {
-    background-color: #333;
-    margin-top: 2px;
+    background-color: rgb(197, 195, 195);
 }
 

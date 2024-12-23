@@ -42,7 +42,7 @@ const Footer: React.FC = () => {
                 icon: "success",
                 timer: 3000,
                 confirmButtonText: "נהדר",
-            })        
+            })
         } catch (error) {
             console.error('Error sending email:', error);
             Swal.fire({
@@ -51,7 +51,8 @@ const Footer: React.FC = () => {
                 icon: "error",
                 timer: 3000,
                 confirmButtonText: "סגור",
-            })             }
+            })
+        }
     };
 
     return (
@@ -63,7 +64,12 @@ const Footer: React.FC = () => {
             <div className={styles.column2}>
                 <p>📧  מייל: 054racheli@gmail.com</p>
                 <p>🌟 נשמח לשמוע מכם</p>
-                <p>🖋️השימוש באתר בכפוף לתקנון</p>
+                <p>
+                    🖋️השימוש באתר בכפוף ל
+                    <a href="/termsOfService" target="_blank" rel="noopener noreferrer" style={{ color: "#007bff", textDecoration: "underline" }}>
+                        תקנון
+                    </a>
+                </p>
                 <p>© כל הזכויות שמורות</p>
             </div>
             <div className={styles.divider}></div>

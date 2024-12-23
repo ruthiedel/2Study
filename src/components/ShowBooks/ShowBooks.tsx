@@ -1,9 +1,7 @@
 'use client';
 
 import React, { useMemo, useState } from 'react';
-import BookCard from '../BookCardFolder/BookCardComp';
-import BookDetail from '../BookFolder/BookComp';
-import FilterComponent from '../Filter/Filter';
+import {BookCard, BookDetail, FilterComponent} from '../index';
 import RequireAuth from '../../layout/RequireAuth';
 import styles from './showBookCss.module.css';
 import { Book } from '../../types';
