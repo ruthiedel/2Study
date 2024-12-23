@@ -10,7 +10,6 @@ export async function POST(request: Request) {
       return NextResponse.json({ message: "Missing userId or books in request body" }, { status: 400 });
     }
 
-    const client = await connectDatabase();
     const recommends = await recommend(userId, books);
 
     return NextResponse.json(recommends);
