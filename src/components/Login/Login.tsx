@@ -151,7 +151,6 @@ function Login({ onClickDialog }: LoginProp) {
         "code" in error &&
         (error as { code: string }).code === "auth/popup-closed-by-user"
       ) {
-        console.log("User closed the Google login popup.");
       } else {
         console.error("Error during Google login:", error);
         Swal.fire({
