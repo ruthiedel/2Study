@@ -7,8 +7,8 @@ export const useMessages = (book_id: string) => {
     return useQuery<LearningGroup>({
         queryKey: ["Messages", book_id],
         queryFn: async () => fetchMessages(book_id),
-        staleTime: 1000000,
         enabled: !!book_id,
+        retry: 1,
     });
 };
 
@@ -59,3 +59,11 @@ export const useUpdateMessage = () => {
         }
     });
 };
+
+
+
+
+
+
+
+

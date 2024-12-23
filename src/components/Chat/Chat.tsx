@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Pusher from "pusher-js";
 import { useMessages, useUpdateMessage } from "../../hooks/messagesDetailes";
-import { User, Message, localMessage } from "../../types";
+import { User, Message } from "../../types";
 import ChatStyles from "./Chat.module.css";
 import useUserStore from "../../services/zustand/userZustand/userStor";
 
@@ -17,8 +17,8 @@ const Chat = ({ bookId, bookName }: { bookId: string; bookName: string }) => {
   useEffect(() => {
     const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY!, { cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER!, });
 
-    const channel = pusher.subscribe(`chat - ${ bookId }`);
-    channel.bind("message", (data: Message) => {
+    const channel = pusher.subscribe(`chat-${bookId}`);
+    channel.bind("message", () => {
       refetch();
     });
 
