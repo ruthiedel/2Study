@@ -26,6 +26,7 @@ export async function getMessagesByBookId(bookId: string): Promise<LearningGroup
   if (!learningGroup) {
     return { book_id: bookId, messages: [] }; 
   }
+  client.close(); 
 
   return {
     book_id: learningGroup.book_id,  
@@ -54,6 +55,9 @@ export async function addMessageToLearningGroup(bookId: string, message: Message
       { 'book_id': bookId },
       { $set: { messages: learningGroup.messages } }
     );
+
+    client.close(); 
+
     return message;
   }
 }

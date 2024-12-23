@@ -41,6 +41,8 @@ async function getAllUsers(): Promise<User[]> {
   const usersCollection = db.collection('users');
 
   const users = await usersCollection.find({}).toArray();
+  client.close(); 
+
   return users.map(user => ({
     ...user,
     _id: user._id.toString(),

@@ -67,6 +67,8 @@ export async function fetchAllBooks(client: MongoClient, collection: string) {
     }
   ]).toArray();
 
+  
+
   if (!books || books.length === 0) {
     console.log("No books found.");
     return [];
