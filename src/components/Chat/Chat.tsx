@@ -31,7 +31,8 @@ const Chat = ({ bookId, bookName }: { bookId: string; bookName: string }) => {
 
     const channel = pusher.subscribe(`chat-${bookId}`);
     channel.bind("message", (data: Message) => {
-      setMessages((prevMessages) => [...prevMessages, data]);
+      // setMessages((prevMessages) => [...prevMessages, data]);
+      refetch()
     });
 
     return () => {
@@ -39,7 +40,6 @@ const Chat = ({ bookId, bookName }: { bookId: string; bookName: string }) => {
     };
   }, [bookId]);
 
-  // Scroll to the latest message
   useEffect(() => {
     if (messageContainerRef.current) {
       messageContainerRef.current.scrollTo({
