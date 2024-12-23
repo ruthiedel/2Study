@@ -16,15 +16,16 @@ export const useUpdateMessage = () => {
     const queryClient = useQueryClient();
 
     return useMutation({
-        mutationFn: async ({ book_id, message, userName }: { book_id: string; message: string; userName: string }) => {
+        mutationFn: async ({ book_id, message, userName, userId }: { book_id: string; message: string; userName: string, userId:string }) => {
             const newMessage = await addMessage({
                 book_id,
                 userName,
                 message,
+                userId
             });
             return newMessage; 
         },
-        onMutate: async ({ book_id, message, userName }) => {
+        onMutate: async ({ book_id, message, userName, userId }) => {
             await queryClient.cancelQueries({ queryKey: ["Messages", book_id] });
 
             const previousMessages = queryClient.getQueryData<LearningGroup>(["Messages", book_id]);
@@ -34,6 +35,7 @@ export const useUpdateMessage = () => {
                     userName,
                     message,
                     timestamp: new Date(), 
+                    userId: userId,
                 };
 
                 queryClient.setQueryData<LearningGroup>(["Messages", book_id], {

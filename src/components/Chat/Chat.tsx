@@ -5,31 +5,21 @@ import { useMessages, useUpdateMessage } from "../../hooks/messagesDetailes";
 import { User, Message, localMessage } from "../../types";
 import ChatStyles from "./Chat.module.css";
 import useUserStore from "../../services/zustand/userZustand/userStor";
-import { convertMessagesToLocalMessages, convertToLocalMessage } from "../../services/chatService";
 
 const Chat = ({ bookId, bookName }: { bookId: string; bookName: string }) => {
   const user: User | null = useUserStore((state) => state.user);
   const { data: initialMessages, refetch } = useMessages(bookId);
-  const [messages, setMessages] = useState<localMessage[]>([]);
   const [message, setMessage] = useState("");
   const [isSending, setIsSending] = useState(false);
   const messageContainerRef = useRef<HTMLDivElement>(null);
   const updateMessagesMutation = useUpdateMessage();
 
   useEffect(() => {
-    if (initialMessages) {
-      setMessages(convertMessagesToLocalMessages(initialMessages.messages));
-    }
-  }, [initialMessages]);
-
-  useEffect(() => {
     const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY!, { cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER!, });
 
-
-    const channel = pusher.subscribe(`chat-${bookId}`);
-    channel.bind('message', (data: Message) => {
-      const newMessage = convertMessagesToLocalMessages([data])[0];
-      setMessages((prevMessages) => [...prevMessages, newMessage]);
+    const channel = pusher.subscribe(`chat - ${ bookId }`);
+    channel.bind("message", (data: Message) => {
+      refetch();
     });
 
     return () => {
@@ -44,14 +34,14 @@ const Chat = ({ bookId, bookName }: { bookId: string; bookName: string }) => {
         behavior: "smooth",
       });
     }
-  }, [messages]);
+  }, [initialMessages]);
 
   const sendMessage = async () => {
     if (!user || message.trim() === "" || isSending) return;
 
     setIsSending(true);
     try {
-      await updateMessagesMutation.mutate({ book_id: bookId, message: message, userName: `${user.name} ${user._id}` })
+      await updateMessagesMutation.mutate({ book_id: bookId, message: message, userName: user.name, userId: user._id || '' })
     } catch (error) {
       console.error("Error sending message:", error);
     } finally {
@@ -74,25 +64,25 @@ const Chat = ({ bookId, bookName }: { bookId: string; bookName: string }) => {
         </div>
       </div>
       <div className={ChatStyles.messages} ref={messageContainerRef} id="messages-container">
-        {messages.map((msg, index) => (
+        {initialMessages && (initialMessages.messages.map((msg, index) => (
           <div
             key={index}
             className={`${ChatStyles.messageContainer} ${msg.userId === user?._id ? ChatStyles.selfContainer : ""
               }`}
           >
-            <div className={ChatStyles.profile}>{msg.username[0]}</div>
+            <div className={ChatStyles.profile}>{msg.userName[0]}</div>
             <div
               className={`${ChatStyles.message} ${msg.userId === user?._id ? ChatStyles.selfMessage : ChatStyles.otherMessage
                 }`}
             >
-              <div className={ChatStyles.username}>{msg.username}</div>
+              <div className={ChatStyles.username}>{msg.userName}</div>
               <div className={ChatStyles.text}>{msg.message}</div>
               <div className={ChatStyles.timestamp}>
                 {new Date(msg.timestamp).toLocaleTimeString()}
               </div>
             </div>
           </div>
-        ))}
+        )))}
       </div>
       <div className={ChatStyles.inputContainer}>
         <input

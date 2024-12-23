@@ -16,12 +16,14 @@ export const addMessage = async (data: {
     book_id: string;
     userName: string;
     message: string;
+    userId: string;
   }): Promise<Message> => {
     try {
       const response = await http.post(`/chat`, {
         userName: data.userName,
         message: data.message,
-        bookId: data.book_id
+        bookId: data.book_id,
+        userId: data.userId
       });
       return response.data;
     } catch (error) {
