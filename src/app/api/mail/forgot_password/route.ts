@@ -20,7 +20,7 @@ export async function PUT(request: Request) {
     try {
         const body = await request.json();
         const { email } = body;
-    
+
         if (!email) {
           return NextResponse.json(
             { error: 'Field email is required.' },
