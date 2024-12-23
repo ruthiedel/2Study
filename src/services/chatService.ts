@@ -34,22 +34,3 @@ export const convertToLocalMessage = (message: Message): localMessage => {
   };
 }
 
-
-export const convertMessagesToLocalMessages = (messages: Message[]): localMessage[] => {
-  if (!messages) {
-    return [];
-  }
-
-  return messages.map((msg) => {
-    return convertToLocalMessage(msg);
-  });
-};
-
-export const convertLocalMessagesToMessages = (localMessages: localMessage[]): Message[] => {
-  return localMessages.map((localMessage) => ({
-    _id: localMessage.messageId,
-    userName: `${localMessage.username} ${localMessage.userId}`,
-    message: localMessage.message,
-    timestamp: localMessage.timestamp,
-  }));
-};

@@ -16,6 +16,7 @@ export type Chapter = {
 export type Message = {
     _id?: string;
     userName: string;
+    userId: string;
     message: string;
     timestamp: Date;
 }
