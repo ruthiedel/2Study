@@ -1,5 +1,6 @@
 import http from "./http";
 import { LearningGroup } from '../types';
+import { Message } from "postcss";
 
 export const fetchMessages = async (bookId: string): Promise<LearningGroup> => {
   try {
@@ -15,7 +16,7 @@ export const addMessage = async (data: {
     book_id: string;
     userName: string;
     message: string;
-  }): Promise<LearningGroup> => {
+  }): Promise<Message> => {
     try {
       const response = await http.post(`/chat`, {
         userName: data.userName,

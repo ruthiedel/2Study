@@ -5,11 +5,11 @@ import { useMessages, useUpdateMessage } from "../../hooks/messagesDetailes";
 import { User, Message, localMessage } from "../../types";
 import ChatStyles from "./Chat.module.css";
 import useUserStore from "../../services/zustand/userZustand/userStor";
-import { postMessage, convertMessagesToLocalMessages } from "../../services/chatService";
+import { convertMessagesToLocalMessages, convertToLocalMessage } from "../../services/chatService";
 
 const Chat = ({ bookId, bookName }: { bookId: string; bookName: string }) => {
   const user: User | null = useUserStore((state) => state.user);
-  const { data: initialMessages, refetch } = useMessages(bookId); 
+  const { data: initialMessages, refetch } = useMessages(bookId);
   const [messages, setMessages] = useState<localMessage[]>([]);
   const [message, setMessage] = useState("");
   const [isSending, setIsSending] = useState(false);
@@ -28,10 +28,7 @@ const Chat = ({ bookId, bookName }: { bookId: string; bookName: string }) => {
     });
 
     const channel = pusher.subscribe(`chat-${bookId}`);
-    channel.bind("message", (data: Message) => {
-      const newMessage = convertMessagesToLocalMessages([data])[0];
-      setMessages((prevMessages) => [...prevMessages, newMessage]);
-    });
+    channel.bind("message", () => {});
 
     return () => {
       pusher.unsubscribe(`chat-${bookId}`);
@@ -51,12 +48,8 @@ const Chat = ({ bookId, bookName }: { bookId: string; bookName: string }) => {
     if (!user || message.trim() === "" || isSending) return;
 
     setIsSending(true);
-
     try {
-      const savedMessage: Message = await postMessage(message, `${user.name} ${user._id}`, bookId);
-      if (savedMessage) {
-        await updateMessagesMutation.mutate({ book_id: bookId, message: savedMessage})
-      }
+      await updateMessagesMutation.mutate({ book_id: bookId, message: message, userName: `${user.name} ${user._id}` })
     } catch (error) {
       console.error("Error sending message:", error);
     } finally {
@@ -82,15 +75,13 @@ const Chat = ({ bookId, bookName }: { bookId: string; bookName: string }) => {
         {messages.map((msg, index) => (
           <div
             key={index}
-            className={`${ChatStyles.messageContainer} ${
-              msg.userId === user?._id ? ChatStyles.selfContainer : ""
-            }`}
+            className={`${ChatStyles.messageContainer} ${msg.userId === user?._id ? ChatStyles.selfContainer : ""
+              }`}
           >
             <div className={ChatStyles.profile}>{msg.username[0]}</div>
             <div
-              className={`${ChatStyles.message} ${
-                msg.userId === user?._id ? ChatStyles.selfMessage : ChatStyles.otherMessage
-              }`}
+              className={`${ChatStyles.message} ${msg.userId === user?._id ? ChatStyles.selfMessage : ChatStyles.otherMessage
+                }`}
             >
               <div className={ChatStyles.username}>{msg.username}</div>
               <div className={ChatStyles.text}>{msg.message}</div>
