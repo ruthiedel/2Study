@@ -49,13 +49,6 @@ const BookItem: React.FC<BookItemProps> = ({ book, index, bookData }) => {
 
         <button className={styles.learnButton} onClick={handleStarted} data-animate disabled={isSending}
         > {isSending ? 'כבר מתחילים...' : 'המשך ללמוד ←'}</button>
-{/* 
-        <button
-          className={styles.learnButton}
-          onClick={() => router.push(`/study/${book.book_id}`)}
-        >
-          המשך ללמוד ←
-        </button> */}
       </div>
     </div>
   );

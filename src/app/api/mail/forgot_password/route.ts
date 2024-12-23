@@ -18,12 +18,9 @@ const generateRandomPassword = (length: number = 6): string => {
 
 export async function PUT(request: Request) {
     try {
-        console.log('hello')
         const body = await request.json();
         const { email } = body;
-    
-        console.log('Received email:', email);
-    
+        
         if (!email) {
           return NextResponse.json(
             { error: 'Field email is required.' },
