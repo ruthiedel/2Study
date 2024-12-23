@@ -8,7 +8,6 @@ export async function PUT(request: Request, { params }: { params: { userId: stri
   
       const client = await connectDatabase();
       const user = await updateUser(client, 'users', uid, updatedData);
-      client.close(); 
 
       return NextResponse.json(user);
     } catch (error) {
