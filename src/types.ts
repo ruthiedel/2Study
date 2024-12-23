@@ -16,6 +16,7 @@ export type Chapter = {
 export type Message = {
     _id?: string;
     userName: string;
+    userId: string;
     message: string;
     timestamp: Date;
 }
@@ -77,7 +78,6 @@ export type localMessage = {
     messageId: string;
     username: string;
     userId: string;
-    bookId: string;
     message: string;
     timestamp: Date;
 }
