@@ -56,7 +56,7 @@ const Recommendations = () => {
               <div>
                 <p>מומלץ בשבילך🌟</p>
                 <p className={styles.small}>
-                  מערכת ההמלצה שלנו חיפשה את הספר המתאים ביותר עבורך בהתבסס על
+                  מערכת ההמלצה שלנו חיפשה את הספר<br/> המתאים ביותר עבורך בהתבסס על<br/>
                   בחירות ודירוגים קודמים
                 </p>
                 <BookComp
