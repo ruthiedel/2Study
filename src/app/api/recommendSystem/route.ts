@@ -1,4 +1,5 @@
-import { connectDatabase, recommend } from "../../../services/mongo/reccomendMongo";
+import { connectDatabase } from "../../../services/mongo/mongoConection";
+import {  recommend } from "../../../services/mongo/reccomendMongo";
 import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
@@ -9,8 +10,8 @@ export async function POST(request: Request) {
     if (!userId || !books) {
       return NextResponse.json({ message: "Missing userId or books in request body" }, { status: 400 });
     }
-
-    const recommends = await recommend(userId, books);
+    const client = await connectDatabase();
+    const recommends = await recommend(client, userId, books);
 
     return NextResponse.json(recommends);
   } catch (error) {

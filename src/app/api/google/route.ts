@@ -1,13 +1,13 @@
 
+import { connectDatabase } from '../../../services/mongo/mongoConection';
 import { googleUser } from '../../../services/mongo/userMongo';
 import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
     try {
         const body = await request.json();
-
-        
-        const result = await googleUser(body);
+        const client = await connectDatabase();
+        const result = await googleUser(client, body);
         return NextResponse.json(
             {
                 message: result.message,

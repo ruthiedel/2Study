@@ -1,22 +1,8 @@
 import { User, Book } from "../../types";
 import { MongoClient } from 'mongodb';
+import { connectDatabase } from "./mongoConection";
 
 type BookWithoutCoverImage = Omit<Book, 'coverImage'>; 
-
-let client: MongoClient;
-let clientPromise: Promise<MongoClient>;
-
-export async function connectDatabase() {
-  if (!client) {
-    const dbConnectionString = process.env.PUBLIC_DB_CONNECTION;
-    if (!dbConnectionString) {
-      throw new Error('Database connection string is not defined');
-    }
-    client = new MongoClient(dbConnectionString);
-    clientPromise = client.connect();
-  }
-  return clientPromise;
-}
 
 function calculateSimilarity(userA: User, userB: User): number {
   const booksA = userA.books?.map(book => ({ book_id: book.book_id, rate: book.rate })) || [];
@@ -34,8 +20,7 @@ function calculateSimilarity(userA: User, userB: User): number {
   return 1 / (1 + sumSimilarity);
 }
 
-async function getAllUsers(): Promise<User[]> {
-  const client = await connectDatabase();
+async function getAllUsers(client: MongoClient): Promise<User[]> {
   const db = client.db('Books');
   const usersCollection = db.collection('users');
 
@@ -50,7 +35,6 @@ async function getAllUsers(): Promise<User[]> {
 function getRecommendations(
   currentUser: User,
   allUsers: User[],
-  books: BookWithoutCoverImage[]
 ): string[] {
   const userSimilarity = allUsers
     .filter(user => user._id !== currentUser._id)
@@ -71,27 +55,22 @@ function getRecommendations(
   return Array.from(new Set(recommendedBooks));
 }
 
-export async function recommend(userId: string, books: BookWithoutCoverImage[]) {
-  const users = await getAllUsers();
+export async function recommend(client: MongoClient, userId: string, books: BookWithoutCoverImage[]) {
+  const users = await getAllUsers(client);
   const currentUser = users.find(user => user._id === userId);
   
   if (!currentUser) {
-    // אם המשתמש לא נמצא, מחזירים את שני הספרים המדורגים ביותר
     return books
       .sort((a, b) => (b.rating || 0) - (a.rating || 0))
       .slice(0, 2)
       .map(book => book._id!);
   }
+  let recommendations = getRecommendations(currentUser, users);
 
-  // קבלת המלצות מבוססות דמיון משתמשים
-  let recommendations = getRecommendations(currentUser, users, books);
-
-  // סינון המלצות כפולות
   recommendations = recommendations.filter(bookId =>
     books.some(book => book._id === bookId)
   );
 
-  // אם למשתמש יש כמעט את כל הספרים
   if (currentUser.books.length >= books.length - 1) {
     recommendations = books
       .filter(book => !currentUser.books.some(b => b.book_id === book._id))
@@ -100,7 +79,6 @@ export async function recommend(userId: string, books: BookWithoutCoverImage[]) 
       .map(book => book._id!);
   }
 
-  // אם אין המלצות או רק המלצה אחת
   if (recommendations.length < 2) {
     const additionalBooks = books
       .filter(book => 
@@ -114,6 +92,5 @@ export async function recommend(userId: string, books: BookWithoutCoverImage[]) 
     recommendations = [...recommendations, ...additionalBooks];
   }
 
-  // החזרת עד 2 ספרים
   return recommendations.slice(0, 2);
 }

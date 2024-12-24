@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import { connectDatabase, updateUser } from '../../../../services/mongo/userMongo'
+import { updateUser } from '../../../../services/mongo/userMongo'
+import { connectDatabase } from '../../../../services/mongo/mongoConection';
 
 export async function PUT(request: Request, { params }: { params: { userId: string } }) {
     try {
