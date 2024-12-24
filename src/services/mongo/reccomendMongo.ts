@@ -1,5 +1,5 @@
 import { User, Book } from "../../types";
-import { MongoClient} from 'mongodb';
+import { MongoClient } from 'mongodb';
 
 type BookWithoutCoverImage = Omit<Book, 'coverImage'>; 
 
@@ -33,7 +33,6 @@ function calculateSimilarity(userA: User, userB: User): number {
 
   return 1 / (1 + sumSimilarity);
 }
-
 
 async function getAllUsers(): Promise<User[]> {
   const client = await connectDatabase();
@@ -75,30 +74,46 @@ function getRecommendations(
 export async function recommend(userId: string, books: BookWithoutCoverImage[]) {
   const users = await getAllUsers();
   const currentUser = users.find(user => user._id === userId);
-  if (!currentUser) return [];
+  
+  if (!currentUser) {
+    // אם המשתמש לא נמצא, מחזירים את שני הספרים המדורגים ביותר
+    return books
+      .sort((a, b) => (b.rating || 0) - (a.rating || 0))
+      .slice(0, 2)
+      .map(book => book._id!);
+  }
 
+  // קבלת המלצות מבוססות דמיון משתמשים
   let recommendations = getRecommendations(currentUser, users, books);
 
-  if (recommendations.length === 0) {
+  // סינון המלצות כפולות
+  recommendations = recommendations.filter(bookId =>
+    books.some(book => book._id === bookId)
+  );
+
+  // אם למשתמש יש כמעט את כל הספרים
+  if (currentUser.books.length >= books.length - 1) {
     recommendations = books
-    .filter(book => !currentUser.books.some(b => b.book_id === book._id))
-    .sort((a, b) => (b.rating || 0) - (a.rating || 0)) 
-    .map(book => book._id) 
-    .filter((id): id is string => id !== undefined);
+      .filter(book => !currentUser.books.some(b => b.book_id === book._id))
+      .sort((a, b) => (b.rating || 0) - (a.rating || 0))
+      .slice(0, 2)
+      .map(book => book._id!);
   }
 
-  if (recommendations.length === 1) {
-      const highestRatedBook = books
-      .filter(book => !currentUser.books.some(b => b.book_id === book._id) && !recommendations.includes(book._id!)) 
-      .sort((a, b) => (b.rating || 0) - (a.rating || 0))[0]; 
+  // אם אין המלצות או רק המלצה אחת
+  if (recommendations.length < 2) {
+    const additionalBooks = books
+      .filter(book => 
+        !recommendations.includes(book._id!) && 
+        !currentUser.books.some(b => b.book_id === book._id)
+      )
+      .sort((a, b) => (b.rating || 0) - (a.rating || 0))
+      .slice(0, 2 - recommendations.length)
+      .map(book => book._id!);
 
-    if (highestRatedBook && highestRatedBook._id) {
-      recommendations.push(highestRatedBook._id); 
-    }
+    recommendations = [...recommendations, ...additionalBooks];
   }
 
-  if(recommendations.length >=2)
-     return recommendations.slice(0, 2);
-
-  return recommendations
+  // החזרת עד 2 ספרים
+  return recommendations.slice(0, 2);
 }
