@@ -29,7 +29,11 @@
   border: 1px solid black;
 }
 
-.bookTitle, .bookImage, .starsContainer, .ttext, .learnButton {
+.bookTitle,
+.bookImage,
+.starsContainer,
+.ttext,
+.learnButton {
   font-family: '2StudyFont', sans-serif;
 }
 
@@ -79,6 +83,7 @@
 
 .ttext {
   margin-top: 8px;
+  width: 100%
 }
 
 .bookTitle,
@@ -95,7 +100,8 @@
   font-weight: bold;
 }
 
-.bookTitle, .bookImage {
+.bookTitle,
+.bookImage {
   text-align: right;
 }
 
