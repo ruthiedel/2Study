@@ -3,25 +3,6 @@ import { promises as fs } from 'fs';
 import path from 'path';
 import { Book } from '../../types';
 
-let client: MongoClient;
-let clientPromise: Promise<MongoClient>;
-
-export async function connectDatabase() {
-  if (!client) {
-    const dbConnectionString = process.env.PUBLIC_DB_CONNECTION;
-    if (!dbConnectionString) {
-      throw new Error('Database connection string is not defined');
-    }
-    client = new MongoClient(dbConnectionString);
-    clientPromise = client.connect();
-  }
-
-  await clientPromise;
-  return client;
-}
-
-
-
 export async function fetchAllBooks(client: MongoClient, collection: string) {
   const db = client.db('Books');
   const books = await db.collection(collection).aggregate([

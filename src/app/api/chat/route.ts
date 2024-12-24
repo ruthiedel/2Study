@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import Pusher from 'pusher';
 import { addMessageToLearningGroup } from '../../../services/mongo/messagesMongo'
+import { connectDatabase } from '../../../services/mongo/mongoConection';
 
 const pusher = new Pusher({
   appId: process.env.PUSHER_APP_ID!,
@@ -21,8 +22,8 @@ export async function POST(req: Request) {
       timestamp: new Date().toISOString(),
       userId
     };
-
-    await addMessageToLearningGroup(bookId, {userName: userName, message, timestamp: new Date(),userId: userId});
+    const client = await connectDatabase();
+    await addMessageToLearningGroup(client, bookId, {userName: userName, message, timestamp: new Date(),userId: userId});
     await pusher.trigger(`chat-${bookId}`, 'message', newMessage);
     return NextResponse.json(newMessage, { status: 200 });
   } catch (error) {

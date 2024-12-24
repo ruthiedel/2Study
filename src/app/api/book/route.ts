@@ -1,12 +1,14 @@
 import { NextResponse } from 'next/server';
-import { addBook, connectDatabase, fetchAllBooks } from '../../../services/mongo/bookMongo';
+import { addBook, fetchAllBooks } from '../../../services/mongo/bookMongo';
 import { Book } from '../../../types';
+import { connectDatabase } from '../../../services/mongo/mongoConection';
 
 
 export async function GET(request: Request) {
     try {
       const client = await connectDatabase();
       const books = await fetchAllBooks(client, 'books'); 
+      await client.close();
       return NextResponse.json(books);
     } catch (error) {
       console.error(error);
@@ -22,8 +24,6 @@ export async function POST(request: Request) {
     const client = await connectDatabase();
 
     const result = await addBook(client, 'books', newBook);
-
-    // client.close();
 
     return NextResponse.json(
       { message: 'Book added successfully', result },

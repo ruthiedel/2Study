@@ -1,21 +1,8 @@
 import { MongoClient, ObjectId } from 'mongodb';
 import { LoginCredentials, User, UserWithPassword } from '../../types';
 import bcrypt from 'bcryptjs';
+import { connectDatabase } from './mongoConection';
 
-let client: MongoClient;
-let clientPromise: Promise<MongoClient>;
-
-export async function connectDatabase() {
-  if (!client) {
-    const dbConnectionString = process.env.PUBLIC_DB_CONNECTION;
-    if (!dbConnectionString) {
-      throw new Error('Database connection string is not defined');
-    }
-    client = new MongoClient(dbConnectionString);
-    clientPromise = client.connect();
-  }
-  return clientPromise;
-}
 
 export async function checkAndAddUser(client: MongoClient, user: UserWithPassword) {
   const db = client.db('Books');
@@ -41,8 +28,7 @@ export async function checkAndAddUser(client: MongoClient, user: UserWithPasswor
   return { status: 201, message: 'המשתמש נרשם בהצלחה', user: userWithId };
 }
 
-export async function findUserByEmailAndPassword(email: string, password: string) {
-  const client = await connectDatabase();
+export async function findUserByEmailAndPassword(client: MongoClient,email: string, password: string) {
   const db = client.db('Books');
   const usersCollection = db.collection('users');
 
@@ -103,8 +89,8 @@ export async function registerUser(user: UserWithPassword) {
   };
 }
 
-export async function loginUser(credentials: LoginCredentials) {
-  const user = await findUserByEmailAndPassword(credentials.email, credentials.password);
+export async function loginUser(client: MongoClient, credentials: LoginCredentials) {
+  const user = await findUserByEmailAndPassword(client, credentials.email, credentials.password);
   if (!user) {
     return { message: 'המייל או הסיסמה שגויים. נסה שוב.', status: 401 };
   }
@@ -112,9 +98,7 @@ export async function loginUser(credentials: LoginCredentials) {
   return { message: 'ההתחברות בוצעה בהצלחה!', status: 200, user };
 }
 
-export async function googleUser(user: UserWithPassword) {
- 
-  const client = await connectDatabase();
+export async function googleUser(client: MongoClient, user: UserWithPassword) {
   const result = await findUserByEmail(client, user.email);
 
   if (result !== null) {

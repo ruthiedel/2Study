@@ -1,11 +1,13 @@
-import {   loginUser } from '../../../services/mongo/userMongo';
+import { connectDatabase } from '../../../services/mongo/mongoConection';
+import { loginUser } from '../../../services/mongo/userMongo';
 import { NextResponse } from 'next/server'
 
 export async function POST(request: Request) {
     try {
         const body = await request.json();
         const { email, password } = body;
-        const result = await loginUser({ email, password });
+        const client = await connectDatabase();
+        const result = await loginUser(client, { email, password });
 
         return NextResponse.json({
             message: result.message,

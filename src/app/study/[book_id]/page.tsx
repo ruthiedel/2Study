@@ -22,6 +22,8 @@ import Confetti from "react-confetti";
 import RequireAuth from "../../../layout/RequireAuth";
 import Swal from "sweetalert2";
 import "sweetalert2/src/sweetalert2.scss";
+import { useRouter } from "next/navigation"; 
+
 
 interface Index {
     chapterId: number;
@@ -34,6 +36,7 @@ interface Paragraphs {
 }
 
 const Study = () => {
+    const router = useRouter();
     const { book_id } = useParams() as { book_id: string | string[] };
     const bookId = Array.isArray(book_id) ? book_id[0] : book_id;
     const { data: books, isLoading } = getBooks();
@@ -43,6 +46,7 @@ const Study = () => {
     const [showConfetti, setShowConfetti] = useState(false);
     const [showQuiz, setShowQuiz] = useState(false);
     const [isShowRating, setIsShowRating] = useState(false);
+    const [isBookInvalid, setIsBookInvalid] = useState(false);
     const user = useUserStore((state) => state.user);
     const updateUserZustand = useUserStore((state) => state.updateUserZustand);
 
@@ -52,6 +56,12 @@ const Study = () => {
 
     useEffect(() => {
         if (!user || !books || !Array.isArray(books)) return;
+
+        if(!user.books.find((book) => book.book_id === bookId)){
+            setIsBookInvalid(true);
+            return;
+        }
+
         if (index.chapterId === -1) {
             if (currentUserBook) {
                 handleChangeIndex(currentUserBook.chapter_id, currentUserBook.section_id);
@@ -165,6 +175,21 @@ const Study = () => {
 
     const openRating = () => setIsShowRating(true);
     const closeRating = () => setIsShowRating(false);
+
+    if (isBookInvalid) {
+        return (
+            <div className={Styles.invalidBookContainer}>
+                <p>הספר שבחרת לא קיים ברשימת הספרים שלך.</p>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => (router.push('/bookCatalog'))} 
+                >
+                    חזור לקטלוג הספרים
+                </Button>
+            </div>
+        );
+    }
 
     return isLoading ? (
         <Loading />
