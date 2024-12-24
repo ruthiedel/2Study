@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 
 import styles from "./userStatus.module.css";
 import { Book as BookComp, Loading } from '../../components';
-import {BookCard} from '../index';
+import { BookCard } from '../index';
 import RequireAuth from "../../layout/RequireAuth";
 import { Book as BookType } from "@/types";
 import useUserStore from "../../services/zustand/userZustand/userStor";
@@ -40,11 +40,11 @@ const Recommendations = () => {
   }, [books, user]);
 
   const handleBookClick = (book: BookType) => {
-    setSelectedBook(book); 
+    setSelectedBook(book);
   };
 
   const handleClosePopup = () => {
-    setSelectedBook(null); 
+    setSelectedBook(null);
   };
 
   return (
@@ -62,15 +62,15 @@ const Recommendations = () => {
                 <BookComp
                   key={book.name}
                   book={book}
-                  handleClick={() => handleBookClick(book)} 
+                  handleClick={() => handleBookClick(book)}
                 />
               </div>
             </div>
           );
         })
       ) : (
-        <div className={styles.loadingContainer}>
-          <Loading />
+        <div className={styles.recommendcard}>
+          <p className={styles.NoBooks} >עדיין אין ספרים מומלצים כרגע</p>
         </div>
       )}
 
