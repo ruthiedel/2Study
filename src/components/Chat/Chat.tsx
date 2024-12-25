@@ -16,14 +16,12 @@ const Chat = ({ bookId, bookName }: { bookId: string; bookName: string }) => {
   const messageContainerRef = useRef<HTMLDivElement>(null);
   const updateMessagesMutation = useUpdateMessage();
 
-  // Fetch initial messages into local state
   useEffect(() => {
     if (initialMessages?.messages) {
       setMessages(initialMessages.messages);
     }
   }, [initialMessages]);
 
-  // Setup Pusher for real-time updates
   useEffect(() => {
     const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY!, {
       cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER!,
@@ -51,9 +49,9 @@ const Chat = ({ bookId, bookName }: { bookId: string; bookName: string }) => {
 
   const sendMessage = async () => {
     if (!user || message.trim() === "" || isSending) return;
-  
+
     setIsSending(true);
-  
+
     try {
       await updateMessagesMutation.mutate({
         book_id: bookId,
@@ -68,7 +66,7 @@ const Chat = ({ bookId, bookName }: { bookId: string; bookName: string }) => {
       setIsSending(false);
     }
   };
-  
+
 
   return (
     <div className={ChatStyles.container}>
@@ -77,9 +75,14 @@ const Chat = ({ bookId, bookName }: { bookId: string; bookName: string }) => {
         <div className={ChatStyles.profileContainer}>
           <div className={ChatStyles.onlineIndicator}></div>
           <img
-            src={user?.userImagePath || "/default-avatar.png"}
-            alt={user?.name}
+            src={user?.userImagePath || "/Default_User.png"}
+            alt={user?.name || "User Avatar"}
             className={ChatStyles.profileImage}
+            onError={(e) => {
+              const target = e.target as HTMLImageElement; 
+              target.onerror = null; 
+              target.src = "/Default_User.png";
+            }}
           />
         </div>
       </div>
@@ -87,17 +90,15 @@ const Chat = ({ bookId, bookName }: { bookId: string; bookName: string }) => {
         {messages.map((msg, index) => (
           <div
             key={index}
-            className={`${ChatStyles.messageContainer} ${
-              msg.userId === user?._id ? ChatStyles.selfContainer : ""
-            }`}
+            className={`${ChatStyles.messageContainer} ${msg.userId === user?._id ? ChatStyles.selfContainer : ""
+              }`}
           >
             <div className={ChatStyles.profile}>{msg.userName[0]}</div>
             <div
-              className={`${ChatStyles.message} ${
-                msg.userId === user?._id
-                  ? ChatStyles.selfMessage
-                  : ChatStyles.otherMessage
-              }`}
+              className={`${ChatStyles.message} ${msg.userId === user?._id
+                ? ChatStyles.selfMessage
+                : ChatStyles.otherMessage
+                }`}
             >
               <div className={ChatStyles.username}>{msg.userName}</div>
               <div className={ChatStyles.text}>{msg.message}</div>
@@ -156,7 +157,7 @@ export default Chat;
 
 //     const channel = pusher.subscribe(`chat-${bookId}`);
 //     channel.bind("message", () => {
-//       refetch(); 
+//       refetch();
 //     });
 
 //     return () => {
@@ -171,7 +172,7 @@ export default Chat;
 //         behavior: "smooth",
 //       });
 //     }
-//   }, [initialMessages]); 
+//   }, [initialMessages]);
 
 //   const sendMessage = async () => {
 //     if (!user || message.trim() === "" || isSending) return;
