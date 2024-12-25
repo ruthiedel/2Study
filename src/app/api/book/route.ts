@@ -3,19 +3,16 @@ import { addBook, fetchAllBooks } from '../../../services/mongo/bookMongo';
 import { Book } from '../../../types';
 import { connectDatabase } from '../../../services/mongo/mongoConection';
 
-
 export async function GET(request: Request) {
     try {
       const client = await connectDatabase();
       const books = await fetchAllBooks(client, 'books'); 
-      await client.close();
       return NextResponse.json(books);
     } catch (error) {
       console.error(error);
       return NextResponse.json({ message: error });
     }
 }
-
 
 export async function POST(request: Request) {
   try {
