@@ -200,12 +200,12 @@ function Login({ onClickDialog }: LoginProp) {
     setLoading(true);
     try {
       let localUser = {
-        _id: 'kWB2fSx9q1SxmMc1W7vyoWo2QQZ2',
+        _id: '675ac1edaa126e5e815ab057',
         email: 'frieman@g.jct.ac.il',
         name: 'guest',
         books: [],
         userImagePath: '',
-        password: 'dhvLXn'
+        password: 'UIZixt'
       };
 
       const response = await logInUser(localUser);
