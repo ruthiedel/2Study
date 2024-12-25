@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import useUserStore from '../../services/zustand/userZustand/userStor';
-import {Grid, Rating } from '@mui/material';
+import { Grid, Rating } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import Image from 'next/image';
 import styles from './bookCard.module.css';
@@ -20,23 +20,21 @@ const BookCardComp: React.FC<BookCardProps> = ({ book, onClose }) => {
     const [showMore, setShowMore] = useState(false);
     const [foundBook, setFoundBook] = useState(false);
     const user = useUserStore((state) => state.user);
-    const [openModal, setOpenModal] = useState(false);
     const [isSending, setIsSending] = useState(false);
     const updateUserZustand = useUserStore((state) => state.updateUserZustand);
     const router = useRouter();
 
     useEffect(() => {
-        if (user === undefined) {
-            setOpenModal(true);
-        } else if (!user) {
-            setOpenModal(true);
-        } else {
-            setOpenModal(false);
-            const bookExists = user.books.find((userBook) => userBook.book_id === book._id);
-            setFoundBook(!!bookExists);
+        if (user) {
+            const bookExists = user.books.find((userBook) => userBook.book_id === book._id );
+            if (bookExists && bookExists.status) {
+                setFoundBook(true);
+            }
+            else{
+                setFoundBook(false);
+            }
         }
     }, [user]);
-
 
     const handleReadMore = async () => {
         if (isSending) return;
@@ -49,7 +47,7 @@ const BookCardComp: React.FC<BookCardProps> = ({ book, onClose }) => {
                     chapter_id: 1,
                     section_id: 1,
                     rate: 0,
-                    status:true,
+                    status: true,
                 };
                 const updatedUserData = {
                     ...user!,
@@ -122,12 +120,11 @@ const BookCardComp: React.FC<BookCardProps> = ({ book, onClose }) => {
                                     {showMore ? 'פחות' : 'קרא עוד'}
                                 </button>
                             )}
-                       
 
-                        <Grid item xs={12}>
-                            <button className={styles.learnButton} onClick={handleReadMore}>
-                            {isSending ? 'כבר מתחילים...' : (foundBook ? "המשך ללמוד ←" : "הוסף לרשימת הספרים שלי")}
-                            </button>
+                            <Grid item xs={12}>
+                                <button className={styles.learnButton} onClick={handleReadMore}>
+                                    {isSending ? 'כבר מתחילים...' : (foundBook ? "המשך ללמוד ←" : "הוסף לרשימת הספרים שלי")}
+                                </button>
                             </Grid>
                         </Grid>
                     </div>
