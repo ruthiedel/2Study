@@ -8,9 +8,6 @@ import RequireAuth from "../../layout/RequireAuth";
 import BookItem from "./BookItem/BookItem";
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
-
-
-
 const BooksLearning = () => {
   const user = useUserStore((state) => state.user);
   const [searchQuery, setSearchQuery] = useState("");
