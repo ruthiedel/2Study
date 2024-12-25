@@ -21,7 +21,7 @@ const loginSchema = z.object({
   email: z.string().email("אימייל לא חוקי"),
   password: z.string().min(6, "הסיסמה חייבת להכיל לפחות 6 תווים"),
 });
-
+//הוספת תמונה להרשמה
 const registerSchema = z.object({
   username: z.string().min(3, "שם המשתמש חייב להכיל לפחות 3 תווים"),
   image: z
@@ -31,6 +31,7 @@ const registerSchema = z.object({
     {message: "התמונה חייבת להיות בפורמט PNG או JPEG",
     }
   ),
+  imagePath: z.string(),
 });
 
 interface LoginProp {
@@ -53,7 +54,6 @@ function Login({ onClickDialog }: LoginProp) {
   });
 
   const email = watch("email");
-
 
   const onSubmit = async (data: any) => {
     setLoading(true);
@@ -86,8 +86,9 @@ function Login({ onClickDialog }: LoginProp) {
           email: data.email,
           password: data.password,
           books: [],
-          userImagePath: "",
+          userImagePath: data.image, //
         };
+        console.log(userData);//check image user
         response = await registerUser(userData);
 
         if (response.status === 200 || response.status === 201) {

@@ -1,5 +1,17 @@
 import http from "./http";
 import { LoginCredentials, User, UserWithPassword } from '../types';
+import { openDB, IDBPDatabase } from 'idb';
+
+let db: IDBPDatabase | null = null;
+  async function openDatabase() {
+    if (db) return db;
+    db = await openDB('image_storage', 1, {
+        upgrade(db) {
+            db.createObjectStore('images', { keyPath: 'id', autoIncrement: true });
+        },
+    });
+    return db;
+}
 
 export const registerUser = async (user: UserWithPassword) => {
   try {

@@ -86,7 +86,7 @@ export async function registerUser(user: UserWithPassword) {
   if (existingUser) {
     return { message: 'המייל הזה כבר קיים במערכת. אנא בחר מייל אחר.', status: 400 };
   }
-
+// save image and change 
   const result = await checkAndAddUser(client, user);
   return {
     message: result.message || 'ההרשמה בוצעה בהצלחה! ברוכה הבאה!',
