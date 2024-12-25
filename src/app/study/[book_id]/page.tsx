@@ -23,6 +23,9 @@ import RequireAuth from "../../../layout/RequireAuth";
 import Swal from "sweetalert2";
 import "sweetalert2/src/sweetalert2.scss";
 import { useRouter } from "next/navigation";
+import StyledButton from "../../../components/StyleComponentsFolder/styledButton";
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+
 
 interface Index {
     chapterId: number;
@@ -227,15 +230,17 @@ const Study = () => {
 
     if (isBookInvalid) {
         return (
-            <div className={Styles.invalidBookContainer}>
+            <div className={Styles.invalidcontainer}>
+                <div className={Styles.animateCon}>
+                <DotLottieReact
+                  src="https://lottie.host/f95cfacb-6440-40e9-a37f-15d6ded82ce0/W0zginnfWq.lottie"
+                  autoplay
+                  loop 
+                ></DotLottieReact></div>
                 <p>הספר שבחרת לא קיים ברשימת הספרים שלך.</p>
-                <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={() => (router.push('/bookCatalog'))}
-                >
+                <StyledButton  onClick={() => (router.push('/bookCatalog'))} >
                     חזור לקטלוג הספרים
-                </Button>
+                </StyledButton>
             </div>
         );
     }

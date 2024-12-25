@@ -32,6 +32,7 @@ export const logInWithGoogle = async(user:UserWithPassword) => {
 }
 
 export const updateUser = async ({ id, updatedData }: { id: string; updatedData: User }): Promise<User> => {
+console.log("updateUserid in service: @@@@@@@@@@@@@@@@@@@@@@", id); 
   try {
     const response = await http.put(`/user/${id}`, updatedData);
     return response.data; 

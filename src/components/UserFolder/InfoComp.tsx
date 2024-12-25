@@ -15,6 +15,11 @@ const InfoComp = () => {
               src={user?.userImagePath || "/Default_User.png"}
               alt={user?.name}
               className={styles.imgUser}
+              onError={(e) => {
+                const target = e.target as HTMLImageElement; 
+                target.onerror = null; 
+                target.src = "/Default_User.png"; 
+              }}
             />
           </div>
           <div className={styles.infoContainer}>

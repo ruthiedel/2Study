@@ -5,7 +5,7 @@ export type Paragraph = {
     paragraphId?: number;
 }
 
-type Question = {
+export type Question = {
     question: string;
     answer: string;
 }

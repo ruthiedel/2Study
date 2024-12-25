@@ -23,7 +23,7 @@ const QuestionCardComp = (props: { p: Paragraph, bookId: string, chapterId: numb
 
             if (props.p.questions.length < idxQuestion + 1) {
                 try {
-                    const { question, answer } = await generateQuestionAndAnswer(props.p.text);
+                    const { question, answer } = await generateQuestionAndAnswer(props.p.text,props.p.questions);
 
                     await updateBookQuestionService({
                         bookId: props.bookId,

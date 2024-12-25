@@ -3,7 +3,6 @@ import { addBook, fetchAllBooks } from '../../../services/mongo/bookMongo';
 import { Book } from '../../../types';
 import { connectDatabase } from '../../../services/mongo/mongoConection';
 
-
 export async function GET(request: Request) {
     try {
       const client = await connectDatabase();
@@ -14,7 +13,6 @@ export async function GET(request: Request) {
       return NextResponse.json({ message: error });
     }
 }
-
 
 export async function POST(request: Request) {
   try {

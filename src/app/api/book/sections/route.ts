@@ -55,7 +55,6 @@ export async function GET(request: Request) {
       }
     };
 
-
     return NextResponse.json(result);
   } catch (error) {
     console.error("Error retrieving chapter:", error);
