@@ -72,7 +72,7 @@ const BooksLearning = () => {
               <p>עדיין לא בחרת ספרים ללמוד ...
                 אתה יכול לבחור ממש עכשיו ↓</p>
               <br />
-              <button className={styles.buttonStart} onClick={handleStarted}>get started</button>
+              <button className={styles.buttonStart} onClick={handleStarted}>התחל ללמוד</button>
               <div className={styles.imageColumn}>
                 <DotLottieReact
                   src="https://lottie.host/f95cfacb-6440-40e9-a37f-15d6ded82ce0/W0zginnfWq.lottie"
