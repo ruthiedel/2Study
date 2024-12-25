@@ -110,6 +110,8 @@ export async function googleUser(client: MongoClient, user: UserWithPassword) {
 
 
 export async function updateUser(client: MongoClient, collection: string, userId: string, updatedData: User) {
+  
+  console.log('User Id: ----------------', userId);
   const db = client.db('Books');
   const objectId = typeof userId === 'string' ? new ObjectId(userId) : userId;
   const { _id, ...dataToUpdate } = updatedData;

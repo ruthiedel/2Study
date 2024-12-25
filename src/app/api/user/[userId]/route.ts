@@ -6,6 +6,8 @@ export async function PUT(request: Request, { params }: { params: { userId: stri
     try {
       const uid = params.userId;
       const updatedData = await request.json();
+
+      console.log('API user id: ####################', uid);
   
       const client = await connectDatabase();
       const user = await updateUser(client, 'users', uid, updatedData);
