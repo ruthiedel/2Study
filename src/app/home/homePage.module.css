@@ -1,6 +1,7 @@
 .pageContainer {
   background-color: var(--primary-color);
   font-family: var(--main-font);
+  padding-bottom: 50px;
 }
 
 .headercontainer {

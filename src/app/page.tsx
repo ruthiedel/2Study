@@ -2,21 +2,26 @@
 
 import React, { useEffect } from "react";
 import { useRouter } from "next/navigation"; 
-import useUserStore from "@/services/zustand/userZustand/userStor"; 
-import HomePage from "./home/page";
+import { Loading } from "../components";
 
 const SomeComponent = () => {
   const router = useRouter();
-  const user = useUserStore((state) => state.user);
+  const user = localStorage.getItem("user");
 
   useEffect(() => {
     if (user) {
-      router.push("/BooksLearning");
+      const parsedUser = JSON.parse(user);
+      if(parsedUser && parsedUser.state.user){
+      router.push("/BooksLearning")
+      }
+      else{
+        router.push("/home");
+      }
     }
-    router.push("/home");
+   
   }, []);
 
-  return <HomePage/>;
+  return <Loading/>
 };
 
 export default SomeComponent;

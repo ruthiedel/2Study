@@ -12,7 +12,6 @@ import { getBooks } from "../../../hooks/booksDetails";
 import Styles from "./Study.module.css";
 import Confetti from "react-confetti";
 import RequireAuth from "../../../layout/RequireAuth";
-import Swal from "sweetalert2";
 import "sweetalert2/src/sweetalert2.scss";
 import { useRouter } from "next/navigation";
 import StyledButton from "../../../components/StyleComponentsFolder/styledButton";
