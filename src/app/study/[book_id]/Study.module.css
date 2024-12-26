@@ -52,20 +52,3 @@
 .quizButton:hover {
     background-color: rgb(197, 195, 195);
 }
-
-.invalidcontainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 270px;
-    justify-content: center;
-    gap: 20px;
-    font-size: large;
-    font-family: var(--main-font);
-}
-
-.animateCon {
-    width: 400px;
-    height: 200px;
-}
-  
