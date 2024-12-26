@@ -57,7 +57,7 @@ const TermsOfService = () => {
 
       <section className={styles.section}>
         <h2>5. אבטחת מידע</h2>
-        <p>האתר נוקט באמצעי אבטחה מתקדמים לשמירה על המידע של המשתמשים.</p>
+        <p> האתר נוקט באמצעי אבטחה מתקדמים לשמירה על המידע של המשתמשים במידה של גניבת מידע אין לאתר אחריות על המידע הניתן לו .</p>
       </section>
 
       <section className={styles.section}>

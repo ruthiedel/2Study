@@ -4,7 +4,6 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
-import Swal from "sweetalert2";
 import image from "../../../public/pictures/unnamed.png";
 import googleImage from "../../../public/pictures/google.jpg";
 import styles from "./login.module.css";
@@ -16,6 +15,7 @@ import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../../lib/firebase";
 import { forgetPassword } from "@/services/mailService";
 import {Loading} from '../index';
+import { errorRegisterAlert, successAlert } from '../../lib/clientHelpers/sweet-alerts'
 
 const loginSchema = z.object({
   email: z.string().email("אימייל לא חוקי"),
@@ -34,15 +34,14 @@ interface LoginProp {
 }
 
 function Login({ onClickDialog }: LoginProp) {
-  const [status, setStatus] = useState<"התחברות" | "הרשמה">("התחברות");
+  const [isLogin, setIsLogin] = useState<boolean>(true);
   const setUser = useUserStore((state) => state.setUser);
   const [loading, setLoading] = useState<boolean>(false);
-  const schema = status === "הרשמה" ? registerSchema : loginSchema;
+  const schema = !isLogin ? registerSchema : loginSchema;
   const {
     register,
     handleSubmit,
     formState: { errors },
-    setValue,
     watch,
   } = useForm({
     resolver: zodResolver(schema),
@@ -50,33 +49,22 @@ function Login({ onClickDialog }: LoginProp) {
 
   const email = watch("email");
 
-
   const onSubmit = async (data: any) => {
     setLoading(true);
     try {
       let response;
-      if (status === "התחברות") {
+      if (isLogin) {
         const loginData: LoginCredentials = {
           email: data.email,
           password: data.password,
         };
         response = await logInUser(loginData);
 
-        if (response.status === 200) {
-          Swal.fire({
-            icon: "success",
-            title: "ההתחברות בוצעה בהצלחה!",
-            text: `ברוך הבא, ${response.user.name}`,
-          });
+        if (response.status === 200) { 
+          successAlert("ההתחברות בוצעה בהצלחה!", `ברוך הבא, ${response.user.name}`)
           setUser(response.user);
-        } else {
-          Swal.fire({
-            icon: "error",
-            title: "שגיאה",
-            text: response.message || "ההתחברות נכשלה.",
-          });
-        }
-      } else if (status === "הרשמה") {
+        } else { errorRegisterAlert(response.message)}
+      } else if (!isLogin ) {
         const userData: UserWithPassword = {
           name: data.username,
           email: data.email,
@@ -87,28 +75,14 @@ function Login({ onClickDialog }: LoginProp) {
         response = await registerUser(userData);
 
         if (response.status === 200 || response.status === 201) {
-          Swal.fire({
-            icon: "success",
-            title: "הרשמה בוצעה בהצלחה!",
-            text: "ברוך הבא למערכת",
-          });
+          successAlert("הרשמה בוצעה בהצלחה!", "ברוך הבא למערכת")
           setUser(response.user);
-          setStatus("התחברות");
-        } else {
-          Swal.fire({
-            icon: "error",
-            title: "שגיאה",
-            text: response.message || "ההרשמה נכשלה.",
-          });
-        }
+          setIsLogin(true);
+        } else { errorRegisterAlert(response.message)}
       }
     } catch (error) {
       console.error("Error during submission:", error);
-      Swal.fire({
-        icon: "error",
-        title: "שגיאה",
-        text: "אירעה שגיאה פנימית במערכת. נסה שוב מאוחר יותר.",
-      });
+      errorRegisterAlert("אירעה שגיאה פנימית במערכת. נסה שוב מאוחר יותר.")
     } finally {
       setLoading(false);
     }
@@ -138,62 +112,32 @@ function Login({ onClickDialog }: LoginProp) {
           localUser = response.user;
         }
         setUser(localUser);
-        Swal.fire({
-          icon: "success",
-          title: "ההתחברות בוצעה בהצלחה!",
-          text: `ברוך הבא, ${response.user.name}`,
-        });
+        successAlert("ההתחברות בוצעה בהצלחה!", `ברוך הבא, ${response.user.name}`)
       }
     } catch (error) {
-      if (
-        typeof error === "object" &&
-        error !== null &&
-        "code" in error &&
-        (error as { code: string }).code === "auth/popup-closed-by-user"
-      ) {
+      if (typeof error === "object" && error !== null && "code" in error 
+        && (error as { code: string }).code === "auth/popup-closed-by-user") {
       } else {
         console.error("Error during Google login:", error);
-        Swal.fire({
-          icon: "error",
-          title: "שגיאה",
-          text: " ההרשמה נכשלה 😥. נסה שוב מאוחר יותר.",
-        });
+        errorRegisterAlert(" ההרשמה נכשלה 😥. נסה שוב מאוחר יותר.")
       }
     } finally {
       setLoading(false);
     }
   }
 
-
-
   const handleForgotPassword = async () => {
     setLoading(true);
-    if (!email) {
-      Swal.fire({
-        icon: "error",
-        title: "שגיאה",
-        text: "יש למלא את המייל",
-      });
+    if (!email) { errorRegisterAlert("יש למלא את המייל")
       setLoading(false);
       return;
     }
 
     try {
-      const response = await forgetPassword(email);
-      Swal.fire({
-        icon: "success",
-        title: "הסיסמה נשלחה בהצלחה!",
-        text: "הסיסמה החדשה נשלחה למייל שלך. אנא העתק אותה מהמייל.",
-      });
-    } catch (error) {
-      Swal.fire({
-        icon: "error",
-        title: "שגיאה",
-        text: "המערכת נתקלה בבעיה בשליחת הסיסמה לתיבת המייל שלך",
-      });
-    } finally {
-      setLoading(false);
-    }
+      await forgetPassword(email);
+      successAlert("הסיסמה נשלחה בהצלחה!", "הסיסמה החדשה נשלחה למייל שלך. אנא העתק אותה מהמייל.")
+    } catch (error) { errorRegisterAlert("המערכת נתקלה בבעיה בשליחת הסיסמה לתיבת המייל שלך")
+    } finally { setLoading(false); }
   };
 
   const handleLoginGuest = async () => {
@@ -234,10 +178,10 @@ function Login({ onClickDialog }: LoginProp) {
               <Image src={image} alt="login image" width={200} height={200} />
             </div>
 
-            <p className={styles.title}>{status}</p>
+            <p className={styles.title}>{isLogin}</p>
 
             <form onSubmit={handleSubmit(onSubmit)}>
-              {status === "הרשמה" && (
+              {!isLogin && ( // if Register
                 <div>
                   <input
                     className={styles.input}
@@ -274,7 +218,7 @@ function Login({ onClickDialog }: LoginProp) {
                   <p className={styles.error}>{errors.password.message as string}</p>
                 )}
 
-                {status === "הרשמה" &&
+                {!isLogin &&
                   (<div className={styles.termsContainer}>
                     <input
                       type="checkbox"
@@ -297,7 +241,7 @@ function Login({ onClickDialog }: LoginProp) {
                   </div>)
                 }
 
-                {status === "התחברות" && (
+                {isLogin && (
                   <button
                     type="button"
                     className={styles.forgotPassword}
@@ -308,32 +252,22 @@ function Login({ onClickDialog }: LoginProp) {
                 )}
               </div>
 
-
               <button className={styles.button} type="submit">
-                {status}
+                {isLogin ? "התחברות " : "הרשמה"}
               </button>
             </form>
             <div className={styles.textWithLine}>
               <span>או התחבר עם google</span>
             </div>
-            <IconButton
-              edge="end"
-              color="inherit"
-              className={styles.iconButton}
-            >
+            <IconButton edge="end" color="inherit" className={styles.iconButton}>
               <Image onClick={() => handleLoginWithGoogle()} className={styles.googleButtonImage} src={googleImage} alt="login image" width={30} height={30} />
             </IconButton>
 
-
-            <p className={styles.switchStatus}>
-              {status === "התחברות" ? (
-                <>
-                  אין לך חשבון? <span onClick={() => setStatus("הרשמה")}>הרשמה</span>
-                </>
+            <p className={styles.switchisLogin}>
+              {isLogin ? (
+                <>  אין לך חשבון? <span onClick={() => setIsLogin(false)}>הרשמה</span></>
               ) : (
-                <>
-                  כבר יש לך חשבון? <span onClick={() => setStatus("התחברות")}>התחברות</span>
-                </>
+                <>כבר יש לך חשבון? <span onClick={() => setIsLogin(true)}>התחברות</span></>
               )}
             </p>
             <span className={styles.guest} onClick={() => handleLoginGuest()}>התחבר כאורח</span>
@@ -344,105 +278,3 @@ function Login({ onClickDialog }: LoginProp) {
 }
 
 export default Login;
-
-
-
-
-
-// import { auth } from "../../lib/firebase";
-// import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-// import useUserStore from "../../services/zustand/userZustand/userStor";
-// import { logInUser } from "../../services/userService";
-// import Image from "next/image";
-// import logo from '../../../public/pictures/logo1.png';
-// import styles from "./login.module.css";
-// import { DotLottieReact } from "@lottiefiles/dotlottie-react";
-// import { useRouter } from "next/navigation";
-
-
-// const Login = () => {
-//   const router = useRouter();
-//   const setUser = useUserStore((state) => state.setUser);
-
-//   const handleLogin = async () => {
-//     try {
-//       let localUser = {
-//         _id: 'kWB2fSx9q1SxmMc1W7vyoWo2QQZ2',
-//         email: 'frieman@g.jct.ac.il',
-//         name: 'guest',
-//         books: [],
-//         userImagePath: '',
-//       };
-
-//       const response = await logInUser(localUser);
-
-//       if (response.status === 200) {
-//         localUser = response.user;
-//       }
-//       setUser(localUser);
-//     } catch (error) {
-//       console.error("Error during login:", error);
-
-//     }
-//   }
-
-//   const handleGoogleLogin = async () => {
-//     try {
-//       const provider = new GoogleAuthProvider();
-//       provider.setCustomParameters({ prompt: "select_account" });
-
-//       const result = await signInWithPopup(auth, provider);
-//       const user = result.user;
-
-//       let localUser = {
-//         _id: user.uid,
-//         email: user.email || '',
-//         name: user.displayName || '',
-//         books: [],
-//         userImagePath: user.photoURL || '',
-//       };
-
-//       const response = await logInUser(localUser);
-
-//       if (response.status === 200) {
-//         localUser = response.user;
-//       }
-//       setUser(localUser);
-
-//     } catch (error) {
-//       console.error("Error during Google login:", error);
-
-//     }
-//   };
-//   const handleGoHome = () => {
-//     router.push('/Home');
-//   };
-
-//   return (
-//     <div className={styles.login_card}>
-//       <div className={styles.side}>
-//         <p className={styles.login_card_text}><strong>התחברות</strong></p>
-//         <button onClick={handleGoogleLogin} className={styles.login_card_button}>
-//           המשך עם Google
-//         </button>
-//         <button onClick={handleLogin} className={styles.login_guest}>
-//           התחבר כאורח
-//         </button>
-//         <button onClick={handleGoHome} className={styles.goHhomeBtn}>חזרה לעמוד הבית</button>
-
-//         <Image
-//           src={logo}
-//           alt="logo image"
-//           className={styles.logo}
-//         />
-//       </div>
-//       <div className={styles.animate}>
-//         <script src="https://unpkg.com/@lottiefiles/dotlottie-wc@0.3.0/dist/dotlottie-wc.js" type="module"></script>
-//         <DotLottieReact src="https://lottie.host/69f5d49e-2f3e-41af-a9cb-914ffbe211ce/MqFYZZanAP.lottie" autoplay loop></DotLottieReact>
-//       </div>
-//     </div>
-//   );
-// };
-
-
-// export default Login;

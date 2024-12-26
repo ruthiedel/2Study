@@ -18,7 +18,7 @@ export const Section: React.FC<SectionProps> = ({ section, isEven }) => {
         <div className={styles.sectionContainer}>
             {isEven ? (
                 <>
-                    <div>
+                    <div >
                         <script src={section.scriptUrl} type="module"></script>
                         <DotLottieReact src={section.animateUrl} autoplay loop />
                     </div>
@@ -35,9 +35,9 @@ export const Section: React.FC<SectionProps> = ({ section, isEven }) => {
                         <div className={styles.line}></div>
                         <p className={styles.heroDescription}>{section.description}</p>
                     </div>
-                    <div>
+                    <div >
                         <script src={section.scriptUrl} type="module"></script>
-                        <DotLottieReact src={section.animateUrl} autoplay loop />
+                        <DotLottieReact src={section.animateUrl} speed={2} autoplay loop />
                     </div>
                 </>
             )}

@@ -87,7 +87,7 @@ const BooksLearning = () => {
               const bookData = getBookData(book);
               return (
                 <BookItem
-                  key={book.book_id}
+                  key={index}
                   book={book}
                   index={index}
                   bookData={bookData}

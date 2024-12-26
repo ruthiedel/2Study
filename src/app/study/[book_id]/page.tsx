@@ -1,18 +1,10 @@
 "use client";
 import React, { useEffect, useState, useMemo } from "react";
-import { Box, IconButton, Button, Dialog } from "@mui/material";
+import { Box, IconButton, Dialog } from "@mui/material";
 import useUserStore from "../../../services/zustand/userZustand/userStor";
 import { getSections } from "../../../services/bookService";
 import { useParams } from "next/navigation";
-import {
-    Chat,
-    MarkButton,
-    ChapterSidebar,
-    ShowParagraph,
-    Loading,
-    Rating,
-    QuestionCard,
-} from "../../../components";
+import { Chat, MarkButton, ChapterSidebar, ShowParagraph, Loading, Rating, QuestionCard, NoBookFound} from "../../../components";
 import { Book, Paragraph, UserBook } from "../../../types";
 import numberToGematria from "../../../lib/clientHelpers/gematriaFunc";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
@@ -20,12 +12,10 @@ import { getBooks } from "../../../hooks/booksDetails";
 import Styles from "./Study.module.css";
 import Confetti from "react-confetti";
 import RequireAuth from "../../../layout/RequireAuth";
-import Swal from "sweetalert2";
 import "sweetalert2/src/sweetalert2.scss";
 import { useRouter } from "next/navigation";
 import StyledButton from "../../../components/StyleComponentsFolder/styledButton";
-import { DotLottieReact } from '@lottiefiles/dotlottie-react';
-
+import { errorAlert, successAlert, infoAlert, finishAlert } from '../../../lib/clientHelpers/sweet-alerts'
 
 interface Index {
     chapterId: number;
@@ -56,14 +46,11 @@ const Study = () => {
         let selectedBook: UserBook | undefined = undefined;
 
         for (const book of user?.books || []) {
-
             if (book.book_id === bookId) {
                 if (book.status) {
                     selectedBook = book;
                     break;
-                } else if (!selectedBook) {
-                    selectedBook = book;
-                }
+                } else if (!selectedBook) {selectedBook = book;}
             }
         }
         return selectedBook;
@@ -93,28 +80,12 @@ const Study = () => {
             try {
                 const paragraphs = await getSections(bookId, chapterId, paragraphId);
                 if (!paragraphs || paragraphs.length === 0) {
-                    Swal.fire({
-                        title: "שים לב",
-                        text: "הפרק הבא עדיין לא נטען",
-                        icon: 'info',
-                        confirmButtonText: "OK",
-                        timer: 3000,
-                    });
-                }
+                    infoAlert()                }
                 setParagraph(paragraphs.sections);
             } catch (error) {
                 console.error("Error fetching paragraphs:", error);
             }
         }
-    };
-
-    const isCurrentSectionMarked = () => {
-        if (!currentUserBook) { return false; }
-
-        return (
-            currentUserBook.chapter_id === index.chapterId &&
-            currentUserBook.section_id === index.paragraphId
-        );
     };
 
     const handleNavigation = (direction: "next" | "prev") => {
@@ -173,13 +144,7 @@ const Study = () => {
         const newBooks = [...user.books];
         newBooks[newBooks.indexOf(currentUserBook)] = currentUserBook;
         updateUserZustand(user!._id!, { ...user, books: newBooks });
-
-        Swal.fire({
-            title: "מעולה!",
-            text: "סיימת ללמוד! כל הכבוד 🎉",
-            icon: "success",
-            timer: 3000,
-        })
+        finishAlert();
         setTimeout(() => setShowConfetti(false), 5000);
     };
 
@@ -200,27 +165,14 @@ const Study = () => {
                 ...user,
                 books: [...user.books, newUserBook],
             };
-
-            await updateUserZustand(user._id || "", updatedUserData);
-
-            Swal.fire({
-                title: "מעולה!",
-                text: "הספר נוסף בהצלחה לרשימת הספרים שלך 🎉",
-                icon: "success",
-                timer: 3000,
-            });
-
+            updateUserZustand(user._id || "", updatedUserData);
+            successAlert("מעולה!", "הספר נוסף בהצלחה לרשימת הספרים שלך 🎉")
             handleChangeIndex(1,1);
         } catch (error) {
             console.error("שגיאה בהוספת הספר:", error);
-            Swal.fire({
-                title: "שגיאה",
-                text: "לא הצלחנו להוסיף את הספר. נסה שוב מאוחר יותר.",
-                icon: "error",
-            });
+            errorAlert( "לא הצלחנו להוסיף את הספר. נסה שוב מאוחר יותר.");
         }
     };
-
 
     const openQuiz = () => setShowQuiz(true);
     const closeQuiz = () => setShowQuiz(false);
@@ -228,22 +180,7 @@ const Study = () => {
     const openRating = () => setIsShowRating(true);
     const closeRating = () => setIsShowRating(false);
 
-    if (isBookInvalid) {
-        return (
-            <div className={Styles.invalidcontainer}>
-                <div className={Styles.animateCon}>
-                <DotLottieReact
-                  src="https://lottie.host/f95cfacb-6440-40e9-a37f-15d6ded82ce0/W0zginnfWq.lottie"
-                  autoplay
-                  loop 
-                ></DotLottieReact></div>
-                <p>הספר שבחרת לא קיים ברשימת הספרים שלך.</p>
-                <StyledButton  onClick={() => (router.push('/bookCatalog'))} >
-                    חזור לקטלוג הספרים
-                </StyledButton>
-            </div>
-        );
-    }
+    if (isBookInvalid) { return <NoBookFound /> }
 
     return isLoading ? (
         <Loading />
@@ -257,18 +194,14 @@ const Study = () => {
                     }}
                 />
                 <div className={Styles.container}>
-                    <IconButton
-                        onClick={() => handleNavigation("prev")}
-                        disabled={index?.chapterId === 1 && index?.paragraphId === 1}
-                    >
+                    <IconButton onClick={() => handleNavigation("prev")} disabled={index?.chapterId === 1 && index?.paragraphId === 1}>
                         <ExpandLess />
                     </IconButton>
                     <MarkButton
                         bookId={bookId}
                         chapterId={index.chapterId}
                         paragraphId={index.paragraphId}
-                        isMarked={isCurrentSectionMarked()}
-                    />
+                        isMarked={currentUserBook && currentUserBook.chapter_id === index.chapterId && currentUserBook.section_id === index.paragraphId}/>
                     {paragraph.length === 0 ? (
                         <p>אין טקסט להצגה כרגע</p>
                     ) : (
@@ -285,10 +218,7 @@ const Study = () => {
                             )} סעיף ${numberToGematria(index?.paragraphId || 1)}`}
                         />
                     )}
-                    <IconButton
-                        onClick={() => handleNavigation("next")}
-                        disabled={isLastSection}
-                    >
+                    <IconButton onClick={() => handleNavigation("next")} disabled={isLastSection}>
                         <ExpandMore />
                     </IconButton>
                     <button onClick={openQuiz} className={Styles.quizButton}>
@@ -322,25 +252,14 @@ const Study = () => {
                         <Rating bookId={bookId} onClose={closeRating} />
                     </Dialog>
                     {isLastSection && currentUserBook?.status === false ? (
-                        <Button
-                            onClick={() => { handleStartAgain() }}
-                            variant="contained"
-                            color="secondary"
-                            className={Styles.finishButton}
-                        >
+                        <StyledButton onClick={() => { handleStartAgain() }} bgColor="#e1e1e1" textColor="black">
                             התחל את הספר מחדש
-                        </Button>
+                        </StyledButton>
                     ) : isLastSection ? (
-                        <Button
-                            onClick={handleFinish}
-                            variant="contained"
-                            color="primary"
-                            className={Styles.finishButton}
-                        >
+                        <StyledButton onClick={handleFinish} bgColor="#e1e1e1" textColor="black">
                             סיימתי ללמוד
-                        </Button>
+                        </StyledButton>
                     ) : null}
-
                 </div>
                 <Chat bookId={bookId} bookName={bookData?.name || ""} />
                 {showConfetti && <Confetti />}
