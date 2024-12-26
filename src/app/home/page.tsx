@@ -5,7 +5,6 @@ import { Feedback, Section, BottomSection } from "../../components";
 import styles from './homePage.module.css';
 import { useRouter } from "next/navigation";
 import { Noto_Serif} from 'next/font/google';
-import AuthForm from "@/components/Login/Check";
 
 const NotoSerif = Noto_Serif({
     weight: ['400'],
@@ -26,13 +25,12 @@ const HomePage: React.FC = () => {
 
                         target.style.opacity = '1';
                         target.style.transform = 'translateY(0)';
-                        target.style.transition = 'opacity 1s ease, transform 1s ease-out';
-                        // target.classList.add('animated'); 
-                        // observer.unobserve(target); 
+                        target.style.transition = 'opacity 0.5s ease, transform 1s ease-out';
+                      
                     } else {
                         target.style.opacity = '0';
                         target.style.transform = 'translateY(20px)';
-                        target.style.transition = 'opacity 1s ease, transform 1s ease-out';
+                        target.style.transition = 'opacity 0.5s ease, transform 1s ease-out';
                     }
                 });
             },
@@ -55,7 +53,7 @@ const HomePage: React.FC = () => {
     const sections = [
         {
             title: 'פתרונות מהירים, הצלחה גדולה',
-            description: 'באתר שלנו, כל הכלים זמינים לך בלחיצת כפתור: סימניות חכמות, שאלות למעקב עצמי, וקבוצות למידה שמשלבות אותך בקהילה תומכת של לומדים.',
+            description: 'באתר שלנו, כל הכלים זמינים לך בלחיצת כפתור:  סימניות חכמות שיכולות לעזור לך לארגן את הלמידה שלך בצורה נוחה, שאלות למעקב עצמי יעזרו לך להעמיק את ההבנה שלך, וקבוצות למידה שמשלבות אותך בקהילה תומכת של לומדים.',
             scriptUrl: 'https://unpkg.com/@lottiefiles/dotlottie-wc@0.3.0/dist/dotlottie-wc.js',
             animateUrl: 'https://lottie.host/5edb9475-79c4-4256-a41e-d87a23ef812c/Cnwk1qM3PW.lottie'
         },
