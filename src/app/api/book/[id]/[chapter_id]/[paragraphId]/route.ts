@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
-import { connectDatabase,updateBookQuestion, fetchBookById } from '../../../../../../services/mongo/bookMongo';
+import { updateBookQuestion } from '../../../../../../services/mongo/bookMongo';
+import { connectDatabase } from '../../../../../../services/mongo/mongoConection';
 
 export async function PATCH(
     request: Request,

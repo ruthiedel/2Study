@@ -13,7 +13,7 @@ import {
     Rating,
     QuestionCard,
 } from "../../../components";
-import { Book, Paragraph } from "../../../types";
+import { Book, Paragraph, UserBook } from "../../../types";
 import numberToGematria from "../../../lib/clientHelpers/gematriaFunc";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import { getBooks } from "../../../hooks/booksDetails";
@@ -22,6 +22,10 @@ import Confetti from "react-confetti";
 import RequireAuth from "../../../layout/RequireAuth";
 import Swal from "sweetalert2";
 import "sweetalert2/src/sweetalert2.scss";
+import { useRouter } from "next/navigation";
+import StyledButton from "../../../components/StyleComponentsFolder/styledButton";
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+
 
 interface Index {
     chapterId: number;
@@ -34,6 +38,7 @@ interface Paragraphs {
 }
 
 const Study = () => {
+    const router = useRouter();
     const { book_id } = useParams() as { book_id: string | string[] };
     const bookId = Array.isArray(book_id) ? book_id[0] : book_id;
     const { data: books, isLoading } = getBooks();
@@ -43,18 +48,38 @@ const Study = () => {
     const [showConfetti, setShowConfetti] = useState(false);
     const [showQuiz, setShowQuiz] = useState(false);
     const [isShowRating, setIsShowRating] = useState(false);
+    const [isBookInvalid, setIsBookInvalid] = useState(false);
     const user = useUserStore((state) => state.user);
     const updateUserZustand = useUserStore((state) => state.updateUserZustand);
 
-    const currentUserBook = useMemo(() => {
-        return user?.books.find((book) => book.book_id === bookId);
+    const currentUserBook: UserBook | undefined = useMemo(() => {
+        let selectedBook: UserBook | undefined = undefined;
+
+        for (const book of user?.books || []) {
+
+            if (book.book_id === bookId) {
+                if (book.status) {
+                    selectedBook = book;
+                    break;
+                } else if (!selectedBook) {
+                    selectedBook = book;
+                }
+            }
+        }
+        return selectedBook;
     }, [user, bookId]);
 
     useEffect(() => {
         if (!user || !books || !Array.isArray(books)) return;
+
+        if (!user.books.find((book) => book.book_id === bookId)) {
+            setIsBookInvalid(true);
+            return;
+        }
+
         if (index.chapterId === -1) {
             if (currentUserBook) {
-                handleChangeIndex(currentUserBook.chapter_id, currentUserBook.section_id);
+                handleChangeIndex(currentUserBook!.chapter_id, currentUserBook.section_id);
             } else {
                 handleChangeIndex(1, 1);
             }
@@ -141,9 +166,7 @@ const Study = () => {
         if (!bookData || !user || !currentUserBook) return;
 
         const lastChapterId = bookData.paragraphsCountPerChapter?.length || 1;
-        const lastSectionId =
-            bookData.paragraphsCountPerChapter?.[lastChapterId - 1] || 1;
-
+        const lastSectionId = bookData.paragraphsCountPerChapter?.[lastChapterId - 1] || 1;
         currentUserBook.chapter_id = lastChapterId;
         currentUserBook.section_id = lastSectionId;
         currentUserBook.status = false;
@@ -160,11 +183,67 @@ const Study = () => {
         setTimeout(() => setShowConfetti(false), 5000);
     };
 
+    const handleStartAgain = async () => {
+        try {
+            if (!user || !bookData) return;
+
+            const newUserBook: UserBook = {
+                book_id: bookId,
+                book_name: bookData.name,
+                chapter_id: 1,
+                section_id: 1,
+                rate: 0,
+                status: true,
+            };
+
+            const updatedUserData = {
+                ...user,
+                books: [...user.books, newUserBook],
+            };
+
+            await updateUserZustand(user._id || "", updatedUserData);
+
+            Swal.fire({
+                title: "מעולה!",
+                text: "הספר נוסף בהצלחה לרשימת הספרים שלך 🎉",
+                icon: "success",
+                timer: 3000,
+            });
+
+            handleChangeIndex(1,1);
+        } catch (error) {
+            console.error("שגיאה בהוספת הספר:", error);
+            Swal.fire({
+                title: "שגיאה",
+                text: "לא הצלחנו להוסיף את הספר. נסה שוב מאוחר יותר.",
+                icon: "error",
+            });
+        }
+    };
+
+
     const openQuiz = () => setShowQuiz(true);
     const closeQuiz = () => setShowQuiz(false);
 
     const openRating = () => setIsShowRating(true);
     const closeRating = () => setIsShowRating(false);
+
+    if (isBookInvalid) {
+        return (
+            <div className={Styles.invalidcontainer}>
+                <div className={Styles.animateCon}>
+                <DotLottieReact
+                  src="https://lottie.host/f95cfacb-6440-40e9-a37f-15d6ded82ce0/W0zginnfWq.lottie"
+                  autoplay
+                  loop 
+                ></DotLottieReact></div>
+                <p>הספר שבחרת לא קיים ברשימת הספרים שלך.</p>
+                <StyledButton  onClick={() => (router.push('/bookCatalog'))} >
+                    חזור לקטלוג הספרים
+                </StyledButton>
+            </div>
+        );
+    }
 
     return isLoading ? (
         <Loading />
@@ -242,7 +321,16 @@ const Study = () => {
                     <Dialog open={isShowRating} onClose={closeRating}>
                         <Rating bookId={bookId} onClose={closeRating} />
                     </Dialog>
-                    {isLastSection && (
+                    {isLastSection && currentUserBook?.status === false ? (
+                        <Button
+                            onClick={() => { handleStartAgain() }}
+                            variant="contained"
+                            color="secondary"
+                            className={Styles.finishButton}
+                        >
+                            התחל את הספר מחדש
+                        </Button>
+                    ) : isLastSection ? (
                         <Button
                             onClick={handleFinish}
                             variant="contained"
@@ -251,7 +339,8 @@ const Study = () => {
                         >
                             סיימתי ללמוד
                         </Button>
-                    )}
+                    ) : null}
+
                 </div>
                 <Chat bookId={bookId} bookName={bookData?.name || ""} />
                 {showConfetti && <Confetti />}

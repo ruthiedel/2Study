@@ -3,6 +3,7 @@
 import React, { useEffect } from "react";
 import { useRouter } from "next/navigation"; 
 import useUserStore from "@/services/zustand/userZustand/userStor"; 
+import HomePage from "./home/page";
 
 const SomeComponent = () => {
   const router = useRouter();
@@ -15,7 +16,7 @@ const SomeComponent = () => {
     router.push("/home");
   }, []);
 
-  return null;
+  return <HomePage/>;
 };
 
 export default SomeComponent;

@@ -48,9 +48,8 @@ const ShowBooks: React.FC = () => {
             books.forEach(book => {
                 const localType = book.category.type;
                 const localSubject = book.category.subject;
-                if(!uniqueCategories.includes(localType)) {uniqueCategories.push(localType);
+                if(!uniqueCategories.includes(localType)) {uniqueCategories.push(localType);}
                 if(!uniqueCategories.includes(localSubject)) {uniqueCategories.push(localSubject);}
-                }
             });
         }  
         return uniqueCategories;

@@ -1,25 +1,7 @@
 import { MongoClient, ObjectId } from 'mongodb';
 import { promises as fs } from 'fs';
 import path from 'path';
-
-let client: MongoClient;
-let clientPromise: Promise<MongoClient>;
-
-export async function connectDatabase() {
-  if (!client) {
-    const dbConnectionString = process.env.PUBLIC_DB_CONNECTION;
-    if (!dbConnectionString) {
-      throw new Error('Database connection string is not defined');
-    }
-    client = new MongoClient(dbConnectionString);
-    clientPromise = client.connect();
-  }
-
-  await clientPromise;
-  return client;
-}
-
-
+import { Book } from '../../types';
 
 export async function fetchAllBooks(client: MongoClient, collection: string) {
   const db = client.db('Books');
@@ -221,4 +203,25 @@ export async function getUniqueCategoryStrings(client: MongoClient, collection: 
   const uniqueCategoryStrings = distinctCategories.map(category => `${category.type} - ${category.subject}`);
 
   return uniqueCategoryStrings;
+}
+
+
+export async function addBook(client: MongoClient, collection: string, newBook: Book) {
+  const db = client.db('Books');
+
+  const bookToInsert = {
+    ...newBook,
+    _id: newBook._id ? new ObjectId(newBook._id) : undefined,
+  };
+
+  const result = await db.collection(collection).insertOne(bookToInsert);
+
+  if (!result.acknowledged) {
+    throw new Error('Failed to add the book');
+  }
+
+  return {
+    message: 'Book added successfully',
+    bookId: result.insertedId,
+  };
 }

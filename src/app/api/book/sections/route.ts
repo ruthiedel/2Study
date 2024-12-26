@@ -1,7 +1,8 @@
 
 
-import { connectDatabase, fetchBookById } from '../../../../services/mongo/bookMongo';
+import {  fetchBookById } from '../../../../services/mongo/bookMongo';
 import { NextResponse } from "next/server";
+import { connectDatabase } from '../../../../services/mongo/mongoConection';
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -16,7 +17,7 @@ export async function GET(request: Request) {
   try {
     const client = await connectDatabase();
     const book = await fetchBookById(client, 'books', bookId);
-    
+
     if (!book) {
       return NextResponse.json({ message: 'Book not found' }, { status: 404 });
     }
@@ -53,7 +54,6 @@ export async function GET(request: Request) {
         name: book.book_name
       }
     };
-
 
     return NextResponse.json(result);
   } catch (error) {

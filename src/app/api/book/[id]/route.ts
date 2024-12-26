@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
-import { connectDatabase, updateBook, fetchBookById } from '../../../../services/mongo/bookMongo';
+import {  updateBook, fetchBookById } from '../../../../services/mongo/bookMongo';
+import { connectDatabase } from '../../../../services/mongo/mongoConection';
 
 export async function POST(request: Request, { params }: { params: { id: string } }) {
   try {
