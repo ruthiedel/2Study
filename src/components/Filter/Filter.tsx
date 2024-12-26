@@ -57,7 +57,7 @@ const Filter: React.FC<FilterComponentProps> = ({
       />
 
       <div className={styles.flexDiv}>
-        <label className={styles.title}>קטגוריה:</label>
+        <label className={styles.title}>   קטגוריה:</label>
         <span className={styles.categoryCount}>{categories.length}</span>
       </div>
 

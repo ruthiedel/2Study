@@ -24,7 +24,7 @@
 }
 
 .categoryCount {
-    margin-left: 8px;
+    margin-right: 8px;
     background-color: #000;
     color: #fff;
     border-radius: 50%;
@@ -39,7 +39,7 @@
 .input {
     background-color: #faf4e6;
     color: #000;
-    border-radius: 25px;
+    border-radius: 5px;
     padding: 10px;
     font-size: 16px;
 }
@@ -53,7 +53,7 @@
     background-color: #faf4e6;
     padding: 10px;
     font-size: 16px;
-    border-radius: 25px;
+    border-radius: 5px;
     color: #000;
 }
 
