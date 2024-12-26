@@ -4,7 +4,6 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
-import Swal from "sweetalert2";
 import image from "../../../public/pictures/unnamed.png";
 import googleImage from "../../../public/pictures/google.jpg";
 import styles from "./login.module.css";
@@ -16,6 +15,7 @@ import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../../lib/firebase";
 import { forgetPassword } from "@/services/mailService";
 import {Loading} from '../index';
+import { errorRegisterAlert, successAlert } from '../../lib/clientHelpers/sweet-alerts'
 
 const loginSchema = z.object({
   email: z.string().email("אימייל לא חוקי"),
@@ -60,20 +60,10 @@ function Login({ onClickDialog }: LoginProp) {
         };
         response = await logInUser(loginData);
 
-        if (response.status === 200) {
-          Swal.fire({
-            icon: "success",
-            title: "ההתחברות בוצעה בהצלחה!",
-            text: `ברוך הבא, ${response.user.name}`,
-          });
+        if (response.status === 200) { 
+          successAlert("ההתחברות בוצעה בהצלחה!", `ברוך הבא, ${response.user.name}`)
           setUser(response.user);
-        } else {
-          Swal.fire({
-            icon: "error",
-            title: "שגיאה",
-            text: response.message || "ההתחברות נכשלה.",
-          });
-        }
+        } else { errorRegisterAlert(response.message)}
       } else if (!isLogin ) {
         const userData: UserWithPassword = {
           name: data.username,
@@ -85,28 +75,14 @@ function Login({ onClickDialog }: LoginProp) {
         response = await registerUser(userData);
 
         if (response.status === 200 || response.status === 201) {
-          Swal.fire({
-            icon: "success",
-            title: "הרשמה בוצעה בהצלחה!",
-            text: "ברוך הבא למערכת",
-          });
+          successAlert("הרשמה בוצעה בהצלחה!", "ברוך הבא למערכת")
           setUser(response.user);
           setIsLogin(true);
-        } else {
-          Swal.fire({
-            icon: "error",
-            title: "שגיאה",
-            text: response.message || "ההרשמה נכשלה.",
-          });
-        }
+        } else { errorRegisterAlert(response.message)}
       }
     } catch (error) {
       console.error("Error during submission:", error);
-      Swal.fire({
-        icon: "error",
-        title: "שגיאה",
-        text: "אירעה שגיאה פנימית במערכת. נסה שוב מאוחר יותר.",
-      });
+      errorRegisterAlert("אירעה שגיאה פנימית במערכת. נסה שוב מאוחר יותר.")
     } finally {
       setLoading(false);
     }
@@ -136,22 +112,14 @@ function Login({ onClickDialog }: LoginProp) {
           localUser = response.user;
         }
         setUser(localUser);
-        Swal.fire({
-          icon: "success",
-          title: "ההתחברות בוצעה בהצלחה!",
-          text: `ברוך הבא, ${response.user.name}`,
-        });
+        successAlert("ההתחברות בוצעה בהצלחה!", `ברוך הבא, ${response.user.name}`)
       }
     } catch (error) {
       if (typeof error === "object" && error !== null && "code" in error 
         && (error as { code: string }).code === "auth/popup-closed-by-user") {
       } else {
         console.error("Error during Google login:", error);
-        Swal.fire({
-          icon: "error",
-          title: "שגיאה",
-          text: " ההרשמה נכשלה 😥. נסה שוב מאוחר יותר.",
-        });
+        errorRegisterAlert(" ההרשמה נכשלה 😥. נסה שוב מאוחר יותר.")
       }
     } finally {
       setLoading(false);
@@ -160,32 +128,16 @@ function Login({ onClickDialog }: LoginProp) {
 
   const handleForgotPassword = async () => {
     setLoading(true);
-    if (!email) {
-      Swal.fire({
-        icon: "error",
-        title: "שגיאה",
-        text: "יש למלא את המייל",
-      });
+    if (!email) { errorRegisterAlert("יש למלא את המייל")
       setLoading(false);
       return;
     }
 
     try {
-      const response = await forgetPassword(email);
-      Swal.fire({
-        icon: "success",
-        title: "הסיסמה נשלחה בהצלחה!",
-        text: "הסיסמה החדשה נשלחה למייל שלך. אנא העתק אותה מהמייל.",
-      });
-    } catch (error) {
-      Swal.fire({
-        icon: "error",
-        title: "שגיאה",
-        text: "המערכת נתקלה בבעיה בשליחת הסיסמה לתיבת המייל שלך",
-      });
-    } finally {
-      setLoading(false);
-    }
+      await forgetPassword(email);
+      successAlert("הסיסמה נשלחה בהצלחה!", "הסיסמה החדשה נשלחה למייל שלך. אנא העתק אותה מהמייל.")
+    } catch (error) { errorRegisterAlert("המערכת נתקלה בבעיה בשליחת הסיסמה לתיבת המייל שלך")
+    } finally { setLoading(false); }
   };
 
   const handleLoginGuest = async () => {

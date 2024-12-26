@@ -17,6 +17,7 @@ import "sweetalert2/src/sweetalert2.scss";
 import { useRouter } from "next/navigation";
 import StyledButton from "../../../components/StyleComponentsFolder/styledButton";
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+import { errorAlert, successAlert, infoAlert, finishAlert } from '../../../lib/clientHelpers/sweet-alerts'
 
 interface Index {
     chapterId: number;
@@ -81,14 +82,7 @@ const Study = () => {
             try {
                 const paragraphs = await getSections(bookId, chapterId, paragraphId);
                 if (!paragraphs || paragraphs.length === 0) {
-                    Swal.fire({
-                        title: "שים לב",
-                        text: "הפרק הבא עדיין לא נטען",
-                        icon: 'info',
-                        confirmButtonText: "OK",
-                        timer: 3000,
-                    });
-                }
+                    infoAlert()                }
                 setParagraph(paragraphs.sections);
             } catch (error) {
                 console.error("Error fetching paragraphs:", error);
@@ -161,13 +155,7 @@ const Study = () => {
         const newBooks = [...user.books];
         newBooks[newBooks.indexOf(currentUserBook)] = currentUserBook;
         updateUserZustand(user!._id!, { ...user, books: newBooks });
-
-        Swal.fire({
-            title: "מעולה!",
-            text: "סיימת ללמוד! כל הכבוד 🎉",
-            icon: "success",
-            timer: 3000,
-        })
+        finishAlert();
         setTimeout(() => setShowConfetti(false), 5000);
     };
 
@@ -188,24 +176,12 @@ const Study = () => {
                 ...user,
                 books: [...user.books, newUserBook],
             };
-
-            await updateUserZustand(user._id || "", updatedUserData);
-
-            Swal.fire({
-                title: "מעולה!",
-                text: "הספר נוסף בהצלחה לרשימת הספרים שלך 🎉",
-                icon: "success",
-                timer: 3000,
-            });
-
+            updateUserZustand(user._id || "", updatedUserData);
+            successAlert("מעולה!", "הספר נוסף בהצלחה לרשימת הספרים שלך 🎉")
             handleChangeIndex(1,1);
         } catch (error) {
             console.error("שגיאה בהוספת הספר:", error);
-            Swal.fire({
-                title: "שגיאה",
-                text: "לא הצלחנו להוסיף את הספר. נסה שוב מאוחר יותר.",
-                icon: "error",
-            });
+            errorAlert( "לא הצלחנו להוסיף את הספר. נסה שוב מאוחר יותר.");
         }
     };
 
