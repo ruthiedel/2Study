@@ -4,7 +4,7 @@ import { Box, IconButton, Dialog } from "@mui/material";
 import useUserStore from "../../../services/zustand/userZustand/userStor";
 import { getSections } from "../../../services/bookService";
 import { useParams } from "next/navigation";
-import { Chat, MarkButton, ChapterSidebar, ShowParagraph, Loading, Rating, QuestionCard,} from "../../../components";
+import { Chat, MarkButton, ChapterSidebar, ShowParagraph, Loading, Rating, QuestionCard, NoBookFound} from "../../../components";
 import { Book, Paragraph, UserBook } from "../../../types";
 import numberToGematria from "../../../lib/clientHelpers/gematriaFunc";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
@@ -12,11 +12,9 @@ import { getBooks } from "../../../hooks/booksDetails";
 import Styles from "./Study.module.css";
 import Confetti from "react-confetti";
 import RequireAuth from "../../../layout/RequireAuth";
-import Swal from "sweetalert2";
 import "sweetalert2/src/sweetalert2.scss";
 import { useRouter } from "next/navigation";
 import StyledButton from "../../../components/StyleComponentsFolder/styledButton";
-import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import { errorAlert, successAlert, infoAlert, finishAlert } from '../../../lib/clientHelpers/sweet-alerts'
 
 interface Index {
@@ -88,15 +86,6 @@ const Study = () => {
                 console.error("Error fetching paragraphs:", error);
             }
         }
-    };
-
-    const isCurrentSectionMarked = () => {
-        if (!currentUserBook) { return false; }
-
-        return (
-            currentUserBook.chapter_id === index.chapterId &&
-            currentUserBook.section_id === index.paragraphId
-        );
     };
 
     const handleNavigation = (direction: "next" | "prev") => {
@@ -191,20 +180,7 @@ const Study = () => {
     const openRating = () => setIsShowRating(true);
     const closeRating = () => setIsShowRating(false);
 
-    if (isBookInvalid) {
-        return (
-            <div className={Styles.invalidcontainer}>
-                <div className={Styles.animateCon}>
-                <DotLottieReact
-                  src="https://lottie.host/f95cfacb-6440-40e9-a37f-15d6ded82ce0/W0zginnfWq.lottie"
-                  autoplay loop ></DotLottieReact></div>
-                <p>הספר שבחרת לא קיים ברשימת הספרים שלך.</p>
-                <StyledButton onClick={() => (router.push('/bookCatalog'))} >
-                    חזור לקטלוג הספרים
-                </StyledButton>
-            </div>
-        );
-    }
+    if (isBookInvalid) { return <NoBookFound /> }
 
     return isLoading ? (
         <Loading />
@@ -225,8 +201,7 @@ const Study = () => {
                         bookId={bookId}
                         chapterId={index.chapterId}
                         paragraphId={index.paragraphId}
-                        isMarked={isCurrentSectionMarked()}
-                    />
+                        isMarked={currentUserBook && currentUserBook.chapter_id === index.chapterId && currentUserBook.section_id === index.paragraphId}/>
                     {paragraph.length === 0 ? (
                         <p>אין טקסט להצגה כרגע</p>
                     ) : (
