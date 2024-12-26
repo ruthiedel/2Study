@@ -1,18 +1,10 @@
 "use client";
 import React, { useEffect, useState, useMemo } from "react";
-import { Box, IconButton, Button, Dialog } from "@mui/material";
+import { Box, IconButton, Dialog } from "@mui/material";
 import useUserStore from "../../../services/zustand/userZustand/userStor";
 import { getSections } from "../../../services/bookService";
 import { useParams } from "next/navigation";
-import {
-    Chat,
-    MarkButton,
-    ChapterSidebar,
-    ShowParagraph,
-    Loading,
-    Rating,
-    QuestionCard,
-} from "../../../components";
+import { Chat, MarkButton, ChapterSidebar, ShowParagraph, Loading, Rating, QuestionCard,} from "../../../components";
 import { Book, Paragraph, UserBook } from "../../../types";
 import numberToGematria from "../../../lib/clientHelpers/gematriaFunc";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
@@ -25,7 +17,6 @@ import "sweetalert2/src/sweetalert2.scss";
 import { useRouter } from "next/navigation";
 import StyledButton from "../../../components/StyleComponentsFolder/styledButton";
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
-
 
 interface Index {
     chapterId: number;
@@ -56,14 +47,11 @@ const Study = () => {
         let selectedBook: UserBook | undefined = undefined;
 
         for (const book of user?.books || []) {
-
             if (book.book_id === bookId) {
                 if (book.status) {
                     selectedBook = book;
                     break;
-                } else if (!selectedBook) {
-                    selectedBook = book;
-                }
+                } else if (!selectedBook) {selectedBook = book;}
             }
         }
         return selectedBook;
@@ -221,7 +209,6 @@ const Study = () => {
         }
     };
 
-
     const openQuiz = () => setShowQuiz(true);
     const closeQuiz = () => setShowQuiz(false);
 
@@ -234,11 +221,9 @@ const Study = () => {
                 <div className={Styles.animateCon}>
                 <DotLottieReact
                   src="https://lottie.host/f95cfacb-6440-40e9-a37f-15d6ded82ce0/W0zginnfWq.lottie"
-                  autoplay
-                  loop 
-                ></DotLottieReact></div>
+                  autoplay loop ></DotLottieReact></div>
                 <p>הספר שבחרת לא קיים ברשימת הספרים שלך.</p>
-                <StyledButton  onClick={() => (router.push('/bookCatalog'))} >
+                <StyledButton onClick={() => (router.push('/bookCatalog'))} >
                     חזור לקטלוג הספרים
                 </StyledButton>
             </div>
@@ -257,10 +242,7 @@ const Study = () => {
                     }}
                 />
                 <div className={Styles.container}>
-                    <IconButton
-                        onClick={() => handleNavigation("prev")}
-                        disabled={index?.chapterId === 1 && index?.paragraphId === 1}
-                    >
+                    <IconButton onClick={() => handleNavigation("prev")} disabled={index?.chapterId === 1 && index?.paragraphId === 1}>
                         <ExpandLess />
                     </IconButton>
                     <MarkButton
@@ -285,10 +267,7 @@ const Study = () => {
                             )} סעיף ${numberToGematria(index?.paragraphId || 1)}`}
                         />
                     )}
-                    <IconButton
-                        onClick={() => handleNavigation("next")}
-                        disabled={isLastSection}
-                    >
+                    <IconButton onClick={() => handleNavigation("next")} disabled={isLastSection}>
                         <ExpandMore />
                     </IconButton>
                     <button onClick={openQuiz} className={Styles.quizButton}>
@@ -322,25 +301,14 @@ const Study = () => {
                         <Rating bookId={bookId} onClose={closeRating} />
                     </Dialog>
                     {isLastSection && currentUserBook?.status === false ? (
-                        <Button
-                            onClick={() => { handleStartAgain() }}
-                            variant="contained"
-                            color="secondary"
-                            className={Styles.finishButton}
-                        >
+                        <StyledButton onClick={() => { handleStartAgain() }} bgColor="#e1e1e1" textColor="black">
                             התחל את הספר מחדש
-                        </Button>
+                        </StyledButton>
                     ) : isLastSection ? (
-                        <Button
-                            onClick={handleFinish}
-                            variant="contained"
-                            color="primary"
-                            className={Styles.finishButton}
-                        >
+                        <StyledButton onClick={handleFinish} bgColor="#e1e1e1" textColor="black">
                             סיימתי ללמוד
-                        </Button>
+                        </StyledButton>
                     ) : null}
-
                 </div>
                 <Chat bookId={bookId} bookName={bookData?.name || ""} />
                 {showConfetti && <Confetti />}
