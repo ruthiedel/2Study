@@ -1,6 +1,6 @@
 import { useRouter } from "next/navigation";
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
-import Styles from './NoBookFound.module.css';
+import Styles from './noBookFound.module.css';
 import StyledButton from "../../components/StyleComponentsFolder/styledButton";
 
 export default function NoBookFound() {
