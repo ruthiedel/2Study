@@ -7,8 +7,8 @@ import logo from '../../../public/pictures/logo1.png';
 import { Mail } from '../../types';
 import Image from 'next/image';
 import styles from './footer.module.css';
-import Swal from "sweetalert2";
 import Link from 'next/link';
+import { sendMailSuccess, sendMailError } from '../../lib/clientHelpers/sweet-alerts'
 
 const contactSchema = z.object({
     name: z.string().min(1, '*שדה חובה'),
@@ -37,22 +37,10 @@ const Footer: React.FC = () => {
             };
             await sendMail(mail);
             reset();
-            Swal.fire({
-                title: "תודה על פנייתך! 🙏",
-                text: " נשמח לעזור ונחזור אליך בהקדם. 😊",
-                icon: "success",
-                timer: 3000,
-                confirmButtonText: "נהדר",
-            })
+            sendMailSuccess();
         } catch (error) {
             console.error('Error sending email:', error);
-            Swal.fire({
-                title: "הייתה שגיאה בשליחת המייל 😥",
-                text: "אנא נסה שוב מאוחר יותר. ⚠️",
-                icon: "error",
-                timer: 3000,
-                confirmButtonText: "סגור",
-            })
+            sendMailError();
         }
     };
 

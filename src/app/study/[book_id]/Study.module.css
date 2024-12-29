@@ -52,3 +52,9 @@
 .quizButton:hover {
     background-color: rgb(197, 195, 195);
 }
+
+
+.defaultText{
+    text-align: center;
+    color:red;
+}

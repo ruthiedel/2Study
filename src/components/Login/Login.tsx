@@ -14,21 +14,10 @@ import { IconButton } from "@mui/material";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../../lib/firebase";
 import { forgetPassword } from "@/services/mailService";
-import {Loading} from '../index';
+import { Loading, Regulations } from '../index';
 import { errorRegisterAlert, successAlert } from '../../lib/clientHelpers/sweet-alerts'
-import Swal from "sweetalert2";
 
-const loginSchema = z.object({
-  email: z.string().email("אימייל לא חוקי"),
-  password: z.string().min(6, "הסיסמה חייבת להכיל לפחות 6 תווים"),
-});
-
-const registerSchema = loginSchema.extend({
-  username: z.string().min(3, "שם המשתמש חייב להכיל לפחות 3 תווים"),
-  acceptTerms: z.literal(true, {
-    errorMap: () => ({ message: "חובה לאשר את התקנון כדי להירשם" }),
-  }),
-});
+import { loginSchema, registerSchema } from '../../lib/clientHelpers/zodSchema'
 
 interface LoginProp {
   onClickDialog: () => void;
@@ -39,15 +28,7 @@ function Login({ onClickDialog }: LoginProp) {
   const setUser = useUserStore((state) => state.setUser);
   const [loading, setLoading] = useState<boolean>(false);
   const schema = !isLogin ? registerSchema : loginSchema;
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    watch,
-  } = useForm({
-    resolver: zodResolver(schema),
-  });
-
+  const { register, handleSubmit, formState: { errors }, watch, } = useForm({ resolver: zodResolver(schema), });
   const email = watch("email");
 
   const onSubmit = async (data: any) => {
@@ -243,28 +224,7 @@ function Login({ onClickDialog }: LoginProp) {
                   <p className={styles.error}>{errors.password.message as string}</p>
                 )}
 
-                {!isLogin &&
-                  (<div className={styles.termsContainer}>
-                    <input
-                      type="checkbox"
-                      id="acceptTerms"
-                      {...register("acceptTerms")}
-                    />
-                    <label htmlFor="acceptTerms">
-                      אני מסכים/ה ל
-                      <a
-                        href="/termsOfService"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        תקנון
-                      </a>
-                    </label>
-                    {errors.acceptTerms && (
-                      <p className={styles.error}>{errors.acceptTerms.message as string}</p>
-                    )}
-                  </div>)
-                }
+                {!isLogin && <Regulations register={register} errors={errors} /> }
 
                 {isLogin && (
                   <button
