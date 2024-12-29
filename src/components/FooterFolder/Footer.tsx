@@ -9,12 +9,7 @@ import Image from 'next/image';
 import styles from './footer.module.css';
 import Link from 'next/link';
 import { sendMailSuccess, sendMailError } from '../../lib/clientHelpers/sweet-alerts'
-
-const contactSchema = z.object({
-    name: z.string().min(1, '*שדה חובה'),
-    email: z.string().nonempty('*שדה חובה').email('*כתובת מייל לא תקינה'),
-    message: z.string().min(1, '*שדה חובה'),
-});
+import { contactSchema } from '../../lib/clientHelpers/zodSchema'
 
 type ContactFormValues = z.infer<typeof contactSchema>;
 
