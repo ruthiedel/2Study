@@ -32,12 +32,21 @@ export const logInWithGoogle = async(user:UserWithPassword) => {
 }
 
 export const updateUser = async ({ id, updatedData }: { id: string; updatedData: User }): Promise<User> => {
-console.log("updateUserid in service: @@@@@@@@@@@@@@@@@@@@@@", id); 
   try {
     const response = await http.put(`/user/${id}`, updatedData);
     return response.data; 
   } catch (error) {
     console.error("Error updating the user:", error);
     throw error; 
+  }
+};
+
+export const updatePassword = async ({ email, newPassword }: { email: string; newPassword: string }) => {
+  try {
+    const response = await http.put("/auth", { email, newPassword });
+    return response.data;
+  } catch (error) {
+    console.error("Error updating password:", error);
+    throw error;
   }
 };

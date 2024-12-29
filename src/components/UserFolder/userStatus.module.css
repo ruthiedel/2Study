@@ -6,12 +6,13 @@
     font-family: var(--main-font);
 }
 
-.firstLine , .secondLine{
+.firstLine,
+.secondLine {
     display: flex;
 }
 
-.secondLine{
- margin-top: 15px;
+.secondLine {
+    margin-top: 15px;
 }
 
 .container {
@@ -19,7 +20,10 @@
     background-color: white;
 }
 
-.mycard, .mystudycard, .myinfocard, .myprogresscard {
+.mycard,
+.mystudycard,
+.myinfocard,
+.myprogresscard {
     position: relative;
     padding: 20px 20px 20px;
     border-radius: 10px;
@@ -27,11 +31,11 @@
     background-color: #fff;
 }
 
-.myinfocard{
+.myinfocard {
     flex: 50%;
 }
 
-.mystudycard{
+.mystudycard {
     flex: 40%;
     margin-left: 10px;
     height: 400px;
@@ -39,7 +43,7 @@
     overflow-x: hidden;
 }
 
-.myprogresscard{
+.myprogresscard {
     flex: 60%;
 }
 
@@ -66,7 +70,7 @@
     width: 90%;
 }
 
-.NoBooks{
+.NoBooks {
     text-align: center;
     font-size: 24px;
     font-weight: 500;
@@ -81,7 +85,7 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.text{
+.text {
     background-color: white;
     border-radius: 25px;
     padding: 0px 4px;
@@ -158,7 +162,7 @@
 .numOfBooksContainer {
     margin-top: 60px;
     text-align: center;
-    background-color:white;
+    background-color: white;
     border-radius: 25px;
     margin: 60px 80px 0px 80px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -216,12 +220,12 @@
 }
 
 
-.loadingContainer{
-    display: flex;            
-    justify-content: center;   
-    align-items: center;       
-    width: 100%;              
-    height: 100%; 
+.loadingContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
     background-color: white;
     max-height: 400px;
 }
@@ -234,9 +238,9 @@
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 999;
-  }
-  
-  .popup {
+}
+
+.popup {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -246,9 +250,13 @@
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     z-index: 1000;
-  }
-  
-  .recommendContainer {
-    position: relative; 
-  }
-  
+}
+
+.recommendContainer {
+    position: relative;
+}
+
+.resetPasswordContainer {
+    place-self: center;
+    width:100%;
+}

@@ -73,7 +73,7 @@ const GoalSetting: React.FC = () => {
             <div className={styles.contentColumn}>
                 <h2 className={styles.title}>המטרות שלי:</h2>
                 <div className={styles.innerColumns}>
-                    <div>
+                    <div className={styles.goalsList}>
                         <ul className={styles.goalList}>
                             {goals.length > 0 ? (
                                 goals.map((goal, index) => (

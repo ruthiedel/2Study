@@ -4,7 +4,7 @@ import { Box, IconButton, Dialog } from "@mui/material";
 import useUserStore from "../../../services/zustand/userZustand/userStor";
 import { getSections } from "../../../services/bookService";
 import { useParams } from "next/navigation";
-import { Chat, MarkButton, ChapterSidebar, ShowParagraph, Loading, Rating, QuestionCard, NoBookFound} from "../../../components";
+import { Chat, MarkButton, ChapterSidebar, ShowParagraph, Loading, Rating, QuestionCard, NoBookFound } from "../../../components";
 import { Book, Paragraph, UserBook } from "../../../types";
 import numberToGematria from "../../../lib/clientHelpers/gematriaFunc";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
@@ -13,7 +13,6 @@ import Styles from "./Study.module.css";
 import Confetti from "react-confetti";
 import RequireAuth from "../../../layout/RequireAuth";
 import "sweetalert2/src/sweetalert2.scss";
-import { useRouter } from "next/navigation";
 import StyledButton from "../../../components/StyleComponentsFolder/styledButton";
 import { errorAlert, successAlert, infoAlert, finishAlert } from '../../../lib/clientHelpers/sweet-alerts'
 
@@ -28,7 +27,6 @@ interface Paragraphs {
 }
 
 const Study = () => {
-    const router = useRouter();
     const { book_id } = useParams() as { book_id: string | string[] };
     const bookId = Array.isArray(book_id) ? book_id[0] : book_id;
     const { data: books, isLoading } = getBooks();
@@ -39,6 +37,7 @@ const Study = () => {
     const [showQuiz, setShowQuiz] = useState(false);
     const [isShowRating, setIsShowRating] = useState(false);
     const [isBookInvalid, setIsBookInvalid] = useState(false);
+    const [isEmptyBook, setIsEmptyBook] = useState(false);
     const user = useUserStore((state) => state.user);
     const updateUserZustand = useUserStore((state) => state.updateUserZustand);
 
@@ -50,7 +49,7 @@ const Study = () => {
                 if (book.status) {
                     selectedBook = book;
                     break;
-                } else if (!selectedBook) {selectedBook = book;}
+                } else if (!selectedBook) { selectedBook = book; }
             }
         }
         return selectedBook;
@@ -80,10 +79,16 @@ const Study = () => {
             try {
                 const paragraphs = await getSections(bookId, chapterId, paragraphId);
                 if (!paragraphs || paragraphs.length === 0) {
-                    infoAlert()                }
+                    infoAlert()
+                }
                 setParagraph(paragraphs.sections);
+                if(paragraphs.length ===0) {
+                    setIsEmptyBook(true)
+                }
             } catch (error) {
                 console.error("Error fetching paragraphs:", error);
+                setIsEmptyBook(true)
+
             }
         }
     };
@@ -167,10 +172,10 @@ const Study = () => {
             };
             updateUserZustand(user._id || "", updatedUserData);
             successAlert("מעולה!", "הספר נוסף בהצלחה לרשימת הספרים שלך 🎉")
-            handleChangeIndex(1,1);
+            handleChangeIndex(1, 1);
         } catch (error) {
             console.error("שגיאה בהוספת הספר:", error);
-            errorAlert( "לא הצלחנו להוסיף את הספר. נסה שוב מאוחר יותר.");
+            errorAlert("לא הצלחנו להוסיף את הספר. נסה שוב מאוחר יותר.");
         }
     };
 
@@ -201,10 +206,13 @@ const Study = () => {
                         bookId={bookId}
                         chapterId={index.chapterId}
                         paragraphId={index.paragraphId}
-                        isMarked={currentUserBook && currentUserBook.chapter_id === index.chapterId && currentUserBook.section_id === index.paragraphId}/>
+                        isMarked={currentUserBook && currentUserBook.chapter_id === index.chapterId && currentUserBook.section_id === index.paragraphId} />
                     {paragraph.length === 0 ? (
-                        <p>אין טקסט להצגה כרגע</p>
-                    ) : (
+                        isEmptyBook ? (
+                            <p className={Styles.defaultText}>ספר זה הוא ספר ללא תוכן שנשמר לבדיקת האתר בלבד.<br/> אנא הכנס לספר מלא כמו מסילת ישרים או קיצור שולחן ערוך וכו'</p>
+                        ) : (
+                            <p>אין טקסט להצגה כרגע</p>
+                        )) : (
                         <ShowParagraph
                             paragraph={
                                 paragraph.find(

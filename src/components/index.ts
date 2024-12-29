@@ -26,4 +26,5 @@ export { default as BooksLearning } from './BooksLearningFolder/BooksLearningCom
 export { default as Feedback } from './homeComponents/Feedback';
 export { Section, BottomSection } from './homeComponents/Sections';
 export { default as NoBookFound } from './NoBookFound/NoBookFound';
+export { default as Regulations } from './Regulations/Regulations';
 

@@ -40,7 +40,6 @@ const BooksLearning = () => {
     }
   }
 
-
   return (
     <RequireAuth>
       <div className={styles.container}>
@@ -82,7 +81,7 @@ const BooksLearning = () => {
                 <p className={styles.text}>כאן יופיעו הספרים שלך </p>
               </div>
             </div>
-          ) : (
+          ) : ( (filteredUserBooks.length === 0) ? <p>אין ספרים התואמים את תוי החיפוש שלך</p> :
             filteredUserBooks.map((book, index) => {
               const bookData = getBookData(book);
               return (

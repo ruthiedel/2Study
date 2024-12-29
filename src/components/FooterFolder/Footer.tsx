@@ -7,13 +7,9 @@ import logo from '../../../public/pictures/logo1.png';
 import { Mail } from '../../types';
 import Image from 'next/image';
 import styles from './footer.module.css';
-import Swal from "sweetalert2";
-
-const contactSchema = z.object({
-    name: z.string().min(1, '*שדה חובה'),
-    email: z.string().nonempty('*שדה חובה').email('*כתובת מייל לא תקינה'),
-    message: z.string().min(1, '*שדה חובה'),
-});
+import Link from 'next/link';
+import { sendMailSuccess, sendMailError } from '../../lib/clientHelpers/sweet-alerts'
+import { contactSchema } from '../../lib/clientHelpers/zodSchema'
 
 type ContactFormValues = z.infer<typeof contactSchema>;
 
@@ -36,22 +32,10 @@ const Footer: React.FC = () => {
             };
             await sendMail(mail);
             reset();
-            Swal.fire({
-                title: "תודה על פנייתך! 🙏",
-                text: " נשמח לעזור ונחזור אליך בהקדם. 😊",
-                icon: "success",
-                timer: 3000,
-                confirmButtonText: "נהדר",
-            })
+            sendMailSuccess();
         } catch (error) {
             console.error('Error sending email:', error);
-            Swal.fire({
-                title: "הייתה שגיאה בשליחת המייל 😥",
-                text: "אנא נסה שוב מאוחר יותר. ⚠️",
-                icon: "error",
-                timer: 3000,
-                confirmButtonText: "סגור",
-            })
+            sendMailError();
         }
     };
 
@@ -59,6 +43,12 @@ const Footer: React.FC = () => {
         <div className={styles.footerContainer}>
             <div className={styles.column1}>
                 <Image src={logo} alt="logo" className={styles.logo} />
+            </div>
+            <div className={styles.links}>
+                <Link href="/home">דף הבית</Link>
+                <Link href="/BooksLearning">ספרים בלמידה</Link>
+                <Link href="/bookCatalog">קטלוג ספרים</Link>
+                <Link href="/userDashboard">איזור אישי</Link>
             </div>
             <div className={styles.divider}></div>
             <div className={styles.column2}>

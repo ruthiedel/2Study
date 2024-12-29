@@ -1,0 +1,17 @@
+.termsContainer {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .termsContainer input {
+    margin-right: 5px;
+  }
+  
+  .termsContainer a {
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  
+  
