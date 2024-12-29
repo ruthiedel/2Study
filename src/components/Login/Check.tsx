@@ -3,17 +3,16 @@ import { registerUser, logInUser } from '../../services/userService';
 import { UserWithPassword, LoginCredentials } from '../../types';
 
 const AuthForm: React.FC = () => {
-  const [isRegister, setIsRegister] = useState<boolean>(true); // מצב אם אנחנו בהרשמה או בהתחברות
+  const [isRegister, setIsRegister] = useState<boolean>(true);
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const [fullName, setFullName] = useState<string>(''); // רק בהרשמה
+  const [fullName, setFullName] = useState<string>('');
   const [message, setMessage] = useState<string>('');
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
     if (isRegister) {
-      // הרשמה
       const user: UserWithPassword = { 
             name: fullName,
             email: email,
@@ -23,16 +22,15 @@ const AuthForm: React.FC = () => {
        };
       try {
         const response = await registerUser(user);
-        setMessage(response.message); // הצגת הודעה מהשרת
+        setMessage(response.message);
       } catch (error) {
         setMessage('שגיאה בהרשמה');
       }
     } else {
-      // התחברות
       const credentials: LoginCredentials = { email, password };
       try {
         const response = await logInUser(credentials);
-        setMessage(response.message); // הצגת הודעה מהשרת
+        setMessage(response.message);
       } catch (error) {
         setMessage('שגיאה בהתחברות');
       }
