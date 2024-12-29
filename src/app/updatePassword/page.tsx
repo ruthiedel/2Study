@@ -32,7 +32,8 @@ const ResetPassword = () => {
     return (
         <RequireAuth>
             <div className={styles.container}>
-                <h2 className={styles.title}>שנה סיסמא</h2>
+                <h2 className={styles.title}>היי {user?.name}</h2>
+                <h2 className={styles.title}>כאן תוכל\י לשנות סיסמא</h2>
                 <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
                     <div className={styles.inputContainer}>
                         <input
