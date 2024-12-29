@@ -8,6 +8,7 @@ import { Mail } from '../../types';
 import Image from 'next/image';
 import styles from './footer.module.css';
 import Swal from "sweetalert2";
+import Link from 'next/link';
 
 const contactSchema = z.object({
     name: z.string().min(1, '*שדה חובה'),
@@ -59,6 +60,12 @@ const Footer: React.FC = () => {
         <div className={styles.footerContainer}>
             <div className={styles.column1}>
                 <Image src={logo} alt="logo" className={styles.logo} />
+            </div>
+            <div className={styles.links}>
+                <Link href="/home">דף הבית</Link>
+                <Link href="/BooksLearning">ספרים בלמידה</Link>
+                <Link href="/bookCatalog">קטלוג ספרים</Link>
+                <Link href="/userDashboard">איזור אישי</Link>
             </div>
             <div className={styles.divider}></div>
             <div className={styles.column2}>
