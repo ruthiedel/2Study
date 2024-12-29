@@ -38,13 +38,14 @@
   justify-content: space-evenly;
 }
 
-.goalsList{
+.goalsList {
   max-width: 40%;
   max-height: 300px;
   overflow-y: auto;
-  overflow-x: hidden; 
-  word-wrap: break-word; 
+  overflow-x: hidden;
+  word-wrap: break-word;
   white-space: normal;
+  direction: ltr; 
 }
 
 .addGoalContainer {
@@ -80,6 +81,7 @@
   flex: 0.5;
   list-style: none;
   transition: transform 0.2s, box-shadow 0.2s;
+  direction: rtl;
 }
 
 .goalText {
