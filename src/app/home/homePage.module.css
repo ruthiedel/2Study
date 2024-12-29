@@ -5,13 +5,14 @@
 }
 
 .headercontainer {
-  background: url('../../../public/pictures/aboutmain.jpg') center/cover no-repeat, rgba(255, 255, 255, 0.895);
+  background: url('../../../public/pictures/aboutmain2.jpg') center/cover no-repeat, rgba(255, 255, 255, 0.9);
   text-align: center;
-  height: 60vh;
+  height: 65vh;
   position: relative;
   align-items: center;
   display: flex;
   flex-direction: column;
+  padding:20px 0px;
 }
 
 .buttonContainer {
