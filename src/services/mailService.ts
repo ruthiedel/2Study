@@ -22,3 +22,15 @@ export const forgetPassword = async (email:string):Promise<any>=>{
         throw error;
     }
 }
+
+
+export const updatePassword = async (email:string):Promise<any>=>{
+    try{
+        const response =await http.put("/mail/update_password",{ email })
+        return response.data; 
+    }
+    catch (error) {
+        console.error("Error during sending mail:", error);  
+        throw error;
+    }
+}
