@@ -1,0 +1,64 @@
+.dailyContent {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    position: relative;
+
+  }
+  
+  .contentCard {
+    background-color:var(--primary-color);
+    border: 1px solid #ccc;
+    padding: 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+  
+  .contentCard:hover {
+    transform: scale(1.05);
+  }
+  
+  .expandedCard {
+    position: fixed;
+    z-index: 1001; 
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    width: 80%;
+    max-height: 90%;
+    overflow-y: auto;
+  }
+
+  .expandedCardWrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+  }
+  
+  .closeButton {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border:1px black solid;
+    background: rgb(241, 238, 238);
+    color: rgb(18, 17, 17);
+    border: none;
+    padding: 2px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  

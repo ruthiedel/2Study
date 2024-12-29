@@ -76,6 +76,9 @@ const Header: React.FC = () => {
                         <Link href="/bookCatalog" className={`${styles.navButton} ${pathname === '/bookCatalog' ? styles.active : ''}`}>
                             <button className={styles.navText}>קטלוג ספרים</button>
                         </Link>
+                        <Link href="/daily" className={`${styles.navButton} ${pathname === '/daily' ? styles.active : ''}`}>
+                            <button className={styles.navText}> לימוד יומי</button>
+                        </Link>
                     </div>
 
                     <IconButton
