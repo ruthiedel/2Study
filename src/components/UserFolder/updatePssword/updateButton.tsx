@@ -24,7 +24,7 @@ const PasswordResetButton: React.FC<SendPasswordResetButtonProps> = ({ email }) 
             await Swal.fire({
                 icon: 'error',
                 title: 'שליחת המייל נכשלה',
-                text: 'אם הבעיה נמשכת, אנא פנה להנהלת האתר במייל: support@example.com',
+                text: 'אם הבעיה נמשכת, אנא פנה להנהלת האתר במייל: 054racheli@gmail.com',
                 confirmButtonText: 'אישור',
             });
         } finally {
