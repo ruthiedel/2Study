@@ -18,6 +18,7 @@ import { Loading, Regulations } from '../index';
 import { errorRegisterAlert, successAlert } from '../../lib/clientHelpers/sweet-alerts'
 
 import { loginSchema, registerSchema } from '../../lib/clientHelpers/zodSchema'
+import Swal from "sweetalert2";
 
 interface LoginProp {
   onClickDialog: () => void;
