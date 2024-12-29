@@ -1,10 +1,11 @@
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 
-export async function POST(request: Request) {
+export async function PUT(request: Request) {
   try {
     const body = await request.json();
     const { email } =body;
+
 
     if ( !email ) {
       return NextResponse.json(
@@ -28,7 +29,7 @@ export async function POST(request: Request) {
       text: `
       Please click one of the links below:
       
-      For developers: http://localhost:3000/updatePssword
+      For developers: http://localhost:3000/updatePassword
       For users: https://2-study.vercel.app/updatePassword
     `,
     };

@@ -3,25 +3,12 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import Swal from 'sweetalert2';
 import styles from './reset-password.module.css';
 import RequireAuth from '../../layout/RequireAuth';
 import useUserStore from '../../services/zustand/userZustand/userStor';
 import { updatePassword } from '@/services/userService';
-
-const passwordSchema = z.object({
-    password: z
-        .string()
-        .min(6, { message: 'הסיסמא צריכה להכיל לפחות 6 תווים' })
-        .regex(/[a-z]/, { message: 'הסיסמא צריכה לכלול אותיות קטנות' })
-        .regex(/[A-Z]/, { message: 'הסיסמא צריכה לכלול אותיות גדולות' })
-        .regex(/[0-9]/, { message: 'הסיסמא צריכה לכלול ספרות' }),
-    confirmPassword: z.string().min(6, { message: 'הסיסמא צריכה להכיל לפחות 6 תווים' }),
-}).refine(data => data.password === data.confirmPassword, {
-    message: 'הסיסמאות לא תואמות',
-    path: ['confirmPassword'],
-});
-
+import { updatePasswordAlert, errorPasswordAlert } from '../../lib/clientHelpers/sweet-alerts'
+import { passwordSchema } from '../../lib/clientHelpers/zodSchema'
 type FormData = z.infer<typeof passwordSchema>;
 
 const ResetPassword = () => {
@@ -36,25 +23,17 @@ const ResetPassword = () => {
         const { password } = data;
         try {
             await updatePassword({email: user?.email!, newPassword: password});
-            Swal.fire({
-                title: 'הסיסמא עודכנה בהצלחה!',
-                icon: 'success',
-                confirmButtonText: 'סגור',
-            });
+            updatePasswordAlert()
         } catch (error) {
-            Swal.fire({
-                title: 'שגיאה',
-                text: 'הייתה שגיאה בעדכון הסיסמא, אנא נסה שוב מאוחר יותר.',
-                icon: 'error',
-                confirmButtonText: 'סגור',
-            });
+            errorPasswordAlert()
         }
     };
 
     return (
         <RequireAuth>
             <div className={styles.container}>
-                <h2 className={styles.title}>שנה סיסמא</h2>
+                <h2 className={styles.title}>היי {user?.name}</h2>
+                <h2 className={styles.title}>כאן תוכל\י לשנות סיסמא</h2>
                 <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
                     <div className={styles.inputContainer}>
                         <input

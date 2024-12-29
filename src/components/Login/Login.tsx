@@ -15,10 +15,8 @@ import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../../lib/firebase";
 import { forgetPassword } from "@/services/mailService";
 import { Loading, Regulations } from '../index';
-import { errorRegisterAlert, successAlert } from '../../lib/clientHelpers/sweet-alerts'
-
+import { errorRegisterAlert, successAlert, newPasswordAlert, forgotPasswordAlert } from '../../lib/clientHelpers/sweet-alerts'
 import { loginSchema, registerSchema } from '../../lib/clientHelpers/zodSchema'
-import Swal from "sweetalert2";
 
 interface LoginProp {
   onClickDialog: () => void;
@@ -110,35 +108,12 @@ function Login({ onClickDialog }: LoginProp) {
   }
 
   const handleForgotPassword = async () => {
-    const { value: email } = await Swal.fire({
-      title: "שכחת סיסמה?",
-      input: "email",
-      inputLabel: "הכנס את כתובת המייל שלך",
-      inputPlaceholder: "your-email@example.com",
-      confirmButtonText: "שלח",
-      showCancelButton: true,
-      cancelButtonText: "ביטול",
-      inputValidator: (value) => {
-        if (!value) {
-          return "יש למלא את כתובת המייל!";
-        }
-        if (!/\S+@\S+\.\S+/.test(value)) {
-          return "כתובת מייל לא חוקית!";
-        }
-        return null;
-      },
-    });
-  
+    const email = await forgotPasswordAlert()
     if (email) {
       setLoading(true);
       try {
         await forgetPassword(email);
-        await Swal.fire({
-          icon: "success",
-          title: "סיסמה חדשה נשלחה!",
-          text: "תוכלי להתחבר למערכת עם הסיסמה החדשה שנשלחה אלייך למייל. בנוסף, תוכלי לשנות אותה באזור האישי שלך.",
-          confirmButtonText: "אישור",
-        });
+        newPasswordAlert()
       } catch (error) {
         errorRegisterAlert("המערכת נתקלה בבעיה בשליחת הסיסמה לתיבת המייל שלך");
       } finally {

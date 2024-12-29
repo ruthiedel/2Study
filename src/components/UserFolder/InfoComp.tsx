@@ -2,6 +2,7 @@ import React from "react";
 import useUserStore from "../../services/zustand/userZustand/userStor";
 import styles from "./userStatus.module.css";
 import StarIcon from "@mui/icons-material/Star";
+import PasswordResetButton from "./updatePssword/updateButton";
 
 const InfoComp = () => {
   const user = useUserStore((state) => state.user);
@@ -16,15 +17,15 @@ const InfoComp = () => {
               alt={user?.name}
               className={styles.imgUser}
               onError={(e) => {
-                const target = e.target as HTMLImageElement; 
-                target.onerror = null; 
-                target.src = "/Default_User.png"; 
+                const target = e.target as HTMLImageElement;
+                target.onerror = null;
+                target.src = "/Default_User.png";
               }}
             />
           </div>
           <div className={styles.infoContainer}>
-            <div  className={styles.userName}>
-            <strong>  שם משתמש: </strong> <div className={styles.text}>{user?.name}</div>
+            <div className={styles.userName}>
+              <strong>  שם משתמש: </strong> <div className={styles.text}>{user?.name}</div>
             </div>
             <div> <strong>מייל: </strong><div className={styles.text}>{user?.email}</div></div>
           </div>
@@ -35,6 +36,9 @@ const InfoComp = () => {
             {user?.books.length} ספרים בלמידה \ נלמדו
             <StarIcon className={styles.starIcon} />
           </p>
+        </div>
+        <div className={styles.resetPasswordContainer}>
+          <PasswordResetButton email={user?.email || ""} />
         </div>
       </div>
     </div>
