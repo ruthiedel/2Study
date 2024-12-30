@@ -26,13 +26,10 @@ const BookCardComp: React.FC<BookCardProps> = ({ book, onClose }) => {
 
     useEffect(() => {
         if (user) {
-            const bookExists = user.books.find((userBook) => userBook.book_id === book._id );
-            if (bookExists && bookExists.status) {
-                setFoundBook(true);
-            }
-            else{
-                setFoundBook(false);
-            }
+            const bookExistsWithActiveStatus = user?.books.some((userBook) => {
+                return userBook.book_id === book._id && userBook.status;
+            });
+            setFoundBook(bookExistsWithActiveStatus);
         }
     }, [user]);
 
@@ -105,13 +102,9 @@ const BookCardComp: React.FC<BookCardProps> = ({ book, onClose }) => {
                                 </div>
                             </Grid>
 
-                            <p className={styles.ttext}>
-                                <strong>הצצה לספר:</strong>
-                            </p>
+                            <p className={styles.ttext}><strong>הצצה לספר:</strong></p>
 
-                            <div
-                                className={showMore ? styles.fullText : styles.truncatedText}
-                            >
+                            <div className={showMore ? styles.fullText : styles.truncatedText}>
                                 {removeHtmlTags(book.firstParagraphText ? book.firstParagraphText : '')}
                             </div>
 
