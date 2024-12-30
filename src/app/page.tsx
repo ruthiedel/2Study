@@ -9,7 +9,6 @@ const SomeComponent = () => {
   const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
-    // ודא שהקוד רץ רק בצד הלקוח
     if (typeof window !== "undefined") {
       const storedUser = localStorage.getItem("user");
       if (storedUser) {

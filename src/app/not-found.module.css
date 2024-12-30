@@ -4,27 +4,27 @@
     align-items: center;
     justify-content: center;
     height: 100vh;
-    background: linear-gradient(135deg, #a8c0d7 0%, #8ec5fc 100%);
+    background: linear-gradient(135deg, #f7f7f7 0%, #f9e9a9 100%);
     text-align: center;
     font-family: 'Arial', sans-serif;
   }
   
   .heading {
     font-size: 36px;
-    color: #fff;
+    color: #080808;
     margin-bottom: 10px;
     font-weight: bold;
   }
   
   .message {
     font-size: 18px;
-    color: #fff;
+    color: #060505;
     margin-bottom: 30px;
   }
   
   .homeLink {
     padding: 12px 24px;
-    background-color: #4ca3dd;
+    background-color: #000001;
     color: #fff;
     font-size: 16px;
     text-decoration: none;
@@ -33,7 +33,7 @@
   }
   
   .homeLink:hover {
-    background-color: #3498db;
+    background-color: #394045;
   }
   
   @media (max-width: 600px) {

@@ -107,21 +107,21 @@ body {
 }
 
 ::-webkit-scrollbar {
-  width: 8px;   /* רוחב פס הגלילה */
-  height: 8px;  /* גובה פס הגלילה עבור גלילה אופקית */
+  width: 8px;  
+  height: 8px; 
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #888;  /* צבע פס הגלילה */
-  border-radius: 10px;     /* פינות מעוגלות */
-  border: 2px solid #fff;  /* רווח פנימי */
+  background-color: #888;  
+  border-radius: 10px;     
+  border: 2px solid #fff; 
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #555;  /* צבע פס הגלילה בהובר */
+  background-color: #555;  
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;     /* צבע הרקע */
-  border-radius: 10px;     /* פינות מעוגלות */
+  background: #f1f1f1;     
+  border-radius: 10px;    
 }

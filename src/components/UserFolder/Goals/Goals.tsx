@@ -5,6 +5,8 @@ import { FaTrashAlt, FaCheckSquare, FaRegSquare } from 'react-icons/fa';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import styles from './Goals.module.css';
 import useUserStore from '../../../services/zustand/userZustand/userStor';
+import { InfoTooltip } from '../../index';
+
 
 interface Goal {
     text: string;
@@ -17,7 +19,7 @@ const GoalSetting: React.FC = () => {
     const user = useUserStore((state) => state.user);
 
     const localStorageKey = user?._id ? `userGoals_${user._id}` : null;
-    
+
     useEffect(() => {
         if (localStorageKey) {
             const storedGoals = JSON.parse(localStorage.getItem(localStorageKey) || '[]');
@@ -71,7 +73,10 @@ const GoalSetting: React.FC = () => {
                 ></DotLottieReact>
             </div>
             <div className={styles.contentColumn}>
-                <h2 className={styles.title}>המטרות שלי:</h2>
+                <h2 className={styles.title} >
+                    המטרות שלי: 
+                    <InfoTooltip text="הצב יעדים, השג אותם, ותראה איך הצמיחה האישית שלך פורחת." />
+                    </h2>
                 <div className={styles.innerColumns}>
                     <div className={styles.goalsList}>
                         <ul className={styles.goalList}>
@@ -79,9 +84,8 @@ const GoalSetting: React.FC = () => {
                                 goals.map((goal, index) => (
                                     <li
                                         key={index}
-                                        className={`${styles.goalItem} ${
-                                            goal.completed ? styles.completed : ''
-                                        }`}
+                                        className={`${styles.goalItem} ${goal.completed ? styles.completed : ''
+                                            }`}
                                     >
                                         <button
                                             onClick={() => handleGoalDelete(index)}

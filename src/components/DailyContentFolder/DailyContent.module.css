@@ -1,0 +1,161 @@
+.mainContainer{
+  font-family: var(--main-font);
+}
+
+.dailyContent {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  position: relative;
+
+}
+
+.contentCard, .learnedCard{
+  background-color: var(--primary-color);
+  border: 1px solid rgb(132, 132, 132);
+  padding: 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.contentCard:hover {
+  transform: scale(1.05);
+}
+
+.expandedCard {
+  position: relative;
+  z-index: 1001;
+  background-color: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  width: 80%;
+  max-height: 90%;
+}
+
+.expandedCardWrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.closeButton {
+  background-color: white;
+  color: black;
+  border: none;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  cursor: pointer;
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+
+.closeButton:hover {
+  background-color: #555; 
+  transform: scale(1.1); 
+  color: white;
+}
+
+.closeButton:active {
+  background-color: #222; 
+  transform: scale(0.95); 
+}
+
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  font-family: var(--main-font);
+}
+
+
+.mainTitle {
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.subtitle{
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.cardTitle{
+  font-size: 25px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.cardSubtitle{
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.cardTextContainer{
+  padding: 0px 50px 0px 50px;
+  overflow-y: scroll;
+  position: relative;
+  max-height: 350px;
+  direction: ltr;
+}
+
+.cardText{
+  direction: rtl;
+}
+
+
+.title {
+  font-size: 30px;
+  font-weight: bold;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.intro {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #414040;
+  margin: 10px 70px 5px 70px;
+}
+
+.headerContainer{
+  text-align: center;
+}
+
+.learnedCard {
+  background-color: #f0f0f0;
+  opacity: 0.7;
+}
+
+.learnedButton {
+  padding: 7px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  margin-top: 5px;
+}

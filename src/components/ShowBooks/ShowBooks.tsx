@@ -96,13 +96,11 @@ const ShowBooks: React.FC = () => {
                 </div>
                 {selectedBook && (
                     <>
-                        <RequireAuth>
 
                             <div className={styles.overlay} onClick={handleClosePopup}></div>
                             <div className={styles.popup}>
-                                <BookCard book={selectedBook} onClose={handleClosePopup} />
+                            <BookCard book={selectedBook} onClose={handleClosePopup} />
                             </div>
-                        </RequireAuth>
 
                     </>
                 )}

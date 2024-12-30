@@ -13,7 +13,6 @@ import Styles from "./Study.module.css";
 import Confetti from "react-confetti";
 import RequireAuth from "../../../layout/RequireAuth";
 import "sweetalert2/src/sweetalert2.scss";
-import StyledButton from "../../../components/StyleComponentsFolder/styledButton";
 import { errorAlert, successAlert, infoAlert, finishAlert } from '../../../lib/clientHelpers/sweet-alerts'
 
 interface Index {
@@ -82,7 +81,7 @@ const Study = () => {
                     infoAlert()
                 }
                 setParagraph(paragraphs.sections);
-                if(paragraphs.length ===0) {
+                if (paragraphs.length === 0) {
                     setIsEmptyBook(true)
                 }
             } catch (error) {
@@ -229,9 +228,23 @@ const Study = () => {
                     <IconButton onClick={() => handleNavigation("next")} disabled={isLastSection}>
                         <ExpandMore />
                     </IconButton>
-                    <button onClick={openQuiz} className={Styles.quizButton}>
-                        בחן את עצמך
-                    </button>
+
+                    {/* Container for buttons */}
+                    <div className={Styles.buttonContainer}>
+                        <button onClick={openQuiz} className={Styles.quizButton}>
+                            בחן את עצמך
+                        </button>
+                        {isLastSection && currentUserBook?.status === false ? (
+                            <button className={Styles.quizButton} onClick={() => { handleStartAgain() }}>
+                                התחל את הספר מחדש
+                            </button>
+                        ) : isLastSection ? (
+                            <button className={Styles.quizButton} onClick={handleFinish}>
+                                סיימתי ללמוד
+                            </button>
+                        ) : null}
+                    </div>
+
                     <Dialog open={showQuiz} onClose={closeQuiz}>
                         {paragraph &&
                             index &&
@@ -259,15 +272,6 @@ const Study = () => {
                     <Dialog open={isShowRating} onClose={closeRating}>
                         <Rating bookId={bookId} onClose={closeRating} />
                     </Dialog>
-                    {isLastSection && currentUserBook?.status === false ? (
-                        <StyledButton onClick={() => { handleStartAgain() }} bgColor="#e1e1e1" textColor="black">
-                            התחל את הספר מחדש
-                        </StyledButton>
-                    ) : isLastSection ? (
-                        <StyledButton onClick={handleFinish} bgColor="#e1e1e1" textColor="black">
-                            סיימתי ללמוד
-                        </StyledButton>
-                    ) : null}
                 </div>
                 <Chat bookId={bookId} bookName={bookData?.name || ""} />
                 {showConfetti && <Confetti />}
@@ -277,4 +281,3 @@ const Study = () => {
 };
 
 export default Study;
-
