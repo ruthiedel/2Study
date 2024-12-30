@@ -3,6 +3,7 @@ import markbook from "../../../public/pictures/bookmark.svg";
 import emptyMarkbook from "../../../public/pictures/empty-bookmark1.svg";
 import Image from "next/image";
 import { bookMarkError, bookMarkSuccess } from '../../lib/clientHelpers/sweet-alerts';
+import { InfoTooltip} from '../index';
 
 interface markProp {
   bookId: string;
@@ -49,6 +50,12 @@ export default function MarkButton({
       <button onClick={handleIndex} className='mark-button'>
         <Image src={(isMarked) ? markbook : emptyMarkbook} alt="markbook"></Image>
         {(isMarked) ? 'עצרתי כאן' : 'עדכן סימניה'}
+        <InfoTooltip
+          text={isMarked
+            ? "כאן עצרת בפעם האחרונה"
+            : "כאן אתה יכול לעדכן את הסימניה, כך שפעם הבאה שתכנס תמשיך ממש מכאן"
+          }
+        />
       </button>
     </div>
   );
