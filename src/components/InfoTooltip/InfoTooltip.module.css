@@ -1,0 +1,51 @@
+.tooltipContainer {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .infoIcon {
+    width: 20px;
+    height: 20px;
+    background-color: rgba(201, 205, 208, 0.5);
+    color: rgb(137, 133, 133);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .tooltip {
+    position: absolute;
+    top: 30px; /* המיקום מעל האלמנט */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: white;
+    padding: 8px 10px;
+    border-radius: 4px;
+    white-space: nowrap;
+    font-size: 14px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000; /* מספר גבוה כדי לוודא שה-tooltip יעמוד מעל כל שאר האלמנטים */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+  }
+  
+  .tooltipContainer:hover .tooltip {
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  /* שימוש בקלאס מותאם אישית כדי להימנע משגיאה */
+  .mark-button,
+  .mark-input,
+  .mark-button input,
+  .mark-button button,
+  .mark-button textarea {
+    position: relative; /* לוודא שה-Tooltip יהיה תמיד מעל */
+  }
+  

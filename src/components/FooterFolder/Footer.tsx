@@ -48,6 +48,7 @@ const Footer: React.FC = () => {
                 <Link href="/home">דף הבית</Link>
                 <Link href="/BooksLearning">ספרים בלמידה</Link>
                 <Link href="/bookCatalog">קטלוג ספרים</Link>
+                <Link href="/daily">לימוד יומי</Link>
                 <Link href="/userDashboard">איזור אישי</Link>
             </div>
             <div className={styles.divider}></div>

@@ -28,3 +28,4 @@ export { Section, BottomSection } from './homeComponents/Sections';
 export { default as NoBookFound } from './NoBookFound/NoBookFound';
 export { default as Regulations } from './Regulations/Regulations';
 export { default as DailyContent} from './DailyContentFolder/DailyContent';
+export { default as InfoTooltip} from './InfoTooltip/InfoTooltip';

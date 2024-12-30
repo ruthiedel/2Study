@@ -9,9 +9,11 @@ import useUserStore from '../../services/zustand/userZustand/userStor';
 import { updatePassword } from '@/services/userService';
 import { updatePasswordAlert, errorPasswordAlert } from '../../lib/clientHelpers/sweet-alerts'
 import { passwordSchema } from '../../lib/clientHelpers/zodSchema'
+import { useRouter } from "next/navigation";
 type FormData = z.infer<typeof passwordSchema>;
 
 const ResetPassword = () => {
+    const router = useRouter();
     const user = useUserStore((state) => state.user);
     const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
         resolver: zodResolver(passwordSchema),
@@ -24,6 +26,7 @@ const ResetPassword = () => {
         try {
             await updatePassword({email: user?.email!, newPassword: password});
             updatePasswordAlert()
+            router.push(`/userDashboard`); 
         } catch (error) {
             errorPasswordAlert()
         }
