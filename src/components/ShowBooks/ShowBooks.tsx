@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useMemo, useState } from 'react';
-import {BookCard, BookDetail, FilterComponent} from '../index';
+import { BookCard, BookDetail, FilterComponent } from '../index';
 import RequireAuth from '../../layout/RequireAuth';
 import styles from './showBookCss.module.css';
 import { Book } from '../../types';
@@ -18,7 +18,7 @@ const ShowBooks: React.FC = () => {
     const filteredBooks = useMemo(() => {
         if (!books || error) return [];
 
-        if (Array.isArray(books)){
+        if (Array.isArray(books)) {
             return books.filter((book: Book) => {
                 const matchesCategory = categories.length === 0 || categories.some(cat =>
                     book.category.subject.includes(cat) ||
@@ -29,7 +29,7 @@ const ShowBooks: React.FC = () => {
                 return matchesCategory && matchesBookName && matchesAuthorName;
             })
         }
-        else{
+        else {
             return []
         }
     }, [books, categories, bookName, authorName]);
@@ -43,25 +43,25 @@ const ShowBooks: React.FC = () => {
     };
 
     function getUniqueCategoryStrings(books: Book[]): string[] {
-        const uniqueCategories: string[] = [];   
-        if( books && Array.isArray(books)) {
+        const uniqueCategories: string[] = [];
+        if (books && Array.isArray(books)) {
             books.forEach(book => {
                 const localType = book.category.type;
                 const localSubject = book.category.subject;
-                if(!uniqueCategories.includes(localType)) {uniqueCategories.push(localType);}
-                if(!uniqueCategories.includes(localSubject)) {uniqueCategories.push(localSubject);}
+                if (!uniqueCategories.includes(localType)) { uniqueCategories.push(localType); }
+                if (!uniqueCategories.includes(localSubject)) { uniqueCategories.push(localSubject); }
             });
-        }  
+        }
         return uniqueCategories;
     }
 
     const uniqueCategories = useMemo(() => {
-        if( books && Array.isArray(books)) {
-        return  books.length > 0 ? getUniqueCategoryStrings(books) : ['הלכה'];
+        if (books && Array.isArray(books)) {
+            return books.length > 0 ? getUniqueCategoryStrings(books) : ['הלכה'];
         } else {
             return ['הלכה'];
         }
-      }, [books]);
+    }, [books]);
 
 
 
@@ -80,27 +80,29 @@ const ShowBooks: React.FC = () => {
             </div>
 
             <div className={styles.booksContainer}>
-                <div className={styles.bookGrid}>
-                    {filteredBooks && filteredBooks?.map((book, index) => (
-                        <BookDetail key={index} book={book} handleClick={handleBookSelect} />
-                    ))}
-                    {filteredBooks && filteredBooks?.map((book, index) => (
-                        <BookDetail key={index} book={book} handleClick={handleBookSelect} />
-                    ))}
-                    {filteredBooks && filteredBooks?.map((book, index) => (
-                        <BookDetail key={index} book={book} handleClick={handleBookSelect} />
-                    ))}
-                    {filteredBooks && filteredBooks?.map((book, index) => (
-                        <BookDetail key={index} book={book} handleClick={handleBookSelect} />
-                    ))}
-                </div>
+                {filteredBooks && filteredBooks.length > 0 ?
+                    <div className={styles.bookGrid}>
+                        {filteredBooks && filteredBooks?.map((book, index) => (
+                            <BookDetail key={index} book={book} handleClick={handleBookSelect} />
+                        ))}
+                        {filteredBooks && filteredBooks?.map((book, index) => (
+                            <BookDetail key={index} book={book} handleClick={handleBookSelect} />
+                        ))}
+                        {filteredBooks && filteredBooks?.map((book, index) => (
+                            <BookDetail key={index} book={book} handleClick={handleBookSelect} />
+                        ))}
+                        {filteredBooks && filteredBooks?.map((book, index) => (
+                            <BookDetail key={index} book={book} handleClick={handleBookSelect} />
+                        ))}
+                    </div> :
+                    <p className={styles.noBooks}>אין ספרים להצגה</p>}
                 {selectedBook && (
                     <>
 
-                            <div className={styles.overlay} onClick={handleClosePopup}></div>
-                            <div className={styles.popup}>
+                        <div className={styles.overlay} onClick={handleClosePopup}></div>
+                        <div className={styles.popup}>
                             <BookCard book={selectedBook} onClose={handleClosePopup} />
-                            </div>
+                        </div>
 
                     </>
                 )}
