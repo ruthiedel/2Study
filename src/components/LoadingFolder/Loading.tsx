@@ -9,6 +9,7 @@ const Loading = () => {
         justifyContent: 'center',
         alignItems: 'center',
         height: '45%',
+        backgroundColor:'none'
 
       }}
     >
@@ -19,6 +20,7 @@ const Loading = () => {
         style={{
           width: '200px',
           height: '170px',
+          backgroundColor: 'transparent',
         }}
       >
       </DotLottieReact>
