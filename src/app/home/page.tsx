@@ -55,7 +55,7 @@ const HomePage: React.FC = () => {
             title: 'פתרונות מהירים, הצלחה גדולה',
             description: 'באתר שלנו, כל הכלים זמינים לך בלחיצת כפתור:  סימניות חכמות שיכולות לעזור לך לארגן את הלמידה שלך בצורה נוחה, שאלות למעקב עצמי יעזרו לך להעמיק את ההבנה שלך, וקבוצות למידה שמשלבות אותך בקהילה תומכת של לומדים.',
             scriptUrl: 'https://unpkg.com/@lottiefiles/dotlottie-wc@0.3.0/dist/dotlottie-wc.js',
-            animateUrl: 'https://lottie.host/5edb9475-79c4-4256-a41e-d87a23ef812c/Cnwk1qM3PW.lottie'
+            animateUrl: 'https://lottie.host/f1d3c5af-add7-4eb4-92a5-86f2a88baa2b/nmxpipNU7M.lottie'
         },
         {
             title: 'המקום המושלם ללמוד',
