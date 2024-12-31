@@ -4,7 +4,7 @@ import { Paragraph } from '../../types';
 import { generateQuestionAndAnswer } from '../../services/questionService';
 import { updateBookQuestionService } from "../../services/bookService";
 import styles from './questionCard.module.css';
-import {Loading} from '../index';
+import {Loading, InfoTooltip} from '../index';
 
 interface Paragraphs {
     section: Paragraph;
@@ -77,6 +77,7 @@ const QuestionCardComp = (props: { p: Paragraph, bookId: string, chapterId: numb
                         {idxQuestion < 4 ? (
                             <button className={styles.changeButton} onClick={handleChangeQuestion}>
                                 שנה שאלה
+                                <InfoTooltip text="מכיר את השאלה? המודל שלנו יביא לך שאלה אחרת" />
                             </button>
                         ) : (
                             <p className={styles.error}>לא ניתן ליצור שאלה נוספת. יש כבר 5 שאלות.</p>
