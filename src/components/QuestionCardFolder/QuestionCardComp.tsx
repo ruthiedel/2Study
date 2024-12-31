@@ -5,6 +5,7 @@ import { generateQuestionAndAnswer } from '../../services/questionService';
 import { updateBookQuestionService } from "../../services/bookService";
 import styles from './questionCard.module.css';
 import {Loading, InfoTooltip} from '../index';
+import { ExpandLess, ExpandMore } from "@mui/icons-material";
 
 interface Paragraphs {
     section: Paragraph;
@@ -73,7 +74,7 @@ const QuestionCardComp = (props: { p: Paragraph, bookId: string, chapterId: numb
             {props.p.questions.length > 0 ? (
                 <div className={`${styles.card} ${loading ? styles.loading : ""}`}>
                     <div className={styles.leftPanel}>
-                        <img src="/pictures/question.jpg" alt="Question Icon" className={styles.image} />
+                        <img src="/pictures/what.jpg" alt="Question Icon" className={styles.image} />
                         {idxQuestion < 4 ? (
                             <button className={styles.changeButton} onClick={handleChangeQuestion}>
                                 שנה שאלה
@@ -89,7 +90,7 @@ const QuestionCardComp = (props: { p: Paragraph, bookId: string, chapterId: numb
                             className={styles.toggle}
                             onClick={() => setIsQuestionOpen(!isQuestionOpen)}
                         >
-                            <span className={styles.toggleText}>{isQuestionOpen? '▲':'▼'}שאלה לתרגול: </span>
+                            <span className={styles.toggleText}>{isQuestionOpen? <ExpandLess /> : <ExpandMore />}שאלה לתרגול: </span>
                         </div>
                         {isQuestionOpen && props.p.questions[idxQuestion] && (
                             <div className={styles.text}>{props.p.questions[idxQuestion].question}</div>
@@ -99,7 +100,7 @@ const QuestionCardComp = (props: { p: Paragraph, bookId: string, chapterId: numb
                             className={styles.toggle}
                             onClick={() => setIsAnswerOpen(!isAnswerOpen)}
                         >
-                            <span className={styles.toggleText}>{isAnswerOpen? '▲':'▼'}חשוף את התשובה: </span>
+                            <span className={styles.toggleText}>{isAnswerOpen? <ExpandLess /> : <ExpandMore />}חשוף את התשובה: </span>
                         </div>
                         {isAnswerOpen && props.p.questions[idxQuestion] && (
                             <div className={styles.text}>{props.p.questions[idxQuestion].answer}</div>

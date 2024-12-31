@@ -1,11 +1,12 @@
 .card {
   display: flex;
   flex-direction: row;
-  background-color:rgb(69, 66, 66);
+  background-color: white;
   color: white;
   padding: 20px;
   width: 600px;
   position: relative;
+  font-family: var(--main-font);
 }
 
 .loading {
@@ -17,7 +18,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: start;
   width: 150px;
   padding: 10px;
 }
@@ -30,7 +31,7 @@
 }
 
 .changeButton {
-  background-color: #f0a500;
+  background-color: rgb(241, 206, 160);
   color: black;
   border: none;
   border-radius: 5px;
@@ -40,7 +41,7 @@
 }
 
 .changeButton:hover {
-  background-color: #ffa726;
+  background-color: rgb(204, 171, 129);
 }
 
 .rightPanel {
@@ -55,7 +56,7 @@
   border: 1px solid white;
   border-radius: 5px;
   padding: 10px;
-  background-color: white;
+  background-color: var(--lightest-gray);
   margin-top: 5px;
 }
 
@@ -67,7 +68,7 @@
 }
 
 .text {
-  background-color: white;
+  /* background-color: var(--lightest-gray); */
   border-radius: 5px;
   padding: 10px;
   color: black;
