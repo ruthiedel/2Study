@@ -1,3 +1,26 @@
+
+.toggleButton {
+  width: 60px;
+  height: 60px;
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+  margin-top: 70vh;
+  margin-left: 30px;
+}
+
+.toggleButton:hover {
+  transform: scale(1.1);
+}
+
 .container {
   display: flex;
   flex-direction: column;
@@ -5,7 +28,11 @@
   background-color: #f9fafa;
   font-family: "2StudyFont", sans-serif;
   border-radius: 15px;
-  max-width: 250px;
+}
+
+.closeButton {
+  cursor: pointer;
+  color: white;
 }
 
 .header {
