@@ -60,7 +60,7 @@
 .profileIcon {
   width: 40px;
   height: 40px;
-  background-color: #fcd34d;
+  background-color: var(--primary-color);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -177,7 +177,7 @@
 }
 
 .profile {
-  background-color: #f0a500;
+  background-color: #fde1a7;
   border-radius: 50%;
   height: 25px;
   width: 25px;
