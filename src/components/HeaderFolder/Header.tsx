@@ -11,8 +11,7 @@ import styles from "./header.module.css";
 import useUserStore from '../../services/zustand/userZustand/userStor';
 import { Login } from '../index';
 import { useRouter } from "next/navigation";
-import Swal from "sweetalert2";
-import { showLogoutConfirmation } from "../../lib/clientHelpers/sweet-alerts";
+import { showLogoutConfirmation,logOutAlert } from "../../lib/clientHelpers/sweet-alerts";
 
 
 const Header: React.FC = () => {
@@ -44,11 +43,7 @@ const Header: React.FC = () => {
             }
             logout();
             setAnchorEl(null);
-            Swal.fire(
-                'התנתקת בהצלחה!',
-                'מקווים לראות אותך שוב בקרוב.',
-                'success'
-            );
+            logOutAlert();
         }
     };    
 
