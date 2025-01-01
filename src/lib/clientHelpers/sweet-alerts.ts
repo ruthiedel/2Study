@@ -137,3 +137,16 @@ export const errorPasswordAlert = async () => {
                   confirmButtonText: 'סגור',
               });
 }
+
+export const showLogoutConfirmation = (): Promise<boolean> => {
+    return Swal.fire({
+        title: 'האם אתה בטוח?',
+        text: 'אתה עומד להתנתק. האם להמשיך?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'כן, התנתק',
+        cancelButtonText: 'בטל'
+    }).then((result) => result.isConfirmed);
+};

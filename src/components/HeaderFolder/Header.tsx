@@ -11,6 +11,8 @@ import styles from "./header.module.css";
 import useUserStore from '../../services/zustand/userZustand/userStor';
 import { Login } from '../index';
 import { useRouter } from "next/navigation";
+import Swal from "sweetalert2";
+import { showLogoutConfirmation } from "../../lib/clientHelpers/sweet-alerts";
 
 
 const Header: React.FC = () => {
@@ -34,13 +36,22 @@ const Header: React.FC = () => {
         setAnchorEl(null);
     };
 
-    const handleLogout = () => {
-        if (pathname.startsWith("/study/")) {
-            router.push("/BooksLearning");
+    const handleLogout = async () => {
+        const userConfirmed = await showLogoutConfirmation();
+        if (userConfirmed) {
+            if (pathname.startsWith("/study/")) {
+                router.push("/BooksLearning");
+            }
+            logout();
+            setAnchorEl(null);
+            Swal.fire(
+                'התנתקת בהצלחה!',
+                'מקווים לראות אותך שוב בקרוב.',
+                'success'
+            );
         }
-        logout();
-        setAnchorEl(null);
-    };
+    };    
+
 
     const handleLoginOpen = () => {
         setShowLogin(true);
