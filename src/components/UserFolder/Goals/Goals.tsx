@@ -74,9 +74,9 @@ const GoalSetting: React.FC = () => {
             </div>
             <div className={styles.contentColumn}>
                 <h2 className={styles.title} >
-                    המטרות שלי: 
+                    המטרות שלי:
                     <InfoTooltip text="הצב יעדים, השג אותם, ותראה איך הצמיחה האישית שלך פורחת." />
-                    </h2>
+                </h2>
                 <div className={styles.innerColumns}>
                     <div className={styles.goalsList}>
                         <ul className={styles.goalList}>
@@ -112,6 +112,7 @@ const GoalSetting: React.FC = () => {
                             type="text"
                             value={goal}
                             onChange={(e) => setGoal(e.target.value)}
+                            onKeyDown={(e) => e.key === 'Enter' && handleGoalSubmit()}
                             placeholder="הוסף מטרה חדשה..."
                             className={styles.inputField}
                         />
