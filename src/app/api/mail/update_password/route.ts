@@ -27,10 +27,18 @@ export async function PUT(request: Request) {
       to: email,
       subject: `2Study update password`,
       text: `
-      Please click one of the links below:
+
+      בקשתך לשינוי סיסמא התקבלה אצלינו במערכת,
       
-      For developers: http://localhost:3000/updatePassword
-      For users: https://2-study.vercel.app/updatePassword
+      אנא לחץ על הקישור המתאים למעבר לעמוד המבוקש: 
+
+      עבור מתכנתים: http://localhost:3000/updatePassword
+      עבור משתמשים: https://2-study.vercel.app/updatePassword
+
+      במידה ולא הגשת בקשה כזו, אנא התעלם ממייל זה.
+
+      בברכה,
+      צוות 2study.
     `,
     };
 

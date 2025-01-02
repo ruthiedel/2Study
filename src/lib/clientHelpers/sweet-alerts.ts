@@ -122,18 +122,36 @@ export const newPasswordAlert = async () => {
 }
 
 export const updatePasswordAlert = async () => {
-  await  Swal.fire({
-                  title: 'הסיסמא עודכנה בהצלחה!',
-                  icon: 'success',
-                  confirmButtonText: 'סגור',
-              });
+  await Swal.fire({
+    title: 'הסיסמא עודכנה בהצלחה!',
+    icon: 'success',
+    confirmButtonText: 'סגור',
+  });
 }
 
 export const errorPasswordAlert = async () => {
-   Swal.fire({
-                  title: 'שגיאה',
-                  text: 'הייתה שגיאה בעדכון הסיסמא, אנא נסה שוב מאוחר יותר.',
-                  icon: 'error',
-                  confirmButtonText: 'סגור',
-              });
+  Swal.fire({
+    title: 'שגיאה',
+    text: 'הייתה שגיאה בעדכון הסיסמא, אנא נסה שוב מאוחר יותר.',
+    icon: 'error',
+    confirmButtonText: 'סגור',
+  });
+}
+
+export const showLogoutConfirmation = (): Promise<boolean> => {
+  return Swal.fire({
+    title: 'האם אתה בטוח?',
+    text: 'אתה עומד להתנתק. האם להמשיך?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'כן, התנתק',
+    cancelButtonText: 'בטל'
+  }).then((result) => result.isConfirmed);
+};
+
+export const logOutAlert = () => {
+  Swal.fire('התנתקת בהצלחה!', 'מקווים לראות אותך שוב בקרוב.', 'success');
+
 }
