@@ -24,6 +24,7 @@
     "chart.js": "^4.4.7",
     "cohere-ai": "^7.14.0",
     "firebase": "^11.0.2",
+    "kosher-zmanim": "^0.8.2",
     "mongodb": "^6.10.0",
     "mongoose": "^8.8.3",
     "next": "14.2.18",
