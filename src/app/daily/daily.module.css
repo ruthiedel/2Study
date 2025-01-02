@@ -1,0 +1,26 @@
+.headerContainer {
+    text-align: center;
+}
+
+.title {
+    font-size: 30px;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.intro {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #414040;
+    margin: 10px 70px 5px 70px;
+}
+
+.container {
+    font-family: var(--main-font);
+}

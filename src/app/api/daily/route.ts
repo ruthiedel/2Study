@@ -71,6 +71,7 @@ const fetchDailyContent = async (): Promise<TextContent[]> => {
 export async function GET() {
     try {
         const content = await fetchDailyContent();
+        console.log(content);
         return new Response(JSON.stringify(content), { status: 200 });
     } catch (err) {
         return new Response(JSON.stringify({ error: 'Failed to fetch daily content.' }), { status: 500 });
