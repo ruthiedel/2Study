@@ -35,8 +35,10 @@ describe('Filter Component', () => {
     it('should handle category selection and removal', () => {
       cy.get('select').select(mockCategories[0]);  
       cy.contains(mockCategories[0]).should('be.visible');
-//לא עובד. לשנות סלקטור ולוודא שהקטגוריה יורדת אחרי לחיצה
-      //cy.get('button.xbutton').click();
+      
+      cy.contains('button', '×').click();
+      cy.get('select').should('contain', mockCategories[0]);
+      cy.contains('קטגוריה:').next('span').should('contain', '0');
     });
   
     it('should display correct category count', () => {
