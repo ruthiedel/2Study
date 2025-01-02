@@ -1,0 +1,33 @@
+
+const dictionary = {
+    'א': { start: 1, end: 9 },
+    'ב': { start: 10, end: 17 },
+    'ג': { start: 18, end: 22 },
+    'ד': { start: 23, end: 28 },
+    'ה': { start: 29, end: 34 },
+    'ו': { start: 35, end: 38 },
+    'ז': { start: 39, end: 43 },
+    'ח': { start: 44, end: 48 },
+    'ט': { start: 49, end: 54 },
+    'י': { start: 55, end: 59 },
+    'יא': { start: 60, end: 65 },
+    'יב': { start: 66, end: 68 },
+    'יג': { start: 69, end: 71 },
+    'יד': { start: 72, end: 76 },
+    'טו': { start: 77, end: 78 },
+    'טז': { start: 79, end: 82 },
+    'יז': { start: 83, end: 87 },
+    'יח': { start: 88, end: 89 },
+    'יט': { start: 90, end: 96 },
+    'כ': { start: 97, end: 103 },
+    'כא': { start: 104, end: 105 },
+    'כב': { start: 106, end: 107 },
+    'כג': { start: 108, end: 112 },
+    'כד': { start: 113, end: 118 },
+    'כה': { start: 119, end: 119 },//עד מ
+    'כו': { start: 119, end: 119 }, 
+    'כז': { start: 120, end: 134 },
+    'כח': { start: 135, end: 139 },
+    'כט': { start: 140, end: 144 },
+    'ל': { start: 145, end: 150 }
+}
