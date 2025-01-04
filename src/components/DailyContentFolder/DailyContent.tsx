@@ -37,22 +37,13 @@ const DailyContent: React.FC = () => {
 
   return (
     <div className={styles.mainContainer}>
+      <h1 className={styles.title}>לימוד יומי</h1>
       {selectedItem && (
         <ExpandedCard
           item={selectedItem}
           onClose={() => setSelectedItem(null)}
         />
       )}
-
-      <div className={styles.headerContainer}>
-        <h1 className={styles.title}>תוכן יומי: צוללים לעומק החכמה והמסורת</h1>
-        <h2 className={styles.subtitle}>מקום יומי להתבוננות, לימוד והשראה מתוך ארון הספרים היהודי</h2>
-        <p className={styles.intro}>
-          ברוכים הבאים לפינת התוכן היומית! כאן תוכלו למצוא מבחר נושאים מגוונים ללימוד יומי מתוך אוצרות ארון הספרים היהודי: מפרשת השבוע, דף יומי, הלכה יומית, ספרי נביאים, כתובים, משנה ועוד.
-          כל יום מחכה לכם תמצית מרתקת שתעשיר את היום שלכם, תעודד התבוננות מעמיקה, ותסייע לכם להתחבר לשורשים ולמסורת בדרך נעימה ומעשירה.<br />
-          ✨ <strong>בחרו נושא, פתחו כרטיס, והתחילו את היום עם השראה!</strong> ✨
-        </p>
-      </div>
 
       <div className={styles.dailyContent}>
         {content.length === 0 ? (

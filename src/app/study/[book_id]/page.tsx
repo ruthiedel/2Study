@@ -144,7 +144,7 @@ const Study = () => {
                             <p>אין טקסט להצגה כרגע</p>
                         )) : (
                         <ShowParagraph
-                            paragraph={ paragraph.find( (p) => p.chapterNumber === index?.chapterId &&  p.section.paragraphId === index?.paragraphId )?.section! }
+                            paragraph={ paragraph.find((p) => p.chapterNumber === index?.chapterId &&  p.section.paragraphId === index?.paragraphId )?.section! }
                             chapterTitle={`פרק ${numberToGematria(index?.chapterId || 1)} סעיף ${numberToGematria(index?.paragraphId || 1)}`}
                         />
                     )}
