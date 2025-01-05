@@ -99,7 +99,7 @@ const HomePage: React.FC = () => {
         if (isSending) return; 
         setIsSending(true); 
             try {
-                router.push(`/BooksLearning`); 
+                router.push(`/bookCatalog`); 
             } catch (error) {
                 console.error('Error navigating to BooksLearning:', error);
             } finally {

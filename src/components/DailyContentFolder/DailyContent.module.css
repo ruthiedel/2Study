@@ -1,8 +1,8 @@
-.mainContainer{
+.mainContainer {
   font-family: var(--main-font);
 }
 
-.title{
+.title {
   font-size: 25px;
   font-weight: bold;
   text-align: center;
@@ -18,7 +18,8 @@
 
 }
 
-.contentCard, .learnedCard{
+.contentCard,
+.learnedCard {
   background-color: var(--primary-color);
   border: 1px solid rgb(132, 132, 132);
   padding: 15px;
@@ -26,6 +27,9 @@
   cursor: pointer;
   transition: transform 0.3s ease;
   margin: 5px 10px 5px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .contentCard:hover {
@@ -73,14 +77,14 @@
 
 
 .closeButton:hover {
-  background-color: #555; 
-  transform: scale(1.1); 
+  background-color: #555;
+  transform: scale(1.1);
   color: white;
 }
 
 .closeButton:active {
-  background-color: #222; 
-  transform: scale(0.95); 
+  background-color: #222;
+  transform: scale(0.95);
 }
 
 
@@ -105,20 +109,20 @@
   text-align: center;
 }
 
-.cardTitle{
+.cardTitle {
   font-size: 25px;
   font-weight: bold;
   text-align: center;
 }
 
-.cardSubtitle{
+.cardSubtitle {
   font-size: 18px;
   font-weight: bold;
   text-align: center;
   margin-bottom: 10px;
 }
 
-.cardTextContainer{
+.cardTextContainer {
   padding: 0px 50px 0px 50px;
   overflow-y: scroll;
   position: relative;
@@ -126,13 +130,17 @@
   direction: ltr;
 }
 
-.cardText{
+.cardText {
   direction: rtl;
 }
 
 .learnedCard {
   background-color: #f0f0f0;
   opacity: 0.7;
+}
+
+.buttonContainer {
+  align-items: end;
 }
 
 .learnedButton {
@@ -144,4 +152,5 @@
   cursor: pointer;
   margin-top: 5px;
   float: left;
+  width: 30%;
 }

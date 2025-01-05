@@ -100,18 +100,14 @@ function Tehilim() {
                 isChapterRead(index) ? styles.read : ""
               }`}
             >
-              <span
-                onClick={() => handleChooseItem(item)}
-                className={styles.chapterText}
-              >
+              <p onClick={() => handleChooseItem(item)}>
                 פרק {numberToGematria(item.chapter)}'
-              </span>
+              </p>
               <button
+                className={styles.markReadButton}
                 onClick={() => handleMarkAsRead(index)}
-                className={styles.markAsReadButton}
-                disabled={isChapterRead(index)}
               >
-                {isChapterRead(index) ? "נקרא" : "סמן כנקרא"}
+                סמן כנקרא
               </button>
             </div>
           ))
