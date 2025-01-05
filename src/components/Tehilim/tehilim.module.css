@@ -4,69 +4,59 @@
     justify-content: flex-start;
     align-items: center;
     padding: 20px;
-}
+    background-color: #f9f9f9;
 
-.title {
+  }
+  
+  .title {
     font-size: 28px;
     font-weight: bold;
     color: #333;
     margin: 20px 0;
-}
-
-.chapterContainer {
+  }
+  
+  .chapterContainer {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     gap: 10px;
     width: 100%;
     max-width: 600px;
-}
-
-.chapterDiv {
+  }
+  
+  .chapterDiv {
     background-color: #fff;
     color: #333;
     border: 1px solid #ddd;
     padding: 10px;
     border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s, background-color 0.2s, color 0.2s, box-shadow 0.2s;
-}
-
-.chapterDiv:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.chapterDiv.read {
-    background-color: #f0f0f0;
-    color: #666;
-}
-
-.chapterText {
-    cursor: pointer;
-    flex-grow: 1;
     text-align: center;
-}
-
-.markAsReadButton {
-    background-color: #444;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    padding: 5px 10px;
     cursor: pointer;
-    transition: background-color 0.2s, transform 0.2s;
-}
-
-.markAsReadButton:hover:not(:disabled) {
-    background-color: #555;
+    transition: background-color 0.2s, transform 0.2s, color 0.2s;
+  }
+  
+  .chapterDiv:hover {
+    
+    color: #828282;
     transform: scale(1.05);
-}
-
-.markAsReadButton:disabled {
-    background-color: #bbb;
-    cursor: not-allowed;
-}
+  }
+  
+  .chapterDiv.read {
+    background-color: #f0f0f0;
+    color: #999;
+    text-decoration: line-through;
+  }
+  
+  .markReadButton {
+    background-color: #030303;
+    color: white;
+    border: none;
+    padding: 3px 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .markReadButton:hover {
+    background-color: #5d5d5d;
+  }
+  

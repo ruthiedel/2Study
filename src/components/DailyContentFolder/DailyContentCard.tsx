@@ -41,14 +41,17 @@ const ContentCard: React.FC<{
       <h3 className={styles.mainTitle}>{item.title}</h3>
       <p className={styles.subtitle}>{item.location}</p>
       <p>{removeHtmlTags(truncatedText)}</p>
-      <button
-        className={styles.learnedButton}
-        onClick={handleLearnedClick}
-        disabled={isLearned}
-        style={{ backgroundColor: isLearned ? "gray" : "black" }}
-      >
-        {isLearned ? "נלמד להיום" : "סמן כנלמד"}
-      </button>
+      <div className={styles.buttonContainer}>
+        <button
+          className={styles.learnedButton}
+          onClick={handleLearnedClick}
+          disabled={isLearned}
+          style={{ backgroundColor: isLearned ? "gray" : "black" }}
+        >
+          {isLearned ? "נלמד להיום" : "סמן כנלמד"}
+        </button>
+      </div>
+
     </div>
   );
 };
