@@ -48,7 +48,7 @@ function Tehilim() {
     if (storedDates) {
       setReadDates(JSON.parse(storedDates));
     } else {
-      const initialDates = Array(150).fill(null); // 150 פרקים
+      const initialDates = Array(150).fill(null); 
       localStorage.setItem("tehilimReadDates", JSON.stringify(initialDates));
       setReadDates(initialDates);
     }

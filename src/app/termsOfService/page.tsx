@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./termsService.module.css"; // ייבוא קובץ העיצוב
+import styles from "./termsService.module.css"; 
 
 const TermsOfService = () => {
   return (

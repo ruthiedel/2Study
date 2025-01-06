@@ -14,8 +14,7 @@ describe('Footer Contact Form', () => {
       emailInput.type('test@example.com');
       messageInput.type('This is a test message.');
       submitButton.click();
-        
-      //check reset
+
       cy.get('[name="name"]').should('have.value', '');
       cy.get('[name="email"]').should('have.value', '');
       cy.get('[name="message"]').should('have.value', '');

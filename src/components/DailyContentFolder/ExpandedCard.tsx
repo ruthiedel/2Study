@@ -1,4 +1,4 @@
-// ExpandedCard.tsx
+
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import styles from "./DailyContent.module.css";
