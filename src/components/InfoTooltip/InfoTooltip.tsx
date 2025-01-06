@@ -1,9 +1,9 @@
-// components/InfoTooltip.tsx
+
 import React, { useState } from "react";
 import styles from "./InfoTooltip.module.css";
 
 interface InfoTooltipProps {
-  text: string; // הטקסט שיוצג בעמוד
+  text: string; 
 }
 
 const InfoTooltip: React.FC<InfoTooltipProps> = ({ text }) => {

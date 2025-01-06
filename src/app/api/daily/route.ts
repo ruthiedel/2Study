@@ -21,7 +21,7 @@ interface CalendarItem {
 interface TextContent {
     title: string;
     text: string;
-    location: string; // הוספתי שדה location לתיאור המקום
+    location: string; 
 }
 
 const SEFARIA_BASE_URL = 'https://www.sefaria.org.il/api/v3/texts';
@@ -45,18 +45,17 @@ const fetchDailyContent = async (): Promise<TextContent[]> => {
 
                 const text = (hebrewVersion.text && hebrewVersion.text) ? hebrewVersion.text : 'טקסט לא נמצא';
 
-                // הוספת תיאור המקום בעברית
                 return {
                     title: item.title.he,
                     text,
-                    location: item.displayValue.he, // הוספת המידע של תיאור המקום
+                    location: item.displayValue.he, 
                 };
             } catch (err) {
                 console.error(`Error fetching content for ${item.title.he}:`, err);
                 return {
                     title: item.title.he,
                     text: 'שגיאה בטעינת הטקסט',
-                    location: item.displayValue.he, // הוספתי גם במקרה של שגיאה
+                    location: item.displayValue.he, 
                 };
             }
         });
@@ -71,7 +70,6 @@ const fetchDailyContent = async (): Promise<TextContent[]> => {
 export async function GET() {
     try {
         const content = await fetchDailyContent();
-        console.log(content);
         return new Response(JSON.stringify(content), { status: 200 });
     } catch (err) {
         return new Response(JSON.stringify({ error: 'Failed to fetch daily content.' }), { status: 500 });

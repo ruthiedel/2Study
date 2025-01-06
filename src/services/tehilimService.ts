@@ -1,10 +1,11 @@
+
 import { HebrewDateFormatter, JewishDate } from 'kosher-zmanim';
 
 type Dictionary = {
     [key: string]: { start: number; end: number };
 };
 
-const dictionary:Dictionary= {
+const dictionary: Dictionary = {
     '1': { start: 1, end: 9 },
     '2': { start: 10, end: 17 },
     '3': { start: 18, end: 22 },
@@ -43,9 +44,9 @@ const getHebrewDay = (): number => {
 };
 
 async function fetchTehilimChapters(
-    start: number, 
+    start: number,
     end: number
-): Promise<Array<{ chapter: number; text: string }>> { 
+): Promise<Array<{ chapter: number; text: string }>> {
     try {
         const response = await fetch(`https://www.sefaria.org/api/v3/texts/Tehilim%20${start}-${end}`);
         const data = await response.json();
@@ -66,17 +67,53 @@ async function fetchTehilimChapters(
     }
 }
 
- export const getTehilimForToday = async () => {
-    const dayInMonth = getHebrewDay().toString(); 
-    
+async function fetchChapter119(day: string): Promise<Array<{ chapter: number; text: string }>> {
+    try {
+        const response = await fetch(`https://www.sefaria.org/api/v3/texts/Tehilim%20119-119`);
+        const data = await response.json();
+
+        if (!data.versions || !data.versions[0].text) {
+            throw new Error("Text data is not available in the response");
+        }
+
+        if (day === '25') {
+            let text: string = '';
+            for (let i = 0; i < 96; i++) {
+                text += ' \n\n' + (data.versions[0].text[i] || ' ');
+            }
+            return [{ chapter: 119, text }];
+        }
+        else {
+            let text: string = '';
+            for (let i = 96; i < data.versions[0].text.length; i++) {
+                text += ' \n\n' + (data.versions[0].text[i] || ' ');
+            }
+            return [{ chapter: 119, text }];
+        }
+    } catch (error) {
+        console.error("Error fetching Tehilim chapters:", error);
+        return [];
+    }
+}
+
+export const getTehilimForToday = async () => {
+     const dayInMonth = getHebrewDay().toString();
+
     if (!(dayInMonth in dictionary)) {
         console.error(`לא נמצא מידע עבור היום ${dayInMonth}`);
         return [];
     }
 
     const { start, end } = dictionary[dayInMonth];
-
-    const tehilimChapters = await fetchTehilimChapters(start, end);
+    let tehilimChapters: Array<{
+        chapter: number;
+        text: string;
+    }> = [];
+    if (  dayInMonth === '25' ||dayInMonth === '26') {
+        tehilimChapters = await fetchChapter119(dayInMonth);
+    }
+    else {
+        tehilimChapters = await fetchTehilimChapters(start, end);
+    }
     return tehilimChapters;
 };
-
